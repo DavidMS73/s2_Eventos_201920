@@ -12,11 +12,24 @@ import javax.persistence.Entity;
  *
  * @author Estudiante
  */
+import java.util.Date;
 public class Memoria extends BaseEntity implements Serializable{
-    private string lugar;
+    private String lugar;
+    private Date fecha;
     
-    public String getLugar{
-        return lugar;
+    public String getLugar(){
+        return this.lugar;
     };
+    public void setLugar(String newLugar){
+        this.lugar=newLugar;
+    }
+    
+    public Date getFecha(){
+        return this.fecha;
+    }
+    public void setFecha(Date newFecha){
+        this.fecha=newFecha;
+    }
+    
     
 }
