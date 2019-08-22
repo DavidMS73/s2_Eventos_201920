@@ -18,6 +18,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String correo;
     private String contraseña;
 
+    public UsuarioEntity(){}
     /**
      * @return the id
      */
@@ -28,7 +29,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     /**
      * @param identificador the id to set
      */
-    public void setIdeentificador(Long identificador) {
+    public void setIdentificador(Long identificador) {
         this.identificador = identificador;
     }
 
