@@ -13,6 +13,8 @@ import javax.persistence.Entity;
  * @author Estudiante
  */
 import java.util.Date;
+
+@Entity
 public class MemoriaEntity extends BaseEntity implements Serializable{
     private String lugar;
     private Date fecha;
