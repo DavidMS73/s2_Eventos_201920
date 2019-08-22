@@ -24,7 +24,7 @@ public class LugarEntity extends BaseEntity implements Serializable
     */
    public Integer getCapacidad()
    {
-      return capacidadAsistentes; 
+      return capacidadAsistentes;
    }
    
    /**
