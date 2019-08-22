@@ -12,7 +12,7 @@ import javax.persistence.Entity;
  * @author Daniel Beetancurth Dorado
  */
 @Entity
-public class UsuarioEntity extends BaseEntity implements Serializable {
+public abstract class UsuarioEntity extends BaseEntity implements Serializable {
     private Long identificador;
     private String nombre;
     private String correo;
