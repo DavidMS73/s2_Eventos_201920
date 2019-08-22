@@ -26,9 +26,4 @@ public class LugarPersistence
         em.persist(lugarEntity);
         return lugarEntity;
     }
-    
-   public EntityManager getEm()
-   {
-       return em;
-   }
 }
