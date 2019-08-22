@@ -9,7 +9,7 @@ package co.edu.uniandes.csw.eventos.entities;
 import javax.persistence.Entity;
 /**
  *
- * @author Estudiante
+ * @author Alberic Despres
  */
 @Entity
 public class AsistenteEntity extends UsuarioEntity{
