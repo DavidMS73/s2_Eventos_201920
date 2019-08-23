@@ -13,10 +13,13 @@ import javax.persistence.Entity;
  * @author Alberic Despres
  */
 import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class MemoriaEntity extends BaseEntity implements Serializable{
     private String lugar;
+    @Temporal(TemporalType.DATE)
     private Date fecha;
    
     /**
