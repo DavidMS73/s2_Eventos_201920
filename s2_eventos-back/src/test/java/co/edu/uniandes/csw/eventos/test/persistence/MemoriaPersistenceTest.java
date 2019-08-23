@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import co.edu.uniandes.csw.eventos.persistence.MemoriaPersistence;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -35,15 +36,21 @@ public class MemoriaPersistenceTest {
     @Inject
     MemoriaPersistence mp;
     
+    @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
     
     @Test
     public void testCreate(){
+        
+        
         PodamFactory factory = new PodamFactoryImpl();
         MemoriaEntity memoria = factory.manufacturePojo(MemoriaEntity.class);
         MemoriaEntity newMem=mp.create(memoria);
         Assert.assertNotNull(newMem);
-        
+        //Assert.assertNotNull(newMem.getId());
+        //Assert.assertNotNull(MemoriaEntity.class);
+        //Assert.assertNotNull(em);
+
         MemoriaEntity myEntity = em.find(MemoriaEntity.class, newMem.getId());
         Assert.assertEquals(memoria.getLugar(), myEntity.getLugar());
         Assert.assertEquals(memoria.getFecha(), myEntity.getFecha());

@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.eventos.entities.LugarEntity;
 import co.edu.uniandes.csw.eventos.persistence.LugarPersistence;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -32,6 +33,7 @@ public class LugarPersistenceTest
         return ShrinkWrap.create(JavaArchive.class).addClass(LugarEntity.class).addClass(LugarPersistence.class).addAsManifestResource("META-INF/persistence.xml","persistence.xml").addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
+    @PersistenceContext(unitName = "eventosPU")
     EntityManager em;
     
     @Inject

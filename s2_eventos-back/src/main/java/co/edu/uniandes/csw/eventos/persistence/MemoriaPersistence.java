@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MemoriaPersistence {
+    
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
     
