@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class MemoriaEntity extends BaseEntity implements Serializable{
     private String lugar;
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
     private Date fecha;
    
     /**
