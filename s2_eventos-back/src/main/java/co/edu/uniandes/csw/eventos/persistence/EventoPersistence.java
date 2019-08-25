@@ -36,4 +36,30 @@ public class EventoPersistence {
         TypedQuery<EventoEntity> query = em.createQuery("select u from EventoEntity u", EventoEntity.class);
         return query.getResultList();
     }
+    
+    public EventoEntity update(EventoEntity evento) {
+        return em.merge(evento);
+    }
+    
+    public void delete(Long eventoId) {
+        EventoEntity entity = em.find(EventoEntity.class, eventoId);
+        em.remove(entity);
+    }
+    
+    public EventoEntity findByName(String name){
+        TypedQuery query = em.createQuery("select u from EventoEntity u where u.nombre = :name", EventoEntity.class);
+        query = query.setParameter("name", name);
+        List<EventoEntity> sameName = query.getResultList();
+        EventoEntity result;
+        if(sameName == null) {
+            result = null;
+        }
+        else if(sameName.isEmpty()) {
+            result = null;
+        }
+        else{
+            result = sameName.get(0);
+        }
+        return result;
+    }
 }
