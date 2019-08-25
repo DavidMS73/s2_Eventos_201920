@@ -16,12 +16,12 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MemoriaPersistence {
-    
+
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
-    
-    public MemoriaEntity create(MemoriaEntity memoria){
+
+    public MemoriaEntity create(MemoriaEntity memoria) {
         em.persist(memoria);
         return memoria;
-    }   
+    }
 }

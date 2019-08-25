@@ -16,12 +16,12 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class PagoPersistence {
-    
-    @PersistenceContext(unitName="eventosPU")
+
+    @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
-    
-    public PagoEntity create(PagoEntity pago){
+
+    public PagoEntity create(PagoEntity pago) {
         em.persist(pago);
-       return pago;
+        return pago;
     }
 }

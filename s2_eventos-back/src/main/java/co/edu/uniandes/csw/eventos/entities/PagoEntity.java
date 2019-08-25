@@ -10,14 +10,14 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author Daniel Santiago Tenjo Leeal
+ * @author Daniel Santiago Tenjo Leal
  */
 @Entity
-public class PagoEntity extends BaseEntity implements Serializable{
-    
+public class PagoEntity extends BaseEntity implements Serializable {
+
     protected String valor;
     protected String titular;
-    protected String códigoConfirmación;
+    protected String codigoConfirmacion;
 
     /**
      * @return the valor
@@ -50,15 +50,15 @@ public class PagoEntity extends BaseEntity implements Serializable{
     /**
      * @return the códigoConfirmación
      */
-    public String getCódigoConfirmación() {
-        return códigoConfirmación;
+    public String getCodigoConfirmacion() {
+        return codigoConfirmacion;
     }
 
     /**
      * @param códigoConfirmación the códigoConfirmación to set
      */
-    public void setCódigoConfirmación(String códigoConfirmación) {
-        this.códigoConfirmación = códigoConfirmación;
+    public void setCódigoConfirmación(String codigoConfirmacion) {
+        this.codigoConfirmacion = codigoConfirmacion;
     }
-    
+
 }

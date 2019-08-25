@@ -7,28 +7,30 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+
 /**
  *
- * @author Daniel Beetancurth Dorado
+ * @author Daniel Betancurth Dorado
  */
 @Entity
 public class UsuarioEntity extends BaseEntity implements Serializable {
+
     private Long identificador;
     private String nombre;
     private String correo;
-    private String contraseña;
+    private String contrasena;
 
-    //Constructor
-    public UsuarioEntity(){
-    
+    public UsuarioEntity() {
+        //Constructor
     }
+
     /**
      * @return the id
      */
     public Long getIdentificador() {
         return identificador;
     }
-    
+
     /**
      * @param identificador the id to set
      */
@@ -67,15 +69,15 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     /**
      * @return the contraseña
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     /**
      * @param contraseña the contraseña to set
      */
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContraseña(String contrasena) {
+        this.contrasena = contrasena;
     }
-    
+
 }

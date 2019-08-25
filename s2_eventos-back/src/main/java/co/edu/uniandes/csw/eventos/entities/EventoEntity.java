@@ -15,23 +15,22 @@ import javax.persistence.Entity;
  */
 @Entity
 public class EventoEntity extends BaseEntity implements Serializable {
-       
+
     private String nombre;
     private String categoria;
     private String descripcion;
-    
+
     private Date fechaInicio;
-    
+
     private Date fechaFin;
-    
+
     private String detallesAdicionales;
     private Integer entradasRestantes;
     private String tipo;
     private Boolean esPago;
-    
-    //Constructor
-    public EventoEntity(){
-        
+
+    public EventoEntity() {
+        //Constructor
     }
 
     /**
