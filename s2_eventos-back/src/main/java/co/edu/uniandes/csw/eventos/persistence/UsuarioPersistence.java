@@ -16,14 +16,12 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class UsuarioPersistence {
-    
+
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
-    
-    public UsuarioEntity create(UsuarioEntity usuario)
-    {
+
+    public UsuarioEntity create(UsuarioEntity usuario) {
         em.persist(usuario);
-       // throw new java.lang.UnsupportedOperationException("Not supported yet");
-       return usuario;
+        return usuario;
     }
 }

@@ -23,7 +23,6 @@ public class EventoPersistence {
     protected EntityManager em;
 
     public EventoEntity create(EventoEntity evento) {
-        //throw new java.lang.UnsupportedOperationException("Not supported yet.");
         em.persist(evento);
         return evento;
     }

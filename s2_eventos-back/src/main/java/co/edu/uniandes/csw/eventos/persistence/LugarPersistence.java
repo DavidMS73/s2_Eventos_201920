@@ -16,13 +16,11 @@ import javax.persistence.PersistenceContext;
  */
 
 @Stateless
-public class LugarPersistence 
-{
+public class LugarPersistence {
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
     
-    public LugarEntity create(LugarEntity lugarEntity)
-    {
+    public LugarEntity create(LugarEntity lugarEntity){
         em.persist(lugarEntity);
         return lugarEntity;
     }

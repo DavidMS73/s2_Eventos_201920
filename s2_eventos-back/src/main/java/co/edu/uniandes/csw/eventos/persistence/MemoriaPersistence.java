@@ -23,7 +23,5 @@ public class MemoriaPersistence {
     public MemoriaEntity create(MemoriaEntity memoria){
         em.persist(memoria);
         return memoria;
-//throw new java.lang.UnsupportedOperationException("Not supported yet");
-    }
-    
+    }   
 }

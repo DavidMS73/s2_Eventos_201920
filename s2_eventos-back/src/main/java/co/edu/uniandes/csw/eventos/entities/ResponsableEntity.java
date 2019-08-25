@@ -5,13 +5,14 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 /**
  *
  * @author Alberic Despres
  */
 @Entity
-public class ResponsableEntity extends UsuarioEntity {
+public class ResponsableEntity extends UsuarioEntity implements Serializable{
     private String codigoUniandes;
     
      /**
@@ -19,7 +20,7 @@ public class ResponsableEntity extends UsuarioEntity {
      */
     public String getCodigoUniandes(){
         return this.codigoUniandes;
-    };
+    }
     
      /**
      * @param newCodigo the codigo to set

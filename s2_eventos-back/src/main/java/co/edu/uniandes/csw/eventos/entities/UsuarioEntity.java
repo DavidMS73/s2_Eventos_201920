@@ -18,7 +18,10 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String correo;
     private String contraseña;
 
-    public UsuarioEntity(){}
+    //Constructor
+    public UsuarioEntity(){
+    
+    }
     /**
      * @return the id
      */

@@ -8,8 +8,6 @@ package co.edu.uniandes.csw.eventos.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -31,6 +29,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private String tipo;
     private Boolean esPago;
     
+    //Constructor
     public EventoEntity(){
         
     }
