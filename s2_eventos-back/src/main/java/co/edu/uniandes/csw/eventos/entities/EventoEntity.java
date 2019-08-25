@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.eventos.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -19,12 +21,19 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private String nombre;
     private String categoria;
     private String descripcion;
+    
     private Date fechaInicio;
+    
     private Date fechaFin;
+    
     private String detallesAdicionales;
     private Integer entradasRestantes;
     private String tipo;
     private Boolean esPago;
+    
+    public EventoEntity(){
+        
+    }
 
     /**
      * @return the nombre

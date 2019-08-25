@@ -37,10 +37,10 @@ public class EventoPersistenceTest {
     }
     
     @Inject
-    EventoPersistence ep;
+    private EventoPersistence ep;
     
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
     
     @Test
     public void createTest(){
