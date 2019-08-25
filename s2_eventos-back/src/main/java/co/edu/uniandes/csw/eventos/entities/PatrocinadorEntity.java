@@ -7,26 +7,28 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+
 /**
  *
  * @author Alberic Despres
  */
 @Entity
-public class PatrocinadorEntity extends UsuarioEntity implements Serializable{
+public class PatrocinadorEntity extends UsuarioEntity implements Serializable {
+
     private String nit;
-    
-     /**
+
+    /**
      * @return the nit
      */
-    public String getNit(){
+    public String getNit() {
         return this.nit;
     }
-    
-     /**
-     * @param newNit the nit to set
+
+    /**
+     * @param nit the nit to set
      */
-    public void setNit(String newNit){
-        this.nit=newNit;
+    public void setNit(String nit) {
+        this.nit = nit;
     }
-    
+
 }

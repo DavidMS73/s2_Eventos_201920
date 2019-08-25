@@ -13,45 +13,37 @@ import javax.persistence.Entity;
  * @author Estudiante
  */
 @Entity
-public class LugarEntity extends BaseEntity implements Serializable
-{
-   private Integer capacidadAsistentes;
-   private String ubicacionGeografica;
-   
-   /**
-    * 
-    * @return the capacidadAsistentes
-    */
-   public Integer getCapacidad()
-   {
-      return capacidadAsistentes;
-   }
-   
-   /**
-    * 
-    * @param pCapacidad the capacidadAsistentes to set
-    */
-   public void setTipo(Integer pCapacidad)
-   {
-     this.capacidadAsistentes = pCapacidad;
-   }
-   
-   /**
-    * 
-    * @return the ubicacionGeografica
-    */
-   public String getUbicacion()
-   {
-       return ubicacionGeografica;
-   }
-   
-   /**
-    * 
-    * @param pUbicacion the ubicacionGeografica to set
-    */
-   public void setUbicacion(String pUbicacion)
-   {
-       this.ubicacionGeografica = pUbicacion;
-   }
-    
+public class LugarEntity extends BaseEntity implements Serializable {
+
+    private Integer capacidadAsistentes;
+    private String ubicacionGeografica;
+
+    /**
+     * @return the capacidadAsistentes
+     */
+    public Integer getCapacidadAsistentes() {
+        return capacidadAsistentes;
+    }
+
+    /**
+     * @param capacidadAsistentes the capacidadAsistentes to set
+     */
+    public void setCapacidadAsistentes(Integer capacidadAsistentes) {
+        this.capacidadAsistentes = capacidadAsistentes;
+    }
+
+    /**
+     * @return the ubicacionGeografica
+     */
+    public String getUbicacionGeografica() {
+        return ubicacionGeografica;
+    }
+
+    /**
+     * @param ubicacionGeografica the ubicacionGeografica to set
+     */
+    public void setUbicacionGeografica(String ubicacionGeografica) {
+        this.ubicacionGeografica = ubicacionGeografica;
+    }
+
 }

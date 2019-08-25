@@ -7,26 +7,28 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+
 /**
  *
  * @author Alberic Despres
  */
 @Entity
-public class ResponsableEntity extends UsuarioEntity implements Serializable{
+public class ResponsableEntity extends UsuarioEntity implements Serializable {
+
     private String codigoUniandes;
-    
-     /**
+
+    /**
      * @return the codigoUniandes
      */
-    public String getCodigoUniandes(){
+    public String getCodigoUniandes() {
         return this.codigoUniandes;
     }
-    
-     /**
-     * @param newCodigo the codigo to set
+
+    /**
+     * @param codigoUniandes the codigo to set
      */
-    public void setCodigoUniandes(String newCodigo){
-        this.codigoUniandes=newCodigo;
+    public void setCodigoUniandes(String codigoUniandes) {
+        this.codigoUniandes = codigoUniandes;
     }
-    
+
 }

@@ -48,16 +48,16 @@ public class PagoEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the códigoConfirmación
+     * @return the codigoConfirmacion
      */
     public String getCodigoConfirmacion() {
         return codigoConfirmacion;
     }
 
     /**
-     * @param códigoConfirmación the códigoConfirmación to set
+     * @param codigoConfirmacion the codigoConfirmacion to set
      */
-    public void setCódigoConfirmación(String codigoConfirmacion) {
+    public void setCodigoConfirmacion(String codigoConfirmacion) {
         this.codigoConfirmacion = codigoConfirmacion;
     }
 

@@ -15,39 +15,38 @@ import javax.persistence.Entity;
 import java.util.Date;
 
 @Entity
-public class MemoriaEntity extends BaseEntity implements Serializable{
+public class MemoriaEntity extends BaseEntity implements Serializable {
+
     private String lugar;
-    
+
     private Date fecha;
-   
+
     /**
      * @return the lugar
      */
-    public String getLugar(){
+    public String getLugar() {
         return this.lugar;
     }
-    
-     /**
-     * @param newLugar the lugar to set
+
+    /**
+     * @param lugar the lugar to set
      */
-    public void setLugar(String newLugar){
-        this.lugar=newLugar;
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
     }
-    
+
     /**
      * @return the fecha
      */
-    public Date getFecha(){
+    public Date getFecha() {
         return this.fecha;
     }
-    
-     /**
-     * @param newFecha the fecha to set
+
+    /**
+     * @param fecha the fecha to set
      */
-    public void setFecha(Date newFecha){
-        this.fecha=newFecha;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
-    
-    
-    
+
 }

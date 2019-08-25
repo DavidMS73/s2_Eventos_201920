@@ -25,36 +25,34 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Estudiante
  */
 @RunWith(Arquillian.class)
-public class LugarPersistenceTest 
-{
+public class LugarPersistenceTest {
+
     @Deployment
-    public static JavaArchive createDeployment()
-    {
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(LugarEntity.class)
                 .addClass(LugarPersistence.class)
-                .addAsManifestResource("META-INF/persistence.xml","persistence.xml")
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @PersistenceContext
     EntityManager em;
-    
+
     @Inject
     LugarPersistence lp;
-    
+
     @Test
-    public void createLugarTest()
-    {
+    public void createLugarTest() {
         PodamFactory podam = new PodamFactoryImpl();
         LugarEntity lugar = podam.manufacturePojo(LugarEntity.class);
         LugarEntity result = lp.create(lugar);
-        
+
         Assert.assertNotNull(result);
-        
+
         LugarEntity entity = em.find(LugarEntity.class, result.getId());
-        
-        Assert.assertEquals(lugar.getCapacidad(), entity.getCapacidad());
+
+        Assert.assertEquals(lugar.getCapacidadAsistentes(), entity.getCapacidadAsistentes());
     }
-    
+
 }

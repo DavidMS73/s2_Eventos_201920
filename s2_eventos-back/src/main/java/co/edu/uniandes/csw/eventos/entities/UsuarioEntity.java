@@ -67,16 +67,16 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the contraseña
+     * @return the contrasena
      */
     public String getContrasena() {
         return contrasena;
     }
 
     /**
-     * @param contraseña the contraseña to set
+     * @param contrasena the contrasena to set
      */
-    public void setContraseña(String contrasena) {
+    public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
 
