@@ -54,6 +54,7 @@ public class MemoriaPersistenceTest {
         MemoriaEntity myEntity = em.find(MemoriaEntity.class, newMem.getId());
         Assert.assertEquals(memoria.getLugar(), myEntity.getLugar());
         Assert.assertEquals(memoria.getFecha(), myEntity.getFecha());
+        
     }
     
 }
