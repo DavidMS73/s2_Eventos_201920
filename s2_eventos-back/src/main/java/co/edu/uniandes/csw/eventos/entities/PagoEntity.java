@@ -18,6 +18,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
     protected String valor;
     protected String titular;
     protected String codigoConfirmacion;
+    private String numeroRecibo;
 
     /**
      * @return the valor
@@ -59,6 +60,13 @@ public class PagoEntity extends BaseEntity implements Serializable {
      */
     public void setCodigoConfirmacion(String codigoConfirmacion) {
         this.codigoConfirmacion = codigoConfirmacion;
+    }
+
+    /**
+     * @return the numeroRecibo
+     */
+    public String getNumeroRecibo() {
+        return numeroRecibo;
     }
 
 }
