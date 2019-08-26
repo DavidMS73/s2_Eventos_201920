@@ -21,14 +21,15 @@ public class ResponsableEntity extends UsuarioEntity implements Serializable {
      * @return the codigoUniandes
      */
     public String getCodigoUniandes() {
-        return this.codigoUniandes;
+        return codigoUniandes;
     }
 
     /**
-     * @param codigoUniandes the codigo to set
+     * @param codigoUniandes the codigoUniandes to set
      */
     public void setCodigoUniandes(String codigoUniandes) {
         this.codigoUniandes = codigoUniandes;
     }
+
 
 }
