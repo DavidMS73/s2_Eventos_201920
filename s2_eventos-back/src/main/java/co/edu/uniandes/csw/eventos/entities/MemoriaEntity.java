@@ -5,20 +5,25 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
+import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
  * @author Alberic Despres
  */
-import java.util.Date;
-
 @Entity
 public class MemoriaEntity extends BaseEntity implements Serializable {
 
     private String lugar;
 
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
 
     /**
