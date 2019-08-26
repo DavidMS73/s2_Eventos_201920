@@ -22,13 +22,14 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Estudiante
+ * @author Gabriel Jose Gonzalez Pereira
  */
 @RunWith(Arquillian.class)
 public class LugarPersistenceTest {
 
     @Deployment
-    public static JavaArchive createDeployment() {
+    public static JavaArchive createDeployment() 
+    {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(LugarEntity.class)
                 .addClass(LugarPersistence.class)
@@ -43,7 +44,8 @@ public class LugarPersistenceTest {
     LugarPersistence lp;
 
     @Test
-    public void createLugarTest() {
+    public void createLugarTest() 
+    {
         PodamFactory podam = new PodamFactoryImpl();
         LugarEntity lugar = podam.manufacturePojo(LugarEntity.class);
         LugarEntity result = lp.create(lugar);
