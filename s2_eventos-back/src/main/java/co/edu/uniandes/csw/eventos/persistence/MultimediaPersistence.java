@@ -49,24 +49,32 @@ public class MultimediaPersistence
     
     public void delete(Long multimediaId)
     {
-        LugarEntity m = em.find(LugarEntity.class, multimediaId);
+        MultimediaEntity m = em.find(MultimediaEntity.class, multimediaId);
         em.remove(m);
     }
     
     public MultimediaEntity findByName(String name)
     {
         TypedQuery query = em.createQuery("select u from MultimediaEntity u where u.nombre = :name", MultimediaEntity.class);
+        query = query.setParameter("name", name);
         List<MultimediaEntity> sameName = query.getResultList();
         MultimediaEntity result;
-        if(sameName == null) {
+        
+        if(sameName == null)
+        {
             result = null;
         }
-        else if(sameName.isEmpty()) {
+        
+        else if(sameName.isEmpty())
+        {
             result = null;
         }
-        else{
+        
+        else
+        {
             result = sameName.get(0);
         }
+        
         return result;
     }
 }

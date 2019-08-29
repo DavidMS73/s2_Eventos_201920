@@ -143,6 +143,17 @@ public class MultimediaPersistenceTest
         Assert.assertEquals(entity.getNombre(), mulEntity.getNombre());
     }
     
+    @Test
+    public void deleteMultimediaTest()
+    {
+        MultimediaEntity multimedia = data.get(0);
+        mp.delete(multimedia.getId());
+        
+        MultimediaEntity deleted = em.find(MultimediaEntity.class, multimedia.getId());
+        Assert.assertNull(deleted);
+        
+        
+    }
     
     @Test
     public void updateMultimediaTest()
@@ -160,5 +171,17 @@ public class MultimediaPersistenceTest
         Assert.assertEquals(mulEntity.getNombre(), resp.getNombre());
     }
     
+    @Test
+    public void findMultimediaByNameTest()
+    {
+        MultimediaEntity entity = data.get(0);
+        MultimediaEntity mulEntity = mp.findByName(entity.getNombre());
+        
+        Assert.assertNotNull(mulEntity);
+        Assert.assertEquals(entity.getNombre(), mulEntity.getNombre());
+        
+        mulEntity = mp.findByName(null);
+        Assert.assertNull(mulEntity);
+    }
     
 }

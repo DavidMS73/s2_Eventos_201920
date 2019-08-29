@@ -141,7 +141,8 @@ public class EventoPersistenceTest {
     }
     
     @Test
-    public void findEventoByNameTest() {
+    public void findEventoByNameTest() 
+    {
         EventoEntity entity = data.get(0);
         EventoEntity newEntity = ep.findByName(entity.getNombre());
         Assert.assertNotNull(newEntity);
