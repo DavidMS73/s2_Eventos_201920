@@ -5,8 +5,8 @@
  */
 package co.edu.uniandes.csw.eventos.test.persistence;
 
-import co.edu.uniandes.csw.eventos.entities.LugarEntity;
-import co.edu.uniandes.csw.eventos.persistence.LugarPersistence;
+import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
+import co.edu.uniandes.csw.eventos.persistence.MultimediaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -28,29 +28,30 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author Gabriel Jose Gonzalez Pereira
  */
-@RunWith(Arquillian.class)
-public class LugarPersistenceTest {
 
+@RunWith(Arquillian.class)
+public class MultimediaPersistenceTest 
+{
     @Deployment
-    public static JavaArchive createDeployment() 
+     public static JavaArchive createDeployment() 
     {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(LugarEntity.class)
-                .addClass(LugarPersistence.class)
+                .addClass(MultimediaEntity.class)
+                .addClass(MultimediaPersistence.class)
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-
+     
     @Inject
     UserTransaction userT;
-    
+     
     @PersistenceContext
     EntityManager em;
 
     @Inject
-    LugarPersistence lp;
+    MultimediaPersistence mp;
     
-    private List<LugarEntity> data = new ArrayList<LugarEntity>();
+    private List<MultimediaEntity> data = new ArrayList<MultimediaEntity>();
     
     @Before
     public void setUp()
@@ -81,7 +82,7 @@ public class LugarPersistenceTest {
     
     private void clearData()
     {
-        em.createQuery("delete from LugarEntity").executeUpdate();
+        em.createQuery("delete from MultimediaEntity").executeUpdate();
     }
     
     private void insertData()
@@ -89,37 +90,37 @@ public class LugarPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for(int i = 0; i < 3; i++)
         {
-            LugarEntity entity = factory.manufacturePojo(LugarEntity.class);
+            MultimediaEntity entity = factory.manufacturePojo(MultimediaEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
-
+    
     @Test
-    public void createLugarTest() 
+    public void createMultimediaTest() 
     {
         PodamFactory podam = new PodamFactoryImpl();
-        LugarEntity lugar = podam.manufacturePojo(LugarEntity.class);
-        LugarEntity result = lp.create(lugar);
+        MultimediaEntity multimedia = podam.manufacturePojo(MultimediaEntity.class);
+        MultimediaEntity result = mp.create(multimedia);
 
         Assert.assertNotNull(result);
 
-        LugarEntity entity = em.find(LugarEntity.class, result.getId());
+        MultimediaEntity entity = em.find(MultimediaEntity.class, result.getId());
 
-        Assert.assertEquals(lugar.getSalon(), entity.getSalon());
+        Assert.assertEquals(multimedia.getNombre(), entity.getNombre());
     }
     
     @Test
-    public void getLugaresTest()
+    public void getMultimediasTest()
     {
-        List<LugarEntity> list = lp.findAll();
+        List<MultimediaEntity> list = mp.findAll();
         Assert.assertEquals(data.size(), list.size());
         
-        for(LugarEntity ent : list)
+        for(MultimediaEntity ent : list)
         {
             boolean found = false;
             
-            for(LugarEntity enti : data)
+            for(MultimediaEntity enti : data)
             {
                 if(ent.getId().equals(enti.getId()))
                 {
@@ -133,51 +134,31 @@ public class LugarPersistenceTest {
     }
     
     @Test
-    public void getLugarTest()
+    public void getMultimediaTest()
     {
-        LugarEntity entity = data.get(0);
-        LugarEntity lugEntity = lp.find(entity.getId());
+        MultimediaEntity entity = data.get(0);
+        MultimediaEntity mulEntity = mp.find(entity.getId());
         
-        Assert.assertNotNull(lugEntity);
-        Assert.assertEquals(entity.getSalon(), lugEntity.getSalon());
+        Assert.assertNotNull(mulEntity);
+        Assert.assertEquals(entity.getNombre(), mulEntity.getNombre());
     }
     
-    @Test
-    public void deleteLugarTest()
-    {
-        LugarEntity entity = data.get(0);
-        lp.delete(entity.getId());
-        LugarEntity deleted = em.find(LugarEntity.class, entity.getId());
-        Assert.assertNull(deleted);
-    }
     
     @Test
-    public void updateLugarTest()
+    public void updateMultimediaTest()
     {
-        LugarEntity entity = data.get(0);
+        MultimediaEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        LugarEntity lugEntity = factory.manufacturePojo(LugarEntity.class);
+        MultimediaEntity mulEntity = factory.manufacturePojo(MultimediaEntity.class);
         
-        lugEntity.setId(entity.getId());
+        mulEntity.setId(entity.getId());
         
-        lp.update(lugEntity);
+        mp.update(mulEntity);
         
-        LugarEntity resp = em.find(LugarEntity.class, entity.getId());
+        MultimediaEntity resp = em.find(MultimediaEntity.class, entity.getId());
         
-        Assert.assertEquals(lugEntity.getSalon(), resp.getSalon());
+        Assert.assertEquals(mulEntity.getNombre(), resp.getNombre());
     }
     
-    @Test
-    public void findLugarByNameTest()
-    {
-        LugarEntity entity = data.get(0);
-        LugarEntity lugEntity = lp.findByName(entity.getSalon());
-        
-        Assert.assertNotNull(lugEntity);
-        Assert.assertEquals(entity.getSalon(), lugEntity.getSalon());
-        
-        lugEntity = lp.findByName(null);
-        Assert.assertNull(lugEntity);
-    }
-
+    
 }
