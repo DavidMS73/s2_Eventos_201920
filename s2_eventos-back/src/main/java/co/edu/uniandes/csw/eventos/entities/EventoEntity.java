@@ -5,9 +5,13 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
+import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -20,8 +24,12 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private String categoria;
     private String descripcion;
 
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
     private Date fechaInicio;
 
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
     private Date fechaFin;
 
     private String detallesAdicionales;
