@@ -5,8 +5,8 @@
  */
 package co.edu.uniandes.csw.eventos.test.persistence;
 
-import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
-import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
+import co.edu.uniandes.csw.eventos.entities.PatrocinioEntity;
+import co.edu.uniandes.csw.eventos.persistence.PatrocinioPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -15,7 +15,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
@@ -30,39 +29,38 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Daniel Betancurth Dorado
  */
 @RunWith(Arquillian.class)
-public class UsuarioPersistenceTest {
-
+public class PatrocinioPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(UsuarioEntity.class)
-                .addClass(UsuarioPersistence.class)
+                .addClass(PatrocinioEntity.class)
+                .addClass(PatrocinioPersistence.class)
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
     @Inject
-    UsuarioPersistence up;
+    PatrocinioPersistence pp;
 
     @PersistenceContext
     EntityManager em;
 
     @Test
-    public void createUsuarioTest() {
+    public void createPatrocinioTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity result = up.create(usuario);
+        PatrocinioEntity usuario = factory.manufacturePojo(PatrocinioEntity.class);
+        PatrocinioEntity result = pp.create(usuario);
 
         Assert.assertNotNull(result);
 
-        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
+        PatrocinioEntity entity = em.find(PatrocinioEntity.class, result.getId());
 
-        Assert.assertEquals(usuario.getNombre(), entity.getNombre());
+        Assert.assertEquals(usuario.getEmpresa(), entity.getEmpresa());
     }
       
     @Inject
     UserTransaction utx;
-    private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
+    private List<PatrocinioEntity> data = new ArrayList<PatrocinioEntity>();
     
     @Before
     public void setUp() {
@@ -83,25 +81,25 @@ public class UsuarioPersistenceTest {
     }
     
     private void clearData() {
-        em.createQuery("delete from UsuarioEntity").executeUpdate();
+        em.createQuery("delete from PatrocinioEntity").executeUpdate();
     }
     
      private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            PatrocinioEntity entity = factory.manufacturePojo(PatrocinioEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
 
     @Test
-    public void getUsuariosTest() {
-        List<UsuarioEntity> list = up.findAll();
+    public void getPatrociniosTest() {
+        List<PatrocinioEntity> list = pp.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for(UsuarioEntity ent : list) {
+        for(PatrocinioEntity ent : list) {
             boolean found = false;
-            for (UsuarioEntity entity : data) {
+            for (PatrocinioEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -111,44 +109,44 @@ public class UsuarioPersistenceTest {
     }
     
     @Test
-    public void getUsuarioTest(){
-        UsuarioEntity entity = data.get(0);
-        UsuarioEntity newEntity = up.find(entity.getId());
+    public void getPatrocinioTest(){
+        PatrocinioEntity entity = data.get(0);
+        PatrocinioEntity newEntity = pp.find(entity.getId());
         Assert.assertNotNull(newEntity); 
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getEmpresa(), newEntity.getEmpresa());
     }
     
     @Test
-    public void deleteUsuarioTest() {
-        UsuarioEntity entity = data.get(0);
-        up.delete(entity.getId());
-        UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
+    public void deletePatrocinioTest() {
+        PatrocinioEntity entity = data.get(0);
+        pp.delete(entity.getId());
+        PatrocinioEntity deleted = em.find(PatrocinioEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
     
     @Test
-    public void updateUsuarioTest() {
-        UsuarioEntity entity = data.get(0);
+    public void updatePatrocinioTest() {
+        PatrocinioEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        PatrocinioEntity newEntity = factory.manufacturePojo(PatrocinioEntity.class);
 
         newEntity.setId(entity.getId());
 
-        up.update(newEntity);
+        pp.update(newEntity);
 
-        UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
+        PatrocinioEntity resp = em.find(PatrocinioEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getEmpresa(), resp.getEmpresa());
     }
     
     @Test
-    public void findUsuarioByNameTest() {
-        UsuarioEntity entity = data.get(0);
-        UsuarioEntity newEntity = up.findByName(entity.getNombre());
+    public void findPatrocinioByNameTest() {
+        PatrocinioEntity entity = data.get(0);
+        PatrocinioEntity newEntity = pp.findByName(entity.getEmpresa());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getEmpresa(), newEntity.getEmpresa());
 
-        newEntity = up.findByName(null);
+        newEntity = pp.findByName(null);
         Assert.assertNull(newEntity);
     }
 }

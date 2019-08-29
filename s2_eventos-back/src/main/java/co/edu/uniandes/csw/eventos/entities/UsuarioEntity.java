@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
+import com.sun.prism.PixelFormat.DataType;
 import java.io.Serializable;
 import javax.persistence.Entity;
 
@@ -19,6 +20,10 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String nombre;
     private String correo;
     private String contrasena;
+    private Boolean asiste;
+    private DataType codigoQR;
+    private String empresa;
+    private PagoEntity pago;
 
     public UsuarioEntity() {
         //Constructor
@@ -78,6 +83,62 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    /**
+     * @return the asiste
+     */
+    public Boolean getAsiste() {
+        return asiste;
+    }
+
+    /**
+     * @param asiste the asiste to set
+     */
+    public void setAsiste(Boolean asiste) {
+        this.asiste = asiste;
+    }
+
+    /**
+     * @return the codigoQR
+     */
+    public DataType getCodigoQR() {
+        return codigoQR;
+    }
+
+    /**
+     * @param codigoQR the codigoQR to set
+     */
+    public void setCodigoQR(DataType codigoQR) {
+        this.codigoQR = codigoQR;
+    }
+
+    /**
+     * @return the empresa
+     */
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    /**
+     * @param empresa the empresa to set
+     */
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
+    }
+
+    /**
+     * @return the pago
+     */
+    public PagoEntity getPago() {
+        return pago;
+    }
+
+    /**
+     * @param pago the pago to set
+     */
+    public void setPago(PagoEntity pago) {
+        this.pago = pago;
     }
 
 }
