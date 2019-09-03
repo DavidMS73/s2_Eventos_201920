@@ -34,9 +34,8 @@ public class MemoriaLogicTest {
                 .addPackage(MemoriaEntity.class.getPackage())
                 .addPackage(MemoriaLogic.class.getPackage())
                 .addPackage(MemoriaPersistence.class.getPackage())
-                //TODO
-                .addAsManifestResource("")
-                .addAsManifestResource("");
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
     private PodamFactory factory = new PodamFactoryImpl();
