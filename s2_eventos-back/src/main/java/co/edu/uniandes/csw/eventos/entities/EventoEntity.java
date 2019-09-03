@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
@@ -36,6 +37,12 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private Integer entradasRestantes;
     private String tipo;
     private Boolean esPago;
+
+    /*@javax.persistence.OneToMany(
+            mappedBy = "evento",
+            fetch = javax.persistence.FetchType.LAZY
+    )
+    Collection<ActividadEventoEntity> actividadesEvento;*/
 
     public EventoEntity() {
         //Constructor
@@ -166,4 +173,18 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public void setEsPago(Boolean esPago) {
         this.esPago = esPago;
     }
+
+    /**
+     * @return the actividadesEvento
+     */
+    /*public Collection<ActividadEventoEntity> getActividadesEvento() {
+        return actividadesEvento;
+    }*/
+
+    /**
+     * @param actividadesEvento the actividadesEvento to set
+     */
+    /*public void setActividadesEvento(Collection<ActividadEventoEntity> actividadesEvento) {
+        this.actividadesEvento = actividadesEvento;
+    }*/
 }

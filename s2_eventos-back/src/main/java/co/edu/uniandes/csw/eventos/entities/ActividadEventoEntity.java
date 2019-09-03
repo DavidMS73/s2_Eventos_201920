@@ -31,6 +31,10 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
 
+    /*@javax.persistence.ManyToOne(
+    )        
+    EventoEntity evento;*/
+    
     public ActividadEventoEntity() {
         //Constructor
     }
@@ -118,4 +122,18 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    /**
+     * @return the evento
+     */
+    /*public EventoEntity getEvento() {
+        return evento;
+    }*/
+
+    /**
+     * @param evento the evento to set
+     */
+    /*public void setEvento(EventoEntity evento) {
+        this.evento = evento;
+    }*/
 }
