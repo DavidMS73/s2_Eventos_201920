@@ -6,31 +6,32 @@
 package co.edu.uniandes.csw.eventos.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 
 /**
  *
- * @author Daniel Santiago Tenjo Leal
+ * @author Estudiante
  */
 @Entity
-public class PagoEntity extends BaseEntity implements Serializable {
-
-    private Date fecha;
+public class PseEntity extends BaseEntity implements Serializable{
     
-
-    /**
-     * @return the valor
-     */
-    public Date getFecha() {
-        return fecha;
-    }
-
-    /**
-     * @param pFecha the valor to set
-     */
-    public void setFecha(Date pFecha) {
-        this.fecha = pFecha;
-    }
+    private String correo;
    
+    /**
+     * @return the correo
+     */
+    public String getCorreo() {
+        return correo;
+    }
+
+    /**
+     * @param pCorreo the valor to set
+     */
+    public void setFecha(String pCorreo) {
+        this.correo = pCorreo;
+    }
+
+    
+    
+    
 }
