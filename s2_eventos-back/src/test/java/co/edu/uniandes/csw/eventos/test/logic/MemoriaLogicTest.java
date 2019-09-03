@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.MemoriaPersistence;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -43,6 +44,7 @@ public class MemoriaLogicTest {
     @Inject
     private MemoriaLogic memoriaLogic; 
     
+    @PersistenceContext
     private EntityManager em;
     
     @Test
