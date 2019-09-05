@@ -16,7 +16,6 @@ import javax.persistence.Entity;
 public class PatrocinioEntity extends BaseEntity implements Serializable{
 
 private String empresa;
-private TipoDePatrocinador tipo;
     public PatrocinioEntity()
     {
         //Constructor
@@ -35,20 +34,4 @@ private TipoDePatrocinador tipo;
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
     }
-
-    /**
-     * @return the tipo
-     */
-    public TipoDePatrocinador getTipo() {
-        return tipo;
-    }
-
-    /**
-     * @param tipo the tipo to set
-     */
-    public void setTipo(TipoDePatrocinador tipo) {
-        this.tipo = tipo;
-    }
-    
-    
 }
