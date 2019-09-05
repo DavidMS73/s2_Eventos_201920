@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.ActividadEventoPersistence;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -37,6 +39,9 @@ public class ActividadEventoLogicTest {
                 .addAsManifestResource("META-INF/beans.xml" , "beans.xml");
     }
     
+    @PersistenceContext
+    private EntityManager em;
+    
     private PodamFactory factory = new PodamFactoryImpl();
     
     @Inject
@@ -47,6 +52,9 @@ public class ActividadEventoLogicTest {
        ActividadEventoEntity newEntity =  factory.manufacturePojo(ActividadEventoEntity.class);
        ActividadEventoEntity result = eventoLogic.createActividadEvento(newEntity);
        Assert.assertNotNull(result);
+       
+       ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, result.getId());
+       Assert.assertEquals(entity.getNombre(), result.getNombre());
     }
     
     @Test (expected = BusinessLogicException.class)

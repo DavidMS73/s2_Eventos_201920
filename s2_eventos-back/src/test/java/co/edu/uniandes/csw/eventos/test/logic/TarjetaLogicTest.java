@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.TarjetaPersistence;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -37,6 +39,9 @@ public class TarjetaLogicTest {
                 .addAsManifestResource("META-INF/beans.xml" , "beans.xml");
     }
     
+    @PersistenceContext
+    private EntityManager em;
+    
     private PodamFactory factory = new PodamFactoryImpl();
     
     @Inject
@@ -47,6 +52,9 @@ public class TarjetaLogicTest {
         TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
         TarjetaEntity result = tarjetaLogic.createTarjeta(newEntity);
         Assert.assertNotNull(result);
+        
+        TarjetaEntity entity = em.find(TarjetaEntity.class, result.getId());
+        Assert.assertEquals(entity.getNumeroTarjeta(), result.getNumeroTarjeta());
     }
     
     @Test (expected = BusinessLogicException.class)
