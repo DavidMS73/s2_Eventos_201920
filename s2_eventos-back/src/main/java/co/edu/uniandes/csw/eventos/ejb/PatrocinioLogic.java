@@ -27,6 +27,7 @@ public PatrocinioEntity createUsuario(PatrocinioEntity patrocinio) throws Busine
         throw new BusinessLogicException("El patrocinio no tiene empresa");
     }
     
+    
     patrocinio = persistence.create(patrocinio);
     return patrocinio;
 }

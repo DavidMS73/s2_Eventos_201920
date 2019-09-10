@@ -27,6 +27,26 @@ public UsuarioEntity createUsuario(UsuarioEntity usuario) throws BusinessLogicEx
     {
         throw new BusinessLogicException("El nombre del usuario esta vacio");
     }
+    if(usuario.getIdentificador()== null)
+    {
+        throw new BusinessLogicException("El identificador del usuario esta vacio");
+    }
+    if(usuario.getEmpresa()== null)
+    {
+        throw new BusinessLogicException("El nombre de la empresa del usuario esta vacio");
+    }
+    if(usuario.getCorreo()== null)
+    {
+        throw new BusinessLogicException("El correo del usuario esta vacio");
+    }
+    if(usuario.getContrasena()== null)
+    {
+        throw new BusinessLogicException("La contraseña del usuario esta vacia");
+    }
+    if(usuario.getCodigoQR()== null)
+    {
+        throw new BusinessLogicException("El codigo QR del usuario es nulo");
+    }
     
     usuario = persistence.create(usuario);
     return usuario;
