@@ -23,7 +23,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private Boolean asiste;
     private DataType codigoQR;
     private String empresa;
-    private PagoEntity pago;
+  //  private PagoEntity pago;
 
     public UsuarioEntity() {
         //Constructor
@@ -127,18 +127,6 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.empresa = empresa;
     }
 
-    /**
-     * @return the pago
-     */
-    public PagoEntity getPago() {
-        return pago;
-    }
-
-    /**
-     * @param pago the pago to set
-     */
-    public void setPago(PagoEntity pago) {
-        this.pago = pago;
-    }
+   
 
 }
