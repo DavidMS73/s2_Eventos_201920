@@ -91,4 +91,11 @@ public class TarjetaLogicTest {
         newEntity.setCw(null);
         TarjetaEntity result = tarjetaLogic.createTarjetaCWInvalido(newEntity);
     }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createTarjetaExpiracionInvalidaTest() throws BusinessLogicException{
+        TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
+        newEntity.setExpiracion(null);
+        TarjetaEntity result = tarjetaLogic.createTarjetaExpiracionInvalida(newEntity);
+    }
 }

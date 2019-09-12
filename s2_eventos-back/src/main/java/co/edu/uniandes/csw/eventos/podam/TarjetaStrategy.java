@@ -19,6 +19,6 @@ public class TarjetaStrategy implements AttributeStrategy<String> {
      * Retorna una tarjeta válida
      */
     public String getValue() {
-        return RandomStringUtils.randomAlphanumeric(16);
+        return RandomStringUtils.randomNumeric(16);
     }
 }

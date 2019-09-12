@@ -55,4 +55,13 @@ public class TarjetaLogic {
             return pTarjeta;
         }
     }
+    
+    public TarjetaEntity createTarjetaExpiracionInvalida(TarjetaEntity pTarjeta) throws BusinessLogicException{
+        if(pTarjeta.getExpiracion() == null)
+            throw new BusinessLogicException("No es un cw válido de tarjeta.");
+        else{
+            pTarjeta = persistence.create(pTarjeta);
+            return pTarjeta;
+        }
+    }
 }
