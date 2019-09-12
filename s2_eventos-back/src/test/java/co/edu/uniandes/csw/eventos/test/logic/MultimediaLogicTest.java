@@ -58,6 +58,8 @@ public class MultimediaLogicTest
         
         MultimediaEntity entity = em.find(MultimediaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getTipo(), entity.getTipo());
+        Assert.assertEquals(newEntity.getUrl(), entity.getUrl());
         
     }
     
@@ -66,6 +68,22 @@ public class MultimediaLogicTest
     {
         MultimediaEntity newEntity = factory.manufacturePojo(MultimediaEntity.class);
         newEntity.setNombre(null);
+        MultimediaEntity result = multimediaLogic.createMultimedia(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createMultimediaTipoNull() throws BusinessLogicException
+    {
+        MultimediaEntity newEntity = factory.manufacturePojo(MultimediaEntity.class);
+        newEntity.setTipo(null);
+        MultimediaEntity result = multimediaLogic.createMultimedia(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createMultimediaUrlNull() throws BusinessLogicException
+    {
+        MultimediaEntity newEntity = factory.manufacturePojo(MultimediaEntity.class);
+        newEntity.setTipo(null);
         MultimediaEntity result = multimediaLogic.createMultimedia(newEntity);
     }
 }

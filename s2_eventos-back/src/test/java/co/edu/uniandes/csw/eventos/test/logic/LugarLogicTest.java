@@ -58,6 +58,10 @@ public class LugarLogicTest
         
         LugarEntity entity = em.find(LugarEntity.class, result.getId());
         Assert.assertEquals(newEntity.getSalon(), entity.getSalon());
+        Assert.assertEquals(newEntity.getBloque(), entity.getBloque());
+        Assert.assertEquals(newEntity.getPiso(), entity.getPiso());
+        Assert.assertEquals(newEntity.getUbicacionGeografica(), entity.getUbicacionGeografica());
+        Assert.assertEquals(newEntity.getCapacidadAsistentes(), entity.getCapacidadAsistentes());
     }
     
     @Test (expected = BusinessLogicException.class)
@@ -65,6 +69,38 @@ public class LugarLogicTest
     {
         LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
         newEntity.setSalon(null);
+        LugarEntity result = lugarLogic.createLugar(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createLugarBloqueNull() throws BusinessLogicException
+    {
+        LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
+        newEntity.setBloque(null);
+        LugarEntity result = lugarLogic.createLugar(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createLugarPisoNull() throws BusinessLogicException
+    {
+        LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
+        newEntity.setPiso(null);
+        LugarEntity result = lugarLogic.createLugar(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createLugarUbicacionGeograficaNull() throws BusinessLogicException
+    {
+        LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
+        newEntity.setUbicacionGeografica(null);
+        LugarEntity result = lugarLogic.createLugar(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createLugarCapacidad() throws BusinessLogicException
+    {
+        LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
+        newEntity.setCapacidadAsistentes(0);
         LugarEntity result = lugarLogic.createLugar(newEntity);
     }
 }

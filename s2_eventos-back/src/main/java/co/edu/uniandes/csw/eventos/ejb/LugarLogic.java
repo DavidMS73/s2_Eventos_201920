@@ -29,6 +29,26 @@ public class LugarLogic
             throw new BusinessLogicException("El nombre del salon esta vacio");
         }
         
+        if(lugar.getBloque() == null)
+        {
+            throw new BusinessLogicException("Debe añadir un bloque");
+        }
+        
+        if(lugar.getPiso() == null)
+        {
+            throw new BusinessLogicException("Debe añadir un piso");
+        }
+        
+        if(lugar.getUbicacionGeografica() == null)
+        {
+            throw new BusinessLogicException("Debe añadir una ubicacion geografica");
+        }
+        
+        if(lugar.getCapacidadAsistentes() == 0)
+        {
+            throw new BusinessLogicException ("Debe añadir una capacidad mayor a cero");
+        }
+        
         lugar = persistence.create(lugar);
         return lugar;
     }

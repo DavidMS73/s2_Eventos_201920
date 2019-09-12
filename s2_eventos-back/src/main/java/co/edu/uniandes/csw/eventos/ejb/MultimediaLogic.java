@@ -29,6 +29,16 @@ public class MultimediaLogic
             throw new BusinessLogicException("El nombre de la multimedia esta vacio");
         }
         
+        if(multimedia.getTipo() == null)
+        {
+            throw new BusinessLogicException("La multimedia debe tener un tipo");
+        }
+        
+        if(multimedia.getUrl() == null)
+        {
+            throw new BusinessLogicException("Debe añadir un URL para la multimedia");
+        }
+        
         multimedia = persistence.create(multimedia);
         return multimedia;
     }
