@@ -48,7 +48,7 @@ public class EventoLogicTest {
     }
     
     @Test
-    public void createEvento() throws BusinessLogicException{
+    public void createEventoTest() throws BusinessLogicException{
         
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         EventoEntity result = eventoLogic.createEvento(newEntity);
@@ -56,13 +56,18 @@ public class EventoLogicTest {
         
         EventoEntity entity = em.find(EventoEntity.class, result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), result.getDescripcion());
+        Assert.assertEquals(entity.getCategoria(), result.getCategoria());
+        Assert.assertEquals(entity.getEntradasRestantes(), result.getEntradasRestantes());
+        Assert.assertEquals(entity.getTipo(), result.getTipo());
+        Assert.assertEquals(entity.getEsPago(), result.getEsPago());
     }
     
     @Test (expected = BusinessLogicException.class)
-    public void createEventoNombreNull() throws BusinessLogicException{
+    public void createEventoNombreNullTest() throws BusinessLogicException{
         
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setNombre(null);
-        EventoEntity result = eventoLogic.createEvento(newEntity);
+        eventoLogic.createEvento(newEntity);
     }
 }

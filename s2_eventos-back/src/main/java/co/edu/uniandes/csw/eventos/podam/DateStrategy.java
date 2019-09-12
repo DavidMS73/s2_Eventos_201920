@@ -26,7 +26,6 @@ package co.edu.uniandes.csw.eventos.podam;
 import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 import uk.co.jemos.podam.common.AttributeStrategy;
 
 /**

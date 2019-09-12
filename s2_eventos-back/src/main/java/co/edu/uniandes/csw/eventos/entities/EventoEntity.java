@@ -21,19 +21,44 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 @Entity
 public class EventoEntity extends BaseEntity implements Serializable {
 
+    /**
+     * Atributo que modela el nombre del evento
+     */
     private String nombre;
+    
+    /**
+     * Atributo que modela la categoría del evento
+     */
     private String categoria;
+    
+    /**
+     * Atributo que modela la descripción del evento
+     */
     private String descripcion;
 
+    /**
+     * Atributo que modela la fecha inicial del evento
+     */
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date fechaInicio;
 
+    /**
+     * Atributo que modela la fecha final del evento
+     */
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date fechaFin;
 
+    /**
+     * Atributo que modela los detalles adicionales del evento
+     */
     private String detallesAdicionales;
+    
+    /**
+     * Atributo que modela las entradas restantes del evento
+     */
+    //@PodamIntegerValue(minValue = 0, maxValue = )
     private Integer entradasRestantes;
     private String tipo;
     private Boolean esPago;
