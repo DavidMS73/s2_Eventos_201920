@@ -65,9 +65,50 @@ public class EventoLogicTest {
     
     @Test (expected = BusinessLogicException.class)
     public void createEventoNombreNullTest() throws BusinessLogicException{
-        
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setNombre(null);
+        eventoLogic.createEvento(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createEventoCategoriaNullTest() throws BusinessLogicException{
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setCategoria(null);
+        eventoLogic.createEvento(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createEventoDescripcionNullTest() throws BusinessLogicException{
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setDescripcion(null);
+        eventoLogic.createEvento(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createEventoFechaInicioNullTest() throws BusinessLogicException{
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setFechaInicio(null);
+        eventoLogic.createEvento(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createEventoFechaFinNullTest() throws BusinessLogicException{
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setFechaFin(null);
+        eventoLogic.createEvento(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createEventoEntradasRestantesNullTest() throws BusinessLogicException{
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setEntradasRestantes(null);
+        eventoLogic.createEvento(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createEventoEsPagoNullTest() throws BusinessLogicException{
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setEsPago(null);
         eventoLogic.createEvento(newEntity);
     }
 }

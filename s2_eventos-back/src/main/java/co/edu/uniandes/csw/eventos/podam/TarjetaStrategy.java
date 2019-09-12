@@ -10,13 +10,15 @@ import uk.co.jemos.podam.common.AttributeStrategy;
 
 /**
  *
- * @author Estudiante
+ * @author Samuel Osorio y Germán Martínez
  */
-public class TarjetaStrategy implements AttributeStrategy<String>{
+public class TarjetaStrategy implements AttributeStrategy<String> {
 
     @Override
+    /**
+     * Retorna una tarjeta válida
+     */
     public String getValue() {
-        return RandomStringUtils.randomAlphanumeric(16); 
+        return RandomStringUtils.randomAlphanumeric(16);
     }
-    
 }

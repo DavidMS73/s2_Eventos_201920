@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.entities;
 
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
+import co.edu.uniandes.csw.eventos.podam.IntegerPositiveStrategy;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -58,9 +59,17 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /**
      * Atributo que modela las entradas restantes del evento
      */
-    //@PodamIntegerValue(minValue = 0, maxValue = )
+   @PodamStrategyValue(IntegerPositiveStrategy.class)
     private Integer entradasRestantes;
+   
+    /**
+     * Atributo que modela el tipo de evento
+     */
     private String tipo;
+    
+    /**
+     * Atributo que modelo si un evento es pago o no
+     */
     private Boolean esPago;
 
     /*@javax.persistence.OneToMany(

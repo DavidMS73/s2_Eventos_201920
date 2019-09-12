@@ -54,12 +54,12 @@ public class EventoLogic {
         if (evento.getEntradasRestantes() == null) {
             throw new BusinessLogicException("Debe definir un número de entradas iniciales");
         }
-        /*if (evento.getEntradasRestantes() < 0) {
+        if (evento.getEntradasRestantes() < 0) {
             throw new BusinessLogicException("El número de entradas iniciales debe ser positivo");
         }
         if (evento.getEntradasRestantes() == 0) {
             throw new BusinessLogicException("El número de entradas iniciales debe ser mayor a cero");
-        }*/
+        }
         if (evento.getTipo() == null) {
             throw new BusinessLogicException("Debe definir un tipo de evento");
         }
