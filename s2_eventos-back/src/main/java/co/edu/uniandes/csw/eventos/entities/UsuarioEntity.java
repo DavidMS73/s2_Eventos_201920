@@ -5,9 +5,12 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
+import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
+import co.edu.uniandes.csw.eventos.podam.LongPositiveStrategy;
 import com.sun.prism.PixelFormat.DataType;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -15,13 +18,21 @@ import javax.persistence.Entity;
  */
 @Entity
 public class UsuarioEntity extends BaseEntity implements Serializable {
-
+   
+    @PodamStrategyValue(LongPositiveStrategy.class)
     private Long identificador;
+   
     private String nombre;
+    
+    @PodamStrategyValue(CorreoStrategy.class)
     private String correo;
+    
     private String contrasena;
+    
     private Boolean asiste;
+    
     private DataType codigoQR;
+    
     private String empresa;
   //  private PagoEntity pago;
 

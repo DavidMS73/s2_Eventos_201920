@@ -18,11 +18,11 @@ import javax.inject.Inject;
 @Stateless
 public class UsuarioLogic {
     
-@Inject    
-private UsuarioPersistence persistence;
+@Inject private UsuarioPersistence persistence;
 
 public UsuarioEntity createUsuario(UsuarioEntity usuario) throws BusinessLogicException
 {
+    UsuarioEntity e = persistence.find(usuario.getId());
     if(usuario.getNombre()== null)
     {
         throw new BusinessLogicException("El nombre del usuario esta vacio");
@@ -47,7 +47,14 @@ public UsuarioEntity createUsuario(UsuarioEntity usuario) throws BusinessLogicEx
     {
         throw new BusinessLogicException("El codigo QR del usuario es nulo");
     }
-    
+    if(usuario.getIdentificador()<0)
+    {
+        throw new BusinessLogicException("El identificador del usuario es negativo");
+    }    
+    if(usuario.getCorreo().contains("@uniandes.edu.co")==false)
+    {
+        throw new BusinessLogicException("El correo del usuario no es valido");
+    }
     usuario = persistence.create(usuario);
     return usuario;
 }
