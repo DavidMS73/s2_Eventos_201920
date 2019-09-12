@@ -28,17 +28,17 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class EventoLogicTest {
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @Inject
     private EventoLogic eventoLogic;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Deployment
-    public static JavaArchive createDeployment(){
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(EventoEntity.class.getPackage())
                 .addPackage(EventoLogic.class.getPackage())
@@ -46,14 +46,14 @@ public class EventoLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @Test
-    public void createEventoTest() throws BusinessLogicException{
-        
+    public void createEventoTest() throws BusinessLogicException {
+
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         EventoEntity result = eventoLogic.createEvento(newEntity);
         Assert.assertNotNull(result);
-        
+
         EventoEntity entity = em.find(EventoEntity.class, result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
         Assert.assertEquals(entity.getDescripcion(), result.getDescripcion());
@@ -62,51 +62,72 @@ public class EventoLogicTest {
         Assert.assertEquals(entity.getTipo(), result.getTipo());
         Assert.assertEquals(entity.getEsPago(), result.getEsPago());
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createEventoNombreNullTest() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoNombreNullTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setNombre(null);
         eventoLogic.createEvento(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createEventoCategoriaNullTest() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoCategoriaNullTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setCategoria(null);
         eventoLogic.createEvento(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createEventoDescripcionNullTest() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoDescripcionNullTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setDescripcion(null);
         eventoLogic.createEvento(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createEventoFechaInicioNullTest() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoFechaInicioNullTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setFechaInicio(null);
         eventoLogic.createEvento(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createEventoFechaFinNullTest() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoFechaFinNullTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setFechaFin(null);
         eventoLogic.createEvento(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createEventoEntradasRestantesNullTest() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoEntradasRestantesNullTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setEntradasRestantes(null);
         eventoLogic.createEvento(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createEventoEsPagoNullTest() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoEntradasRestantesNegativeTest() throws BusinessLogicException {
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setEntradasRestantes(-2);
+        eventoLogic.createEvento(newEntity);
+    }
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoEntradasRestantesZeroTest() throws BusinessLogicException {
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setEntradasRestantes(0);
+        eventoLogic.createEvento(newEntity);
+    }
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoTipoNullTest() throws BusinessLogicException {
+        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
+        newEntity.setTipo(null);
+        eventoLogic.createEvento(newEntity);
+    }
+
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoEsPagoNullTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setEsPago(null);
         eventoLogic.createEvento(newEntity);
