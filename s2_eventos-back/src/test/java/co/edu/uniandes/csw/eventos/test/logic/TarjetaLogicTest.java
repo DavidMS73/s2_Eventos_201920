@@ -63,4 +63,32 @@ public class TarjetaLogicTest {
         newEntity.setNumeroTarjeta(null);
         TarjetaEntity result = tarjetaLogic.createTarjeta(newEntity);
     }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createTarjetaNumeroInvalidoTest1()throws BusinessLogicException{
+        TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
+        newEntity.setNumeroTarjeta("1000");
+        TarjetaEntity result = tarjetaLogic.createTarjetaNumeroInvalido(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createTarjetaNumeroInvalidoTest2()throws BusinessLogicException{
+        TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
+        newEntity.setNumeroTarjeta("11111111111111111");
+        TarjetaEntity result = tarjetaLogic.createTarjetaNumeroInvalido(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createTarjetaTipoNull()throws BusinessLogicException{
+        TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
+        newEntity.setTipoTarjeta(null);
+        TarjetaEntity result = tarjetaLogic.createTarjetaTipoNull(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class) 
+    public void createTarjetaCWInvalido()throws BusinessLogicException{
+        TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
+        newEntity.setCw(null);
+        TarjetaEntity result = tarjetaLogic.createTarjetaCWInvalido(newEntity);
+    }
 }

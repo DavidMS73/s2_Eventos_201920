@@ -22,9 +22,37 @@ public class TarjetaLogic {
     
     public TarjetaEntity createTarjeta(TarjetaEntity pTarjeta)throws BusinessLogicException{
         if(pTarjeta.getNumeroTarjeta() == null)
-            throw new BusinessLogicException("Uyuyuy");
-        
-        pTarjeta = persistence.create(pTarjeta);
-        return pTarjeta;
+            throw new BusinessLogicException("No existe el número de la tarjeta.");
+        else{
+            pTarjeta = persistence.create(pTarjeta);
+            return pTarjeta;
+        }
+    }
+    
+    public TarjetaEntity createTarjetaNumeroInvalido(TarjetaEntity pTarjeta) throws BusinessLogicException{
+        if(pTarjeta.getNumeroTarjeta().length() != 16)
+            throw new BusinessLogicException("No es un número válido de tarjeta.");
+        else{
+             pTarjeta = persistence.create(pTarjeta);
+            return pTarjeta;
+        }
+    }
+    
+    public TarjetaEntity createTarjetaTipoNull(TarjetaEntity pTarjeta) throws BusinessLogicException{
+        if(pTarjeta.getTipoTarjeta() == null)
+            throw new BusinessLogicException("No es un tipo válido de tarjeta.");
+        else{
+             pTarjeta = persistence.create(pTarjeta);
+            return pTarjeta;
+        }
+    }
+    
+    public TarjetaEntity createTarjetaCWInvalido(TarjetaEntity pTarjeta) throws BusinessLogicException{
+        if(pTarjeta.getCw() == null)
+            throw new BusinessLogicException("No es un cw válido de tarjeta.");
+        else{
+             pTarjeta = persistence.create(pTarjeta);
+            return pTarjeta;
+        }
     }
 }

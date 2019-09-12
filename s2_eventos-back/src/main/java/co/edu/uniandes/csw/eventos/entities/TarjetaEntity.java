@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.entities;
 
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
+import co.edu.uniandes.csw.eventos.podam.TarjetaStrategy;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 @Entity
 public class TarjetaEntity extends MedioPagoEntity implements Serializable{
     private String tipoTarjeta;
-    
+    @PodamStrategyValue(TarjetaStrategy.class)
     private String numeroTarjeta;
     
     @Temporal(TemporalType.DATE)
