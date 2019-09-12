@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author Estudiante
+ * @author Danielito mortadelito
  */
 @Entity
 public class PseEntity extends BaseEntity implements Serializable{
@@ -27,7 +27,7 @@ public class PseEntity extends BaseEntity implements Serializable{
     /**
      * @param pCorreo the valor to set
      */
-    public void setFecha(String pCorreo) {
+    public void setCorreo(String pCorreo) {
         this.correo = pCorreo;
     }
 

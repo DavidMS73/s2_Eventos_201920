@@ -57,6 +57,9 @@ public class PagoLogicTest {
        PagoEntity newEntity= factory.manufacturePojo(PagoEntity.class);
        PagoEntity result =pagoLogic.createPago(newEntity);
        Assert.assertNotNull(result);
+       
+       PagoEntity entity = em.find(PagoEntity.class, result.getId());
+       Assert.assertEquals(entity.getFecha(), result.getFecha());
    }
    
    @Test (expected= BusinessLogicException.class)
