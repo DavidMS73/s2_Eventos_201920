@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.eventos.test.logic;
 
-
 import co.edu.uniandes.csw.eventos.ejb.LugarLogic;
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
@@ -28,16 +27,15 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Gabriel Jose Gonzalez Pereira
  */
 @RunWith(Arquillian.class)
-public class LugarLogicTest 
-{
+public class LugarLogicTest {
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @Inject
     private LugarLogic lugarLogic;
-    
+
     @Deployment
-    public static JavaArchive createDeployment()
-    {
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(LugarEntity.class.getPackage())
                 .addPackage(LugarLogic.class.getPackage())
@@ -45,17 +43,16 @@ public class LugarLogicTest
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Test
-    public void createLugar() throws BusinessLogicException
-    {
+    public void createLugar() throws BusinessLogicException {
         LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
         LugarEntity result = lugarLogic.createLugar(newEntity);
         Assert.assertNotNull(result);
-        
+
         LugarEntity entity = em.find(LugarEntity.class, result.getId());
         Assert.assertEquals(newEntity.getSalon(), entity.getSalon());
         Assert.assertEquals(newEntity.getBloque(), entity.getBloque());
@@ -63,42 +60,37 @@ public class LugarLogicTest
         Assert.assertEquals(newEntity.getUbicacionGeografica(), entity.getUbicacionGeografica());
         Assert.assertEquals(newEntity.getCapacidadAsistentes(), entity.getCapacidadAsistentes());
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createLugarSalonNull() throws BusinessLogicException
-    {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createLugarSalonNull() throws BusinessLogicException {
         LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
         newEntity.setSalon(null);
         LugarEntity result = lugarLogic.createLugar(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createLugarBloqueNull() throws BusinessLogicException
-    {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createLugarBloqueNull() throws BusinessLogicException {
         LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
         newEntity.setBloque(null);
         LugarEntity result = lugarLogic.createLugar(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createLugarPisoNull() throws BusinessLogicException
-    {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createLugarPisoNull() throws BusinessLogicException {
         LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
         newEntity.setPiso(null);
         LugarEntity result = lugarLogic.createLugar(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createLugarUbicacionGeograficaNull() throws BusinessLogicException
-    {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createLugarUbicacionGeograficaNull() throws BusinessLogicException {
         LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
         newEntity.setUbicacionGeografica(null);
         LugarEntity result = lugarLogic.createLugar(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createLugarCapacidad() throws BusinessLogicException
-    {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createLugarCapacidad() throws BusinessLogicException {
         LugarEntity newEntity = factory.manufacturePojo(LugarEntity.class);
         newEntity.setCapacidadAsistentes(0);
         LugarEntity result = lugarLogic.createLugar(newEntity);

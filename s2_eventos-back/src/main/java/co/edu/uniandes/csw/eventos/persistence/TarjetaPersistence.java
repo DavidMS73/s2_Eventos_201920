@@ -18,44 +18,43 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class TarjetaPersistence {
-     @PersistenceContext(unitName = "eventosPU")
+
+    @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
-    
-        public TarjetaEntity create(TarjetaEntity pMedio){
+
+    public TarjetaEntity create(TarjetaEntity pMedio) {
         em.persist(pMedio);
         return pMedio;
     }
-    
-    public TarjetaEntity find(Long medioPagoId){
+
+    public TarjetaEntity find(Long medioPagoId) {
         return em.find(TarjetaEntity.class, medioPagoId);
     }
-    
-    public List<TarjetaEntity> findAll(){
+
+    public List<TarjetaEntity> findAll() {
         TypedQuery<TarjetaEntity> q = em.createQuery("select u from TarjetaEntity u", TarjetaEntity.class);
         return q.getResultList();
     }
-    
-    public TarjetaEntity update(TarjetaEntity pNuevo){
+
+    public TarjetaEntity update(TarjetaEntity pNuevo) {
         return em.merge(pNuevo);
     }
-    
-    public void delete(Long medioPagoId){
+
+    public void delete(Long medioPagoId) {
         TarjetaEntity medio = em.find(TarjetaEntity.class, medioPagoId);
         em.remove(medio);
     }
-    
-    public TarjetaEntity findByNumber(String pNumero){
+
+    public TarjetaEntity findByNumber(String pNumero) {
         TypedQuery q = em.createQuery("select u from TarjetaEntity u where u.numeroTarjeta = :pNumero", TarjetaEntity.class);
         q = q.setParameter("pNumero", pNumero);
         List<TarjetaEntity> sameNumber = q.getResultList();
         TarjetaEntity result;
-         if(sameNumber == null) {
+        if (sameNumber == null) {
             result = null;
-        }
-        else if(sameNumber.isEmpty()) {
+        } else if (sameNumber.isEmpty()) {
             result = null;
-        }
-        else{
+        } else {
             result = sameNumber.get(0);
         }
         return result;

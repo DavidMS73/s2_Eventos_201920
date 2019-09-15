@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.eventos.test.persistence;
 
-
 import co.edu.uniandes.csw.eventos.entities.PagoEntity;
 import co.edu.uniandes.csw.eventos.persistence.PagoPersistence;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class PagoPersistenceTest {
-    
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -45,12 +44,12 @@ public class PagoPersistenceTest {
 
     @PersistenceContext
     EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     private List<PagoEntity> data = new ArrayList<PagoEntity>();
-    
+
     @Before
     public void setUp() {
         try {
@@ -68,10 +67,11 @@ public class PagoPersistenceTest {
             }
         }
     }
+
     private void clearData() {
         em.createQuery("delete from PagoEntity").executeUpdate();
     }
-    
+
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
@@ -80,6 +80,7 @@ public class PagoPersistenceTest {
             data.add(entity);
         }
     }
+
     @Test
     public void deletePagoTest() {
         PagoEntity entity = data.get(0);
@@ -87,7 +88,7 @@ public class PagoPersistenceTest {
         PagoEntity deleted = em.find(PagoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
     public void createPagoTest() {
         PodamFactory factory = new PodamFactoryImpl();
@@ -100,6 +101,7 @@ public class PagoPersistenceTest {
 
         Assert.assertEquals(pago.getFecha(), entity.getFecha());
     }
+
     @Test
     public void updatePagoTest() {
         PagoEntity entity = data.get(0);
@@ -114,6 +116,5 @@ public class PagoPersistenceTest {
 
         Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
     }
-    
-    
+
 }

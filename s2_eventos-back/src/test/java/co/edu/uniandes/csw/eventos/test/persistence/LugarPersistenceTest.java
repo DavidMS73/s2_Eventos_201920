@@ -32,8 +32,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 public class LugarPersistenceTest {
 
     @Deployment
-    public static JavaArchive createDeployment() 
-    {
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(LugarEntity.class)
                 .addClass(LugarPersistence.class)
@@ -43,52 +42,42 @@ public class LugarPersistenceTest {
 
     @Inject
     UserTransaction userT;
-    
+
     @PersistenceContext
     EntityManager em;
 
     @Inject
     LugarPersistence lp;
-    
+
     private List<LugarEntity> data = new ArrayList<LugarEntity>();
-    
+
     @Before
-    public void setUp()
-    {
-        try 
-        {
+    public void setUp() {
+        try {
             userT.begin();
             em.joinTransaction();
             clearData();
             insertData();
             userT.commit();
-            
-        } 
-        catch (Exception e) 
-        {
+
+        } catch (Exception e) {
             e.printStackTrace();
-            
-            try 
-            {
+
+            try {
                 userT.rollback();
-            } 
-            catch (Exception e1) 
-            {
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
         }
     }
-    
-    private void clearData()
-    {
+
+    private void clearData() {
         em.createQuery("delete from LugarEntity").executeUpdate();
     }
-    
-    private void insertData()
-    {
+
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for(int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             LugarEntity entity = factory.manufacturePojo(LugarEntity.class);
             em.persist(entity);
             data.add(entity);
@@ -96,8 +85,7 @@ public class LugarPersistenceTest {
     }
 
     @Test
-    public void createLugarTest() 
-    {
+    public void createLugarTest() {
         PodamFactory podam = new PodamFactoryImpl();
         LugarEntity lugar = podam.manufacturePojo(LugarEntity.class);
         LugarEntity result = lp.create(lugar);
@@ -108,74 +96,66 @@ public class LugarPersistenceTest {
 
         Assert.assertEquals(lugar.getSalon(), entity.getSalon());
     }
-    
+
     @Test
-    public void getLugaresTest()
-    {
+    public void getLugaresTest() {
         List<LugarEntity> list = lp.findAll();
         Assert.assertEquals(data.size(), list.size());
-        
-        for(LugarEntity ent : list)
-        {
+
+        for (LugarEntity ent : list) {
             boolean found = false;
-            
-            for(LugarEntity enti : data)
-            {
-                if(ent.getId().equals(enti.getId()))
-                {
+
+            for (LugarEntity enti : data) {
+                if (ent.getId().equals(enti.getId())) {
                     found = true;
                 }
             }
-            
+
             Assert.assertTrue(found);
-            
+
         }
     }
-    
+
     @Test
-    public void getLugarTest()
-    {
+    public void getLugarTest() {
         LugarEntity entity = data.get(0);
         LugarEntity lugEntity = lp.find(entity.getId());
-        
+
         Assert.assertNotNull(lugEntity);
         Assert.assertEquals(entity.getSalon(), lugEntity.getSalon());
     }
-    
+
     @Test
-    public void deleteLugarTest()
-    {
+    public void deleteLugarTest() {
         LugarEntity entity = data.get(0);
         lp.delete(entity.getId());
         LugarEntity deleted = em.find(LugarEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
-    public void updateLugarTest()
-    {
+    public void updateLugarTest() {
         LugarEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         LugarEntity lugEntity = factory.manufacturePojo(LugarEntity.class);
-        
+
         lugEntity.setId(entity.getId());
-        
+
         lp.update(lugEntity);
-        
+
         LugarEntity resp = em.find(LugarEntity.class, entity.getId());
-        
+
         Assert.assertEquals(lugEntity.getSalon(), resp.getSalon());
     }
-    
+
     @Test
-    public void findLugarByNameTest()
-    {
+    public void findLugarByNameTest() {
         LugarEntity entity = data.get(0);
         LugarEntity lugEntity = lp.findByName(entity.getSalon());
-        
+
         Assert.assertNotNull(lugEntity);
         Assert.assertEquals(entity.getSalon(), lugEntity.getSalon());
-        
+
         lugEntity = lp.findByName(null);
         Assert.assertNull(lugEntity);
     }

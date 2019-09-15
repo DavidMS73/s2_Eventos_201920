@@ -24,11 +24,11 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Santiago Leal
+ * @author Daniel Santiago Leal
  */
 @RunWith(Arquillian.class)
 public class PseLogicTest {
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
@@ -36,7 +36,7 @@ public class PseLogicTest {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -46,9 +46,9 @@ public class PseLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @Test
-    public void createEventoTest()throws BusinessLogicException{
+    public void createEventoTest() throws BusinessLogicException {
 
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
         newEntity.setCorreo("germanElNegritoDeOjosClaros@gmail.com");
@@ -59,21 +59,19 @@ public class PseLogicTest {
         entity.setCorreo("germanElNegritoDeOjosClaros@gmail.com");
         Assert.assertEquals(entity.getCorreo(), result.getCorreo());
     }
-    
+
     @Test(expected = BusinessLogicException.class)
     public void createPseCorreoNullTest() throws BusinessLogicException {
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
         newEntity.setCorreo(null);
         pseLogic.createPago(newEntity);
     }
+
     @Test(expected = BusinessLogicException.class)
     public void createPseCorreoSinArrobaTest() throws BusinessLogicException {
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
         newEntity.setCorreo("Pachitoelsexi");
         pseLogic.createPago(newEntity);
     }
-    
-    
-    
-    
+
 }

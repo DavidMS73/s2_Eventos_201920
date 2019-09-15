@@ -13,25 +13,21 @@ import javax.inject.Inject;
 
 /**
  *
- * @author Danielito Tenjo
+ * @author Daniel Santiago Tenjo
  */
 @Stateless
 public class PagoLogic {
-    
+
     @Inject
     private PagoPersistence persistence;
-    
-    public PagoEntity createPago(PagoEntity pago) throws BusinessLogicException
-    {
-        if(pago.getFecha()==null)
-        {
+
+    public PagoEntity createPago(PagoEntity pago) throws BusinessLogicException {
+        if (pago.getFecha() == null) {
             throw new BusinessLogicException("La fecha del pago está vacio");
         }
-        
-        pago=persistence.create(pago);
+
+        pago = persistence.create(pago);
         return pago;
     }
-    
-    
-    
+
 }

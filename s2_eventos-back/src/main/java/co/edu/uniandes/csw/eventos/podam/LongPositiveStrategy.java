@@ -13,18 +13,18 @@ import uk.co.jemos.podam.common.AttributeStrategy;
  * @author Daniel Betancurth Dorado
  */
 public class LongPositiveStrategy implements AttributeStrategy<Long> {
- SecureRandom sr = new SecureRandom();
-    
+
+    SecureRandom sr = new SecureRandom();
+
     /**
      * Retorna un número entero positivo válido
+     *
      * @return entero válido
      */
- @Override
+    @Override
     public Long getValue() {
-        long leftLimit=1L;
-        long rightLimit=10L;
-        long r= leftLimit + sr.nextLong();
-        System.out.println(r);
+        long leftLimit = 1L;
+        long r = leftLimit + sr.nextLong();
         return r;
-    }   
+    }
 }

@@ -12,15 +12,16 @@ import uk.co.jemos.podam.common.AttributeStrategy;
  *
  * @author Germán David Martínez Solano
  */
-public class IntegerPositiveStrategy implements AttributeStrategy<Integer>{
-    
+public class IntegerPositiveStrategy implements AttributeStrategy<Integer> {
+
     SecureRandom sr = new SecureRandom();
-    
+
     /**
      * Retorna un número entero positivo válido
+     *
      * @return entero válido
      */
     public Integer getValue() {
-        return sr.nextInt(10^9)+1;
+        return sr.nextInt(10 ^ 9) + 1;
     }
 }

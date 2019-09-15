@@ -49,7 +49,7 @@ public class LugarEntity extends BaseEntity implements Serializable {
     public void setUbicacionGeografica(String ubicacionGeografica) {
         this.ubicacionGeografica = ubicacionGeografica;
     }
-    
+
     /**
      * @return the bloque
      */
@@ -63,7 +63,7 @@ public class LugarEntity extends BaseEntity implements Serializable {
     public void setBloque(String pBloque) {
         this.bloque = pBloque;
     }
-    
+
     /**
      * @return the salon
      */
@@ -77,7 +77,7 @@ public class LugarEntity extends BaseEntity implements Serializable {
     public void setSalon(String pSalon) {
         this.salon = pSalon;
     }
-    
+
     /**
      * @return the piso
      */
@@ -88,9 +88,22 @@ public class LugarEntity extends BaseEntity implements Serializable {
     /**
      * @param pPiso the piso to set
      */
-    public void setPiso(String pPiso) 
-    {
+    public void setPiso(String pPiso) {
         this.piso = pPiso;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
 }

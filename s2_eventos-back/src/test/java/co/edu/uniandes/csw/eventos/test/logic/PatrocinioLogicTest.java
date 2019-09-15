@@ -28,8 +28,8 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class PatrocinioLogicTest {
-    
-     private PodamFactory factory = new PodamFactoryImpl();
+
+    private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
     private PatrocinioLogic usuarioLogic;

@@ -15,33 +15,27 @@ import javax.inject.Inject;
  *
  * @author Gabriel Jose Gonzalez Pereira
  */
-
 @Stateless
-public class MultimediaLogic 
-{
+public class MultimediaLogic {
+
     @Inject
     private MultimediaPersistence persistence;
-    
-    public MultimediaEntity createMultimedia(MultimediaEntity multimedia) throws BusinessLogicException
-    {
-        if(multimedia.getNombre() == null)
-        {
+
+    public MultimediaEntity createMultimedia(MultimediaEntity multimedia) throws BusinessLogicException {
+        if (multimedia.getNombre() == null) {
             throw new BusinessLogicException("El nombre de la multimedia esta vacio");
         }
-        
-        if(multimedia.getTipo() == null)
-        {
+
+        if (multimedia.getTipo() == null) {
             throw new BusinessLogicException("La multimedia debe tener un tipo");
         }
-        
-        if(multimedia.getUrl() == null)
-        {
+
+        if (multimedia.getUrl() == null) {
             throw new BusinessLogicException("Debe añadir un URL para la multimedia");
         }
-        
+
         multimedia = persistence.create(multimedia);
         return multimedia;
     }
-    
-    
+
 }

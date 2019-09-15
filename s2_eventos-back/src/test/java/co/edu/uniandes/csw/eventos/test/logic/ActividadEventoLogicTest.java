@@ -24,41 +24,41 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Samuelillo el pillo.
+ * @author Samuel Osorio
  */
 @RunWith(Arquillian.class)
 public class ActividadEventoLogicTest {
-    
+
     @Deployment
-    public static JavaArchive createDeployment(){
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ActividadEventoEntity.class.getPackage())
                 .addPackage(ActividadEventoLogic.class.getPackage())
                 .addPackage(ActividadEventoPersistence.class.getPackage())
-                .addAsManifestResource("META-INF/persistence.xml" , "persistence.xml")
-                .addAsManifestResource("META-INF/beans.xml" , "beans.xml");
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @Inject
     private ActividadEventoLogic eventoLogic;
-    
+
     @Test
     public void createActividadEvento() throws BusinessLogicException {
-       ActividadEventoEntity newEntity =  factory.manufacturePojo(ActividadEventoEntity.class);
-       ActividadEventoEntity result = eventoLogic.createActividadEvento(newEntity);
-       Assert.assertNotNull(result);
-       
-       ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, result.getId());
-       Assert.assertEquals(entity.getNombre(), result.getNombre());
+        ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
+        ActividadEventoEntity result = eventoLogic.createActividadEvento(newEntity);
+        Assert.assertNotNull(result);
+
+        ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, result.getId());
+        Assert.assertEquals(entity.getNombre(), result.getNombre());
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createActividadEventoNombreNull()throws BusinessLogicException {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createActividadEventoNombreNull() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
         newEntity.setNombre(null);
         ActividadEventoEntity result = eventoLogic.createActividadEvento(newEntity);

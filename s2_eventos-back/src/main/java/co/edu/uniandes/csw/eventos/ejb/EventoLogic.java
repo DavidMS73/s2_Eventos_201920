@@ -48,8 +48,7 @@ public class EventoLogic {
          * sumarRestarDiasFecha(fechaComparar, 7); if
          * (evento.getFechaInicio().before(fechaAdelante)) { throw new
          * BusinessLogicException("No se puede crear un evento si no tiene una
-         * semana de anterioridad");
-        }
+         * semana de anterioridad"); }
          */
         if (evento.getFechaFin() == null) {
             throw new BusinessLogicException("Debe definir una fecha de fin");

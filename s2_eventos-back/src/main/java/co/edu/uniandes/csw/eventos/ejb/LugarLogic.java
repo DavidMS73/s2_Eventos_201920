@@ -15,43 +15,35 @@ import javax.inject.Inject;
  *
  * @author Gabriel Jose Gonzalez Pereira
  */
-
 @Stateless
-public class LugarLogic 
-{
+public class LugarLogic {
+
     @Inject
     private LugarPersistence persistence;
-    
-    public LugarEntity createLugar(LugarEntity lugar) throws BusinessLogicException
-    {
-        if(lugar.getSalon() == null)
-        {
+
+    public LugarEntity createLugar(LugarEntity lugar) throws BusinessLogicException {
+        if (lugar.getSalon() == null) {
             throw new BusinessLogicException("El nombre del salon esta vacio");
         }
-        
-        if(lugar.getBloque() == null)
-        {
+
+        if (lugar.getBloque() == null) {
             throw new BusinessLogicException("Debe añadir un bloque");
         }
-        
-        if(lugar.getPiso() == null)
-        {
+
+        if (lugar.getPiso() == null) {
             throw new BusinessLogicException("Debe añadir un piso");
         }
-        
-        if(lugar.getUbicacionGeografica() == null)
-        {
+
+        if (lugar.getUbicacionGeografica() == null) {
             throw new BusinessLogicException("Debe añadir una ubicacion geografica");
         }
-        
-        if(lugar.getCapacidadAsistentes() == 0)
-        {
-            throw new BusinessLogicException ("Debe añadir una capacidad mayor a cero");
+
+        if (lugar.getCapacidadAsistentes() == 0) {
+            throw new BusinessLogicException("Debe añadir una capacidad mayor a cero");
         }
-        
+
         lugar = persistence.create(lugar);
         return lugar;
     }
-    
-    
+
 }

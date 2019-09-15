@@ -17,18 +17,18 @@ import javax.inject.Inject;
  */
 @Stateless
 public class MemoriaLogic {
-    
+
     @Inject
     private MemoriaPersistence persistence;
-    
-    public MemoriaEntity createMemoria(MemoriaEntity memoria) throws BusinessLogicException{
-        
-        if(memoria.getLugar()==null || memoria.getFecha()==null){
+
+    public MemoriaEntity createMemoria(MemoriaEntity memoria) throws BusinessLogicException {
+
+        if (memoria.getLugar() == null || memoria.getFecha() == null) {
             throw new BusinessLogicException("El lugar o la fecha de memoria esta vacio");
         }
-        
+
         memoria = persistence.create(memoria);
         return memoria;
     }
-    
+
 }

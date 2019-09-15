@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.eventos.test.persistence;
 
-import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.persistence.TarjetaPersistence;
 import java.util.ArrayList;
@@ -31,8 +30,8 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class TarjetaPersistenceTest {
-    
-     @Deployment
+
+    @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(TarjetaEntity.class)
@@ -40,16 +39,16 @@ public class TarjetaPersistenceTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-     @Inject
+
+    @Inject
     UserTransaction utx;
-     
+
     @Inject
     private TarjetaPersistence ep;
 
     @PersistenceContext
     private EntityManager em;
-    
+
     private List<TarjetaEntity> data = new ArrayList<TarjetaEntity>();
 
     @Before
@@ -69,12 +68,12 @@ public class TarjetaPersistenceTest {
             }
         }
     }
-    
+
     private void clearData() {
         em.createQuery("delete from TarjetaEntity").executeUpdate();
     }
-    
-     private void insertData() {
+
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             TarjetaEntity entity = factory.manufacturePojo(TarjetaEntity.class);
@@ -82,8 +81,8 @@ public class TarjetaPersistenceTest {
             data.add(entity);
         }
     }
-     
-      @Test
+
+    @Test
     public void createTarjetaTest() {
         PodamFactory factory = new PodamFactoryImpl();
         TarjetaEntity tarjeta = factory.manufacturePojo(TarjetaEntity.class);
@@ -94,7 +93,7 @@ public class TarjetaPersistenceTest {
 
         Assert.assertEquals(tarjeta.getNumeroTarjeta(), entity.getNumeroTarjeta());
     }
-    
+
     @Test
     public void deleteTarjetaTest() {
         TarjetaEntity entity = data.get(0);
@@ -102,12 +101,12 @@ public class TarjetaPersistenceTest {
         TarjetaEntity deleted = em.find(TarjetaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
     public void getTarjetaTest() {
         List<TarjetaEntity> list = ep.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for(TarjetaEntity ent : list) {
+        for (TarjetaEntity ent : list) {
             boolean found = false;
             for (TarjetaEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
@@ -117,15 +116,15 @@ public class TarjetaPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getEventoTest(){
+    public void getEventoTest() {
         TarjetaEntity entity = data.get(0);
         TarjetaEntity newEntity = ep.find(entity.getId());
-        Assert.assertNotNull(newEntity); 
+        Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNumeroTarjeta(), newEntity.getNumeroTarjeta());
     }
-    
+
     @Test
     public void updateMedioPagoTest() {
         TarjetaEntity entity = data.get(0);
@@ -140,7 +139,7 @@ public class TarjetaPersistenceTest {
 
         Assert.assertEquals(newEntity.getNumeroTarjeta(), resp.getNumeroTarjeta());
     }
-    
+
     @Test
     public void findTarjetaByNameNumber() {
         TarjetaEntity entity = data.get(0);

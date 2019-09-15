@@ -12,10 +12,10 @@ import uk.co.jemos.podam.common.AttributeStrategy;
  *
  * @author Daniele Betancurth Dorado
  */
-public class CorreoStrategy implements AttributeStrategy<String>{
+public class CorreoStrategy implements AttributeStrategy<String> {
 
     @Override
     public String getValue() {
-        return RandomStringUtils.randomAlphanumeric(12)+"@uniandes.edu.co";
+        return RandomStringUtils.randomAlphanumeric(12) + "@uniandes.edu.co";
     }
 }

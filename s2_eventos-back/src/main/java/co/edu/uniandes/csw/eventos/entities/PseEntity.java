@@ -10,13 +10,13 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author Danielito mortadelito
+ * @author Daniel Santiago Tenjo
  */
 @Entity
-public class PseEntity extends BaseEntity implements Serializable{
-    
+public class PseEntity extends MedioPagoEntity implements Serializable {
+
     private String correo;
-   
+
     /**
      * @return the correo
      */
@@ -31,7 +31,4 @@ public class PseEntity extends BaseEntity implements Serializable{
         this.correo = pCorreo;
     }
 
-    
-    
-    
 }

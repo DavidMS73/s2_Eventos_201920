@@ -25,14 +25,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author El Daniel Santiago
+ * @author Daniel Santiago Tenjo
  */
 @RunWith(Arquillian.class)
 public class PagoLogicTest {
-    
+
     @Deployment
-    public static JavaArchive CreateDeployment()
-    {
+    public static JavaArchive CreateDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(PagoEntity.class.getPackage())
                 .addPackage(PagoLogic.class.getPackage())
@@ -40,34 +39,30 @@ public class PagoLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-    
-   private PodamFactory factory= new PodamFactoryImpl();
-   
-   
-   @Inject
-   private PagoLogic pagoLogic;
-   
-   @PersistenceContext
-   private EntityManager em;
-           
-   @Test
-   public void createPagoTest() throws BusinessLogicException
-   {
-       PagoEntity newEntity= factory.manufacturePojo(PagoEntity.class);
-       PagoEntity result =pagoLogic.createPago(newEntity);
-       Assert.assertNotNull(result);
-       
-       PagoEntity entity = em.find(PagoEntity.class, result.getId());
-       Assert.assertEquals(entity.getFecha(), result.getFecha());
-   }
-   
-   @Test (expected= BusinessLogicException.class)
-   public  void createPagoFechaNullTest() throws BusinessLogicException
-   {
-       PagoEntity newEntity= factory.manufacturePojo(PagoEntity.class);
-       newEntity.setFecha(null);
-       PagoEntity result= pagoLogic.createPago(newEntity);
-   }
-           
+
+    private PodamFactory factory = new PodamFactoryImpl();
+
+    @Inject
+    private PagoLogic pagoLogic;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Test
+    public void createPagoTest() throws BusinessLogicException {
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+        PagoEntity result = pagoLogic.createPago(newEntity);
+        Assert.assertNotNull(result);
+
+        PagoEntity entity = em.find(PagoEntity.class, result.getId());
+        Assert.assertEquals(entity.getFecha(), result.getFecha());
+    }
+
+    @Test(expected = BusinessLogicException.class)
+    public void createPagoFechaNullTest() throws BusinessLogicException {
+        PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
+        newEntity.setFecha(null);
+        PagoEntity result = pagoLogic.createPago(newEntity);
+    }
+
 }

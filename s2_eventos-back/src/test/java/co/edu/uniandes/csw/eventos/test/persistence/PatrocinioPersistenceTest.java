@@ -30,6 +30,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class PatrocinioPersistenceTest {
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -57,11 +58,11 @@ public class PatrocinioPersistenceTest {
 
         Assert.assertEquals(usuario.getEmpresa(), entity.getEmpresa());
     }
-      
+
     @Inject
     UserTransaction utx;
     private List<PatrocinioEntity> data = new ArrayList<PatrocinioEntity>();
-    
+
     @Before
     public void setUp() {
         try {
@@ -79,12 +80,12 @@ public class PatrocinioPersistenceTest {
             }
         }
     }
-    
+
     private void clearData() {
         em.createQuery("delete from PatrocinioEntity").executeUpdate();
     }
-    
-     private void insertData() {
+
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             PatrocinioEntity entity = factory.manufacturePojo(PatrocinioEntity.class);
@@ -97,7 +98,7 @@ public class PatrocinioPersistenceTest {
     public void getPatrociniosTest() {
         List<PatrocinioEntity> list = pp.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for(PatrocinioEntity ent : list) {
+        for (PatrocinioEntity ent : list) {
             boolean found = false;
             for (PatrocinioEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
@@ -107,15 +108,15 @@ public class PatrocinioPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getPatrocinioTest(){
+    public void getPatrocinioTest() {
         PatrocinioEntity entity = data.get(0);
         PatrocinioEntity newEntity = pp.find(entity.getId());
-        Assert.assertNotNull(newEntity); 
+        Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getEmpresa(), newEntity.getEmpresa());
     }
-    
+
     @Test
     public void deletePatrocinioTest() {
         PatrocinioEntity entity = data.get(0);
@@ -123,7 +124,7 @@ public class PatrocinioPersistenceTest {
         PatrocinioEntity deleted = em.find(PatrocinioEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
     public void updatePatrocinioTest() {
         PatrocinioEntity entity = data.get(0);
@@ -138,7 +139,7 @@ public class PatrocinioPersistenceTest {
 
         Assert.assertEquals(newEntity.getEmpresa(), resp.getEmpresa());
     }
-    
+
     @Test
     public void findPatrocinioByNameTest() {
         PatrocinioEntity entity = data.get(0);

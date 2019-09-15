@@ -55,13 +55,12 @@ public class UsuarioLogicTest {
 
         UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
-        Assert.assertEquals(entity.getIdentificador(), result.getIdentificador());
         Assert.assertEquals(entity.getEmpresa(), result.getEmpresa());
         Assert.assertEquals(entity.getCorreo(), result.getCorreo());
         Assert.assertEquals(entity.getContrasena(), result.getContrasena());
         Assert.assertEquals(entity.getCodigoQR(), result.getCodigoQR());
         Assert.assertEquals(entity.getAsiste(), result.getAsiste());
-        
+
     }
 
     @Test(expected = BusinessLogicException.class)
@@ -70,54 +69,46 @@ public class UsuarioLogicTest {
         entity.setNombre(null);
         usuarioLogic.createUsuario(entity);
     }
-    @Test (expected = BusinessLogicException.class)
-    public void createUsuarioIdentificadorNull() throws BusinessLogicException{
-        
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        newEntity.setIdentificador(null);
-        usuarioLogic.createUsuario(newEntity);
-    }
-    @Test (expected = BusinessLogicException.class)
-    public void createUsuarioIdentificadorNegativo() throws BusinessLogicException{
-        
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        newEntity.setIdentificador(-200L);
-        usuarioLogic.createUsuario(newEntity);
-    }
-     @Test (expected = BusinessLogicException.class)
-    public void createUsuarioCorreoNull() throws BusinessLogicException{
-        
+
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioCorreoNull() throws BusinessLogicException {
+
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setCorreo(null);
         usuarioLogic.createUsuario(newEntity);
     }
-    @Test (expected = BusinessLogicException.class)
-    public void createUsuarioCorreoNoUniandes() throws BusinessLogicException{
-        
+
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioCorreoNoUniandes() throws BusinessLogicException {
+
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setCorreo("juan@hotmail.com");
         usuarioLogic.createUsuario(newEntity);
     }
-    public void createUsuarioContrasena() throws BusinessLogicException{
-        
+
+    public void createUsuarioContrasena() throws BusinessLogicException {
+
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setContrasena(null);
         usuarioLogic.createUsuario(newEntity);
     }
-    public void createUsuarioAsisteNull() throws BusinessLogicException{
-        
+
+    public void createUsuarioAsisteNull() throws BusinessLogicException {
+
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setAsiste(null);
         usuarioLogic.createUsuario(newEntity);
     }
-    public void createUsuarioCodigoQRNull() throws BusinessLogicException{
-        
+
+    public void createUsuarioCodigoQRNull() throws BusinessLogicException {
+
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setCodigoQR(null);
         usuarioLogic.createUsuario(newEntity);
     }
-    public void createUsuarioEmpresaNull() throws BusinessLogicException{
-        
+
+    public void createUsuarioEmpresaNull() throws BusinessLogicException {
+
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setEmpresa(null);
         usuarioLogic.createUsuario(newEntity);

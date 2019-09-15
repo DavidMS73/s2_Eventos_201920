@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.eventos.entities;
 
 /**
  *
- * @author Estudiante
+ * @author Daniel Betancurth Dorado
  */
 enum TipoDePatrocinador {
     GENERAL,

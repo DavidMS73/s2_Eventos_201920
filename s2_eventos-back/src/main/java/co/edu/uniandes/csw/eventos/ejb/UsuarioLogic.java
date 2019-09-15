@@ -17,45 +17,31 @@ import javax.inject.Inject;
  */
 @Stateless
 public class UsuarioLogic {
-    
-@Inject private UsuarioPersistence persistence;
 
-public UsuarioEntity createUsuario(UsuarioEntity usuario) throws BusinessLogicException
-{
-    UsuarioEntity e = persistence.find(usuario.getId());
-    if(usuario.getNombre()== null)
-    {
-        throw new BusinessLogicException("El nombre del usuario esta vacio");
+    @Inject
+    private UsuarioPersistence persistence;
+
+    public UsuarioEntity createUsuario(UsuarioEntity usuario) throws BusinessLogicException {
+        UsuarioEntity e = persistence.find(usuario.getId());
+        if (usuario.getNombre() == null) {
+            throw new BusinessLogicException("El nombre del usuario esta vacio");
+        }
+        if (usuario.getEmpresa() == null) {
+            throw new BusinessLogicException("El nombre de la empresa del usuario esta vacio");
+        }
+        if (usuario.getCorreo() == null) {
+            throw new BusinessLogicException("El correo del usuario esta vacio");
+        }
+        if (usuario.getContrasena() == null) {
+            throw new BusinessLogicException("La contraseña del usuario esta vacia");
+        }
+        if (usuario.getCodigoQR() == null) {
+            throw new BusinessLogicException("El codigo QR del usuario es nulo");
+        }
+        if (usuario.getCorreo().contains("@uniandes.edu.co") == false) {
+            throw new BusinessLogicException("El correo del usuario no es valido");
+        }
+        usuario = persistence.create(usuario);
+        return usuario;
     }
-    if(usuario.getIdentificador()== null)
-    {
-        throw new BusinessLogicException("El identificador del usuario esta vacio");
-    }
-    if(usuario.getEmpresa()== null)
-    {
-        throw new BusinessLogicException("El nombre de la empresa del usuario esta vacio");
-    }
-    if(usuario.getCorreo()== null)
-    {
-        throw new BusinessLogicException("El correo del usuario esta vacio");
-    }
-    if(usuario.getContrasena()== null)
-    {
-        throw new BusinessLogicException("La contraseña del usuario esta vacia");
-    }
-    if(usuario.getCodigoQR()== null)
-    {
-        throw new BusinessLogicException("El codigo QR del usuario es nulo");
-    }
-    if(usuario.getIdentificador()<0)
-    {
-        throw new BusinessLogicException("El identificador del usuario es negativo");
-    }    
-    if(usuario.getCorreo().contains("@uniandes.edu.co")==false)
-    {
-        throw new BusinessLogicException("El correo del usuario no es valido");
-    }
-    usuario = persistence.create(usuario);
-    return usuario;
-}
 }

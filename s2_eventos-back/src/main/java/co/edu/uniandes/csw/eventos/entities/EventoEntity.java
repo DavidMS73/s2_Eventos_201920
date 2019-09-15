@@ -8,7 +8,6 @@ package co.edu.uniandes.csw.eventos.entities;
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import co.edu.uniandes.csw.eventos.podam.IntegerPositiveStrategy;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;

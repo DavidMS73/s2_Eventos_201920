@@ -17,18 +17,16 @@ import javax.inject.Inject;
  */
 @Stateless
 public class PatrocinioLogic {
-    @Inject    
-private PatrocinioPersistence persistence;
 
-public PatrocinioEntity createUsuario(PatrocinioEntity patrocinio) throws BusinessLogicException
-{
-    if(patrocinio.getEmpresa()== null)
-    {
-        throw new BusinessLogicException("El patrocinio no tiene empresa");
+    @Inject
+    private PatrocinioPersistence persistence;
+
+    public PatrocinioEntity createUsuario(PatrocinioEntity patrocinio) throws BusinessLogicException {
+        if (patrocinio.getEmpresa() == null) {
+            throw new BusinessLogicException("El patrocinio no tiene empresa");
+        }
+
+        patrocinio = persistence.create(patrocinio);
+        return patrocinio;
     }
-    
-    
-    patrocinio = persistence.create(patrocinio);
-    return patrocinio;
-}
 }

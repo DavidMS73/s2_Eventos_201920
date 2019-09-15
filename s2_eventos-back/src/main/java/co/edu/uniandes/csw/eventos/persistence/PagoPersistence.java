@@ -26,40 +26,38 @@ public class PagoPersistence {
         em.persist(pago);
         return pago;
     }
-    public PagoEntity find (Long pagoId)
-    {
+
+    public PagoEntity find(Long pagoId) {
         return em.find(PagoEntity.class, pagoId);
     }
-    
+
     public List<PagoEntity> findAll() {
         TypedQuery<PagoEntity> query = em.createQuery("select u from EventoEntity u", PagoEntity.class);
         return query.getResultList();
     }
-    
+
     public PagoEntity update(PagoEntity pago) {
         return em.merge(pago);
     }
-    
+
     public void delete(Long pagoId) {
         PagoEntity entity = em.find(PagoEntity.class, pagoId);
         em.remove(entity);
     }
-    
-    public PagoEntity findByName(String name){
+
+    public PagoEntity findByName(String name) {
         TypedQuery query = em.createQuery("select u from PagoEntity u where u.numeroRecibo = :name", PagoEntity.class);
         query = query.setParameter("name", name);
         List<PagoEntity> sameName = query.getResultList();
         PagoEntity result;
-        if(sameName == null) {
+        if (sameName == null) {
             result = null;
-        }
-        else if(sameName.isEmpty()) {
+        } else if (sameName.isEmpty()) {
             result = null;
-        }
-        else{
+        } else {
             result = sameName.get(0);
         }
         return result;
     }
-    
+
 }

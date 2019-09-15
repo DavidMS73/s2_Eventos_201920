@@ -28,77 +28,64 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author Gabriel Jose Gonzalez Pereira
  */
-
 @RunWith(Arquillian.class)
-public class MultimediaPersistenceTest 
-{
+public class MultimediaPersistenceTest {
+
     @Deployment
-     public static JavaArchive createDeployment() 
-    {
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(MultimediaEntity.class)
                 .addClass(MultimediaPersistence.class)
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-     
+
     @Inject
     UserTransaction userT;
-     
+
     @PersistenceContext
     EntityManager em;
 
     @Inject
     MultimediaPersistence mp;
-    
+
     private List<MultimediaEntity> data = new ArrayList<MultimediaEntity>();
-    
+
     @Before
-    public void setUp()
-    {
-        try 
-        {
+    public void setUp() {
+        try {
             userT.begin();
             em.joinTransaction();
             clearData();
             insertData();
             userT.commit();
-            
-        } 
-        catch (Exception e) 
-        {
+
+        } catch (Exception e) {
             e.printStackTrace();
-            
-            try 
-            {
+
+            try {
                 userT.rollback();
-            } 
-            catch (Exception e1) 
-            {
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
         }
     }
-    
-    private void clearData()
-    {
+
+    private void clearData() {
         em.createQuery("delete from MultimediaEntity").executeUpdate();
     }
-    
-    private void insertData()
-    {
+
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for(int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             MultimediaEntity entity = factory.manufacturePojo(MultimediaEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
-    
+
     @Test
-    public void createMultimediaTest() 
-    {
+    public void createMultimediaTest() {
         PodamFactory podam = new PodamFactoryImpl();
         MultimediaEntity multimedia = podam.manufacturePojo(MultimediaEntity.class);
         MultimediaEntity result = mp.create(multimedia);
@@ -109,79 +96,70 @@ public class MultimediaPersistenceTest
 
         Assert.assertEquals(multimedia.getNombre(), entity.getNombre());
     }
-    
+
     @Test
-    public void getMultimediasTest()
-    {
+    public void getMultimediasTest() {
         List<MultimediaEntity> list = mp.findAll();
         Assert.assertEquals(data.size(), list.size());
-        
-        for(MultimediaEntity ent : list)
-        {
+
+        for (MultimediaEntity ent : list) {
             boolean found = false;
-            
-            for(MultimediaEntity enti : data)
-            {
-                if(ent.getId().equals(enti.getId()))
-                {
+
+            for (MultimediaEntity enti : data) {
+                if (ent.getId().equals(enti.getId())) {
                     found = true;
                 }
             }
-            
+
             Assert.assertTrue(found);
-            
+
         }
     }
-    
+
     @Test
-    public void getMultimediaTest()
-    {
+    public void getMultimediaTest() {
         MultimediaEntity entity = data.get(0);
         MultimediaEntity mulEntity = mp.find(entity.getId());
-        
+
         Assert.assertNotNull(mulEntity);
         Assert.assertEquals(entity.getNombre(), mulEntity.getNombre());
     }
-    
+
     @Test
-    public void deleteMultimediaTest()
-    {
+    public void deleteMultimediaTest() {
         MultimediaEntity multimedia = data.get(0);
         mp.delete(multimedia.getId());
-        
+
         MultimediaEntity deleted = em.find(MultimediaEntity.class, multimedia.getId());
         Assert.assertNull(deleted);
-        
-        
+
     }
-    
+
     @Test
-    public void updateMultimediaTest()
-    {
+    public void updateMultimediaTest() {
         MultimediaEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         MultimediaEntity mulEntity = factory.manufacturePojo(MultimediaEntity.class);
-        
+
         mulEntity.setId(entity.getId());
-        
+
         mp.update(mulEntity);
-        
+
         MultimediaEntity resp = em.find(MultimediaEntity.class, entity.getId());
-        
+
         Assert.assertEquals(mulEntity.getNombre(), resp.getNombre());
     }
-    
+
     @Test
-    public void findMultimediaByNameTest()
-    {
+    public void findMultimediaByNameTest() {
         MultimediaEntity entity = data.get(0);
         MultimediaEntity mulEntity = mp.findByName(entity.getNombre());
-        
+
         Assert.assertNotNull(mulEntity);
         Assert.assertEquals(entity.getNombre(), mulEntity.getNombre());
-        
+
         mulEntity = mp.findByName(null);
         Assert.assertNull(mulEntity);
     }
-    
+
 }

@@ -42,15 +42,15 @@ public class EventoPersistenceTest {
 
     @Inject
     UserTransaction utx;
-     
+
     @Inject
     private EventoPersistence ep;
 
     @PersistenceContext
     private EntityManager em;
-    
+
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
-    
+
     @Before
     public void setUp() {
         try {
@@ -68,12 +68,12 @@ public class EventoPersistenceTest {
             }
         }
     }
-    
+
     private void clearData() {
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
-    
-     private void insertData() {
+
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
@@ -81,7 +81,7 @@ public class EventoPersistenceTest {
             data.add(entity);
         }
     }
-    
+
     @Test
     public void createEventoTest() {
         PodamFactory factory = new PodamFactoryImpl();
@@ -98,7 +98,7 @@ public class EventoPersistenceTest {
     public void getEventosTest() {
         List<EventoEntity> list = ep.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for(EventoEntity ent : list) {
+        for (EventoEntity ent : list) {
             boolean found = false;
             for (EventoEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
@@ -108,15 +108,15 @@ public class EventoPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getEventoTest(){
+    public void getEventoTest() {
         EventoEntity entity = data.get(0);
         EventoEntity newEntity = ep.find(entity.getId());
-        Assert.assertNotNull(newEntity); 
+        Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
-    
+
     @Test
     public void deleteEventoTest() {
         EventoEntity entity = data.get(0);
@@ -124,7 +124,7 @@ public class EventoPersistenceTest {
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
     public void updateEventoTest() {
         EventoEntity entity = data.get(0);
@@ -139,10 +139,9 @@ public class EventoPersistenceTest {
 
         Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
     }
-    
+
     @Test
-    public void findEventoByNameTest() 
-    {
+    public void findEventoByNameTest() {
         EventoEntity entity = data.get(0);
         EventoEntity newEntity = ep.findByName(entity.getNombre());
         Assert.assertNotNull(newEntity);

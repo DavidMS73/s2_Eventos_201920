@@ -34,12 +34,11 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     /*@javax.persistence.ManyToOne(
     )        
     EventoEntity evento;*/
-    
     public ActividadEventoEntity() {
         //Constructor
     }
 
-   /**
+    /**
      * @return the identificador
      */
     public Long getIdentificador() {
@@ -52,7 +51,7 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     public void setIdentificador(Long identificador) {
         this.identificador = identificador;
     }
-    
+
     /**
      * @return the nombre
      */
@@ -129,7 +128,6 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     /*public EventoEntity getEvento() {
         return evento;
     }*/
-
     /**
      * @param evento the evento to set
      */

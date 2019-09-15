@@ -13,18 +13,19 @@ import javax.inject.Inject;
 
 /**
  *
- * @author Samuelillo el pillo
+ * @author Samuel Osorio
  */
 @Stateless
 public class ActividadEventoLogic {
-    
+
     @Inject
     private ActividadEventoPersistence persistence;
-    
-    public ActividadEventoEntity createActividadEvento(ActividadEventoEntity actividad) throws BusinessLogicException{
-        if(actividad.getNombre() == null)
+
+    public ActividadEventoEntity createActividadEvento(ActividadEventoEntity actividad) throws BusinessLogicException {
+        if (actividad.getNombre() == null) {
             throw new BusinessLogicException("El nombre de la actividad está vacío.");
-        
+        }
+
         actividad = persistence.create(actividad);
         return actividad;
     }

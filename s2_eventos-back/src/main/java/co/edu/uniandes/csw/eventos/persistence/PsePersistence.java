@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class PsePersistence {
-    
+
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
 
@@ -30,35 +30,34 @@ public class PsePersistence {
     public PseEntity find(Long PseId) {
         return em.find(PseEntity.class, PseId);
     }
+
     public List<PseEntity> findAll() {
         TypedQuery<PseEntity> query = em.createQuery("select u from EventoEntity u", PseEntity.class);
         return query.getResultList();
     }
-    
+
     public PseEntity update(PseEntity evento) {
         return em.merge(evento);
     }
-    
+
     public void delete(Long eventoId) {
         PseEntity entity = em.find(PseEntity.class, eventoId);
         em.remove(entity);
     }
-    
-    public PseEntity findByName(String name){
+
+    public PseEntity findByName(String name) {
         TypedQuery query = em.createQuery("select u from EventoEntity u where u.nombre = :name", PseEntity.class);
         query = query.setParameter("name", name);
         List<PseEntity> sameName = query.getResultList();
         PseEntity result;
-        if(sameName == null) {
+        if (sameName == null) {
             result = null;
-        }
-        else if(sameName.isEmpty()) {
+        } else if (sameName.isEmpty()) {
             result = null;
-        }
-        else{
+        } else {
             result = sameName.get(0);
         }
         return result;
     }
-    
+
 }

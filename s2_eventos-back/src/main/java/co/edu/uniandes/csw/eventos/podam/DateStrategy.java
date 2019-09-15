@@ -36,7 +36,7 @@ import uk.co.jemos.podam.common.AttributeStrategy;
  */
 public class DateStrategy implements AttributeStrategy<Date> {
 
-    SecureRandom  r = new SecureRandom();
+    SecureRandom r = new SecureRandom();
 
     @Override
     public Date getValue() {

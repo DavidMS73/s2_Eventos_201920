@@ -59,11 +59,11 @@ public class UsuarioPersistenceTest {
 
         Assert.assertEquals(usuario.getNombre(), entity.getNombre());
     }
-      
+
     @Inject
     UserTransaction utx;
     private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
-    
+
     @Before
     public void setUp() {
         try {
@@ -81,12 +81,12 @@ public class UsuarioPersistenceTest {
             }
         }
     }
-    
+
     private void clearData() {
         em.createQuery("delete from UsuarioEntity").executeUpdate();
     }
-    
-     private void insertData() {
+
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
@@ -99,7 +99,7 @@ public class UsuarioPersistenceTest {
     public void getUsuariosTest() {
         List<UsuarioEntity> list = up.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for(UsuarioEntity ent : list) {
+        for (UsuarioEntity ent : list) {
             boolean found = false;
             for (UsuarioEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
@@ -109,15 +109,15 @@ public class UsuarioPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getUsuarioTest(){
+    public void getUsuarioTest() {
         UsuarioEntity entity = data.get(0);
         UsuarioEntity newEntity = up.find(entity.getId());
-        Assert.assertNotNull(newEntity); 
+        Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
-    
+
     @Test
     public void deleteUsuarioTest() {
         UsuarioEntity entity = data.get(0);
@@ -125,7 +125,7 @@ public class UsuarioPersistenceTest {
         UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
     public void updateUsuarioTest() {
         UsuarioEntity entity = data.get(0);
@@ -140,7 +140,7 @@ public class UsuarioPersistenceTest {
 
         Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
     }
-    
+
     @Test
     public void findUsuarioByNameTest() {
         UsuarioEntity entity = data.get(0);

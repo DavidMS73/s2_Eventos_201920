@@ -10,7 +10,7 @@ import uk.co.jemos.podam.common.AttributeStrategy;
 
 /**
  *
- * @author Samuel Osorio y Germán Martínez
+ * @author Samuel Osorio
  */
 public class TarjetaStrategy implements AttributeStrategy<String> {
 

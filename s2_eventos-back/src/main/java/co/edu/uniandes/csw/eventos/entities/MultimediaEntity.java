@@ -12,47 +12,39 @@ import javax.persistence.Entity;
  *
  * @author Gabriel Jose Gonzalez Pereira
  */
-
 @Entity
-public class MultimediaEntity extends BaseEntity implements Serializable
-{
+public class MultimediaEntity extends BaseEntity implements Serializable {
+
     private String url;
     private String nombre;
     private String tipo;
-    
-    public MultimediaEntity ()
-    {
-        
+
+    public MultimediaEntity() {
+
     }
-    
-    public String getUrl()
-    {
+
+    public String getUrl() {
         return url;
     }
-    
-    public void setUrl(String pUrl)
-    {
+
+    public void setUrl(String pUrl) {
         url = pUrl;
     }
-    
-    public String getNombre()
-    {
+
+    public String getNombre() {
         return nombre;
     }
-    
-    public void setNombre(String pNombre)
-    {
+
+    public void setNombre(String pNombre) {
         nombre = pNombre;
     }
-    
-    public String getTipo()
-    {
+
+    public String getTipo() {
         return tipo;
     }
-    
-    public void setTipo(String pTipo)
-    {
+
+    public void setTipo(String pTipo) {
         tipo = pTipo;
     }
-    
+
 }

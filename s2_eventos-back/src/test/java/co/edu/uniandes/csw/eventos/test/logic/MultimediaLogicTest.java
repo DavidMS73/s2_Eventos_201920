@@ -26,18 +26,16 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author Gabriel Jose Gonzalez Pereira
  */
-
 @RunWith(Arquillian.class)
-public class MultimediaLogicTest 
-{
+public class MultimediaLogicTest {
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @Inject
     private MultimediaLogic multimediaLogic;
-    
+
     @Deployment
-    public static JavaArchive createDeployment()
-    {
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(MultimediaEntity.class.getPackage())
                 .addPackage(MultimediaLogic.class.getPackage())
@@ -45,46 +43,41 @@ public class MultimediaLogicTest
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Test
-    public void createMultimedia() throws BusinessLogicException
-    {
+    public void createMultimedia() throws BusinessLogicException {
         MultimediaEntity newEntity = factory.manufacturePojo(MultimediaEntity.class);
         MultimediaEntity result = multimediaLogic.createMultimedia(newEntity);
         Assert.assertNotNull(result);
-        
+
         MultimediaEntity entity = em.find(MultimediaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
         Assert.assertEquals(newEntity.getTipo(), entity.getTipo());
         Assert.assertEquals(newEntity.getUrl(), entity.getUrl());
-        
+
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createMultimediaNombreNull() throws BusinessLogicException
-    {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createMultimediaNombreNull() throws BusinessLogicException {
         MultimediaEntity newEntity = factory.manufacturePojo(MultimediaEntity.class);
         newEntity.setNombre(null);
         MultimediaEntity result = multimediaLogic.createMultimedia(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createMultimediaTipoNull() throws BusinessLogicException
-    {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createMultimediaTipoNull() throws BusinessLogicException {
         MultimediaEntity newEntity = factory.manufacturePojo(MultimediaEntity.class);
         newEntity.setTipo(null);
         MultimediaEntity result = multimediaLogic.createMultimedia(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createMultimediaUrlNull() throws BusinessLogicException
-    {
+
+    @Test(expected = BusinessLogicException.class)
+    public void createMultimediaUrlNull() throws BusinessLogicException {
         MultimediaEntity newEntity = factory.manufacturePojo(MultimediaEntity.class);
         newEntity.setTipo(null);
         MultimediaEntity result = multimediaLogic.createMultimedia(newEntity);
     }
 }
-

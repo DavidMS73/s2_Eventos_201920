@@ -13,11 +13,11 @@ import javax.persistence.Entity;
  * @author Daniel Betancurth Dorado
  */
 @Entity
-public class PatrocinioEntity extends BaseEntity implements Serializable{
+public class PatrocinioEntity extends BaseEntity implements Serializable {
 
-private String empresa;
-    public PatrocinioEntity()
-    {
+    private String empresa;
+
+    public PatrocinioEntity() {
         //Constructor
     }
 

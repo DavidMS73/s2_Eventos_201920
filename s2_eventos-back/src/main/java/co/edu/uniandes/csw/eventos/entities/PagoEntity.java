@@ -17,7 +17,6 @@ import javax.persistence.Entity;
 public class PagoEntity extends BaseEntity implements Serializable {
 
     private Date fecha;
-    
 
     /**
      * @return the valor
@@ -32,5 +31,5 @@ public class PagoEntity extends BaseEntity implements Serializable {
     public void setFecha(Date pFecha) {
         this.fecha = pFecha;
     }
-   
+
 }

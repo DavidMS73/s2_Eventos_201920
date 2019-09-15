@@ -26,7 +26,8 @@ public class UsuarioPersistence {
         em.persist(usuario);
         return usuario;
     }
-        public UsuarioEntity find(Long usuariosId) {
+
+    public UsuarioEntity find(Long usuariosId) {
         return em.find(UsuarioEntity.class, usuariosId);
     }
 
@@ -34,28 +35,26 @@ public class UsuarioPersistence {
         TypedQuery<UsuarioEntity> query = em.createQuery("select u from UsuarioEntity u", UsuarioEntity.class);
         return query.getResultList();
     }
-    
+
     public UsuarioEntity update(UsuarioEntity evento) {
         return em.merge(evento);
     }
-    
+
     public void delete(Long eventoId) {
         UsuarioEntity entity = em.find(UsuarioEntity.class, eventoId);
         em.remove(entity);
     }
-    
-    public UsuarioEntity findByName(String name){
+
+    public UsuarioEntity findByName(String name) {
         TypedQuery query = em.createQuery("select u from UsuarioEntity u where u.nombre = :name", UsuarioEntity.class);
         query = query.setParameter("name", name);
         List<UsuarioEntity> sameName = query.getResultList();
         UsuarioEntity result;
-        if(sameName == null) {
+        if (sameName == null) {
             result = null;
-        }
-        else if(sameName.isEmpty()) {
+        } else if (sameName.isEmpty()) {
             result = null;
-        }
-        else{
+        } else {
             result = sameName.get(0);
         }
         return result;

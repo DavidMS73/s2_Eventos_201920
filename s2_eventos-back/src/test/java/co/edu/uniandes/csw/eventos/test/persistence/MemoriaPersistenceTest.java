@@ -32,23 +32,23 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class MemoriaPersistenceTest {
-    
+
     @Deployment
-    public static JavaArchive createDeployment(){
-        return ShrinkWrap.create(JavaArchive.class).addClass(MemoriaEntity.class).addClass(MemoriaPersistence.class).addAsManifestResource("META-INF/persistence.xml","persistence.xml").addAsManifestResource("META-INF/beans.xml", "beans.xml");
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class).addClass(MemoriaEntity.class).addClass(MemoriaPersistence.class).addAsManifestResource("META-INF/persistence.xml", "persistence.xml").addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @Inject
     UserTransaction utx;
-    
+
     @Inject
     MemoriaPersistence mp;
-    
+
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
-    
+
     private List<MemoriaEntity> data = new ArrayList<MemoriaEntity>();
-    
+
     @Before
     public void setUp() {
         try {
@@ -66,12 +66,12 @@ public class MemoriaPersistenceTest {
             }
         }
     }
-    
+
     private void clearData() {
         em.createQuery("delete from MemoriaEntity").executeUpdate();
     }
-    
-     private void insertData() {
+
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             MemoriaEntity entity = factory.manufacturePojo(MemoriaEntity.class);
@@ -79,14 +79,13 @@ public class MemoriaPersistenceTest {
             data.add(entity);
         }
     }
-    
+
     @Test
-    public void testCreate(){
-        
-        
+    public void testCreate() {
+
         PodamFactory factory = new PodamFactoryImpl();
         MemoriaEntity memoria = factory.manufacturePojo(MemoriaEntity.class);
-        MemoriaEntity newMem=mp.create(memoria);
+        MemoriaEntity newMem = mp.create(memoria);
         Assert.assertNotNull(newMem);
         //Assert.assertNotNull(newMem.getId());
         //Assert.assertNotNull(MemoriaEntity.class);
@@ -95,15 +94,14 @@ public class MemoriaPersistenceTest {
         MemoriaEntity myEntity = em.find(MemoriaEntity.class, newMem.getId());
         Assert.assertEquals(memoria.getLugar(), myEntity.getLugar());
         Assert.assertEquals(memoria.getFecha(), myEntity.getFecha());
-        
+
     }
-    
-    
+
     @Test
     public void getMemoriasTest() {
         List<MemoriaEntity> list = mp.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for(MemoriaEntity ent : list) {
+        for (MemoriaEntity ent : list) {
             boolean found = false;
             for (MemoriaEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
@@ -113,15 +111,15 @@ public class MemoriaPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getMemoriaTest(){
+    public void getMemoriaTest() {
         MemoriaEntity entity = data.get(0);
         MemoriaEntity newEntity = mp.find(entity.getId());
-        Assert.assertNotNull(newEntity); 
+        Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getLugar(), newEntity.getLugar());
     }
-    
+
     @Test
     public void deleteMemoriaTest() {
         MemoriaEntity entity = data.get(0);
@@ -129,7 +127,7 @@ public class MemoriaPersistenceTest {
         MemoriaEntity deleted = em.find(MemoriaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
     public void updateMemoriaTest() {
         MemoriaEntity entity = data.get(0);
@@ -144,7 +142,7 @@ public class MemoriaPersistenceTest {
 
         Assert.assertEquals(newEntity.getLugar(), resp.getLugar());
     }
-    
+
     @Test
     public void findEventoByNameTest() {
         MemoriaEntity entity = data.get(0);

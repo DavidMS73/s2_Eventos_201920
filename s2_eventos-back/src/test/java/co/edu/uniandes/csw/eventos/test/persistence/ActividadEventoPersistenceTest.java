@@ -30,6 +30,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class ActividadEventoPersistenceTest {
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -41,15 +42,15 @@ public class ActividadEventoPersistenceTest {
 
     @Inject
     UserTransaction utx;
-     
+
     @Inject
     private ActividadEventoPersistence ep;
 
     @PersistenceContext
     private EntityManager em;
-    
+
     private List<ActividadEventoEntity> data = new ArrayList<ActividadEventoEntity>();
-    
+
     @Before
     public void setUp() {
         try {
@@ -67,20 +68,21 @@ public class ActividadEventoPersistenceTest {
             }
         }
     }
-    
+
     private void clearData() {
         em.createQuery("delete from ActividadEventoEntity").executeUpdate();
     }
-    
-     private void insertData() {
-;        PodamFactory factory = new PodamFactoryImpl();
+
+    private void insertData() {
+        ;
+        PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             ActividadEventoEntity entity = factory.manufacturePojo(ActividadEventoEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
-    
+
     @Test
     public void createActividadEventoTest() {
         PodamFactory factory = new PodamFactoryImpl();
@@ -97,7 +99,7 @@ public class ActividadEventoPersistenceTest {
     public void getActividadesEventosTest() {
         List<ActividadEventoEntity> list = ep.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for(ActividadEventoEntity ent : list) {
+        for (ActividadEventoEntity ent : list) {
             boolean found = false;
             for (ActividadEventoEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
@@ -107,15 +109,15 @@ public class ActividadEventoPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getActividadEventoTest(){
+    public void getActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);
         ActividadEventoEntity newEntity = ep.find(entity.getId());
-        Assert.assertNotNull(newEntity); 
+        Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
-    
+
     @Test
     public void deleteActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);
@@ -123,7 +125,7 @@ public class ActividadEventoPersistenceTest {
         ActividadEventoEntity deleted = em.find(ActividadEventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
     public void updateActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);
@@ -138,7 +140,7 @@ public class ActividadEventoPersistenceTest {
 
         Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
     }
-    
+
     @Test
     public void findActividadEventoByNameTest() {
         ActividadEventoEntity entity = data.get(0);

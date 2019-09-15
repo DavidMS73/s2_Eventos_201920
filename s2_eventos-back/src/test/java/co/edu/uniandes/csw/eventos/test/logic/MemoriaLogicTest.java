@@ -28,9 +28,9 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class MemoriaLogicTest {
-    
+
     @Deployment
-    public static JavaArchive createDeployment(){
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(MemoriaEntity.class.getPackage())
                 .addPackage(MemoriaLogic.class.getPackage())
@@ -38,39 +38,39 @@ public class MemoriaLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @Inject
-    private MemoriaLogic memoriaLogic; 
-    
+    private MemoriaLogic memoriaLogic;
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Test
-    public void createMemoria() throws BusinessLogicException{
-        
+    public void createMemoria() throws BusinessLogicException {
+
         MemoriaEntity newMemoria = factory.manufacturePojo(MemoriaEntity.class);
         MemoriaEntity result = memoriaLogic.createMemoria(newMemoria);
         Assert.assertNotNull(result);
-        
+
         MemoriaEntity entity = em.find(MemoriaEntity.class, result.getId());
         Assert.assertEquals(entity.getLugar(), result.getLugar());
         Assert.assertEquals(entity.getFecha(), result.getFecha());
 
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createMemoriaLugarNull() throws BusinessLogicException{
-        
+
+    @Test(expected = BusinessLogicException.class)
+    public void createMemoriaLugarNull() throws BusinessLogicException {
+
         MemoriaEntity newEntity = factory.manufacturePojo(MemoriaEntity.class);
         newEntity.setLugar(null);
         MemoriaEntity result = memoriaLogic.createMemoria(newEntity);
     }
-    
-    @Test (expected = BusinessLogicException.class)
-    public void createMemoriaFechaNull() throws BusinessLogicException{
-        
+
+    @Test(expected = BusinessLogicException.class)
+    public void createMemoriaFechaNull() throws BusinessLogicException {
+
         MemoriaEntity newEntity = factory.manufacturePojo(MemoriaEntity.class);
         newEntity.setFecha(null);
         MemoriaEntity result = memoriaLogic.createMemoria(newEntity);

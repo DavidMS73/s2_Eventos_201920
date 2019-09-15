@@ -13,27 +13,24 @@ import javax.inject.Inject;
 
 /**
  *
- * @author Danisanti leal
+ * @author Daniel Santiago Tenjo
  */
 @Stateless
 public class PseLogic {
-    
+
     @Inject
     private PsePersistence persistence;
-    
-    public PseEntity createPago(PseEntity pse) throws BusinessLogicException
-    {
-        if(pse.getCorreo()==null)
-        {
+
+    public PseEntity createPago(PseEntity pse) throws BusinessLogicException {
+        if (pse.getCorreo() == null) {
             throw new BusinessLogicException("El correo está vacio");
         }
-        if(pse.getCorreo().contains("@")==false)
-        {
+        if (pse.getCorreo().contains("@") == false) {
             throw new BusinessLogicException("El correo debe ser valido");
         }
-        
-        pse=persistence.create(pse);
+
+        pse = persistence.create(pse);
         return pse;
     }
-    
+
 }
