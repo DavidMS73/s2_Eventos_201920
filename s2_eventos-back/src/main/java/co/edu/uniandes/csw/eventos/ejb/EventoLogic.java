@@ -101,7 +101,7 @@ public class EventoLogic {
         return newEntity;
     }
 
-    public void deleteEvento(Long eventosId) throws BusinessLogicException {
+    public void deleteEvento(Long eventosId){
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0}", eventosId);
         persistence.delete(eventosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", eventosId);
