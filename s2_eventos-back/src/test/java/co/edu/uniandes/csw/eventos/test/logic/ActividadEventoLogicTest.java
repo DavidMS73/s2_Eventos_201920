@@ -24,7 +24,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Samuel Osorio
+ * @author Germán David Martínez
  */
 @RunWith(Arquillian.class)
 public class ActividadEventoLogicTest {

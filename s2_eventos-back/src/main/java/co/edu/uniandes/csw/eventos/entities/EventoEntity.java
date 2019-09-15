@@ -8,10 +8,14 @@ package co.edu.uniandes.csw.eventos.entities;
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import co.edu.uniandes.csw.eventos.podam.IntegerPositiveStrategy;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -76,11 +80,10 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     private Long valor;
 
-    /*@javax.persistence.OneToMany(
-            mappedBy = "evento",
-            fetch = javax.persistence.FetchType.LAZY
-    )
-    Collection<ActividadEventoEntity> actividadesEvento;*/
+    /*@PodamExclude
+    @OneToMany(mappedBy = "evento")
+    private List<ActividadEventoEntity> actividadesEvento = new ArrayList<ActividadEventoEntity>();*/
+
     public EventoEntity() {
         //Constructor
     }
@@ -228,13 +231,14 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /**
      * @return the actividadesEvento
      */
-    /*public Collection<ActividadEventoEntity> getActividadesEvento() {
+    /*public List<ActividadEventoEntity> getActividadesEvento() {
         return actividadesEvento;
     }*/
+
     /**
      * @param actividadesEvento the actividadesEvento to set
      */
-    /*public void setActividadesEvento(Collection<ActividadEventoEntity> actividadesEvento) {
+    /*public void setActividadesEvento(List<ActividadEventoEntity> actividadesEvento) {
         this.actividadesEvento = actividadesEvento;
     }*/
 }

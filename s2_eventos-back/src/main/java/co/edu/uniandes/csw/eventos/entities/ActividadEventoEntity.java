@@ -9,8 +9,10 @@ import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -47,9 +49,9 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
 
-    /*@javax.persistence.ManyToOne(
-    )        
-    EventoEntity evento;*/
+    /*@PodamExclude
+    @ManyToOne
+    private EventoEntity evento;*/
     public ActividadEventoEntity() {
         //Constructor
     }

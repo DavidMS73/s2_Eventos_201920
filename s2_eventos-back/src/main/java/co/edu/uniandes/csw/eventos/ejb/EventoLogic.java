@@ -10,6 +10,9 @@ import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -19,6 +22,8 @@ import javax.inject.Inject;
  */
 @Stateless
 public class EventoLogic {
+
+    private static final Logger LOGGER = Logger.getLogger(EventoLogic.class.getName());
 
     @Inject
     private EventoPersistence persistence;
@@ -31,6 +36,7 @@ public class EventoLogic {
     }
 
     public EventoEntity createEvento(EventoEntity evento) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de creación del evento");
         if (evento.getNombre() == null) {
             throw new BusinessLogicException("El nombre de evento está vacío");
         }
@@ -70,6 +76,37 @@ public class EventoLogic {
         }
 
         evento = persistence.create(evento);
+        LOGGER.log(Level.INFO, "Termina proceso de creación del evento");
         return evento;
+    }
+
+    public List<EventoEntity> getEventos() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los eventos");
+        List<EventoEntity> eventos = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los eventos");
+        return eventos;
+    }
+
+    public EventoEntity getEvento(Long eventosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0}", eventosId);
+        EventoEntity editorialEntity = persistence.find(eventosId);
+        if (editorialEntity == null) {
+            LOGGER.log(Level.SEVERE, "El evento con el id = {0} no existe", eventosId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la editorial con id = {0}", eventosId);
+        return editorialEntity;
+    }
+
+    public EventoEntity updateEvento(Long editorialsId, EventoEntity editorialEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0}", editorialsId);
+        EventoEntity newEntity = persistence.update(editorialEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", editorialEntity.getId());
+        return newEntity;
+    }
+
+    public void deleteEvento(Long eventosId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0}", eventosId);
+        persistence.delete(eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", eventosId);
     }
 }
