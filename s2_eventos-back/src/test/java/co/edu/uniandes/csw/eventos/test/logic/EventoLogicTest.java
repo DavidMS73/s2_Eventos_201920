@@ -75,7 +75,6 @@ public class EventoLogicTest {
     }
 
     private void clearData() {
-        em.createQuery("delete from ActividadEventoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
@@ -95,6 +94,7 @@ public class EventoLogicTest {
         Assert.assertNotNull(result);
 
         EventoEntity entity = em.find(EventoEntity.class, result.getId());
+        Assert.assertEquals(entity.getId(), result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
         Assert.assertEquals(entity.getDescripcion(), result.getDescripcion());
         Assert.assertEquals(entity.getCategoria(), result.getCategoria());
@@ -149,13 +149,6 @@ public class EventoLogicTest {
     public void createEventoEntradasRestantesNegativeTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setEntradasRestantes(-2);
-        eventoLogic.createEvento(newEntity);
-    }
-
-    @Test(expected = BusinessLogicException.class)
-    public void createEventoEntradasRestantesZeroTest() throws BusinessLogicException {
-        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
-        newEntity.setEntradasRestantes(0);
         eventoLogic.createEvento(newEntity);
     }
 

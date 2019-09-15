@@ -63,10 +63,7 @@ public class EventoLogic {
             throw new BusinessLogicException("Debe definir un número de entradas iniciales");
         }
         if (evento.getEntradasRestantes() < 0) {
-            throw new BusinessLogicException("El número de entradas iniciales debe ser positivo");
-        }
-        if (evento.getEntradasRestantes() == 0) {
-            throw new BusinessLogicException("El número de entradas iniciales debe ser mayor a cero");
+            throw new BusinessLogicException("El número de entradas restantes debe ser positivo");
         }
         if (evento.getTipo() == null) {
             throw new BusinessLogicException("Debe definir un tipo de evento");
@@ -89,18 +86,18 @@ public class EventoLogic {
 
     public EventoEntity getEvento(Long eventosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0}", eventosId);
-        EventoEntity editorialEntity = persistence.find(eventosId);
-        if (editorialEntity == null) {
+        EventoEntity eventoEntity = persistence.find(eventosId);
+        if (eventoEntity == null) {
             LOGGER.log(Level.SEVERE, "El evento con el id = {0} no existe", eventosId);
         }
         LOGGER.log(Level.INFO, "Termina proceso de consultar la editorial con id = {0}", eventosId);
-        return editorialEntity;
+        return eventoEntity;
     }
 
-    public EventoEntity updateEvento(Long editorialsId, EventoEntity editorialEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0}", editorialsId);
-        EventoEntity newEntity = persistence.update(editorialEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", editorialEntity.getId());
+    public EventoEntity updateEvento(Long eventosId, EventoEntity eventoEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0}", eventosId);
+        EventoEntity newEntity = persistence.update(eventoEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", eventoEntity.getId());
         return newEntity;
     }
 
