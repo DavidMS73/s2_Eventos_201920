@@ -71,7 +71,7 @@ public class ActividadEventoLogic {
         return newEntity;
     }
 
-    public void deleteEvento(Long actividadesEventosId){
+    public void deleteEvento(Long actividadesEventosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0}", actividadesEventosId);
         persistence.delete(actividadesEventosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", actividadesEventosId);
