@@ -74,7 +74,6 @@ public class ActividadEventoPersistenceTest {
     }
 
     private void insertData() {
-        ;
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             ActividadEventoEntity entity = factory.manufacturePojo(ActividadEventoEntity.class);
@@ -86,13 +85,18 @@ public class ActividadEventoPersistenceTest {
     @Test
     public void createActividadEventoTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        ActividadEventoEntity evento = factory.manufacturePojo(ActividadEventoEntity.class);
-        ActividadEventoEntity result = ep.create(evento);
+        ActividadEventoEntity actividadEvento = factory.manufacturePojo(ActividadEventoEntity.class);
+        ActividadEventoEntity result = ep.create(actividadEvento);
         Assert.assertNotNull(result);
 
         ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, result.getId());
 
-        Assert.assertEquals(evento.getNombre(), entity.getNombre());
+        Assert.assertEquals(actividadEvento.getId(), entity.getId());
+        Assert.assertEquals(actividadEvento.getNombre(), entity.getNombre());
+        Assert.assertEquals(actividadEvento.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(actividadEvento.getFecha(), entity.getFecha());
+        Assert.assertEquals(actividadEvento.getHoraInicio(), entity.getHoraInicio());
+        Assert.assertEquals(actividadEvento.getHoraFin(), entity.getHoraFin());
     }
 
     @Test
@@ -115,7 +119,12 @@ public class ActividadEventoPersistenceTest {
         ActividadEventoEntity entity = data.get(0);
         ActividadEventoEntity newEntity = ep.find(entity.getId());
         Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getId(), newEntity.getId());
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+        Assert.assertEquals(entity.getFecha(), newEntity.getFecha());
+        Assert.assertEquals(entity.getHoraInicio(), newEntity.getHoraInicio());
+        Assert.assertEquals(entity.getHoraFin(), newEntity.getHoraFin());
     }
 
     @Test
@@ -138,7 +147,12 @@ public class ActividadEventoPersistenceTest {
 
         ActividadEventoEntity resp = em.find(ActividadEventoEntity.class, entity.getId());
 
+        Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+        Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
+        Assert.assertEquals(newEntity.getHoraInicio(), resp.getHoraInicio());
+        Assert.assertEquals(newEntity.getHoraFin(), resp.getHoraFin());
     }
 
     @Test

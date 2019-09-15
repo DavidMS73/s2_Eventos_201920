@@ -20,13 +20,29 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 @Entity
 public class ActividadEventoEntity extends BaseEntity implements Serializable {
 
-    private Long identificador;
+    /**
+     * Atributo que modela el nombre de la actividad del evento
+     */
     private String nombre;
+
+    /**
+     * Atributo que modela la descripción de la actividad del evento
+     */
     private String descripcion;
 
+    /**
+     * Atributo que modela la hora de inicio de la actividad del evento
+     */
     private String horaInicio;
+
+    /**
+     * Atributo que modela la hora de fin de la actividad del evento
+     */
     private String horaFin;
 
+    /**
+     * Atributo que modela la fecha de la actividad del evento
+     */
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
@@ -36,20 +52,6 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     EventoEntity evento;*/
     public ActividadEventoEntity() {
         //Constructor
-    }
-
-    /**
-     * @return the identificador
-     */
-    public Long getIdentificador() {
-        return identificador;
-    }
-
-    /**
-     * @param identificador the identificador to set
-     */
-    public void setIdentificador(Long identificador) {
-        this.identificador = identificador;
     }
 
     /**

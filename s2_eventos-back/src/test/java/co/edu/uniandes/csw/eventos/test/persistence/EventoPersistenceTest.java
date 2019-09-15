@@ -91,7 +91,16 @@ public class EventoPersistenceTest {
 
         EventoEntity entity = em.find(EventoEntity.class, result.getId());
 
+        Assert.assertEquals(evento.getId(), entity.getId());
         Assert.assertEquals(evento.getNombre(), entity.getNombre());
+        Assert.assertEquals(evento.getCategoria(), entity.getCategoria());
+        Assert.assertEquals(evento.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(evento.getFechaInicio(), entity.getFechaInicio());
+        Assert.assertEquals(evento.getFechaFin(), entity.getFechaFin());
+        Assert.assertEquals(evento.getDetallesAdicionales(), entity.getDetallesAdicionales());
+        Assert.assertEquals(evento.getEntradasRestantes(), entity.getEntradasRestantes());
+        Assert.assertEquals(evento.getEsPago(), entity.getEsPago());
+        Assert.assertEquals(evento.getValor(), entity.getValor());
     }
 
     @Test
@@ -114,7 +123,16 @@ public class EventoPersistenceTest {
         EventoEntity entity = data.get(0);
         EventoEntity newEntity = ep.find(entity.getId());
         Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getId(), newEntity.getId());
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getCategoria(), newEntity.getCategoria());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+        Assert.assertEquals(entity.getFechaInicio(), newEntity.getFechaInicio());
+        Assert.assertEquals(entity.getFechaFin(), newEntity.getFechaFin());
+        Assert.assertEquals(entity.getDetallesAdicionales(), newEntity.getDetallesAdicionales());
+        Assert.assertEquals(entity.getEntradasRestantes(), newEntity.getEntradasRestantes());
+        Assert.assertEquals(entity.getEsPago(), newEntity.getEsPago());
+        Assert.assertEquals(entity.getValor(), newEntity.getValor());
     }
 
     @Test
@@ -137,7 +155,16 @@ public class EventoPersistenceTest {
 
         EventoEntity resp = em.find(EventoEntity.class, entity.getId());
 
+        Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getCategoria(), resp.getCategoria());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+        Assert.assertEquals(newEntity.getFechaInicio(), resp.getFechaInicio());
+        Assert.assertEquals(newEntity.getFechaFin(), resp.getFechaFin());
+        Assert.assertEquals(newEntity.getDetallesAdicionales(), resp.getDetallesAdicionales());
+        Assert.assertEquals(newEntity.getEntradasRestantes(), resp.getEntradasRestantes());
+        Assert.assertEquals(newEntity.getEsPago(), resp.getEsPago());
+        Assert.assertEquals(newEntity.getValor(), resp.getValor());
     }
 
     @Test

@@ -25,12 +25,12 @@ public class EventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela el nombre del evento
      */
     private String nombre;
-    
+
     /**
      * Atributo que modela la categoría del evento
      */
     private String categoria;
-    
+
     /**
      * Atributo que modela la descripción del evento
      */
@@ -54,29 +54,33 @@ public class EventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela los detalles adicionales del evento
      */
     private String detallesAdicionales;
-    
+
     /**
      * Atributo que modela las entradas restantes del evento
      */
-   @PodamStrategyValue(IntegerPositiveStrategy.class)
+    @PodamStrategyValue(IntegerPositiveStrategy.class)
     private Integer entradasRestantes;
-   
+
     /**
      * Atributo que modela el tipo de evento
      */
     private String tipo;
-    
+
     /**
-     * Atributo que modelo si un evento es pago o no
+     * Atributo que modela si un evento es pago o no
      */
     private Boolean esPago;
+
+    /**
+     * Atributo que modela el valor del evento
+     */
+    private Long valor;
 
     /*@javax.persistence.OneToMany(
             mappedBy = "evento",
             fetch = javax.persistence.FetchType.LAZY
     )
     Collection<ActividadEventoEntity> actividadesEvento;*/
-
     public EventoEntity() {
         //Constructor
     }
@@ -208,12 +212,25 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * @return the valor
+     */
+    public Long getValor() {
+        return valor;
+    }
+
+    /**
+     * @param valor the valor to set
+     */
+    public void setValor(Long valor) {
+        this.valor = valor;
+    }
+
+    /**
      * @return the actividadesEvento
      */
     /*public Collection<ActividadEventoEntity> getActividadesEvento() {
         return actividadesEvento;
     }*/
-
     /**
      * @param actividadesEvento the actividadesEvento to set
      */
