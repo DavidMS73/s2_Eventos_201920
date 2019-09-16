@@ -93,13 +93,20 @@ public class PsePersistenceTest {
         Assert.assertEquals(pse.getCorreo(), entity.getCorreo());
     }
 
-    /**
-     * @Test public void getPsesTest() { List<PseEntity> list = ep.findAll();
-     * Assert.assertEquals(data.size(), list.size()); for(PseEntity ent : list)
-     * { boolean found = false; for (PseEntity entity : data) { if
-     * (ent.getId().equals(entity.getId())) { found = true; } }
-     * Assert.assertTrue(found); } }
-     */
+    @Test
+    public void getPsesTest() {
+        List<PseEntity> list = ep.findAll();
+        Assert.assertEquals(data.size(), list.size());
+        for(PseEntity ent : list) {
+            boolean found = false;
+            for (PseEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
     @Test
     public void getPseTest() {
         PseEntity entity = data.get(0);
@@ -131,12 +138,15 @@ public class PsePersistenceTest {
         Assert.assertEquals(newEntity.getCorreo(), resp.getCorreo());
     }
 
-    /**
-     * @Test public void findPseByNameTest() { PseEntity entity = data.get(0);
-     * PseEntity newEntity = ep.findByName(entity.getCorreo());
-     * Assert.assertNotNull(newEntity); Assert.assertEquals(entity.getCorreo(),
-     * newEntity.getCorreo());
-     *
-     * newEntity = ep.findByName(null); Assert.assertNull(newEntity); }
-     */
+    @Test
+    public void findPseByCorreoTest() 
+    {
+        PseEntity entity = data.get(0);
+        PseEntity newEntity = ep.findByName(entity.getCorreo());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getCorreo(), newEntity.getCorreo());
+
+        newEntity = ep.findByName(null);
+        Assert.assertNull(newEntity);
+    }
 }

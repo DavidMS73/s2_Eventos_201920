@@ -32,21 +32,21 @@ public class PsePersistence {
     }
 
     public List<PseEntity> findAll() {
-        TypedQuery<PseEntity> query = em.createQuery("select u from EventoEntity u", PseEntity.class);
+        TypedQuery<PseEntity> query = em.createQuery("select u from PseEntity u", PseEntity.class);
         return query.getResultList();
     }
 
     public PseEntity update(PseEntity evento) {
         return em.merge(evento);
     }
-
-    public void delete(Long eventoId) {
-        PseEntity entity = em.find(PseEntity.class, eventoId);
+    
+    public void delete(Long pseId) {
+        PseEntity entity = em.find(PseEntity.class, pseId);
         em.remove(entity);
     }
-
-    public PseEntity findByName(String name) {
-        TypedQuery query = em.createQuery("select u from EventoEntity u where u.nombre = :name", PseEntity.class);
+    
+    public PseEntity findByName(String name){
+        TypedQuery query = em.createQuery("select u from PseEntity u where u.correo = :name", PseEntity.class);
         query = query.setParameter("name", name);
         List<PseEntity> sameName = query.getResultList();
         PseEntity result;
@@ -59,5 +59,6 @@ public class PsePersistence {
         }
         return result;
     }
+
 
 }
