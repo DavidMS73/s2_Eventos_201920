@@ -99,7 +99,6 @@ public class EventoLogicTest {
         Assert.assertEquals(entity.getDescripcion(), result.getDescripcion());
         Assert.assertEquals(entity.getCategoria(), result.getCategoria());
         Assert.assertEquals(entity.getEntradasRestantes(), result.getEntradasRestantes());
-        Assert.assertEquals(entity.getTipo(), result.getTipo());
         Assert.assertEquals(entity.getEsPago(), result.getEsPago());
     }
 
@@ -153,13 +152,6 @@ public class EventoLogicTest {
     }
 
     @Test(expected = BusinessLogicException.class)
-    public void createEventoTipoNullTest() throws BusinessLogicException {
-        EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
-        newEntity.setTipo(null);
-        eventoLogic.createEvento(newEntity);
-    }
-
-    @Test(expected = BusinessLogicException.class)
     public void createEventoEsPagoNullTest() throws BusinessLogicException {
         EventoEntity newEntity = factory.manufacturePojo(EventoEntity.class);
         newEntity.setEsPago(null);
@@ -190,7 +182,6 @@ public class EventoLogicTest {
         Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
         Assert.assertEquals(entity.getCategoria(), resultEntity.getCategoria());
         Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion());
-        Assert.assertEquals(entity.getTipo(), resultEntity.getTipo());
         Assert.assertEquals(entity.getFechaInicio(), resultEntity.getFechaInicio());
         Assert.assertEquals(entity.getFechaFin(), resultEntity.getFechaFin());
         Assert.assertEquals(entity.getEsPago(), resultEntity.getEsPago());

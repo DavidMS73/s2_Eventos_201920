@@ -3,28 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.eventos.entities;
+package co.edu.uniandes.csw.eventos.dtos;
 
-import co.edu.uniandes.csw.eventos.podam.DateStrategy;
-import co.edu.uniandes.csw.eventos.podam.IntegerPositiveStrategy;
+import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import uk.co.jemos.podam.common.PodamExclude;
-import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
  * @author Germán David Martínez Solano
  */
-@Entity
-public class EventoEntity extends BaseEntity implements Serializable {
+public class EventoDTO implements Serializable {
 
+    private Long id;
     /**
      * Atributo que modela el nombre del evento
      */
@@ -43,15 +34,11 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /**
      * Atributo que modela la fecha inicial del evento
      */
-    @Temporal(TemporalType.DATE)
-    @PodamStrategyValue(DateStrategy.class)
     private Date fechaInicio;
 
     /**
      * Atributo que modela la fecha final del evento
      */
-    @Temporal(TemporalType.DATE)
-    @PodamStrategyValue(DateStrategy.class)
     private Date fechaFin;
 
     /**
@@ -62,8 +49,12 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /**
      * Atributo que modela las entradas restantes del evento
      */
-    @PodamStrategyValue(IntegerPositiveStrategy.class)
     private Integer entradasRestantes;
+
+    /**
+     * Atributo que modela el tipo de evento
+     */
+    private String tipo;
 
     /**
      * Atributo que modela si un evento es pago o no
@@ -75,11 +66,37 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     private Long valor;
 
-    /*@PodamExclude
-    @OneToMany(mappedBy = "evento")
-    private List<ActividadEventoEntity> actividadesEvento = new ArrayList<ActividadEventoEntity>();*/
-    public EventoEntity() {
-        //Constructor
+    public EventoDTO() {
+        // Constructor
+    }
+
+    public EventoDTO(EventoEntity entidad) {
+        setId(entidad.getId());
+        setNombre(entidad.getNombre());
+        setCategoria(entidad.getCategoria());
+        setDescripcion(entidad.getDescripcion());
+        setEsPago(entidad.getEsPago());
+        setFechaInicio(entidad.getFechaInicio());
+        setFechaFin(entidad.getFechaFin());
+        setValor(entidad.getValor());
+        setDetallesAdicionales(entidad.getDetallesAdicionales());
+        setEntradasRestantes(entidad.getEntradasRestantes());
+    }
+
+    public EventoEntity toEntity() {
+        EventoEntity entidad = new EventoEntity();
+        entidad.setId(this.getId());
+        entidad.setNombre(this.getNombre());
+        entidad.setCategoria(this.getCategoria());
+        entidad.setDescripcion(this.getDescripcion());
+        entidad.setEsPago(this.getEsPago());
+        entidad.setFechaInicio(this.getFechaInicio());
+        entidad.setFechaFin(this.getFechaFin());
+        entidad.setValor(this.getValor());
+        entidad.setDetallesAdicionales(this.getDetallesAdicionales());
+        entidad.setEntradasRestantes(this.getEntradasRestantes());
+
+        return entidad;
     }
 
     /**
@@ -181,6 +198,20 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    /**
      * @return the esPago
      */
     public Boolean getEsPago() {
@@ -209,15 +240,17 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the actividadesEvento
+     * @return the id
      */
-    /*public List<ActividadEventoEntity> getActividadesEvento() {
-        return actividadesEvento;
-    }*/
+    public Long getId() {
+        return id;
+    }
+
     /**
-     * @param actividadesEvento the actividadesEvento to set
+     * @param id the id to set
      */
-    /*public void setActividadesEvento(List<ActividadEventoEntity> actividadesEvento) {
-        this.actividadesEvento = actividadesEvento;
-    }*/
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }

@@ -65,9 +65,6 @@ public class EventoLogic {
         if (evento.getEntradasRestantes() < 0) {
             throw new BusinessLogicException("El número de entradas restantes debe ser positivo");
         }
-        if (evento.getTipo() == null) {
-            throw new BusinessLogicException("Debe definir un tipo de evento");
-        }
         if (evento.getEsPago() == null) {
             throw new BusinessLogicException("Debe definir si el evento es pago o no");
         }
