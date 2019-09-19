@@ -6,12 +6,13 @@
 package co.edu.uniandes.csw.eventos.dtos;
 
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
+import java.io.Serializable;
 
 /**
  *
  * @author Alberic Despres
  */
-public class LugarDTO {
+public class LugarDTO implements Serializable {
     private Long id;
     private Integer capacidadAsistentes;
     private String ubicacionGeografica;
