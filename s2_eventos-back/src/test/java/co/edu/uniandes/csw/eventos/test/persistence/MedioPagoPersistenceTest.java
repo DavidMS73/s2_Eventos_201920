@@ -5,8 +5,8 @@
  */
 package co.edu.uniandes.csw.eventos.test.persistence;
 
-import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
-import co.edu.uniandes.csw.eventos.persistence.TarjetaPersistence;
+import co.edu.uniandes.csw.eventos.entities.MedioPagoEntity;
+import co.edu.uniandes.csw.eventos.persistence.MedioPagoPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -29,27 +29,27 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Samuelillo el pillo.
  */
 @RunWith(Arquillian.class)
-public class TarjetaPersistenceTest {
+public class MedioPagoPersistenceTest {
 
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(TarjetaEntity.class)
-                .addClass(TarjetaPersistence.class)
+                .addClass(MedioPagoEntity.class)
+                .addClass(MedioPagoPersistence.class)
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
-    @Inject
+     @Inject
     UserTransaction utx;
 
     @Inject
-    private TarjetaPersistence ep;
+    private MedioPagoPersistence ep;
 
     @PersistenceContext
     private EntityManager em;
 
-    private List<TarjetaEntity> data = new ArrayList<>();
+    private List<MedioPagoEntity> data = new ArrayList<MedioPagoEntity>();
 
     @Before
     public void setUp() {
@@ -70,45 +70,45 @@ public class TarjetaPersistenceTest {
     }
 
     private void clearData() {
-        em.createQuery("delete from TarjetaEntity").executeUpdate();
+        em.createQuery("delete from MedioPagoEntity").executeUpdate();
     }
 
-    private void insertData() {
+     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            TarjetaEntity entity = factory.manufacturePojo(TarjetaEntity.class);
+            MedioPagoEntity entity = factory.manufacturePojo(MedioPagoEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
 
-    @Test
-    public void createTarjetaTest() {
+      @Test
+    public void createMedioPagoTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        TarjetaEntity tarjeta = factory.manufacturePojo(TarjetaEntity.class);
-        TarjetaEntity result = ep.create(tarjeta);
+        MedioPagoEntity medioPago = factory.manufacturePojo(MedioPagoEntity.class);
+        MedioPagoEntity result = ep.create(medioPago);
         Assert.assertNotNull(result);
 
-        TarjetaEntity entity = em.find(TarjetaEntity.class, result.getId());
+        MedioPagoEntity entity = em.find(MedioPagoEntity.class, result.getId());
 
-        Assert.assertEquals(tarjeta.getNumeroTarjeta(), entity.getNumeroTarjeta());
+        Assert.assertEquals(medioPago.getNumeroRecibo(), entity.getNumeroRecibo());
     }
 
     @Test
-    public void deleteTarjetaTest() {
-        TarjetaEntity entity = data.get(0);
+    public void deleteMedioPagoTest() {
+        MedioPagoEntity entity = data.get(0);
         ep.delete(entity.getId());
-        TarjetaEntity deleted = em.find(TarjetaEntity.class, entity.getId());
+        MedioPagoEntity deleted = em.find(MedioPagoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 
     @Test
-    public void getTarjetaTest() {
-        List<TarjetaEntity> list = ep.findAll();
+    public void getMedioPagoTest() {
+        List<MedioPagoEntity> list = ep.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for (TarjetaEntity ent : list) {
+        for(MedioPagoEntity ent : list) {
             boolean found = false;
-            for (TarjetaEntity entity : data) {
+            for (MedioPagoEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -118,34 +118,34 @@ public class TarjetaPersistenceTest {
     }
 
     @Test
-    public void getEventoTest() {
-        TarjetaEntity entity = data.get(0);
-        TarjetaEntity newEntity = ep.find(entity.getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNumeroTarjeta(), newEntity.getNumeroTarjeta());
+    public void getEventoTest(){
+        MedioPagoEntity entity = data.get(0);
+        MedioPagoEntity newEntity = ep.find(entity.getId());
+        Assert.assertNotNull(newEntity); 
+        Assert.assertEquals(entity.getNumeroRecibo(), newEntity.getNumeroRecibo());
     }
 
     @Test
     public void updateMedioPagoTest() {
-        TarjetaEntity entity = data.get(0);
+        MedioPagoEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
+        MedioPagoEntity newEntity = factory.manufacturePojo(MedioPagoEntity.class);
 
         newEntity.setId(entity.getId());
 
         ep.update(newEntity);
 
-        TarjetaEntity resp = em.find(TarjetaEntity.class, entity.getId());
+        MedioPagoEntity resp = em.find(MedioPagoEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getNumeroTarjeta(), resp.getNumeroTarjeta());
+        Assert.assertEquals(newEntity.getNumeroRecibo(), resp.getNumeroRecibo());
     }
-
-    @Test
+    
+     @Test
     public void findTarjetaByNameNumber() {
-        TarjetaEntity entity = data.get(0);
-        TarjetaEntity newEntity = ep.findByNumber(entity.getNumeroTarjeta());
+        MedioPagoEntity entity = data.get(0);
+        MedioPagoEntity newEntity = ep.findByNumber(entity.getNumeroRecibo());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNumeroTarjeta(), newEntity.getNumeroTarjeta());
+        Assert.assertEquals(entity.getNumeroRecibo(), newEntity.getNumeroRecibo());
 
         newEntity = ep.findByNumber(null);
         Assert.assertNull(newEntity);

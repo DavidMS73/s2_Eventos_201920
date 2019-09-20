@@ -10,18 +10,17 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author Germán David Martínez Solano
+ * @author Estudiante
  */
 @Entity
-public abstract class MedioPagoEntity extends BaseEntity implements Serializable {
-
+public class MedioPagoEntity extends BaseEntity implements Serializable{
     private String numeroRecibo;
 
-    public String getNumeroRecibo() {
+    public String getNumeroRecibo(){
         return numeroRecibo;
     }
 
-    public void setNumeroRecibo(String pRecibo) {
+    public void setNumeroRecibo(String pRecibo){
         this.numeroRecibo = pRecibo;
     }
 }

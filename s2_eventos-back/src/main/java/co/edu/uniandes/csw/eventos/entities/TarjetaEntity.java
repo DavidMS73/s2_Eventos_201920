@@ -16,7 +16,7 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
- * @author Samuel Osorio
+ * @author Samuelillo el pillo
  */
 @Entity
 public class TarjetaEntity extends MedioPagoEntity implements Serializable {
