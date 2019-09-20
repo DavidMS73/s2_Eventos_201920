@@ -87,20 +87,20 @@ public class EventoLogic {
         if (eventoEntity == null) {
             LOGGER.log(Level.SEVERE, "El evento con el id = {0} no existe", eventosId);
         }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la editorial con id = {0}", eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0}", eventosId);
         return eventoEntity;
     }
 
     public EventoEntity updateEvento(Long eventosId, EventoEntity eventoEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0}", eventosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el evento con id = {0}", eventosId);
         EventoEntity newEntity = persistence.update(eventoEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", eventoEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el evento con id = {0}", eventoEntity.getId());
         return newEntity;
     }
 
     public void deleteEvento(Long eventosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0}", eventosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el evento con id = {0}", eventosId);
         persistence.delete(eventosId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el evento con id = {0}", eventosId);
     }
 }
