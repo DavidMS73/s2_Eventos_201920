@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.eventos.dtos;
 
+import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  */
 public class ActividadEventoDTO implements Serializable {
 
+    private Long id;
     /**
      * Atributo que modela el nombre de la actividad del evento
      */
@@ -41,6 +43,15 @@ public class ActividadEventoDTO implements Serializable {
 
     public ActividadEventoDTO() {
         // Constructor
+    }
+    
+    public ActividadEventoDTO(ActividadEventoEntity entidad) {
+        setId(entidad.getId());
+        setNombre(entidad.getNombre());
+        setDescripcion(entidad.getDescripcion());
+        setHoraInicio(entidad.getHoraInicio());
+        setHoraFin(entidad.getHoraFin());
+        setFecha(entidad.getFecha());
     }
 
     /**
@@ -112,4 +123,19 @@ public class ActividadEventoDTO implements Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 }

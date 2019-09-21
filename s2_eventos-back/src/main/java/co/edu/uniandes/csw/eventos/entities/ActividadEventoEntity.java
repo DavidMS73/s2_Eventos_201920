@@ -23,6 +23,13 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 public class ActividadEventoEntity extends BaseEntity implements Serializable {
 
     /**
+     * Atributo que modela el evento asociado a la actividad
+     */
+    @PodamExclude
+    @ManyToOne
+    private EventoEntity evento;
+    
+    /**
      * Atributo que modela el nombre de la actividad del evento
      */
     private String nombre;
@@ -129,13 +136,13 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     /**
      * @return the evento
      */
-    /*public EventoEntity getEvento() {
+    public EventoEntity getEvento() {
         return evento;
-    }*/
+    }
     /**
      * @param evento the evento to set
      */
-    /*public void setEvento(EventoEntity evento) {
+    public void setEvento(EventoEntity evento) {
         this.evento = evento;
-    }*/
+    }
 }
