@@ -34,8 +34,8 @@ public class PsePersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(PseEntity.class)
-                .addClass(PsePersistence.class)
+                .addPackage(PseEntity.class.getPackage())
+                .addPackage(PsePersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }

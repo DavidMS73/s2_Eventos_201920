@@ -34,8 +34,8 @@ public class MultimediaPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(MultimediaEntity.class)
-                .addClass(MultimediaPersistence.class)
+                .addPackage(MultimediaEntity.class.getPackage())
+                .addPackage(MultimediaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }

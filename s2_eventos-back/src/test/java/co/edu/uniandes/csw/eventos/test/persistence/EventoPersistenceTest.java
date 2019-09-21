@@ -34,8 +34,8 @@ public class EventoPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(EventoEntity.class)
-                .addClass(EventoPersistence.class)
+                .addPackage(EventoEntity.class.getPackage())
+                .addPackage(EventoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
