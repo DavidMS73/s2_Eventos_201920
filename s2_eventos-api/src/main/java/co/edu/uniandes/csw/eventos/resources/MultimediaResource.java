@@ -5,9 +5,10 @@
  */
 package co.edu.uniandes.csw.eventos.resources;
 
-import co.edu.uniandes.csw.eventos.dtos.LugarDTO;
-import co.edu.uniandes.csw.eventos.ejb.LugarLogic;
-import co.edu.uniandes.csw.eventos.entities.LugarEntity;
+
+import co.edu.uniandes.csw.eventos.dtos.MultimediaDTO;
+import co.edu.uniandes.csw.eventos.ejb.MultimediaLogic;
+import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -26,13 +27,18 @@ import javax.ws.rs.Produces;
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class LugarResource 
+public class MultimediaResource 
 {
     @Inject
-    private LugarLogic logic;
+    private MultimediaLogic logic;
     
-    private static final Logger LOGGER = Logger.getLogger(LugarResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MultimediaResource.class.getName());
     
-    
-    
+    @POST
+    public MultimediaDTO createMultimedia(MultimediaDTO multimedia) throws BusinessLogicException
+    {
+        MultimediaEntity multimediaEntity = multimedia.toEntity();
+        multimediaEntity = logic.createMultimedia(multimediaEntity);
+        return new MultimediaDTO(multimediaEntity);
+    }
 }

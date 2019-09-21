@@ -58,9 +58,9 @@ public class EventoActividadesEventoResource {
     */
     @GET
     public List<ActividadEventoDTO> getBooks(@PathParam("eventosId") Long eventosId) {
-        LOGGER.log(Level.INFO, "EventoResource getActividades: input: {0}", eventosId);
-        List<ActividadEventoDTO> actividadesDTO = actividadesEntityToDTO(eventoActividadesLogic.getActividades(eventosId));
-        LOGGER.log(Level.INFO, "EventoResource getActividades: output: {0}", actividadesDTO);
-        return actividadesDTO;
+      LOGGER.log(Level.INFO, "EventoResource getActividades: input: {0}", eventosId);
+      List<ActividadEventoDTO> actividadesDTO = actividadesEntityToDTO(eventoActividadesLogic.getActividades(eventosId));
+      LOGGER.log(Level.INFO, "EventoResource getActividades: output: {0}", actividadesDTO);
+      return actividadesDTO;
     }
 }

@@ -25,7 +25,8 @@ public class LugarDTO implements Serializable {
         // Constructor
     }
 
-    public LugarDTO(LugarEntity entidad) {
+    public LugarDTO(LugarEntity entidad) 
+    {
         setId(entidad.getId());
         setNombre(entidad.getNombre());
         setCapacidadAsistentes(entidad.getCapacidadAsistentes());
