@@ -12,6 +12,7 @@ import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -29,6 +30,7 @@ import javax.ws.rs.core.MediaType;
 public class UsuarioResource {
     
 private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+@Inject
 private UsuarioLogic ulogic;
 @POST
 public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
