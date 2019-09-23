@@ -5,26 +5,26 @@
  */
 package co.edu.uniandes.csw.eventos.dtos;
 
-import co.edu.uniandes.csw.eventos.entities.PseEntity;
+import co.edu.uniandes.csw.eventos.entities.PagoEntity;
 import java.io.Serializable;
 
 /**
  *
- * @author Santiaguito Leal
+ * @author Danisanti Tenjo
  */
-public class PseDetailDTO extends PseDTO implements Serializable{
+public class PagoDetailDTO extends PagoDTO implements Serializable{
 
-    public PseDetailDTO() {
+    public PagoDetailDTO() {
         super();
     }
 
-    public PseDetailDTO(PseEntity pseEntity) {
-        super(pseEntity);
+    public PagoDetailDTO(PagoEntity pagoEntity) {
+        super(pagoEntity);
 
     }
 
-    public PseEntity toEntity() {
-        PseEntity entidad = super.toEntity();
+    public PagoEntity toEntity() {
+        PagoEntity entidad = super.toEntity();
 
         return entidad;
     }

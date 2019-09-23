@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.eventos.dtos;
 
+import co.edu.uniandes.csw.eventos.entities.PseEntity;
 import java.io.Serializable;
 
 /**
@@ -17,9 +18,19 @@ public class PseDTO implements Serializable{
     
     public PseDTO()
     {
-        
+
     }
 
+    public PseDTO(PseEntity entidad) {
+        setCorreo(entidad.getCorreo());
+
+    }
+     public PseEntity toEntity() {
+         PseEntity entidad = new PseEntity();
+         entidad.setCorreo(this.getCorreo());
+
+         return entidad;
+     }
     /**
      * @return the correo
      */
