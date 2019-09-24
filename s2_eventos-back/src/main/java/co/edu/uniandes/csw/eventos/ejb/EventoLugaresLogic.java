@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.eventos.ejb;
 
+import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import co.edu.uniandes.csw.eventos.persistence.LugarPersistence;
@@ -41,5 +42,20 @@ public class EventoLugaresLogic {
     public List<LugarEntity> getLugares(Long eventosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar los lugares asociados al evento con id = {0}", eventosId);
         return eventoPersistence.find(eventosId).getLugares();
+    }
+    
+     /**
+     * Agregar un lugar al evento
+     *
+     * @param lugaresId El id del lugar a guardar
+     * @param eventosId El id del evento en la cual se va a guardar el lugar.
+     * @return el lugar creado.
+     */
+    public LugarEntity addLugar(Long lugaresId, Long eventosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregarle un lugar al evento con id = {0}", eventosId);
+        EventoEntity eventoEntity = eventoPersistence.find(eventosId);
+        LugarEntity lugarEntity = lugarPersistence.find(lugaresId);
+        LOGGER.log(Level.INFO, "Termina proceso de agregarle un lugar al evento con id = {0}", eventosId);
+        return lugarEntity;
     }
 }
