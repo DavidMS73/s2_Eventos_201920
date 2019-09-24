@@ -33,6 +33,14 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<ActividadEventoEntity> actividadesEvento = new ArrayList<ActividadEventoEntity>();
     
     /**
+     * Atributo que modela las actividadesEvento del evento
+     */
+    @PodamExclude
+    @OneToMany
+    private List<LugarEntity> lugares = new ArrayList<LugarEntity>();
+    
+    
+    /**
      * Atributo que modela el nombre del evento
      */
     private String nombre;
@@ -227,4 +235,20 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public void setActividadesEvento(List<ActividadEventoEntity> actividadesEvento) {
         this.actividadesEvento = actividadesEvento;
     }
+
+    /**
+     * @return the lugares
+     */
+    public List<LugarEntity> getLugares() {
+        return lugares;
+    }
+
+    /**
+     * @param lugares the lugares to set
+     */
+    public void setLugares(List<LugarEntity> lugares) {
+        this.lugares = lugares;
+    }
+    
+    
 }

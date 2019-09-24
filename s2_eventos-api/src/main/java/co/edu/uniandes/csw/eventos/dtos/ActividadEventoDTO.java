@@ -16,6 +16,12 @@ import java.util.Date;
 public class ActividadEventoDTO implements Serializable {
 
     private Long id;
+    
+    /**
+     * Atributo que modela el evento asociado a la actividad
+     */
+    private EventoDTO evento;
+    
     /**
      * Atributo que modela el nombre de la actividad del evento
      */
@@ -44,14 +50,34 @@ public class ActividadEventoDTO implements Serializable {
     public ActividadEventoDTO() {
         // Constructor
     }
-    
     public ActividadEventoDTO(ActividadEventoEntity entidad) {
         setId(entidad.getId());
+        if(entidad.getEvento() == null){
+            setEvento(null);
+        }
+        else{
+            setEvento(new EventoDTO(entidad.getEvento()));
+        }
         setNombre(entidad.getNombre());
         setDescripcion(entidad.getDescripcion());
         setHoraInicio(entidad.getHoraInicio());
         setHoraFin(entidad.getHoraFin());
         setFecha(entidad.getFecha());
+    }
+    
+    public ActividadEventoEntity toEntity() {
+        ActividadEventoEntity entidad = new ActividadEventoEntity();
+        entidad.setId(this.getId());
+        entidad.setNombre(this.getNombre());
+        entidad.setDescripcion(this.getDescripcion());
+        entidad.setHoraInicio(this.getHoraInicio());
+        entidad.setHoraFin(this.getHoraFin());
+        entidad.setFecha(this.getFecha());
+        if (this.getEvento() != null) {
+            entidad.setEvento(this.getEvento().toEntity());
+        }
+
+        return entidad;
     }
 
     /**
@@ -137,5 +163,21 @@ public class ActividadEventoDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    /**
+     * @return the evento
+     */
+    public EventoDTO getEvento() {
+        return evento;
+    }
+
+    /**
+     * @param evento the evento to set
+     */
+    public void setEvento(EventoDTO evento) {
+        this.evento = evento;
+    }
+    
+    
     
 }

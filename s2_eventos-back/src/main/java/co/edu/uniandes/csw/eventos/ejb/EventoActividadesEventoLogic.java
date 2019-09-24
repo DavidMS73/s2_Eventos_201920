@@ -81,4 +81,18 @@ public class EventoActividadesEventoLogic {
         }
         throw new BusinessLogicException("La actividad no está asociada al evento");
     }
+    
+    /**
+     * Desasocia una actividad existente de un evento existente
+     *
+     * @param eventosId Identificador de la instancia de Evento
+     * @param actividadesId Identificador de la instancia de ActividadEvento
+     */
+    public void removeActividad(Long eventosId, Long actividadesId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar una actividad del evento con id = {0}", eventosId);
+        EventoEntity eventoEntity = eventoPersistence.find(eventosId);
+        ActividadEventoEntity actividadEntity = actividadPersistence.find(actividadesId);
+        eventoEntity.getActividadesEvento().remove(actividadEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar una actividad del evento con id = {0}", eventosId);
+    }
 }
