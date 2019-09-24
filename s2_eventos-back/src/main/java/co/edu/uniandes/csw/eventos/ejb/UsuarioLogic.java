@@ -22,7 +22,6 @@ public class UsuarioLogic {
     private UsuarioPersistence persistence;
 
     public UsuarioEntity createUsuario(UsuarioEntity usuario) throws BusinessLogicException {
-        UsuarioEntity e = persistence.find(usuario.getId());
         if (usuario.getNombre() == null) {
             throw new BusinessLogicException("El nombre del usuario esta vacio");
         }

@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.eventos.entities;
 
 import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
-import com.sun.prism.PixelFormat.DataType;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import uk.co.jemos.podam.common.PodamStrategyValue;
@@ -25,9 +24,9 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
 
     private String contrasena;
 
-    private Boolean asiste;
+    private String asiste;
 
-    private DataType codigoQR;
+    private String codigoQR;
 
     private String empresa;
     //  private PagoEntity pago;
@@ -81,28 +80,28 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     /**
      * @return the asiste
      */
-    public Boolean getAsiste() {
+    public String getAsiste() {
         return asiste;
     }
 
     /**
      * @param asiste the asiste to set
      */
-    public void setAsiste(Boolean asiste) {
+    public void setAsiste(String asiste) {
         this.asiste = asiste;
     }
 
     /**
      * @return the codigoQR
      */
-    public DataType getCodigoQR() {
+    public String getCodigoQR() {
         return codigoQR;
     }
 
     /**
      * @param codigoQR the codigoQR to set
      */
-    public void setCodigoQR(DataType codigoQR) {
+    public void setCodigoQR(String codigoQR) {
         this.codigoQR = codigoQR;
     }
 
