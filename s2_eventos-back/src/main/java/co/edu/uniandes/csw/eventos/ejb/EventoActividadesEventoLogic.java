@@ -74,6 +74,9 @@ public class EventoActividadesEventoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar la actividad con id = {0} del evento con id = " + eventosId, actividadesId);
         List<ActividadEventoEntity> actividades = eventoPersistence.find(eventosId).getActividadesEvento();
         ActividadEventoEntity actividadEntity = actividadPersistence.find(actividadesId);
+        if(actividadEntity == null){
+            return null;
+        }
         int index = actividades.indexOf(actividadEntity);
         LOGGER.log(Level.INFO, "Termina proceso de consultar la actividad con id = {0} del evento con id = " + eventosId, actividadesId);
         if (index >= 0) {
