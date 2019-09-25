@@ -55,7 +55,8 @@ public class EventoLugaresLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de agregarle un lugar al evento con id = {0}", eventosId);
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
         LugarEntity lugarEntity = lugarPersistence.find(lugaresId);
-        LOGGER.log(Level.INFO, "Termina proceso de agregarle un lugar al evento con id = {0}", eventosId);
+        eventoEntity.getLugares().add(lugarEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de a+gregarle un lugar al evento con id = {0}", eventosId);
         return lugarEntity;
     }
 }
