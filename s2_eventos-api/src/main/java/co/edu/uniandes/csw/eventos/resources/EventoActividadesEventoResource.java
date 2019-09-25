@@ -65,7 +65,7 @@ public class EventoActividadesEventoResource {
     * evento. Si no hay ninguno retorna una lista vacía.
     */
     @GET
-    public List<ActividadEventoDTO> getBooks(@PathParam("eventosId") Long eventosId) {
+    public List<ActividadEventoDTO> getActividades(@PathParam("eventosId") Long eventosId) {
       LOGGER.log(Level.INFO, "EventoResource getActividades: input: {0}", eventosId);
       List<ActividadEventoDTO> actividadesDTO = actividadesEntityToDTO(eventoActividadesLogic.getActividades(eventosId));
       LOGGER.log(Level.INFO, "EventoResource getActividades: output: {0}", actividadesDTO);
