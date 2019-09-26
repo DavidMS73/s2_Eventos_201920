@@ -99,7 +99,7 @@ public class PagoPersistenceTest {
 
         PagoEntity entity = em.find(PagoEntity.class, result.getId());
 
-        Assert.assertEquals(pago.getFecha(), entity.getFecha());
+        Assert.assertEquals(pago.getId(), entity.getId());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class PagoPersistenceTest {
 
         PagoEntity resp = em.find(PagoEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
+        Assert.assertEquals(newEntity.getId(), resp.getId());
     }
 
 }

@@ -55,7 +55,7 @@ public class PagoLogicTest {
         Assert.assertNotNull(result);
 
         PagoEntity entity = em.find(PagoEntity.class, result.getId());
-        Assert.assertEquals(entity.getFecha(), result.getFecha());
+        Assert.assertEquals(entity.getId(), result.getId());
     }
 
     @Test(expected = BusinessLogicException.class)
