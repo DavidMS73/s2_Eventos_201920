@@ -13,9 +13,14 @@ import javax.persistence.Entity;
  * @author Daniel Santiago Tenjo
  */
 @Entity
-public class PseEntity extends MedioPagoEntity implements Serializable {
+public class PseEntity extends BaseEntity implements Serializable {
 
     private String correo;
+    
+    public PseEntity()
+    {
+        
+    }
 
     /**
      * @return the correo

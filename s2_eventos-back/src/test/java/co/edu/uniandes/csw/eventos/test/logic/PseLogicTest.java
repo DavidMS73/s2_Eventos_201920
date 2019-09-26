@@ -48,11 +48,11 @@ public class PseLogicTest {
     }
 
     @Test
-    public void createEventoTest() throws BusinessLogicException {
+    public void createPseTest() throws BusinessLogicException {
 
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
         newEntity.setCorreo("germanElNegritoDeOjosClaros@gmail.com");
-        PseEntity result = pseLogic.createPago(newEntity);
+        PseEntity result = pseLogic.createPse(newEntity);
         Assert.assertNotNull(result);
 
         PseEntity entity = em.find(PseEntity.class, result.getId());
@@ -64,14 +64,14 @@ public class PseLogicTest {
     public void createPseCorreoNullTest() throws BusinessLogicException {
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
         newEntity.setCorreo(null);
-        pseLogic.createPago(newEntity);
+        pseLogic.createPse(newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createPseCorreoSinArrobaTest() throws BusinessLogicException {
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
-        newEntity.setCorreo("Pachitoelsexi");
-        pseLogic.createPago(newEntity);
+        newEntity.setCorreo("GermancitoElsexi");
+        pseLogic.createPse(newEntity);
     }
 
 }

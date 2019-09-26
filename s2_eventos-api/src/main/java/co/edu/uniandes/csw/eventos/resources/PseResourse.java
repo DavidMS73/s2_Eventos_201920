@@ -34,9 +34,9 @@ public class PseResourse {
     private static final Logger LOGGER= Logger.getLogger(PseResourse.class.getName());
     
     @POST
-    public PseDTO createEvento(PseDTO evento) throws BusinessLogicException {
+    public PseDTO createPse(PseDTO pse) throws BusinessLogicException {
 
-        PseEntity pseEntity = evento.toEntity();
+        PseEntity pseEntity = pse.toEntity();
         pseEntity = logica.createPse(pseEntity);
         return new PseDTO(pseEntity);
     }

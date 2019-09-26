@@ -21,7 +21,7 @@ public class PseLogic {
     @Inject
     private PsePersistence persistence;
 
-    public PseEntity createPago(PseEntity pse) throws BusinessLogicException {
+    public PseEntity createPse(PseEntity pse) throws BusinessLogicException {
         if (pse.getCorreo() == null) {
             throw new BusinessLogicException("El correo está vacio");
         }
