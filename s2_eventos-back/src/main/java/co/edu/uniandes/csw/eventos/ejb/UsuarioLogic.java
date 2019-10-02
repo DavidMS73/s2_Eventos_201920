@@ -45,6 +45,10 @@ public class UsuarioLogic {
         if (usuario.getCorreo().contains("@uniandes.edu.co") == false) {
             throw new BusinessLogicException("El correo del usuario no es valido");
         }
+        if(persistence.findByName(usuario.getCorreo())!=null){
+            throw new BusinessLogicException("El correo del usuario ya existe");
+
+        }
         usuario = persistence.create(usuario);
         return usuario;
     }

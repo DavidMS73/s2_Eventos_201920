@@ -46,7 +46,7 @@ public class UsuarioPersistence {
     }
 
     public UsuarioEntity findByName(String name) {
-        TypedQuery query = em.createQuery("select u from UsuarioEntity u where u.nombre = :name", UsuarioEntity.class);
+        TypedQuery query = em.createQuery("select u from UsuarioEntity u where u.correo = :name", UsuarioEntity.class);
         query = query.setParameter("name", name);
         List<UsuarioEntity> sameName = query.getResultList();
         UsuarioEntity result;
