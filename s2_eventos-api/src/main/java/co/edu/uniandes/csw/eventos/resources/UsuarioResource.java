@@ -77,7 +77,7 @@ public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
     }
     @PUT
     @Path("{usuariosId: \\d+}")
-    public UsuarioDTO updateAuthor(@PathParam("usuariosId") Long usuariosId, UsuarioDTO usuario) {
+    public UsuarioDTO updateUsuario(@PathParam("usuariosId") Long usuariosId, UsuarioDTO usuario) {
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: input: usuariosId: {0} , usuario: {1}", new Object[]{usuariosId, usuario});
         usuario.setId(usuariosId);
         if (ulogic.getUsuario(usuariosId) == null) {
