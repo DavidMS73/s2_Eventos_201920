@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author Estudiante
+ * @author Gabriel Jose Gonzalez Pereira
  */
 @Entity
 public class LugarEntity extends BaseEntity implements Serializable {

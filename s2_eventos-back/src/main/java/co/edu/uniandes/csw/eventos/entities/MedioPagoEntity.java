@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author Estudiante
+ * @author Samuel Osorio
  */
 @Entity
 public class MedioPagoEntity extends BaseEntity implements Serializable{
