@@ -45,14 +45,15 @@ public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
         UsuarioEntity usuarioEntity = usuario.toEntity();
         usuarioEntity = ulogic.createUsuario(usuarioEntity);
         UsuarioDTO nuevoEditorialDTO = new UsuarioDTO(usuarioEntity);
-        LOGGER.log(Level.INFO, "usuarioResource createEditorial: output: {0}", nuevoEditorialDTO);
+        LOGGER.log(Level.INFO, "UsuarioResource createEditorial: output: {0}", nuevoEditorialDTO);
     return nuevoEditorialDTO;
 }
+
  @GET
     public List<UsuarioDTO> getUsuarios() {
         LOGGER.info("UsuarioResource getUsuarios: input: void");
         List<UsuarioDTO> listaUsuarios = listEntity2DTO(ulogic.getUsuarios());
-        LOGGER.log(Level.INFO, "UsuariosResource getAuthors: output: {0}", listaUsuarios);
+        LOGGER.log(Level.INFO, "UsuarioResource getUsuarios: output: {0}", listaUsuarios);
         return listaUsuarios;
     }
     private List<UsuarioDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
