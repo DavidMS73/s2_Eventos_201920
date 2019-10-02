@@ -53,13 +53,13 @@ public class MultimediaResource
     public MultimediaDTO getMultimedia(@PathParam("mutlimediasId") Long multimediasId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "MultimediaResource getMultimedia: input: {0}", multimediasId);
-        MultimediaEntity multimediaEntity = logic.getMultimedia(multimediasId);
-        if(multimediaEntity == null)
+        MultimediaEntity entity = logic.getMultimedia(multimediasId);
+        if(entity == null)
         {
             throw new WebApplicationException("El recurso /multimedias/" + multimediasId + "no existe", 404);
         }
        
-        MultimediaDTO multimediaDTO = new MultimediaDTO(multimediaEntity);
+        MultimediaDTO multimediaDTO = new MultimediaDTO(entity);
         LOGGER.log(Level.INFO, "MultimediaResource getMultimedia: output: {0}", multimediaDTO);
         return multimediaDTO;
     }
@@ -88,7 +88,7 @@ public class MultimediaResource
         MultimediaEntity entity = logic.getMultimedia(multimediasId);
         if(entity == null)
         {
-            throw new WebApplicationException("El recurso /multimedias/" + multimediasId + "no existe.", 404);
+            throw new WebApplicationException("El recurso /multimedias/" + multimediasId + " no existe.", 404);
         }
        
         logic.deleteMultimedia(multimediasId);
