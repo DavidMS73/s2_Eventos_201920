@@ -48,8 +48,6 @@ public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
         LOGGER.log(Level.INFO, "UsuarioResource createEditorial: output: {0}", nuevoEditorialDTO);
     return nuevoEditorialDTO;
 }
-
- 
  @GET
     @Path("{usuariosId: \\d+}")
     public UsuarioDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
