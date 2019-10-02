@@ -50,5 +50,17 @@ public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
 }
 
  
+ @GET
+    @Path("{usuariosId: \\d+}")
+    public UsuarioDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
+        LOGGER.log(Level.INFO, "UsuarioResource getUsuario: input: {0}", usuariosId);
+        UsuarioEntity usuarioEntity = ulogic.getUsuario(usuariosId);
+        if (usuarioEntity == null) {
+            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+        }
+        UsuarioDTO detailDTO = new UsuarioDTO(usuarioEntity);
+        LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
+        return detailDTO;
+    }
 
 }
