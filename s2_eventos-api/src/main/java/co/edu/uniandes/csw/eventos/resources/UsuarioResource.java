@@ -49,53 +49,6 @@ public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
     return nuevoEditorialDTO;
 }
 
- @GET
-    public List<UsuarioDTO> getUsuarios() {
-        LOGGER.info("UsuarioResource getUsuarios: input: void");
-        List<UsuarioDTO> listaUsuarios = listEntity2DTO(ulogic.getUsuarios());
-        LOGGER.log(Level.INFO, "UsuarioResource getUsuarios: output: {0}", listaUsuarios);
-        return listaUsuarios;
-    }
-    private List<UsuarioDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
-        List<UsuarioDTO> list = new ArrayList<>();
-        for (UsuarioEntity entity : entityList) {
-            list.add(new UsuarioDTO(entity));
-        }
-        return list;
-    }
-    @GET
-    @Path("{usuariosId: \\d+}")
-    public UsuarioDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
-        LOGGER.log(Level.INFO, "UsuarioResource getUsuario: input: {0}", usuariosId);
-        UsuarioEntity usuarioEntity = ulogic.getUsuario(usuariosId);
-        if (usuarioEntity == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
-        }
-        UsuarioDTO detailDTO = new UsuarioDTO(usuarioEntity);
-        LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
-        return detailDTO;
-    }
-    @PUT
-    @Path("{usuariosId: \\d+}")
-    public UsuarioDTO updateUsuario(@PathParam("usuariosId") Long usuariosId, UsuarioDTO usuario) {
-        LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: input: usuariosId: {0} , usuario: {1}", new Object[]{usuariosId, usuario});
-        usuario.setId(usuariosId);
-        if (ulogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /authors/" + usuariosId + " no existe.", 404);
-        }
-        UsuarioDTO detailDTO = new UsuarioDTO(ulogic.updateUsuario(usuariosId, usuario.toEntity()));
-        LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: output: {0}", detailDTO);
-        return detailDTO;
-    }
-    @DELETE
-    @Path("{usuariosId: \\d+}")
-    public void deleteUsuario(@PathParam("usuariosId") Long usuariosId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "UsuarioResource deleteUsuario: input: {0}", usuariosId);
-        if (ulogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
-        }
-        ulogic.deleteUsuario(usuariosId);
-        LOGGER.info("UsuarioResource deleteUsuario: output: void");
-    }
+ 
 
 }
