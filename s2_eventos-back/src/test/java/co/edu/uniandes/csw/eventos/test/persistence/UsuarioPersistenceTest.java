@@ -144,9 +144,9 @@ public class UsuarioPersistenceTest {
     @Test
     public void findUsuarioByNameTest() {
         UsuarioEntity entity = data.get(0);
-        UsuarioEntity newEntity = up.findByName(entity.getNombre());
+        UsuarioEntity newEntity = up.findByName(entity.getCorreo());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getCorreo(), newEntity.getCorreo());
 
         newEntity = up.findByName(null);
         Assert.assertNull(newEntity);
