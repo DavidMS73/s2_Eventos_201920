@@ -49,7 +49,7 @@ public class MultimediaResource
     }
    
     @GET
-    @Path("{multimediasId: \\d+")
+    @Path("{multimediasId: \\d+}")
     public MultimediaDTO getMultimedia(@PathParam("mutlimediasId") Long multimediasId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "MultimediaResource getMultimedia: input: {0}", multimediasId);
@@ -65,7 +65,7 @@ public class MultimediaResource
     }
    
     @PUT
-    @Path("{multimediasId: \\d+")
+    @Path("{multimediasId: \\d+}")
     public MultimediaDTO updateMultimedia(@PathParam("multimediasId") Long multimediasId, MultimediaDTO multimedia) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "MultimediaResource updateMultimedia: input: id: {0}, multimedia: {1}", new Object[]{multimediasId, multimedia});
@@ -81,7 +81,7 @@ public class MultimediaResource
     }
    
     @DELETE
-    @Path("{multimediasId: \\d+")
+    @Path("{multimediasId: \\d+}")
     public void deleteMultimedia(@PathParam("multimediasId") Long multimediasId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "MultimediaResource deleteMultimedia: input: {0}", multimediasId);

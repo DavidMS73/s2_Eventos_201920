@@ -48,7 +48,7 @@ public class MemoriaResource
     }
    
     @GET
-    @Path("{memoriasId: \\d+")
+    @Path("{memoriasId: \\d+}")
     public MemoriaDTO getMemoria(@PathParam("memoriassId") Long memoriasId)
     {
         LOGGER.log(Level.INFO, "MemoriaResource getMemoria: input: {0}", memoriasId);
@@ -64,7 +64,7 @@ public class MemoriaResource
     }
    
     @PUT
-    @Path("{memoriasId: \\d+")
+    @Path("{memoriasId: \\d+}")
     public MemoriaDTO updateMultimedia(@PathParam("memoriasId") Long memoriasId, MemoriaDTO memoria) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "MemoriaResource updateMemoria: input: id: {0}, memoria: {1}", new Object[]{memoriasId, memoria});
@@ -80,7 +80,7 @@ public class MemoriaResource
     }
    
     @DELETE
-    @Path("{memoriasId: \\d+")
+    @Path("{memoriasId: \\d+}")
     public void deleteMemoria(@PathParam("memoriasId") Long memoriasId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "MemoriaResource deleteMemoria: input: {0}", memoriasId);

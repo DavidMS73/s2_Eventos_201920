@@ -41,7 +41,6 @@ private UsuarioLogic ulogic;
 @POST
 public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
 {
-    ulogic = new UsuarioLogic();
     LOGGER.log(Level.INFO, "UsuarioResource createEditorial: input: {0}", usuario);
         UsuarioEntity usuarioEntity = usuario.toEntity();
         usuarioEntity = ulogic.createUsuario(usuarioEntity);
@@ -52,7 +51,6 @@ public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
 
  @GET
 public List<UsuarioDTO> getUsuarios() {
-        ulogic = new UsuarioLogic();
         LOGGER.info("UsuarioResource getUsuarios: input: void");
         List<UsuarioDTO> listaUsuarios = listEntity2DTO(ulogic.getUsuarios());
         LOGGER.log(Level.INFO, "UsuarioResource getUsuarios: output: {0}", listaUsuarios);
@@ -68,7 +66,6 @@ public List<UsuarioDTO> getUsuarios() {
     @GET
     @Path("{usuariosId: \\d+}")
     public UsuarioDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
-            ulogic = new UsuarioLogic();
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: input: {0}", usuariosId);
         UsuarioEntity usuarioEntity = ulogic.getUsuario(usuariosId);
         if (usuarioEntity == null) {
@@ -81,8 +78,6 @@ public List<UsuarioDTO> getUsuarios() {
     @PUT
     @Path("{usuariosId: \\d+}")
     public UsuarioDTO updateUsuario(@PathParam("usuariosId") Long usuariosId, UsuarioDTO usuario) {
-            ulogic = new UsuarioLogic();
-
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: input: usuariosId: {0} , usuario: {1}", new Object[]{usuariosId, usuario});
         usuario.setId(usuariosId);
         if (ulogic.getUsuario(usuariosId) == null) {
@@ -95,8 +90,6 @@ public List<UsuarioDTO> getUsuarios() {
     @DELETE
     @Path("{usuariosId: \\d+}")
     public void deleteUsuario(@PathParam("usuariosId") Long usuariosId) throws BusinessLogicException {
-            ulogic = new UsuarioLogic();
-
         LOGGER.log(Level.INFO, "UsuarioResource deleteUsuario: input: {0}", usuariosId);
         if (ulogic.getUsuario(usuariosId) == null) {
             throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
