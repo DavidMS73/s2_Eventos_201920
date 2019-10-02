@@ -52,13 +52,13 @@ public class MemoriaResource
     public MemoriaDTO getMemoria(@PathParam("memoriassId") Long memoriasId)
     {
         LOGGER.log(Level.INFO, "MemoriaResource getMemoria: input: {0}", memoriasId);
-        MemoriaEntity memoriaEntity = logic.getMemoria(memoriasId);
-        if(memoriaEntity == null)
+        MemoriaEntity entity = logic.getMemoria(memoriasId);
+        if(entity == null)
         {
             throw new WebApplicationException("El recurso /memorias/" + memoriasId + "no existe.", 404);
         }
        
-        MemoriaDTO memoriaDTO = new MemoriaDTO(memoriaEntity);
+        MemoriaDTO memoriaDTO = new MemoriaDTO(entity);
         LOGGER.log(Level.INFO, "MemoriaResource getMemoria: output: {0}", memoriaDTO);
         return memoriaDTO;
     }
