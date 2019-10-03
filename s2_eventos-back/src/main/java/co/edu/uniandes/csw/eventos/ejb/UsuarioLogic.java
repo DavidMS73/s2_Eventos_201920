@@ -21,7 +21,7 @@ import javax.inject.Inject;
 @Stateless
 public class UsuarioLogic {
 
-    private static final Logger LOGGER = Logger.getLogger(EventoLogic.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UsuarioLogic.class.getName());
     
     @Inject
     private UsuarioPersistence persistence;
@@ -41,6 +41,9 @@ public class UsuarioLogic {
         }
         if (usuario.getCodigoQR() == null) {
             throw new BusinessLogicException("El codigo QR del usuario es nulo");
+        }
+        if(usuario.getAsiste()==null){
+            throw new BusinessLogicException("La informacion de asistencia del usuario es nula");
         }
         if (usuario.getCorreo().contains("@uniandes.edu.co") == false) {
             throw new BusinessLogicException("El correo del usuario no es valido");
