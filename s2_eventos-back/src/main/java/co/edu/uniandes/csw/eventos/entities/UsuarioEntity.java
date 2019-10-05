@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.eventos.entities;
 import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -29,7 +31,9 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String codigoQR;
 
     private String empresa;
-    //  private PagoEntity pago;
+    
+    @OneToOne(mappedBy = "responsable", fetch=FetchType.LAZY)
+    private EventoEntity evento;
 
     public UsuarioEntity() {
         //Constructor
@@ -117,6 +121,20 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      */
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
+    }
+
+    /**
+     * @return the evento
+     */
+    public EventoEntity getEvento() {
+        return evento;
+    }
+
+    /**
+     * @param evento the evento to set
+     */
+    public void setEvento(EventoEntity evento) {
+        this.evento = evento;
     }
 
 }

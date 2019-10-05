@@ -17,8 +17,8 @@ import javax.persistence.TypedQuery;
  * @author Daniel Betancurth Dorado
  */
 @Stateless
-public class UsuarioPersistence {
-
+public class UsuarioPersistence 
+{
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
 
@@ -40,7 +40,8 @@ public class UsuarioPersistence {
         return em.merge(evento);
     }
 
-    public void delete(Long eventoId) {
+    public void delete(Long eventoId) 
+    {
         UsuarioEntity entity = em.find(UsuarioEntity.class, eventoId);
         em.remove(entity);
     }

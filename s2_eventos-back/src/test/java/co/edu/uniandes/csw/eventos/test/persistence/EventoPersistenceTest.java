@@ -6,7 +6,9 @@
 package co.edu.uniandes.csw.eventos.test.persistence;
 
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
+import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -29,7 +31,20 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Germán David Martínez Solano
  */
 @RunWith(Arquillian.class)
-public class EventoPersistenceTest {
+public class EventoPersistenceTest 
+{
+@Inject
+    UserTransaction utx;
+
+    @Inject
+    private EventoPersistence ep;
+    @Inject
+    private UsuarioPersistence up;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    private List<EventoEntity> data = new ArrayList<EventoEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -40,17 +55,7 @@ public class EventoPersistenceTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
-    @Inject
-    UserTransaction utx;
-
-    @Inject
-    private EventoPersistence ep;
-
-    @PersistenceContext
-    private EntityManager em;
-
-    private List<EventoEntity> data = new ArrayList<EventoEntity>();
-
+    
     @Before
     public void setUp() {
         try {
@@ -69,14 +74,21 @@ public class EventoPersistenceTest {
         }
     }
 
-    private void clearData() {
-        em.createQuery("delete from EventoEntity").executeUpdate();
+    private void clearData() 
+    {
+     em.createQuery("delete from EventoEntity").executeUpdate();
+     em.createQuery("delete from UsuarioEntity").executeUpdate();
+
     }
 
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+            UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
+            entity.setResponsable(usuario);
+            usuario.setEvento(entity);
+            em.persist(usuario);
             em.persist(entity);
             data.add(entity);
         }

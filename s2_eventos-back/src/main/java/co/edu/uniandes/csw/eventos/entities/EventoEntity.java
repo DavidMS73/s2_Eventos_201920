@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -38,7 +39,8 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany
     private List<LugarEntity> lugares = new ArrayList<LugarEntity>();
-    
+    @OneToOne
+    private UsuarioEntity responsable;
     
     /**
      * Atributo que modela el nombre del evento
@@ -248,6 +250,20 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     public void setLugares(List<LugarEntity> lugares) {
         this.lugares = lugares;
+    }
+
+    /**
+     * @return the responsable
+     */
+    public UsuarioEntity getResponsable() {
+        return responsable;
+    }
+
+    /**
+     * @param responsable the responsable to set
+     */
+    public void setResponsable(UsuarioEntity responsable) {
+        this.responsable = responsable;
     }
     
     

@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.eventos.test.persistence;
 
+import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
+import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,40 +31,33 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Daniel Betancurth Dorado
  */
 @RunWith(Arquillian.class)
-public class UsuarioPersistenceTest {
+public class UsuarioPersistenceTest 
+{
+    @Inject
+    UsuarioPersistence up;
+    
+    @Inject
+    EventoPersistence ep;
 
+    @PersistenceContext
+    EntityManager em;
+
+    @Inject
+    UserTransaction utx;
+    
+    private  List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
+    
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(UsuarioEntity.class.getPackage())
                 .addPackage(UsuarioPersistence.class.getPackage())
+                .addPackage(EventoEntity.class.getPackage())
+                .addPackage(EventoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-
-    @Inject
-    UsuarioPersistence up;
-
-    @PersistenceContext
-    EntityManager em;
-
-    @Test
-    public void createUsuarioTest() {
-        PodamFactory factory = new PodamFactoryImpl();
-        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity result = up.create(usuario);
-
-        Assert.assertNotNull(result);
-
-        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
-
-        Assert.assertEquals(usuario.getNombre(), entity.getNombre());
-    }
-
-    @Inject
-    UserTransaction utx;
-    private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
-
+    
     @Before
     public void setUp() {
         try {
@@ -82,16 +77,40 @@ public class UsuarioPersistenceTest {
     }
 
     private void clearData() {
+        em.createQuery("delete from EventoEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
+
     }
 
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) 
+        {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
+            
+            evento.setResponsable(entity);
+            entity.setEvento(evento);
+            
+            em.persist(evento);            
             em.persist(entity);
             data.add(entity);
         }
+    }
+@Test
+    public void createUsuarioTest() {
+        PodamFactory factory = new PodamFactoryImpl();
+        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
+        EventoEntity evento=factory.manufacturePojo(EventoEntity.class);
+        EventoEntity evento2= ep.create(evento);
+        usuario.setEvento(evento2);
+        UsuarioEntity result = up.create(usuario);
+
+        Assert.assertNotNull(result);
+
+        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
+
+        Assert.assertEquals(usuario.getNombre(), entity.getNombre());
     }
 
     @Test
