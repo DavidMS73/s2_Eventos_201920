@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,18 +31,20 @@ public class EventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela las actividadesEvento del evento
      */
     @PodamExclude
-    @OneToMany(mappedBy = "evento")
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ActividadEventoEntity> actividadesEvento = new ArrayList<ActividadEventoEntity>();
-    
+
     /**
      * Atributo que modela las actividadesEvento del evento
      */
     @PodamExclude
     @OneToMany
     private List<LugarEntity> lugares = new ArrayList<LugarEntity>();
+
+    @PodamExclude
     @OneToOne
     private UsuarioEntity responsable;
-    
+
     /**
      * Atributo que modela el nombre del evento
      */
@@ -231,6 +234,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public List<ActividadEventoEntity> getActividadesEvento() {
         return actividadesEvento;
     }
+
     /**
      * @param actividadesEvento the actividadesEvento to set
      */
@@ -265,6 +269,5 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public void setResponsable(UsuarioEntity responsable) {
         this.responsable = responsable;
     }
-    
-    
+
 }

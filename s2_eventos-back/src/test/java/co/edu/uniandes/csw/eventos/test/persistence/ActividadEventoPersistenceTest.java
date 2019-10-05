@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.test.persistence;
 
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
+import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.persistence.ActividadEventoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class ActividadEventoPersistenceTest {
 
     private List<ActividadEventoEntity> data = new ArrayList<ActividadEventoEntity>();
 
+    private List<EventoEntity> dataEvento = new ArrayList<EventoEntity>();
+
     @Before
     public void setUp() {
         try {
@@ -71,12 +74,21 @@ public class ActividadEventoPersistenceTest {
 
     private void clearData() {
         em.createQuery("delete from ActividadEventoEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
+            EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+            em.persist(entity);
+            dataEvento.add(entity);
+        }
+        for (int i = 0; i < 3; i++) {
             ActividadEventoEntity entity = factory.manufacturePojo(ActividadEventoEntity.class);
+            if (i == 0) {
+                entity.setEvento(dataEvento.get(0));
+            }
             em.persist(entity);
             data.add(entity);
         }
@@ -87,6 +99,7 @@ public class ActividadEventoPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         ActividadEventoEntity actividadEvento = factory.manufacturePojo(ActividadEventoEntity.class);
         ActividadEventoEntity result = ep.create(actividadEvento);
+
         Assert.assertNotNull(result);
 
         ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, result.getId());
@@ -101,8 +114,8 @@ public class ActividadEventoPersistenceTest {
 
     @Test
     public void getActividadesEventosTest() {
-        List<ActividadEventoEntity> list = ep.findAll();
-        Assert.assertEquals(data.size(), list.size());
+        List<ActividadEventoEntity> list = ep.findAllOfAnEvent(dataEvento.get(0).getId());
+        Assert.assertEquals(1, list.size());
         for (ActividadEventoEntity ent : list) {
             boolean found = false;
             for (ActividadEventoEntity entity : data) {
@@ -117,7 +130,7 @@ public class ActividadEventoPersistenceTest {
     @Test
     public void getActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);
-        ActividadEventoEntity newEntity = ep.find(entity.getId());
+        ActividadEventoEntity newEntity = ep.find(dataEvento.get(0).getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
@@ -153,16 +166,5 @@ public class ActividadEventoPersistenceTest {
         Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
         Assert.assertEquals(newEntity.getHoraInicio(), resp.getHoraInicio());
         Assert.assertEquals(newEntity.getHoraFin(), resp.getHoraFin());
-    }
-
-    @Test
-    public void findActividadEventoByNameTest() {
-        ActividadEventoEntity entity = data.get(0);
-        ActividadEventoEntity newEntity = ep.findByName(entity.getNombre());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-
-        newEntity = ep.findByName(null);
-        Assert.assertNull(newEntity);
     }
 }

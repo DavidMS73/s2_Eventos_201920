@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.eventos.entities;
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -26,9 +27,9 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela el evento asociado a la actividad
      */
     @PodamExclude
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private EventoEntity evento;
-    
+
     /**
      * Atributo que modela el nombre de la actividad del evento
      */
@@ -139,6 +140,7 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     public EventoEntity getEvento() {
         return evento;
     }
+
     /**
      * @param evento the evento to set
      */

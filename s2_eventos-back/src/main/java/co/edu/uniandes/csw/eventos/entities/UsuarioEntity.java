@@ -10,6 +10,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -31,9 +32,10 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String codigoQR;
 
     private String empresa;
-    
-    @OneToOne(mappedBy = "responsable", fetch=FetchType.LAZY)
-    private EventoEntity evento;
+
+    @PodamExclude
+    @OneToOne(mappedBy = "responsable", fetch = FetchType.LAZY)
+    private EventoEntity eventoResponsable;
 
     public UsuarioEntity() {
         //Constructor
@@ -124,17 +126,16 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the evento
+     * @return the eventoResponsable
      */
-    public EventoEntity getEvento() {
-        return evento;
+    public EventoEntity getEventoResponsable() {
+        return eventoResponsable;
     }
 
     /**
-     * @param evento the evento to set
+     * @param eventoResponsable the eventoResponsable to set
      */
-    public void setEvento(EventoEntity evento) {
-        this.evento = evento;
+    public void setEventoResponsable(EventoEntity eventoResponsable) {
+        this.eventoResponsable = eventoResponsable;
     }
-
 }

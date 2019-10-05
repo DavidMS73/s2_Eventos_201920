@@ -33,15 +33,29 @@ public class ActividadEventoPersistence {
         return actividadEvento;
     }
 
-    public ActividadEventoEntity find(Long actividadEventoEventosId) {
-        LOGGER.log(Level.INFO, "Consultando la actividad del evento con id={0}", actividadEventoEventosId);
-        return em.find(ActividadEventoEntity.class, actividadEventoEventosId);
+    public ActividadEventoEntity find(Long eventosId, Long actividadEventoEventosId) {
+        LOGGER.log(Level.INFO, "Consultando la actividad del evento con id={0} del evento con id = " + eventosId, actividadEventoEventosId);
+        TypedQuery<ActividadEventoEntity> q = em.createQuery("select p from ActividadEventoEntity p where (p.evento.id = :eventoid) and (p.id = :actividadesEventoId)", ActividadEventoEntity.class);
+        q.setParameter("eventoid", eventosId);
+        q.setParameter("actividadesEventoId", actividadEventoEventosId);
+        List<ActividadEventoEntity> results = q.getResultList();
+        ActividadEventoEntity actividad = null;
+        if (results == null) {
+            actividad = null;
+        } else if (results.isEmpty()) {
+            actividad = null;
+        } else if (results.size() >= 1) {
+            actividad = results.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar la actividad del evento con id = {0} del evento con id =" + eventosId, actividadEventoEventosId);
+        return actividad;
     }
 
-    public List<ActividadEventoEntity> findAll() {
+    public List<ActividadEventoEntity> findAllOfAnEvent(Long eventosId) {
         LOGGER.log(Level.INFO, "Consultando todas las actividades del evento");
-        TypedQuery<ActividadEventoEntity> query = em.createQuery("select u from ActividadEventoEntity u", ActividadEventoEntity.class);
-        return query.getResultList();
+        TypedQuery<ActividadEventoEntity> q = em.createQuery("select p from ActividadEventoEntity p where (p.evento.id = :eventoid)", ActividadEventoEntity.class);
+        q.setParameter("eventoid", eventosId);
+        return q.getResultList();
     }
 
     public ActividadEventoEntity update(ActividadEventoEntity actividadEvento) {
@@ -53,23 +67,6 @@ public class ActividadEventoPersistence {
         LOGGER.log(Level.INFO, "Borrando la actividad del evento con id={0}", actividadEventoId);
         ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, actividadEventoId);
         em.remove(entity);
-    }
-
-    public ActividadEventoEntity findByName(String name) {
-        LOGGER.log(Level.INFO, "Consultando actividades de evento por nombre ", name);
-        TypedQuery query = em.createQuery("select u from ActividadEventoEntity u where u.nombre = :name", ActividadEventoEntity.class);
-        query = query.setParameter("name", name);
-        List<ActividadEventoEntity> sameName = query.getResultList();
-        ActividadEventoEntity result;
-        if (sameName == null) {
-            result = null;
-        } else if (sameName.isEmpty()) {
-            result = null;
-        } else {
-            result = sameName.get(0);
-        }
-
-        LOGGER.log(Level.INFO, "Saliendo de consultar actividades de evento por nombre ", name);
-        return result;
+        LOGGER.log(Level.INFO, "Saliendo de borrar la actididad con id = {0}", actividadEventoId);
     }
 }

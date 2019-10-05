@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.eventos.ejb;
 
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
+import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.ActividadEventoPersistence;
+import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +28,12 @@ public class ActividadEventoLogic {
     @Inject
     private ActividadEventoPersistence persistence;
 
-    public ActividadEventoEntity createActividadEvento(ActividadEventoEntity actividad) throws BusinessLogicException {
+    @Inject
+    private EventoPersistence eventoPersistence;
+
+    public ActividadEventoEntity createActividadEvento(Long eventosId, ActividadEventoEntity actividad) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de crear actividad del evento");
+
         if (actividad.getNombre() == null) {
             throw new BusinessLogicException("El nombre de la actividad está vacío");
         }
@@ -43,37 +50,60 @@ public class ActividadEventoLogic {
             throw new BusinessLogicException("La hora final no puede ser vacía");
         }
 
+        EventoEntity evento = eventoPersistence.find(eventosId);
+        actividad.setEvento(evento);
+
+        LOGGER.log(Level.INFO, "Termina proceso de creación de la actividad del evento");
+
         actividad = persistence.create(actividad);
         return actividad;
     }
 
-    public List<ActividadEventoEntity> getEventos() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las actividades");
-        List<ActividadEventoEntity> actividadesEventos = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las actividades");
-        return actividadesEventos;
+    public List<ActividadEventoEntity> getActividadesEvento(Long eventosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las actividades asociados al evento con id = {0}", eventosId);
+        EventoEntity eventoEntity = eventoPersistence.find(eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las actividades asociados al evento con id = {0}", eventosId);
+        return eventoEntity.getActividadesEvento();
     }
 
-    public ActividadEventoEntity getEvento(Long eventosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0}", eventosId);
-        ActividadEventoEntity eventoEntity = persistence.find(eventosId);
-        if (eventoEntity == null) {
-            LOGGER.log(Level.SEVERE, "El evento con el id = {0} no existe", eventosId);
+    public ActividadEventoEntity getActividadEvento(Long eventosId, Long actividadesEventoId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la actividad del evento con id = {0} del evento con id = " + eventosId, actividadesEventoId);
+        return persistence.find(eventosId, actividadesEventoId);
+    }
+
+    public ActividadEventoEntity updateActividadEvento(Long eventosId, ActividadEventoEntity actividadEventoEntity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0} del evento con id = " + eventosId, actividadEventoEntity.getId());
+
+        if (actividadEventoEntity.getNombre() == null) {
+            throw new BusinessLogicException("El nombre de la actividad está vacío");
         }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la editorial con id = {0}", eventosId);
-        return eventoEntity;
+        if (actividadEventoEntity.getDescripcion() == null) {
+            throw new BusinessLogicException("Debe escribir una descripción");
+        }
+        if (actividadEventoEntity.getFecha() == null) {
+            throw new BusinessLogicException("La fecha no puede ser vacía");
+        }
+        if (actividadEventoEntity.getHoraInicio() == null) {
+            throw new BusinessLogicException("La hora inicial no puede ser vacía");
+        }
+        if (actividadEventoEntity.getHoraFin() == null) {
+            throw new BusinessLogicException("La hora final no puede ser vacía");
+        }
+
+        EventoEntity eventoEntity = eventoPersistence.find(eventosId);
+        actividadEventoEntity.setEvento(eventoEntity);
+        persistence.update(actividadEventoEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0} del evento con id = " + eventosId, actividadEventoEntity.getId());
+        return actividadEventoEntity;
     }
 
-    public ActividadEventoEntity updateEvento(Long eventosId, ActividadEventoEntity actividadEventoEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0}", eventosId);
-        ActividadEventoEntity newEntity = persistence.update(actividadEventoEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", actividadEventoEntity.getId());
-        return newEntity;
-    }
-
-    public void deleteEvento(Long actividadesEventosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0}", actividadesEventosId);
-        persistence.delete(actividadesEventosId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", actividadesEventosId);
+    public void deleteActividadEvento(Long eventosId, Long actividadesEventosId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0} del evento con id = " + eventosId, actividadesEventosId);
+        ActividadEventoEntity old = getActividadEvento(eventosId, actividadesEventosId);
+        if (old == null) {
+            throw new BusinessLogicException("La actividad con id = " + actividadesEventosId + " no esta asociado al evento con id = " + eventosId);
+        }
+        persistence.delete(old.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0} del evento con id = " + eventosId, actividadesEventosId);
     }
 }

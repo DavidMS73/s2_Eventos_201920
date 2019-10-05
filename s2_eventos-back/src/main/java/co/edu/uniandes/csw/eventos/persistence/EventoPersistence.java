@@ -35,12 +35,19 @@ public class EventoPersistence {
 
     public EventoEntity find(Long eventosId) {
         LOGGER.log(Level.INFO, "Consultando el evento con id={0}", eventosId);
-        return em.find(EventoEntity.class, eventosId);
+        TypedQuery<EventoEntity> query = em.createQuery("select u from EventoEntity u left join FETCH u.responsable p where u.id =:id", EventoEntity.class);
+        query = query.setParameter("id", eventosId);
+        List<EventoEntity> eventos = query.getResultList();
+        EventoEntity result = null;
+        if (!(eventos == null || eventos.isEmpty())) {
+            result = eventos.get(0);
+        }
+        return result;
     }
 
     public List<EventoEntity> findAll() {
         LOGGER.log(Level.INFO, "Consultando todos los eventos");
-        TypedQuery<EventoEntity> query = em.createQuery("select u from EventoEntity u", EventoEntity.class);
+        TypedQuery<EventoEntity> query = em.createQuery("select u from EventoEntity u left join FETCH u.responsable p", EventoEntity.class);
         return query.getResultList();
     }
 
@@ -51,8 +58,11 @@ public class EventoPersistence {
 
     public void delete(Long eventoId) {
         LOGGER.log(Level.INFO, "Borrando el evento con id={0}", eventoId);
-        EventoEntity entity = em.find(EventoEntity.class, eventoId);
-        em.remove(entity);
+        TypedQuery<EventoEntity> query = em.createQuery("select u from EventoEntity u left join FETCH u.responsable p where u.id =:id", EventoEntity.class);
+        query = query.setParameter("id", eventoId);
+        EventoEntity organizationEntity = query.getSingleResult();
+
+        em.remove(organizationEntity);
     }
 
     public EventoEntity findByName(String name) {

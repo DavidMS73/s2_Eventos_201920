@@ -8,7 +8,6 @@ package co.edu.uniandes.csw.eventos.test.persistence;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
-import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,15 +30,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Germán David Martínez Solano
  */
 @RunWith(Arquillian.class)
-public class EventoPersistenceTest 
-{
-@Inject
+public class EventoPersistenceTest {
+
+    @Inject
     UserTransaction utx;
 
     @Inject
     private EventoPersistence ep;
-    @Inject
-    private UsuarioPersistence up;
 
     @PersistenceContext
     private EntityManager em;
@@ -55,7 +52,6 @@ public class EventoPersistenceTest
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
-    
     @Before
     public void setUp() {
         try {
@@ -74,24 +70,27 @@ public class EventoPersistenceTest
         }
     }
 
-    private void clearData() 
-    {
-     em.createQuery("delete from EventoEntity").executeUpdate();
-     em.createQuery("delete from UsuarioEntity").executeUpdate();
-
+    private void clearData() {
+        em.createQuery("delete from EventoEntity").executeUpdate();
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
     }
 
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
-            UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
-            entity.setResponsable(usuario);
-            usuario.setEvento(entity);
-            em.persist(usuario);
+            UsuarioEntity usuarioEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+            entity.setResponsable(usuarioEntity);
+            usuarioEntity.setEventoResponsable(entity);
             em.persist(entity);
+            em.persist(usuarioEntity);
             data.add(entity);
         }
+
+        EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+        em.persist(entity);
+        data.add(entity);
     }
 
     @Test
