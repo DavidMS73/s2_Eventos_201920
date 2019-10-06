@@ -71,8 +71,8 @@ public class EventoPersistenceTest {
     }
 
     private void clearData() {
-        em.createQuery("delete from EventoEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
     private void insertData() {
@@ -83,6 +83,7 @@ public class EventoPersistenceTest {
 
             entity.setResponsable(usuarioEntity);
             usuarioEntity.setEventoResponsable(entity);
+
             em.persist(entity);
             em.persist(usuarioEntity);
             data.add(entity);
@@ -97,7 +98,9 @@ public class EventoPersistenceTest {
     public void createEventoTest() {
         PodamFactory factory = new PodamFactoryImpl();
         EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
+
         EventoEntity result = ep.create(evento);
+
         Assert.assertNotNull(result);
 
         EventoEntity entity = em.find(EventoEntity.class, result.getId());
@@ -132,8 +135,11 @@ public class EventoPersistenceTest {
     @Test
     public void getEventoTest() {
         EventoEntity entity = data.get(0);
+
         EventoEntity newEntity = ep.find(entity.getId());
+
         Assert.assertNotNull(newEntity);
+
         Assert.assertEquals(entity.getId(), newEntity.getId());
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
         Assert.assertEquals(entity.getCategoria(), newEntity.getCategoria());
@@ -148,7 +154,7 @@ public class EventoPersistenceTest {
 
     @Test
     public void deleteEventoTest() {
-        EventoEntity entity = data.get(0);
+        EventoEntity entity = data.get(3);
         ep.delete(entity.getId());
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         Assert.assertNull(deleted);

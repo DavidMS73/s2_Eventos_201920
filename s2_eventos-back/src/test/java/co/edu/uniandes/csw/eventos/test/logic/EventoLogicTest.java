@@ -6,8 +6,8 @@
 package co.edu.uniandes.csw.eventos.test.logic;
 
 import co.edu.uniandes.csw.eventos.ejb.EventoLogic;
-import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import java.util.ArrayList;
@@ -75,6 +75,7 @@ public class EventoLogicTest {
     }
 
     private void clearData() {
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
@@ -84,6 +85,10 @@ public class EventoLogicTest {
             em.persist(entity);
             data.add(entity);
         }
+        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
+        em.persist(usuario);
+        usuario.setEventoResponsable(data.get(2));
+        data.get(2).setResponsable(usuario);
     }
 
     @Test
@@ -197,8 +202,17 @@ public class EventoLogicTest {
         pojoEntity.setId(entity.getId());
         eventoLogic.updateEvento(pojoEntity.getId(), pojoEntity);
         EventoEntity resp = em.find(EventoEntity.class, entity.getId());
+
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
         Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(pojoEntity.getCategoria(), resp.getCategoria());
+        Assert.assertEquals(pojoEntity.getDescripcion(), resp.getDescripcion());
+        Assert.assertEquals(pojoEntity.getFechaInicio(), resp.getFechaInicio());
+        Assert.assertEquals(pojoEntity.getFechaFin(), resp.getFechaFin());
+        Assert.assertEquals(pojoEntity.getEsPago(), resp.getEsPago());
+        Assert.assertEquals(pojoEntity.getDetallesAdicionales(), resp.getDetallesAdicionales());
+        Assert.assertEquals(pojoEntity.getEntradasRestantes(), resp.getEntradasRestantes());
+        Assert.assertEquals(pojoEntity.getValor(), resp.getValor());
     }
 
     @Test
@@ -208,5 +222,4 @@ public class EventoLogicTest {
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-
 }

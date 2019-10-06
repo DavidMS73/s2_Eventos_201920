@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -32,20 +33,20 @@ public class UsuarioPersistence {
     }
 
     public List<UsuarioEntity> findAll() {
-        TypedQuery<UsuarioEntity> query = em.createQuery("select u from UsuarioEntity u", UsuarioEntity.class);
+        Query query = em.createQuery("select u from UsuarioEntity u");
         return query.getResultList();
     }
 
-    public UsuarioEntity update(UsuarioEntity evento) {
-        return em.merge(evento);
+    public UsuarioEntity update(UsuarioEntity usuario) {
+        return em.merge(usuario);
     }
 
-    public void delete(Long eventoId) {
-        UsuarioEntity entity = em.find(UsuarioEntity.class, eventoId);
+    public void delete(Long usuarioId) {
+        UsuarioEntity entity = em.find(UsuarioEntity.class, usuarioId);
         em.remove(entity);
     }
 
-    public UsuarioEntity findByName(String name) {
+    public UsuarioEntity findByEmail(String name) {
         TypedQuery query = em.createQuery("select u from UsuarioEntity u where u.correo = :name", UsuarioEntity.class);
         query = query.setParameter("name", name);
         List<UsuarioEntity> sameName = query.getResultList();

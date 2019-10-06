@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -42,7 +43,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<LugarEntity> lugares = new ArrayList<LugarEntity>();
 
     @PodamExclude
-    @OneToOne
+    @OneToOne(mappedBy = "eventoResponsable", fetch = FetchType.LAZY)
     private UsuarioEntity responsable;
 
     /**
@@ -95,9 +96,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     private Long valor;
 
-    /*@PodamExclude
-    @OneToMany(mappedBy = "evento")
-    private List<ActividadEventoEntity> actividadesEvento = new ArrayList<ActividadEventoEntity>();*/
     public EventoEntity() {
         //Constructor
     }

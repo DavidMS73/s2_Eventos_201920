@@ -181,7 +181,7 @@ public class ActividadEventoLogicTest {
     }
 
     @Test
-    public void updateActividadEventoTest() throws BusinessLogicException {
+    public void updateActividadEventoTest(){
         ActividadEventoEntity entity = data.get(0);
         ActividadEventoEntity pojoEntity = factory.manufacturePojo(ActividadEventoEntity.class);
 

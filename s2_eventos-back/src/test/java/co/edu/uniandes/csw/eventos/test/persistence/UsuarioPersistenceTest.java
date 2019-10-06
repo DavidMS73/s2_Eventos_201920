@@ -48,8 +48,6 @@ public class UsuarioPersistenceTest {
 
     private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
 
-    private List<EventoEntity> dataEvento = new ArrayList<EventoEntity>();
-
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -85,13 +83,13 @@ public class UsuarioPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
-            em.persist(entity);
-            dataEvento.add(entity);
-        }
-        for (int i = 0; i < 3; i++) {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
-            entity.setEventoResponsable(dataEvento.get(0));
+            EventoEntity eventoEntity = factory.manufacturePojo(EventoEntity.class);
+
+            eventoEntity.setResponsable(entity);
+            entity.setEventoResponsable(eventoEntity);
+
+            em.persist(eventoEntity);
             em.persist(entity);
             data.add(entity);
         }
@@ -100,19 +98,19 @@ public class UsuarioPersistenceTest {
     @Test
     public void createUsuarioTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         EventoEntity newEventoEntity = factory.manufacturePojo(EventoEntity.class);
 
         newEventoEntity = ep.create(newEventoEntity);
-        usuario.setEventoResponsable(newEventoEntity);
+        newEntity.setEventoResponsable(newEventoEntity);
 
-        UsuarioEntity result = up.create(usuario);
+        UsuarioEntity result = up.create(newEntity);
 
         Assert.assertNotNull(result);
 
         UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
 
-        Assert.assertEquals(usuario.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
 
     @Test
@@ -164,11 +162,11 @@ public class UsuarioPersistenceTest {
     @Test
     public void findUsuarioByNameTest() {
         UsuarioEntity entity = data.get(0);
-        UsuarioEntity newEntity = up.findByName(entity.getCorreo());
+        UsuarioEntity newEntity = up.findByEmail(entity.getCorreo());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getCorreo(), newEntity.getCorreo());
 
-        newEntity = up.findByName(null);
+        newEntity = up.findByEmail(null);
         Assert.assertNull(newEntity);
     }
 }

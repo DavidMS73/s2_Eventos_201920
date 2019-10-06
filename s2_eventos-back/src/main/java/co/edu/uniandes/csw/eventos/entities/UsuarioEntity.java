@@ -34,7 +34,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String empresa;
 
     @PodamExclude
-    @OneToOne(mappedBy = "responsable", fetch = FetchType.LAZY)
+    @OneToOne
     private EventoEntity eventoResponsable;
 
     public UsuarioEntity() {

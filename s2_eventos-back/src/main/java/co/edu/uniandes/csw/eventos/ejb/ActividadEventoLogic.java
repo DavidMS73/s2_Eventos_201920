@@ -71,24 +71,8 @@ public class ActividadEventoLogic {
         return persistence.find(eventosId, actividadesEventoId);
     }
 
-    public ActividadEventoEntity updateActividadEvento(Long eventosId, ActividadEventoEntity actividadEventoEntity) throws BusinessLogicException {
+    public ActividadEventoEntity updateActividadEvento(Long eventosId, ActividadEventoEntity actividadEventoEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0} del evento con id = " + eventosId, actividadEventoEntity.getId());
-
-        if (actividadEventoEntity.getNombre() == null) {
-            throw new BusinessLogicException("El nombre de la actividad está vacío");
-        }
-        if (actividadEventoEntity.getDescripcion() == null) {
-            throw new BusinessLogicException("Debe escribir una descripción");
-        }
-        if (actividadEventoEntity.getFecha() == null) {
-            throw new BusinessLogicException("La fecha no puede ser vacía");
-        }
-        if (actividadEventoEntity.getHoraInicio() == null) {
-            throw new BusinessLogicException("La hora inicial no puede ser vacía");
-        }
-        if (actividadEventoEntity.getHoraFin() == null) {
-            throw new BusinessLogicException("La hora final no puede ser vacía");
-        }
 
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
         actividadEventoEntity.setEvento(eventoEntity);

@@ -60,9 +60,8 @@ public class EventoPersistence {
         LOGGER.log(Level.INFO, "Borrando el evento con id={0}", eventoId);
         TypedQuery<EventoEntity> query = em.createQuery("select u from EventoEntity u left join FETCH u.responsable p where u.id =:id", EventoEntity.class);
         query = query.setParameter("id", eventoId);
-        EventoEntity organizationEntity = query.getSingleResult();
-
-        em.remove(organizationEntity);
+        EventoEntity eventoEntity = query.getSingleResult();
+        em.remove(eventoEntity);
     }
 
     public EventoEntity findByName(String name) {

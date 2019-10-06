@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.eventos.test.logic;
 
+import co.edu.uniandes.csw.eventos.ejb.EventoLogic;
 import co.edu.uniandes.csw.eventos.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
@@ -37,24 +39,32 @@ public class UsuarioLogicTest {
 
     @Inject
     private UsuarioLogic usuarioLogic;
-    
+
+    @Inject
+    private EventoLogic eventoLogic;
+
     @Inject
     private UserTransaction utx;
 
     @PersistenceContext
     private EntityManager em;
 
-     private List<UsuarioEntity> data = new ArrayList<>();
+    private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
+
+    private List<EventoEntity> eventoData = new ArrayList<>();
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(UsuarioEntity.class.getPackage())
+                .addPackage(EventoEntity.class.getPackage())
                 .addPackage(UsuarioLogic.class.getPackage())
                 .addPackage(UsuarioPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-  /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -79,7 +89,6 @@ public class UsuarioLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from UsuarioEntity").executeUpdate();
-     
     }
 
     /**
@@ -89,12 +98,16 @@ public class UsuarioLogicTest {
     private void insertData() {
         for (int i = 0; i < 3; i++) {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            EventoEntity eventoEntity = factory.manufacturePojo(EventoEntity.class);
+            em.persist(eventoEntity);
+            entity.setEventoResponsable(eventoEntity);
+            eventoEntity.setResponsable(entity);
             em.persist(entity);
             data.add(entity);
+            eventoData.add(eventoEntity);
         }
     }
 
-   
     /**
      * Prueba para consultar la lista de Authors.
      */
@@ -116,6 +129,11 @@ public class UsuarioLogicTest {
     @Test
     public void createUsuarioTest() throws BusinessLogicException {
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        EventoEntity newEventoEntity = factory.manufacturePojo(EventoEntity.class);
+
+        newEventoEntity = eventoLogic.createEvento(newEventoEntity);
+        newEntity.setEventoResponsable(newEventoEntity);
+
         UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
         Assert.assertNotNull(result);
 
@@ -138,7 +156,6 @@ public class UsuarioLogicTest {
 
     @Test(expected = BusinessLogicException.class)
     public void createUsuarioCorreoNull() throws BusinessLogicException {
-
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setCorreo(null);
         usuarioLogic.createUsuario(newEntity);
@@ -146,11 +163,11 @@ public class UsuarioLogicTest {
 
     @Test(expected = BusinessLogicException.class)
     public void createUsuarioCorreoNoUniandes() throws BusinessLogicException {
-
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setCorreo("juan@hotmail.com");
         usuarioLogic.createUsuario(newEntity);
     }
+
     @Test(expected = BusinessLogicException.class)
     public void createUsuarioContrasenaNull() throws BusinessLogicException {
 
@@ -158,6 +175,7 @@ public class UsuarioLogicTest {
         newEntity.setContrasena(null);
         usuarioLogic.createUsuario(newEntity);
     }
+
     @Test(expected = BusinessLogicException.class)
     public void createUsuarioAsisteNull() throws BusinessLogicException {
 
@@ -165,6 +183,7 @@ public class UsuarioLogicTest {
         newEntity.setAsiste(null);
         usuarioLogic.createUsuario(newEntity);
     }
+
     @Test(expected = BusinessLogicException.class)
     public void createUsuarioCodigoQRNull() throws BusinessLogicException {
 
@@ -172,13 +191,14 @@ public class UsuarioLogicTest {
         newEntity.setCodigoQR(null);
         usuarioLogic.createUsuario(newEntity);
     }
+
     @Test(expected = BusinessLogicException.class)
     public void createUsuarioEmpresaNull() throws BusinessLogicException {
-
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         newEntity.setEmpresa(null);
         usuarioLogic.createUsuario(newEntity);
     }
+
     @Test
     public void updateUsuarioTest() {
         UsuarioEntity entity = data.get(0);
@@ -194,7 +214,6 @@ public class UsuarioLogicTest {
         Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
         Assert.assertEquals(pojoEntity.getCorreo(), resp.getCorreo());
     }
-
 
     @Test
     public void deleteUsuarioTest() throws BusinessLogicException {
