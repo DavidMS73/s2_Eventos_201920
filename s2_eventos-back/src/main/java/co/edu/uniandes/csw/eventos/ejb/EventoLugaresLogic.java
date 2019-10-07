@@ -20,7 +20,7 @@ import javax.inject.Inject;
  * la entidad de Evento y Lugar.
  *
  * @author Albéric Despres
- * 
+ *
  */
 @Stateless
 public class EventoLugaresLogic {
@@ -28,10 +28,26 @@ public class EventoLugaresLogic {
     private static final Logger LOGGER = Logger.getLogger(EventoLugaresLogic.class.getName());
 
     @Inject
-    private LugarPersistence lugarPersistence;
+    private EventoPersistence eventoPersistence;
 
     @Inject
-    private EventoPersistence eventoPersistence;
+    private LugarPersistence lugarPersistence;
+
+    /**
+     * Agregar un lugar al evento
+     *
+     * @param lugaresId El id del lugar a guardar
+     * @param eventosId El id del evento en la cual se va a guardar el lugar.
+     * @return el lugar creado.
+     */
+    public LugarEntity addLugar(Long eventosId, Long lugaresId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregarle un lugar al evento con id = {0}", eventosId);
+        LugarEntity lugarEntity = lugarPersistence.find(lugaresId);
+        EventoEntity eventoEntity = eventoPersistence.find(eventosId);
+        eventoEntity.getLugares().add(lugarEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de agregarle un lugar al evento con id = {0}", eventosId);
+        return lugarPersistence.find(lugaresId);
+    }
 
     /**
      * Retorna todos los lugares asociados a un evento
@@ -43,20 +59,32 @@ public class EventoLugaresLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar los lugares asociados al evento con id = {0}", eventosId);
         return eventoPersistence.find(eventosId).getLugares();
     }
-    
-     /**
-     * Agregar un lugar al evento
-     *
-     * @param lugaresId El id del lugar a guardar
-     * @param eventosId El id del evento en la cual se va a guardar el lugar.
-     * @return el lugar creado.
-     */
-    public LugarEntity addLugar(Long lugaresId, Long eventosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de agregarle un lugar al evento con id = {0}", eventosId);
-        EventoEntity eventoEntity = eventoPersistence.find(eventosId);
+
+    public LugarEntity getLugar(Long eventosId, Long lugaresId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar un lugar del evento con id = {0}", eventosId);
+        List<LugarEntity> lugares = eventoPersistence.find(eventosId).getLugares();
         LugarEntity lugarEntity = lugarPersistence.find(lugaresId);
-        eventoEntity.getLugares().add(lugarEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de a+gregarle un lugar al evento con id = {0}", eventosId);
-        return lugarEntity;
+        int index = lugares.indexOf(lugarEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar un lugar del evento con id = {0}", eventosId);
+        if (index >= 0) {
+            return lugares.get(index);
+        }
+        return null;
+    }
+
+    public List<LugarEntity> replaceLugares(Long eventosId, List<LugarEntity> list) {
+        LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los lugares del evento con id = {0}", eventosId);
+        EventoEntity eventoEntity = eventoPersistence.find(eventosId);
+        eventoEntity.setLugares(list);
+        LOGGER.log(Level.INFO, "Termina proceso de reemplazar los lugares del evento con id = {0}", eventosId);
+        return eventoPersistence.find(eventosId).getLugares();
+    }
+
+    public void removeLugar(Long eventosId, Long lugaresId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar un lugar del evento con id = {0}", eventosId);
+        LugarEntity authorEntity = lugarPersistence.find(lugaresId);
+        EventoEntity bookEntity = eventoPersistence.find(eventosId);
+        bookEntity.getLugares().remove(authorEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar un lugar del evento con id = {0}", eventosId);
     }
 }

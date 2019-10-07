@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.ejb;
 
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.LugarEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import java.util.Calendar;
@@ -99,8 +100,12 @@ public class EventoLogic {
         return newEntity;
     }
 
-    public void deleteEvento(Long eventosId) {
+    public void deleteEvento(Long eventosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el evento con id = {0}", eventosId);
+        List<LugarEntity> lugares = getEvento(eventosId).getLugares();
+        if (lugares != null && !lugares.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene lugares asociados");
+        }
         persistence.delete(eventosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el evento con id = {0}", eventosId);
     }

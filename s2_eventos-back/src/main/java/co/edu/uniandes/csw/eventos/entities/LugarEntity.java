@@ -6,7 +6,13 @@
 package co.edu.uniandes.csw.eventos.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,6 +21,10 @@ import javax.persistence.Entity;
 @Entity
 public class LugarEntity extends BaseEntity implements Serializable {
 
+    @PodamExclude
+    @ManyToMany(mappedBy = "lugares")
+    private List<EventoEntity> eventos = new ArrayList<>();
+    
     private Integer capacidadAsistentes;
     private String ubicacionGeografica;
     private String nombre;
@@ -104,6 +114,20 @@ public class LugarEntity extends BaseEntity implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the eventos
+     */
+    public List<EventoEntity> getEventos() {
+        return eventos;
+    }
+
+    /**
+     * @param eventos the eventos to set
+     */
+    public void setEventos(List<EventoEntity> eventos) {
+        this.eventos = eventos;
     }
 
 }

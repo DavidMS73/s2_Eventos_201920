@@ -14,6 +14,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -39,7 +40,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela las actividadesEvento del evento
      */
     @PodamExclude
-    @OneToMany
+    @ManyToMany
     private List<LugarEntity> lugares = new ArrayList<LugarEntity>();
 
     @PodamExclude
