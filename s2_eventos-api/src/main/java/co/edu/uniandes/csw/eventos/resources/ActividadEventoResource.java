@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.ActividadEventoDTO;
 import co.edu.uniandes.csw.eventos.ejb.ActividadEventoLogic;
+import co.edu.uniandes.csw.eventos.ejb.EventoActividadesEventoLogic;
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -39,7 +40,10 @@ public class ActividadEventoResource {
     private static final Logger LOGGER = Logger.getLogger(ActividadEventoResource.class.getName());
    
     @Inject
-    private ActividadEventoLogic eventoActividadesLogic;
+    private ActividadEventoLogic actividadEventoLogic;
+    
+    @Inject
+    private EventoActividadesEventoLogic eventoActividadesEventoLogic;
     
     
     /**
@@ -67,35 +71,67 @@ public class ActividadEventoResource {
     @GET
     public List<ActividadEventoDTO> getActividades(@PathParam("eventosId") Long eventosId) {
       LOGGER.log(Level.INFO, "EventoResource getActividades: input: {0}", eventosId);
-      List<ActividadEventoDTO> actividadesDTO = actividadesEntityToDTO(eventoActividadesLogic.getActividadesEvento(eventosId));
+      List<ActividadEventoDTO> actividadesDTO = actividadesEntityToDTO(actividadEventoLogic.getActividadesEvento(eventosId));
       LOGGER.log(Level.INFO, "EventoResource getActividades: output: {0}", actividadesDTO);
       return actividadesDTO;
     }
     
+    /**
+    * Busca y devuelve la actividad de un evento.
+    *
+    * @param eventosId Identificador del evento que se esta buscando.
+    * @param actividadesId Identificador de la actividad que se esta buscando.
+    * Este deben ser cadenas de dígitos.
+    * @return JSON {@link ActividadEventoDTO} - La actividadEvento encontrada en el
+    * evento.
+    */
+    @GET
+    @Path("{actividadesId: \\d+}")
+    public ActividadEventoDTO getActividad(@PathParam("eventosId") Long eventosId, @PathParam("actividadesId") Long actividadesId) {
+        LOGGER.log(Level.INFO, "ActividadEventoResource getActividad: input: {0}", actividadesId);
+        ActividadEventoEntity actividadEntity = actividadEventoLogic.getActividadEvento(eventosId, actividadesId);
+        if (actividadEntity == null) {
+            throw new WebApplicationException("El recurso /actividadesEvento/" + actividadesId + " no existe.", 404);
+        }
+        ActividadEventoDTO actividadDTO = new ActividadEventoDTO(actividadEntity);
+        LOGGER.log(Level.INFO, "ActividadEventoResource getActividad: output: {0}", actividadDTO);
+        return actividadDTO;
+    }
+    
+    //solo sirve para la funcion addActividadEvento()
+    public ActividadEventoDTO createActividadEvento(@PathParam("eventosId") Long eventosId, ActividadEventoDTO actividadEvento) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "ActividadEventoResource createActividadEvento: input: {0}", actividadEvento);
+        ActividadEventoEntity actividadEntity = actividadEvento.toEntity();
+        actividadEntity = actividadEventoLogic.createActividadEvento(eventosId, actividadEntity);
+        ActividadEventoDTO nuevaActividadDTO = new ActividadEventoDTO(actividadEntity);
+        LOGGER.log(Level.INFO, "ActividadEventoResource createActividadEvento: output: {0}", nuevaActividadDTO);
+        return nuevaActividadDTO;
+    }
+    
      /**
-     * Asocia una actividad existente con un evento existente
+     * Crea y asocia una actividad con un evento existente
      *
      * @param eventosId El ID del evento al cual se le va a asociar la actividad
-     * @param actividadesId El ID de la actividad que se asocia
+     * @param actividadEvento la actividad a crear y asociar al evento
      * @return JSON {@link ActividadEventoDTO} - La actividad asociada.
      * @throws co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la actividad.
      */
-    /*@POST HAY QUE ARREGLAR ESTO PORQUE NO LE LLEGA UN ID DE LA ACTIVIDAD SINO LA ACTIVIDAD :)
-    @Path("{actividadesId: \\d+}")
-    public ActividadEventoDTO addActividadEvento(@PathParam("actividadesId") Long actividadesId, @PathParam("eventosId") Long eventosId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "EventoactividadesEventoResource addActividadEvento: input: actividadesId {0} , eventosId {1}", new Object[]{actividadesId, eventosId});
-        if (eventoActividadesLogic.getActividadEvento(eventosId, actividadesId) == null) {
-            throw new WebApplicationException("El recurso /actividadesEvento/" + actividadesId + " no existe.", 404);
-        }
-        ActividadEventoDTO actividadDTO = new ActividadEventoDTO(eventoActividadesLogic.createActividadEvento(eventosId, actividadesId));
-        LOGGER.log(Level.INFO, "EventoactividadesEventoResource addActividadEvento: output: {0}", actividadDTO);
-        return actividadDTO;
-    }*/
+    @POST //HAY QUE ARREGLAR ESTO PORQUE NO LE LLEGA UN ID DE LA ACTIVIDAD SINO LA ACTIVIDAD :)
+    public ActividadEventoDTO addActividadEvento(ActividadEventoDTO actividadEvento, @PathParam("eventosId") Long eventosId) throws BusinessLogicException {
+        //se crea la actividad
+        LOGGER.log(Level.INFO, "ActividadEventoResource addActividadEvento: input: {0}", actividadEvento);
+        ActividadEventoEntity actividadEntity = actividadEvento.toEntity();
+        actividadEntity = actividadEventoLogic.createActividadEvento(eventosId, actividadEntity);
+        ActividadEventoDTO nuevaActividadDTO = new ActividadEventoDTO(actividadEntity);
+        eventoActividadesEventoLogic.addActividad(nuevaActividadDTO.getId(), eventosId);
+        LOGGER.log(Level.INFO, "ActividadEventoResource addActividadEvento: output: {0}", nuevaActividadDTO);
+        return nuevaActividadDTO;
+    }
     
     /**
-     * Elimina la conexión entre la actividad y el evento recibidos en la URL.
+     * Elimina la conexión entre la actividad y el evento recibidos en la URL y elimina la actividad.
      *
      * @param eventosId El ID del evento al cual se le va a desasociar la actividad
      * @param actividadesId El ID de la actividad que se desasocia
@@ -106,11 +142,17 @@ public class ActividadEventoResource {
     @DELETE
     @Path("{actividadesId: \\d+}")
     public void removeActividadEvento(@PathParam("eventosId") Long eventosId, @PathParam("actividadesId") Long actividadesId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "EventoactividadesEventoResource removeActividadEvento: input: eventosId {0} , actividadesId {1}", new Object[]{eventosId, actividadesId});
-        if (eventoActividadesLogic.getActividadEvento(eventosId, actividadesId) == null) {
+        LOGGER.log(Level.INFO, "EventoactividadesEventoResource removeActividadEvento: input: eventosId {0} , actividadesId {1}", new Object[]{eventosId, actividadesId});     
+        if (actividadEventoLogic.getActividadEvento(eventosId, actividadesId) == null) {
             throw new WebApplicationException("El recurso /actividadesEvento/" + actividadesId + " no existe.", 404);
         }
-        eventoActividadesLogic.deleteActividadEvento(eventosId, actividadesId);
+        
+        //se borra la actividad
+        actividadEventoLogic.deleteActividadEvento(eventosId, actividadesId);
+        
+        //se desasocia la actividad del evento
+        eventoActividadesEventoLogic.removeActividad(eventosId, actividadesId);
+        
         LOGGER.info("EventoactividadesEventoResource removeActividadEvento: output: void");
     }
 }
