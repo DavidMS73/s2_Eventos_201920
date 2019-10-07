@@ -37,12 +37,12 @@ public class LugarLogicTest {
 
     @Inject
     private LugarLogic lugarLogic;
-    
+
     @Inject
     private UserTransaction utx;
-    
+
     private List<LugarEntity> data = new ArrayList<LugarEntity>();
-    
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -55,43 +55,30 @@ public class LugarLogicTest {
 
     @PersistenceContext
     private EntityManager em;
-    
-    
+
     @Before
-    public void configTest()
-    {
-        try 
-        {
+    public void configTest() {
+        try {
             utx.begin();
             clearData();
             insertData();
             utx.commit();
-        } 
-        
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            try 
-            {
+            try {
                 utx.rollback();
-            } 
-            
-            catch (Exception e1) 
-            {
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
         }
     }
-    
-    private void clearData()
-    {
+
+    private void clearData() {
         em.createQuery("delete from LugarEntity").executeUpdate();
     }
-    
-    private void insertData()
-    {
-        for(int i = 0; i < 3; i++)
-        {
+
+    private void insertData() {
+        for (int i = 0; i < 3; i++) {
             LugarEntity entity = factory.manufacturePojo(LugarEntity.class);
             em.persist(entity);
             data.add(entity);
@@ -146,30 +133,25 @@ public class LugarLogicTest {
         newEntity.setCapacidadAsistentes(0);
         LugarEntity result = lugarLogic.createLugar(newEntity);
     }
-    
+
     @Test
-    public void getLugaresTest()
-    {
+    public void getLugaresTest() {
         List<LugarEntity> list = lugarLogic.getLugares();
         Assert.assertEquals(data.size(), list.size());
-        for(LugarEntity entity : list)
-        {
+        for (LugarEntity entity : list) {
             boolean found = false;
-            for(LugarEntity stored : data)
-            {
-                if(entity.getId().equals(stored.getId()))
-                {
+            for (LugarEntity stored : data) {
+                if (entity.getId().equals(stored.getId())) {
                     found = true;
                 }
             }
-            
+
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getLugarTest()
-    {
+    public void getLugarTest() {
         LugarEntity entity = data.get(0);
         LugarEntity resultEntity = lugarLogic.getLugar(entity.getId());
         Assert.assertNotNull(resultEntity);
@@ -181,10 +163,9 @@ public class LugarLogicTest {
         Assert.assertEquals(entity.getUbicacionGeografica(), resultEntity.getUbicacionGeografica());
         Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
     }
-    
+
     @Test
-    public void updateLugarTest()
-    {
+    public void updateLugarTest() {
         LugarEntity entity = data.get(0);
         LugarEntity pojoEntity = factory.manufacturePojo(LugarEntity.class);
         pojoEntity.setId(entity.getId());
@@ -193,10 +174,9 @@ public class LugarLogicTest {
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
         Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
     }
-    
+
     @Test
-    public void deleteLugarTest() throws BusinessLogicException
-    {
+    public void deleteLugarTest() throws BusinessLogicException {
         LugarEntity entity = data.get(1);
         lugarLogic.deleteLugar(entity.getId());
         LugarEntity deleted = em.find(LugarEntity.class, entity.getId());
