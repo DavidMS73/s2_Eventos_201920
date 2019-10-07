@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.eventos.dtos;
 
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.LugarEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.List;
 public class EventoDetailDTO extends EventoDTO implements Serializable {
 
     private List<ActividadEventoDTO> actividadesEvento;
+
+    private List<LugarDTO> lugares;
 
     public EventoDetailDTO() {
         super();
@@ -31,6 +34,12 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
                 actividadesEvento.add(new ActividadEventoDTO(entityReview));
             }
         }
+        if (eventoEntity.getLugares() != null) {
+            lugares = new ArrayList<>();
+            for (LugarEntity entityLugar : eventoEntity.getLugares()) {
+                lugares.add(new LugarDTO(entityLugar));
+            }
+        }
     }
 
     @Override
@@ -42,6 +51,13 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
                 actividadesEntity.add(dtoActividad.toEntity());
             }
             entidad.setActividadesEvento(actividadesEntity);
+        }
+        if (getLugares() != null) {
+            List<LugarEntity> lugaresEntity = new ArrayList<>();
+            for (LugarDTO dtoAuthor : getLugares()) {
+                lugaresEntity.add(dtoAuthor.toEntity());
+            }
+            entidad.setLugares(lugaresEntity);
         }
         return entidad;
     }
@@ -58,5 +74,19 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
      */
     public void setActividadesEvento(List<ActividadEventoDTO> actividadesEvento) {
         this.actividadesEvento = actividadesEvento;
+    }
+
+    /**
+     * @return the lugares
+     */
+    public List<LugarDTO> getLugares() {
+        return lugares;
+    }
+
+    /**
+     * @param lugares the lugares to set
+     */
+    public void setLugares(List<LugarDTO> lugares) {
+        this.lugares = lugares;
     }
 }
