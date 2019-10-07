@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.eventos.dtos.EventoDetailDTO;
 import co.edu.uniandes.csw.eventos.ejb.EventoLogic;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +49,22 @@ public class EventoResource {
         EventoDTO nuevoEventoDTO = new EventoDTO(eventoEntity);
         LOGGER.log(Level.INFO, "EventoResource createEvento: output: {0}", nuevoEventoDTO);
         return nuevoEventoDTO;
+    }
+    
+    private List<EventoDetailDTO> listEntity2DetailDTO(List<EventoEntity> entityList) {
+        List<EventoDetailDTO> list = new ArrayList<>();
+        for (EventoEntity entity : entityList) {
+            list.add(new EventoDetailDTO(entity));
+        }
+        return list;
+    }
+    
+    @GET
+    public List<EventoDetailDTO> getBooks() {
+        LOGGER.info("EventoResource getEventos: input: void");
+        List<EventoDetailDTO> listaEventos = listEntity2DetailDTO(eventoLogic.getEventos());
+        LOGGER.log(Level.INFO, "EventoResource getEventos: output: {0}", listaEventos);
+        return listaEventos;
     }
 
     @GET
