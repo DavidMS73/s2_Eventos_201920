@@ -50,7 +50,7 @@ public class EventoResource {
         LOGGER.log(Level.INFO, "EventoResource createEvento: output: {0}", nuevoEventoDTO);
         return nuevoEventoDTO;
     }
-    
+
     private List<EventoDetailDTO> listEntity2DetailDTO(List<EventoEntity> entityList) {
         List<EventoDetailDTO> list = new ArrayList<>();
         for (EventoEntity entity : entityList) {
@@ -58,7 +58,7 @@ public class EventoResource {
         }
         return list;
     }
-    
+
     @GET
     public List<EventoDetailDTO> getBooks() {
         LOGGER.info("EventoResource getEventos: input: void");
