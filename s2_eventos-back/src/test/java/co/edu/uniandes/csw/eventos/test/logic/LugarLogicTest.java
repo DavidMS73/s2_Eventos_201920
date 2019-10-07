@@ -195,7 +195,7 @@ public class LugarLogicTest {
     }
     
     @Test
-    public void deleteLugarTest()
+    public void deleteLugarTest() throws BusinessLogicException
     {
         LugarEntity entity = data.get(1);
         lugarLogic.deleteLugar(entity.getId());
