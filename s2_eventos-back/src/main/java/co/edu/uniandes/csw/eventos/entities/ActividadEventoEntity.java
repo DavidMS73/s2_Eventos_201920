@@ -57,9 +57,6 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
 
-    /*@PodamExclude
-    @ManyToOne
-    private EventoEntity evento;*/
     public ActividadEventoEntity() {
         //Constructor
     }

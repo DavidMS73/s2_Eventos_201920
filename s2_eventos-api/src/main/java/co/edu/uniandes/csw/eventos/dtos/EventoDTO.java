@@ -52,11 +52,6 @@ public class EventoDTO implements Serializable {
     private Integer entradasRestantes;
 
     /**
-     * Atributo que modela el tipo de evento
-     */
-    private String tipo;
-
-    /**
      * Atributo que modela si un evento es pago o no
      */
     private Boolean esPago;
@@ -195,20 +190,6 @@ public class EventoDTO implements Serializable {
      */
     public void setEntradasRestantes(Integer entradasRestantes) {
         this.entradasRestantes = entradasRestantes;
-    }
-
-    /**
-     * @return the tipo
-     */
-    public String getTipo() {
-        return tipo;
-    }
-
-    /**
-     * @param tipo the tipo to set
-     */
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     /**
