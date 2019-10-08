@@ -7,8 +7,10 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
@@ -36,6 +38,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToOne
     private EventoEntity eventoResponsable;
+    
+    
+    /**
+     * Atributo que modela las actividades asociadas al usuario
+     */
+    @PodamExclude
+    @ManyToMany(mappedBy="usuarios")
+    private List<ActividadEventoEntity> actividadesEvento;
 
     public UsuarioEntity() {
         //Constructor
@@ -137,5 +147,19 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      */
     public void setEventoResponsable(EventoEntity eventoResponsable) {
         this.eventoResponsable = eventoResponsable;
+    }
+
+    /**
+     * @return the actividadesEvento
+     */
+    public List<ActividadEventoEntity> getActividadesEvento() {
+        return actividadesEvento;
+    }
+
+    /**
+     * @param actividadesEvento the actividadesEvento to set
+     */
+    public void setActividadesEvento(List<ActividadEventoEntity> actividadesEvento) {
+        this.actividadesEvento = actividadesEvento;
     }
 }

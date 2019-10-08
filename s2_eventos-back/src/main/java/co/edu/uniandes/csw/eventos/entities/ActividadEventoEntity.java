@@ -8,8 +8,12 @@ package co.edu.uniandes.csw.eventos.entities;
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,6 +26,17 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  */
 @Entity
 public class ActividadEventoEntity extends BaseEntity implements Serializable {
+    
+    /**
+     * Atributo que modela los usuarios asociados a la actividad
+    */
+    @PodamExclude
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_asociated", 
+        joinColumns = @JoinColumn(name = "actividadEvento_id"), 
+        inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private List<UsuarioEntity> usuarios;
 
     /**
      * Atributo que modela el evento asociado a la actividad
@@ -144,4 +159,20 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     public void setEvento(EventoEntity evento) {
         this.evento = evento;
     }
+
+    /**
+     * @return the usuarios
+     */
+    public List<UsuarioEntity> getUsuarios() {
+        return usuarios;
+    }
+
+    /**
+     * @param usuarios the usuarios to set
+     */
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
+        this.usuarios = usuarios;
+    }
+    
+    
 }
