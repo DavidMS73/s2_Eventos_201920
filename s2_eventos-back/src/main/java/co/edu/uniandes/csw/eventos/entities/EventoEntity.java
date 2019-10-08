@@ -46,6 +46,13 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToOne(mappedBy = "eventoResponsable", fetch = FetchType.LAZY)
     private UsuarioEntity responsable;
+    
+    /**
+     * Atributo que modela los pago del evento
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
 
     /**
      * Atributo que modela el nombre del evento
@@ -268,5 +275,21 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public void setResponsable(UsuarioEntity responsable) {
         this.responsable = responsable;
     }
+
+    /**
+     * @return the pagos
+     */
+    public List<PagoEntity> getPagos() {
+        return pagos;
+    }
+
+    /**
+     * @param pagos the pagos to set
+     */
+    public void setPagos(List<PagoEntity> pagos) {
+        this.pagos = pagos;
+    }
+    
+    
 
 }
