@@ -45,14 +45,14 @@ public class EventoLogic {
 
     public EventoEntity createEvento(EventoEntity evento) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del evento");
-        UsuarioEntity responsable = up.find(evento.getResponsable().getId());
+        /**UsuarioEntity responsable = up.find(evento.getResponsable().getId());
         if (responsable == null) {
             throw new BusinessLogicException("El responsable es invalido");
         }
         UsuarioEntity organizador = up.find(evento.getOrganizador().getId());
         if (organizador == null) {
             throw new BusinessLogicException("El organizador es invalido");
-        }
+        }*/
         if (evento.getNombre() == null) {
             throw new BusinessLogicException("El nombre de evento está vacío");
         }
