@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.eventos.test.logic;
 
 import co.edu.uniandes.csw.eventos.ejb.EventoLogic;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
@@ -46,6 +47,9 @@ public class EventoLogicTest {
     private UserTransaction utx;
 
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
+    
+    private List<MemoriaEntity> memoriaData = new ArrayList();
+
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -76,14 +80,25 @@ public class EventoLogicTest {
 
     private void clearData() {
         em.createQuery("delete from UsuarioEntity").executeUpdate();
+        em.createQuery("delete from MemoriaEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
-    private void insertData() {
+    private void insertData() 
+    {
+        for (int i = 0; i < 3; i++) {
+            MemoriaEntity memorias = factory.manufacturePojo(MemoriaEntity.class);
+            em.persist(memorias);
+            memoriaData.add(memorias);
+        }
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
             em.persist(entity);
             data.add(entity);
+            if (i == 0) {
+                memoriaData.get(i).setEvento(entity);
+            }
+            
         }
         UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
         em.persist(usuario);
