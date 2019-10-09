@@ -85,7 +85,6 @@ public class EventoLugaresResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el lugar.
      */
-    
     @POST
     @Path("{lugaresId: \\d+}")
     public LugarDTO addLugar(@PathParam("lugaresId") Long lugaresId, @PathParam("eventosId") Long eventosId) throws BusinessLogicException {
@@ -93,7 +92,7 @@ public class EventoLugaresResource {
         if (lugarLogic.getLugar(lugaresId) == null) {
             throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
         }
-        LugarDTO lugarDTO = new LugarDTO(eventoLugaresLogic.addLugar(lugaresId, eventosId));
+        LugarDTO lugarDTO = new LugarDTO(eventoLugaresLogic.addLugar(eventosId, lugaresId));
         LOGGER.log(Level.INFO, "EventoLugaresResource addLugar: output: {0}", lugarDTO);
         return lugarDTO;
     }
