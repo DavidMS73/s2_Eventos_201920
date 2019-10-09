@@ -21,7 +21,7 @@ public class MemoriaDTO implements Serializable {
      */
     private String lugar;
 
-    
+    private EventoDTO evento;
 
     /**
      * Atributo que modela la fecha de la memoria
@@ -38,6 +38,13 @@ public class MemoriaDTO implements Serializable {
         setId(entidad.getId());
         setLugar(entidad.getLugar());
         setFecha(entidad.getFecha());
+        if(entidad.getEvento()!=null){
+            this.evento = new EventoDTO(entidad.getEvento());
+        }
+        else{
+            this.evento=null;
+        }
+                
     }
 
     public MemoriaEntity toEntity() {
@@ -45,7 +52,9 @@ public class MemoriaDTO implements Serializable {
         entidad.setId(this.getId());
         entidad.setLugar(this.getLugar());
         entidad.setFecha(this.getFecha());
-
+        if(this.evento !=null){
+           entidad.setEvento(this.evento.toEntity());
+        }
         return entidad;
     }
 
@@ -89,6 +98,20 @@ public class MemoriaDTO implements Serializable {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * @return the evento
+     */
+    public EventoDTO getEvento() {
+        return evento;
+    }
+
+    /**
+     * @param evento the evento to set
+     */
+    public void setEvento(EventoDTO evento) {
+        this.evento = evento;
     }
 
 }
