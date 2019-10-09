@@ -1,11 +1,57 @@
 {
 	"info": {
-		"_postman_id": "174e266f-31ed-4f3b-9970-025b6d39668b",
-		"name": "Lugar",
-		"description": "Colección de pruebas sobre el recurso Lugar",
+		"_postman_id": "c5dd5722-2c60-4355-a67d-c32d2d4efa22",
+		"name": "EventoLugares",
+		"description": "Colección de pruebas sobre el recurso EventoLugares",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Crear un evento",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "694741e6-4794-48fd-b32b-d790963ac9b0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\", data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"valor\": 0,\n\t\"responsable\": null\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos"
+					]
+				},
+				"description": "Crea un nuevo evento. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
 		{
 			"name": "Crear un lugar",
 			"event": [
@@ -113,7 +159,82 @@
 			"response": []
 		},
 		{
-			"name": "Obtener todos los lugares",
+			"name": "Agregar un lugar existente a un evento existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e61e78f3-7560-466e-84cf-366a9a4a5305",
+						"exec": [
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_e}}/lugares/{{new_id_l}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos",
+						"{{new_id_e}}",
+						"lugares",
+						"{{new_id_l}}"
+					]
+				},
+				"description": "Asocia un lugar a un evento en la aplicación. \r\n\r\nSe envía el Id del evento y el del evento a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar un lugar que no existe a un evento existente ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e61e78f3-7560-466e-84cf-366a9a4a5305",
+						"exec": [
+							"tests[\"No se deberia asociar el evento ya que el lugar no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /lugares/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_e}}/lugares/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos",
+						"{{new_id_e}}",
+						"lugares",
+						"0"
+					]
+				},
+				"description": "Asocia un lugar que no existe a un autor en la aplicación. \r\n\r\nSe envía el Id del lugar y el del evento a asociar en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /lugares/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener los lugares de un evento",
 			"event": [
 				{
 					"listen": "test",
@@ -132,7 +253,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/lugares",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_e}}/lugares",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -141,34 +262,38 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
+						"eventos",
+						"{{new_id_e}}",
 						"lugares"
 					]
 				},
-				"description": "Consulta todos los lugares de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\n**Código http esperado: 200**"
+				"description": "Consulta los lugares de un evento en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del evento a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un lugar",
+			"name": "Borrarle un lugar a un evento",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "20acc8ea-cadf-4ea4-b92e-f4d8218ce963",
+						"id": "9510b6cd-b566-4cfa-b16f-9c783800176d",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/lugares/{{new_id_l}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_e}}/lugares/{{new_id_l}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -177,23 +302,67 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
+						"eventos",
+						"{{new_id_e}}",
 						"lugares",
 						"{{new_id_l}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un lugar de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del lugar deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un lugar y un evento. Se envían los ids del evento y del lugar creados anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un lugar que no existe",
+			"name": "Borrarle un lugar a un evento que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "39dc353d-ae0a-41c6-99a5-89218360c4d3",
+						"id": "91d9959e-4825-4dd7-88e3-3e33b988c765",
 						"exec": [
-							"tests[\"No se deberia obtener un lugar con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"No se deberia eliminar ninguna asociacion ya que el evento no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/0/lugares/{{new_id_l2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos",
+						"0",
+						"lugares",
+						"{{new_id_l2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nBorra la asociación entre a un lugar y un evento que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /eventos/0/lugares no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un lugar que no existe a un evento",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db442b05-4aea-4f64-9db1-a28176069f5e",
+						"exec": [
+							"tests[\"No se deberia eliminar ninguna asociacion ya que el lugar no existe\"] = responseCode.code === 404;",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /lugares/0 no existe.\");"
 						],
 						"type": "text/javascript"
@@ -201,10 +370,14 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/lugares/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_e}}/lugares/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -213,44 +386,39 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
+						"eventos",
+						"{{new_id_e}}",
 						"lugares",
 						"0"
 					]
 				},
-				"description": "\r\n\r\nConsulta un lugar que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /lugares/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nBorra la asociación entre un lugar que no existe y un evento en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "Editar un lugar",
+			"name": "Borrarle un lugar a un evento 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "68dc8b6c-6d16-40b8-8f51-b61db7113074",
+						"id": "9510b6cd-b566-4cfa-b16f-9c783800176d",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
+				"method": "DELETE",
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"capacidadAsistentes\": 120,\r\n\t\"ubicacionGeografica\": \"Springfield\",\r\n\t\"nombre\": \"Homer\",\r\n\t\"bloque\": \"D\",\r\n\t\"piso\": \"7\",\r\n\t\"salon\": \"C-702\"\r\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/lugares/{{new_id_l}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_e}}/lugares/{{new_id_l2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -259,61 +427,18 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
+						"eventos",
+						"{{new_id_e}}",
 						"lugares",
-						"{{new_id_l}}"
+						"{{new_id_l2}}"
 					]
 				},
-				"description": "Actualiza un lugar existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un lugar y un evento. Se envían los ids del evento y del lugar creados anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Editar un lugar que no existe",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "15a70f62-2a66-469a-9ca6-d1125b0c8774",
-						"exec": [
-							"tests[\"No se deberia actualizar un lugar con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /lugares/0 no existe.\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n\t\"capacidadAsistentes\": 120,\r\n\t\"ubicacionGeografica\": \"Springfield\",\r\n\t\"nombre\": \"Homer\",\r\n\t\"bloque\": \"D\",\r\n\t\"piso\": \"7\",\r\n\t\"salon\": \"C-702\"\r\n}"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/lugares/0",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_eventos-api",
-						"api",
-						"lugares",
-						"0"
-					]
-				},
-				"description": "Actualiza un lugar que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /lugares/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar un lugar",
+			"name": "Borrar un evento",
 			"event": [
 				{
 					"listen": "test",
@@ -334,7 +459,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/lugares/{{new_id_l}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_e}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -343,90 +468,11 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
-						"lugares",
-						"{{new_id_l}}"
+						"eventos",
+						"{{new_id_e}}"
 					]
 				},
-				"description": "Borra un lugar. Se envía el id del lugar creado anteriormente.\n\n**Código HTTP esperado: 204**"
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar un lugar que no existe",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c0905623-e468-4838-b24e-56e8402ea65c",
-						"exec": [
-							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /lugares/0 no existe.\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/lugares/0",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_eventos-api",
-						"api",
-						"lugares",
-						"0"
-					]
-				},
-				"description": "Borra un lugar que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /lugares/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar el lugar 2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "7db5b212-04c0-43a8-b627-44b62f4b9852",
-						"exec": [
-							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/lugares/{{new_id_l2}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_eventos-api",
-						"api",
-						"lugares",
-						"{{new_id_l2}}"
-					]
-				},
-				"description": "Borra un lugar. Se envía el id del lugar creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un evento. Se envía el id del evento creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		}
@@ -435,7 +481,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "6b179cae-f5a2-48c2-b645-ddb930ca5e97",
+				"id": "e738a265-9c3c-47f1-bbbf-2fb853b5a48f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -445,7 +491,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "1c2a6d95-80a4-4aad-9951-aa89607889d2",
+				"id": "3b1bcd54-6a1b-46e0-9532-06d734c236b6",
 				"type": "text/javascript",
 				"exec": [
 					""
