@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -95,6 +96,25 @@ public class EventoLugaresResource {
         LugarDTO lugarDTO = new LugarDTO(eventoLugaresLogic.addLugar(eventosId, lugaresId));
         LOGGER.log(Level.INFO, "EventoLugaresResource addLugar: output: {0}", lugarDTO);
         return lugarDTO;
+    }
+    
+    /**
+     * Elimina la conexión entre el lugar y el evento recibidos en la URL.
+     *
+     * @param eventosId El ID del evento al cual se le va a desasociar el lugar
+     * @param lugaresId El ID del lugar que se desasocia
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el lugar.
+     */
+    @DELETE
+    @Path("{lugaresId: \\d+}")
+    public void removeLugar(@PathParam("eventosId") Long eventosId, @PathParam("lugaresId") Long lugaresId) {
+        LOGGER.log(Level.INFO, "EventoLugaressResource removeLugar: input: eventosId {0} , lugaresId {1}", new Object[]{eventosId, lugaresId});
+        if (lugarLogic.getLugar(lugaresId) == null) {
+            throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
+        }
+        eventoLugaresLogic.removeLugar(eventosId, lugaresId);
+        LOGGER.info("EventoLugaressResource removeLugar: output: void");
     }
 }
 
