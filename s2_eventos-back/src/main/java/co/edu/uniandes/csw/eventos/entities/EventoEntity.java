@@ -42,6 +42,10 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToMany
     private List<LugarEntity> lugares = new ArrayList<LugarEntity>();
+    
+    @PodamExclude
+    @ManyToMany
+    private List<PatrocinioEntity> patrocinios = new ArrayList<PatrocinioEntity>();
 
     @PodamExclude
     @OneToOne(mappedBy = "eventoResponsable", fetch = FetchType.LAZY)
@@ -287,7 +291,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     public void addMemorias(MemoriaEntity m) {
-        memorias.add(m);
+        getMemorias().add(m);
     }
 
     /**
@@ -295,6 +299,20 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     public void setMemorias(List<MemoriaEntity> memorias) {
         this.memorias = memorias;
+    }
+
+    /**
+     * @return the patrocinios
+     */
+    public List<PatrocinioEntity> getPatrocinios() {
+        return patrocinios;
+    }
+
+    /**
+     * @param patrocinios the patrocinios to set
+     */
+    public void setPatrocinios(List<PatrocinioEntity> patrocinios) {
+        this.patrocinios = patrocinios;
     }
 
     /**

@@ -179,7 +179,7 @@ public class EventoLugaresLogicTest {
         Assert.assertEquals(lugarEntity.getId(), lugar.getId());
         Assert.assertEquals(lugarEntity.getNombre(), lugar.getNombre());
     }
-
+    @Test
     public List<LugarEntity> replaceLugares(Long eventoId, List<LugarEntity> lugares) {
         LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los lugares asociados al evento con id = {0}", eventoId);
         EventoEntity eventoEntity = eventoPersistence.find(eventoId);

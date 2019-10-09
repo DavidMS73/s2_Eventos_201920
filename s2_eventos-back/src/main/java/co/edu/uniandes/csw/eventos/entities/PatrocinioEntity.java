@@ -6,7 +6,11 @@
 package co.edu.uniandes.csw.eventos.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,8 +19,26 @@ import javax.persistence.Entity;
 @Entity
 public class PatrocinioEntity extends BaseEntity implements Serializable {
 
+    /**
+     * @return the eventos
+     */
+    public List<EventoEntity> getEventos() {
+        return eventos;
+    }
+
+    /**
+     * @param eventos the eventos to set
+     */
+    public void setEventos(List<EventoEntity> eventos) {
+        this.eventos = eventos;
+    }
+
     private String empresa;
     private String tipo;
+    
+    @PodamExclude
+    @ManyToMany(mappedBy="patrocinios")
+    private List<EventoEntity> eventos = new ArrayList<EventoEntity>();
 
     public PatrocinioEntity() {
         //Constructor

@@ -11,12 +11,14 @@ import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import co.edu.uniandes.csw.eventos.persistence.MemoriaPersistence;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author Daniel Betancurth Dorado
  */
+@Stateless
 public class MemoriaEventoLogic 
 {
     private static final Logger LOGGER = Logger.getLogger(MemoriaEventoLogic.class.getName());

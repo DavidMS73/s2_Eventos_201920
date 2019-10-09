@@ -14,12 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author Daniel Betancurth Dorado
  */
+@Stateless
 public class EventoMemoriasLogic {
 
     private static final Logger LOGGER = Logger.getLogger(EventoMemoriasLogic.class.getName());
