@@ -30,6 +30,12 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
     private Date expiracion;
 
     private Integer cw;
+    
+    
+    public TarjetaEntity()
+    {
+        
+    }
 
     /**
      * Retorna el tipo de tarjeta.
