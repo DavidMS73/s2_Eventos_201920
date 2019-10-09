@@ -48,8 +48,12 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<PatrocinioEntity> patrocinios = new ArrayList<PatrocinioEntity>();
 
     @PodamExclude
-    @OneToOne(mappedBy = "eventoResponsable", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
     private UsuarioEntity responsable;
+    
+    @PodamExclude
+    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
+    private UsuarioEntity organizador;
 
     @PodamExclude
     @OneToMany(mappedBy = "evento")
@@ -313,6 +317,20 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     public void setPatrocinios(List<PatrocinioEntity> patrocinios) {
         this.patrocinios = patrocinios;
+    }
+
+    /**
+     * @return the organizador
+     */
+    public UsuarioEntity getOrganizador() {
+        return organizador;
+    }
+
+    /**
+     * @param organizador the organizador to set
+     */
+    public void setOrganizador(UsuarioEntity organizador) {
+        this.organizador = organizador;
     }
 
     /**

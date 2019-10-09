@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.eventos.test.persistence;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
+import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -37,6 +38,7 @@ public class EventoPersistenceTest {
 
     @Inject
     private EventoPersistence ep;
+
 
     @PersistenceContext
     private EntityManager em;
@@ -82,7 +84,7 @@ public class EventoPersistenceTest {
             UsuarioEntity usuarioEntity = factory.manufacturePojo(UsuarioEntity.class);
 
             entity.setResponsable(usuarioEntity);
-            usuarioEntity.setEventoResponsable(entity);
+            usuarioEntity.setEvento(entity);
 
             em.persist(entity);
             em.persist(usuarioEntity);

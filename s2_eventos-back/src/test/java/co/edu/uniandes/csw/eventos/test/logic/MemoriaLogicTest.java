@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.test.logic;
 
 import co.edu.uniandes.csw.eventos.ejb.MemoriaLogic;
+import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.MemoriaPersistence;
@@ -51,11 +52,16 @@ public class MemoriaLogicTest {
     @PersistenceContext
     private EntityManager em;
     
+      @Inject
+    private MemoriaPersistence memoriaPersistence;
+
     @Inject
     private UserTransaction utx;
-    
-    private List<MemoriaEntity> data = new ArrayList<MemoriaEntity>();
-    
+
+    private List<MemoriaEntity> data = new ArrayList<>();
+
+    private List<EventoEntity> dataEventos = new ArrayList<>();
+
     @Before
     public void configTest() {
         try {
@@ -72,23 +78,37 @@ public class MemoriaLogicTest {
             }
         }
     }
-    
+
     private void clearData() {
         em.createQuery("delete from MemoriaEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
+
     }
-    
-     private void insertData() {
+
+    private void insertData() {
         for (int i = 0; i < 3; i++) {
             MemoriaEntity entity = factory.manufacturePojo(MemoriaEntity.class);
             em.persist(entity);
             data.add(entity);
         }
+        for (int i = 0; i < 3; i++) {
+            EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+            em.persist(entity);
+            dataEventos.add(entity);
+        }
+        dataEventos.get(0).setMemorias(data);
+        for(MemoriaEntity m: dataEventos.get(0).getMemorias())
+        {
+            m.setEvento(dataEventos.get(0));
+           memoriaPersistence.update(m); 
+        }
+        
     }
 
     @Test
     public void createMemoria() throws BusinessLogicException {
 
-        MemoriaEntity newMemoria = factory.manufacturePojo(MemoriaEntity.class);
+        MemoriaEntity newMemoria = data.get(0);
         MemoriaEntity result = memoriaLogic.createMemoria(newMemoria);
         Assert.assertNotNull(result);
 
@@ -113,7 +133,7 @@ public class MemoriaLogicTest {
         newEntity.setFecha(null);
         MemoriaEntity result = memoriaLogic.createMemoria(newEntity);
     }
-    
+
     @Test
     public void getMemoriasTest() {
         List<MemoriaEntity> list = memoriaLogic.getMemorias();

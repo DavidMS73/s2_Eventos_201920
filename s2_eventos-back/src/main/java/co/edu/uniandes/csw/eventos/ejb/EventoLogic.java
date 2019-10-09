@@ -7,8 +7,12 @@ package co.edu.uniandes.csw.eventos.ejb;
 
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
+import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
+import co.edu.uniandes.csw.eventos.entities.PatrocinioEntity;
+import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
+import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +33,9 @@ public class EventoLogic {
     @Inject
     private EventoPersistence persistence;
 
+    @Inject
+    private UsuarioPersistence up;
+
     public Date sumarRestarDiasFecha(Date fecha, int dias) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
@@ -38,6 +45,14 @@ public class EventoLogic {
 
     public EventoEntity createEvento(EventoEntity evento) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del evento");
+        UsuarioEntity responsable = up.find(evento.getResponsable().getId());
+        if (responsable == null) {
+            throw new BusinessLogicException("El responsable es invalido");
+        }
+        UsuarioEntity organizador = up.find(evento.getOrganizador().getId());
+        if (organizador == null) {
+            throw new BusinessLogicException("El organizador es invalido");
+        }
         if (evento.getNombre() == null) {
             throw new BusinessLogicException("El nombre de evento está vacío");
         }
@@ -105,6 +120,14 @@ public class EventoLogic {
         List<LugarEntity> lugares = getEvento(eventosId).getLugares();
         if (lugares != null && !lugares.isEmpty()) {
             throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene lugares asociados");
+        }
+        List<MemoriaEntity> memorias = getEvento(eventosId).getMemorias();
+        if (memorias != null && !memorias.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene memorias asociadas");
+        }
+        List<PatrocinioEntity> patrocinios = getEvento(eventosId).getPatrocinios();
+        if (patrocinios != null && !patrocinios.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene patrocinios asociadas");
         }
         persistence.delete(eventosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el evento con id = {0}", eventosId);

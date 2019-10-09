@@ -37,7 +37,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @OneToOne
-    private EventoEntity eventoResponsable;
+    private EventoEntity evento;
     
     
     /**
@@ -138,15 +138,15 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     /**
      * @return the eventoResponsable
      */
-    public EventoEntity getEventoResponsable() {
-        return eventoResponsable;
+    public EventoEntity getEvento() {
+        return evento;
     }
 
     /**
      * @param eventoResponsable the eventoResponsable to set
      */
-    public void setEventoResponsable(EventoEntity eventoResponsable) {
-        this.eventoResponsable = eventoResponsable;
+    public void setEvento(EventoEntity eventoResponsable) {
+        this.evento= eventoResponsable;
     }
 
     /**
