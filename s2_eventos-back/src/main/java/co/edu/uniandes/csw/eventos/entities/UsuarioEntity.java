@@ -43,10 +43,10 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     /**
      * Atributo que modela las actividades asociadas al usuario
      */
-  /*  @PodamExclude
+    @PodamExclude
     @ManyToMany(mappedBy="usuarios")
     private List<ActividadEventoEntity> actividadesEvento;
-*/
+
     public UsuarioEntity() {
         //Constructor
     }
@@ -151,15 +151,15 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
 
     /**
      * @return the actividadesEvento
-     *//*
+    **/
     public List<ActividadEventoEntity> getActividadesEvento() {
         return actividadesEvento;
     }
-*/
+
     /**
      * @param actividadesEvento the actividadesEvento to set
-     *//*
+     */
     public void setActividadesEvento(List<ActividadEventoEntity> actividadesEvento) {
         this.actividadesEvento = actividadesEvento;
-    }*/
+    }
 }

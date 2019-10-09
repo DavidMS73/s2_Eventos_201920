@@ -21,11 +21,11 @@ public class PagoEntity extends BaseEntity implements Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
-  /*  
+    
     @PodamExclude
     @ManyToOne
     private EventoEntity evento;
-    */
+    
     public PagoEntity()
     {
         
@@ -47,18 +47,18 @@ public class PagoEntity extends BaseEntity implements Serializable {
 
     /**
      * @return the evento
-     *//*
+     */
     public EventoEntity getEvento() {
         return evento;
-    }*/
+    }
 
     /**
      * @param evento the evento to set
-     *//*
+     */
     public void setEvento(EventoEntity evento) {
         this.evento = evento;
     }
-    */
+    
     
 
 }

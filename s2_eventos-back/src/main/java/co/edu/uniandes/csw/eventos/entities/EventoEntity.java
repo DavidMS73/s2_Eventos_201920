@@ -62,9 +62,9 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /**
      * Atributo que modela los pago del evento
      */
-    /*  @PodamExclude
+    @PodamExclude
     @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<PagoEntity> pagos = new ArrayList<PagoEntity>();*/
+    private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
     /**
      * Atributo que modela el nombre del evento
      */
@@ -336,17 +336,17 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /**
      * @return the pagos
      */
-    /*   public List<PagoEntity> getPagos() {
+    public List<PagoEntity> getPagos() {
         return pagos;
     }
-     */
+     
     /**
      * @param pagos the pagos to set
-     *//*
+     */
     public void setPagos(List<PagoEntity> pagos) {
         this.pagos = pagos;
     }
     
-     */
+     
 
 }
