@@ -179,23 +179,22 @@ public class EventoLugaresLogicTest {
         Assert.assertEquals(lugarEntity.getId(), lugar.getId());
         Assert.assertEquals(lugarEntity.getNombre(), lugar.getNombre());
     }
+
     @Test
-    public List<LugarEntity> replaceLugares(Long eventoId, List<LugarEntity> lugares) {
-        LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los lugares asociados al evento con id = {0}", eventoId);
-        EventoEntity eventoEntity = eventoPersistence.find(eventoId);
-        List<LugarEntity> lugarList = lugarPersistence.findAll();
-        for (LugarEntity lugar : lugarList) {
-            if (lugares.contains(evento)) {
-                if (!lugar.getEventos().contains(eventoEntity)) {
-                    lugar.getEventos().add(eventoEntity);
-                }
-            } else {
-                lugar.getEventos().remove(eventoEntity);
-            }
+    public void replaceLugares(Long eventoId, List<LugarEntity> lugares) throws BusinessLogicException {
+        List<LugarEntity> nuevaLista = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            LugarEntity entity = factory.manufacturePojo(LugarEntity.class);
+            entity.setEventos(new ArrayList<>());
+            entity.getEventos().add(evento);
+            lugarLogic.createLugar(entity);
+            nuevaLista.add(entity);
         }
-        eventoEntity.setLugares(lugares);
-        LOGGER.log(Level.INFO, "Termina proceso de reemplazar los lugares asociados al evento con id = {0}", eventoId);
-        return eventoEntity.getLugares();
+        eventoLugaresLogic.replaceLugares(evento.getId(), nuevaLista);
+        List<LugarEntity> bookEntities = eventoLugaresLogic.getLugares(evento.getId());
+        for (LugarEntity aNuevaLista : nuevaLista) {
+            Assert.assertTrue(bookEntities.contains(aNuevaLista));
+        }
     }
 
     @Test
