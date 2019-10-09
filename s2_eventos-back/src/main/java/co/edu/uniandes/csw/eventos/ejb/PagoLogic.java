@@ -55,7 +55,7 @@ public class PagoLogic {
     }
     
     
-    public void deleteLugar(Long id) throws BusinessLogicException {
+    public void deletePago(Long id) throws BusinessLogicException {
         
         persistence.delete(id);
     }
