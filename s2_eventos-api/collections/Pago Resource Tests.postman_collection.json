@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "c0e4c498-af65-4c1a-b2d5-937b25bfd462",
+		"name": "Pago Resource Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un pago",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"2020-09-07T00:00:00-08:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"pagos"
+					]
+				},
+				"description": "Crea un pago"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los pagos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"pagos"
+					]
+				},
+				"description": "Obtiene todos los pagos"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un pago",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pagos/4",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"pagos",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modifica un pago ",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"2020-10-07T00:00:00-08:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pagos/4",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"pagos",
+						"4"
+					]
+				},
+				"description": "Modifica un pago"
+			},
+			"response": []
+		},
+		{
+			"name": "Borra un pago",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pagos/2",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"pagos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
