@@ -39,13 +39,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @OneToOne
     private EventoEntity evento;
     
-    
-    /**
-     * Atributo que modela las actividades asociadas al usuario
-     */
     @PodamExclude
-    @ManyToMany(mappedBy="usuarios")
-    private List<ActividadEventoEntity> actividadesEvento;
+    @ManyToMany
+    private List<EventoEntity> eventosInscritos;
+    
+    @PodamExclude
+    @ManyToMany
+    private List<EventoEntity> eventosInvitadosEspeciales;
+
 
     public UsuarioEntity() {
         //Constructor
@@ -146,20 +147,33 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      * @param eventoResponsable the eventoResponsable to set
      */
     public void setEvento(EventoEntity eventoResponsable) {
-        this.evento= eventoResponsable;
+        this.evento = eventoResponsable;
     }
-
     /**
-     * @return the actividadesEvento
-    **/
-    public List<ActividadEventoEntity> getActividadesEvento() {
-        return actividadesEvento;
-    }
-
-    /**
-     * @param actividadesEvento the actividadesEvento to set
+     * @return the eventosInscritos
      */
-    public void setActividadesEvento(List<ActividadEventoEntity> actividadesEvento) {
-        this.actividadesEvento = actividadesEvento;
+    public List<EventoEntity> getEventosInscritos() {
+        return eventosInscritos;
+    }
+
+    /**
+     * @param eventosInscritos the eventosInscritos to set
+     */
+    public void setEventosInscritos(List<EventoEntity> eventosInscritos) {
+        this.eventosInscritos = eventosInscritos;
+    }
+
+    /**
+     * @return the eventosInvitadosEspeciales
+     */
+    public List<EventoEntity> getEventosInvitadosEspeciales() {
+        return eventosInvitadosEspeciales;
+    }
+
+    /**
+     * @param eventosInvitadosEspeciales the eventosInvitadosEspeciales to set
+     */
+    public void setEventosInvitadosEspeciales(List<EventoEntity> eventosInvitadosEspeciales) {
+        this.eventosInvitadosEspeciales = eventosInvitadosEspeciales;
     }
 }
