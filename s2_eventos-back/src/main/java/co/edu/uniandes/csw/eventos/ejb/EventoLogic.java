@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.eventos.ejb;
 
+import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
 import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
@@ -128,6 +129,18 @@ public class EventoLogic {
         List<PatrocinioEntity> patrocinios = getEvento(eventosId).getPatrocinios();
         if (patrocinios != null && !patrocinios.isEmpty()) {
             throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene patrocinios asociadas");
+        }
+        List<UsuarioEntity> inscritos = getEvento(eventosId).getInscritos();
+        if (inscritos != null && !inscritos.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene inscritos asociados");
+        }
+        List<UsuarioEntity> invitadosEspeciales = getEvento(eventosId).getInvitadosEspeciales();
+        if (invitadosEspeciales != null && !invitadosEspeciales.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene invitados especiales asociados");
+        }
+        List<ActividadEventoEntity> actividadesEvento = getEvento(eventosId).getActividadesEvento();
+        if (actividadesEvento != null && !actividadesEvento.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene actividades evento asociadas");
         }
         persistence.delete(eventosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el evento con id = {0}", eventosId);

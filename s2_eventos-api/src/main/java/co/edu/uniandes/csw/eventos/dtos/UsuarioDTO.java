@@ -35,7 +35,6 @@ public class UsuarioDTO implements Serializable{
      */
     public UsuarioDTO()
     {
-        
     }
     public UsuarioDTO(UsuarioEntity usuario)
     {

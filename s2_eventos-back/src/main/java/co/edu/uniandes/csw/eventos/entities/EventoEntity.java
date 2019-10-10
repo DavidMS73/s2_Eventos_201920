@@ -65,6 +65,14 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<UsuarioEntity> inscritos = new ArrayList<UsuarioEntity>();
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<UsuarioEntity> invitadosEspeciales = new ArrayList<UsuarioEntity>();
     /**
      * Atributo que modela el nombre del evento
      */
@@ -345,6 +353,34 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     public void setPagos(List<PagoEntity> pagos) {
         this.pagos = pagos;
+    }
+
+    /**
+     * @return the inscritos
+     */
+    public List<UsuarioEntity> getInscritos() {
+        return inscritos;
+    }
+
+    /**
+     * @param inscritos the inscritos to set
+     */
+    public void setInscritos(List<UsuarioEntity> inscritos) {
+        this.inscritos = inscritos;
+    }
+
+    /**
+     * @return the invitadosEspeciales
+     */
+    public List<UsuarioEntity> getInvitadosEspeciales() {
+        return invitadosEspeciales;
+    }
+
+    /**
+     * @param invitadosEspeciales the invitadosEspeciales to set
+     */
+    public void setInvitadosEspeciales(List<UsuarioEntity> invitadosEspeciales) {
+        this.invitadosEspeciales = invitadosEspeciales;
     }
     
      
