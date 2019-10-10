@@ -30,11 +30,14 @@ public class UsuarioDTO implements Serializable{
     
     private Long id;
     
+    private TarjetaDTO tarjeta;
+    
     /**
      * Constructor vacio
      */
     public UsuarioDTO()
     {
+        
     }
     public UsuarioDTO(UsuarioEntity usuario)
     {
@@ -45,6 +48,10 @@ public class UsuarioDTO implements Serializable{
             this.contrasena=usuario.getContrasena();
             this.codigoQR=usuario.getCodigoQR();
             this.asiste=usuario.getAsiste();
+            if(usuario.getTarjeta() != null)
+                this.tarjeta = new TarjetaDTO(usuario.getTarjeta());
+            else
+                this.tarjeta = null;
         
     }
     public UsuarioEntity toEntity()
@@ -57,6 +64,8 @@ public class UsuarioDTO implements Serializable{
         usuario.setCorreo(this.getCorreo());
         usuario.setEmpresa(this.getEmpresa());
         usuario.setNombre(this.getNombre());
+        if(this.tarjeta != null)
+            usuario.setTarjeta(this.tarjeta.toEntity());
         return usuario;
     }
     /**
@@ -155,5 +164,13 @@ public class UsuarioDTO implements Serializable{
      */
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public TarjetaDTO getTarjeta(){
+        return tarjeta;
+    }
+    
+    public void setTarjeta(TarjetaDTO tarjeta){
+        this.tarjeta = tarjeta;
     }
 }

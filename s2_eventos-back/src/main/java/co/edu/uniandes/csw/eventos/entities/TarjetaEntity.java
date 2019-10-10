@@ -9,9 +9,12 @@ import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import co.edu.uniandes.csw.eventos.podam.TarjetaStrategy;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -31,7 +34,10 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
 
     private Integer cw;
     
-    
+     @PodamExclude
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private UsuarioEntity usuario;
+     
     public TarjetaEntity()
     {
         
@@ -107,5 +113,13 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
      */
     public void setCw(Integer pCw) {
         this.cw = pCw;
+    }
+    
+    public UsuarioEntity getUsuario(){
+        return usuario;
+    }
+    
+    public void setUsuario(UsuarioEntity usuario){
+        this.usuario = usuario;
     }
 }

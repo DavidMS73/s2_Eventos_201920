@@ -9,6 +9,8 @@ import co.edu.uniandes.csw.eventos.dtos.TarjetaDTO;
 import co.edu.uniandes.csw.eventos.ejb.TarjetaLogic;
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -22,14 +24,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author Samuelillo el pillo.
  */
 @Path("tarjetas")
-@Produces("application/json")
-@Consumes("application/json")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class TarjetaResource {
     private static final Logger LOGGER = Logger.getLogger(TarjetaResource.class.getName());
@@ -81,5 +84,23 @@ public class TarjetaResource {
         }
         tp.deleteTarjeta(tarjetasId);
         LOGGER.info("TarjetaResource deleteTarjeta: output: void");
+    }
+    
+    @GET
+    public List<TarjetaDTO> getTarjetas(@PathParam("tarjetasId") Long tarjetasId){
+      LOGGER.log(Level.INFO, "TarjetasResource getTarjetas: input: {0}", tarjetasId);
+      List<TarjetaDTO> tarjetasDTO = tarjetasEntityToDTO(tp.getTarjetas());
+      LOGGER.log(Level.INFO, "EventoResource getLugares: output: {0}", tarjetasDTO);
+      return tarjetasDTO;
+    }
+    
+    private List<TarjetaDTO> tarjetasEntityToDTO(List<TarjetaEntity> list){
+        List<TarjetaDTO> listDTO = new ArrayList();
+        
+        for(TarjetaEntity entity : list){
+            listDTO.add(new TarjetaDTO(entity));
+        }
+        
+        return listDTO;
     }
 }
