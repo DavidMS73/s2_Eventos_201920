@@ -38,15 +38,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToOne
     private EventoEntity evento;
-    
+
     @PodamExclude
     @ManyToMany
     private List<EventoEntity> eventosInscritos;
-    
+
     @PodamExclude
     @ManyToMany
     private List<EventoEntity> eventosInvitadosEspeciales;
-
 
     public UsuarioEntity() {
         //Constructor
@@ -149,6 +148,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void setEvento(EventoEntity eventoResponsable) {
         this.evento = eventoResponsable;
     }
+
     /**
      * @return the eventosInscritos
      */

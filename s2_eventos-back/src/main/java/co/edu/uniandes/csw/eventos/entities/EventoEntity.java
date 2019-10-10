@@ -67,11 +67,11 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
     
     @PodamExclude
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    @ManyToMany(mappedBy = "eventosInscritos", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<UsuarioEntity> inscritos = new ArrayList<UsuarioEntity>();
     
     @PodamExclude
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    @ManyToMany(mappedBy = "eventosInvitadosEspeciales", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<UsuarioEntity> invitadosEspeciales = new ArrayList<UsuarioEntity>();
     /**
      * Atributo que modela el nombre del evento

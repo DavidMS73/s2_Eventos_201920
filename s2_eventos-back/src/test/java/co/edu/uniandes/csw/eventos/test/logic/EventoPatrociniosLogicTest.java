@@ -39,7 +39,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class EventoPatrociniosLogicTest {
 
-    private static final Logger LOGGER = Logger.getLogger(EventoLugaresLogic.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(EventoPatrociniosLogic.class.getName());
 
     private PodamFactory factory = new PodamFactoryImpl();
 
