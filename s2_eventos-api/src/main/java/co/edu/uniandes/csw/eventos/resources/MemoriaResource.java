@@ -38,6 +38,7 @@ public class MemoriaResource
 {
     @Inject
     private MemoriaLogic logic;
+    
    
     private static final Logger LOGGER = Logger.getLogger(MemoriaResource.class.getName());
    
