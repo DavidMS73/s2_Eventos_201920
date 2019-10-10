@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "ef80bc39-e9d5-458e-9851-0a010ff8fb3a",
-		"name": "Eventos",
+		"name": "EventoResource",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -54,7 +54,7 @@
 						"eventos"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo evento. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Ciclo 1**\r\n\r\nCrea un nuevo evento. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
@@ -91,7 +91,7 @@
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un evento de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del evento deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Ciclo 1**\r\n\r\nConsulta un evento de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del evento deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
@@ -127,7 +127,7 @@
 						"eventos"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los eventos de la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de eventos en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Ciclo 1**\r\n\r\nConsulta todos los eventos de la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de eventos en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
@@ -180,7 +180,7 @@
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nActualiza un evento existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Ciclo 1**\r\n\r\nActualiza un evento existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
@@ -232,7 +232,7 @@
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\nActualiza un evento que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /events/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
+				"description": "**Release: Ciclo 1**\r\nActualiza un evento que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /events/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
 			},
 			"response": []
 		},
@@ -271,7 +271,7 @@
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un evento. Se envía el id del evento creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Ciclo 1**\n\nBorra un evento. Se envía el id del evento creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
@@ -311,7 +311,7 @@
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nBorra un evento que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /events/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Ciclo 1**\r\n\r\nBorra un evento que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /events/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		}
@@ -340,14 +340,14 @@
 	],
 	"variable": [
 		{
-			"id": "51bc1f5c-a4bc-4ca8-891d-bbf8816bbd17",
+			"id": "b321db53-0ebe-49f8-a48c-6b7e1664999e",
 			"key": "ip",
 			"value": "localhost",
 			"type": "string",
 			"disabled": true
 		},
 		{
-			"id": "f7dc1372-3aa8-419b-9dd6-90d38187de15",
+			"id": "0f0d7a9e-e09c-4c29-9e4d-d4e3b1cdd15f",
 			"key": "puerto",
 			"value": "8080",
 			"type": "string",

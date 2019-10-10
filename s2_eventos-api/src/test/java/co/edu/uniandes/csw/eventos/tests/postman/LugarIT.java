@@ -17,7 +17,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- *  Pruebas de integracion del recurso de Lugar.
+ * Pruebas de integracion del recurso de Lugar.
+ *
  * @author Alberic Despres
  */
 @RunWith(Arquillian.class)

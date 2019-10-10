@@ -1,8 +1,8 @@
 package co.edu.uniandes.csw.eventos.tests.postman;
 
-import co.edu.uniandes.csw.eventos.dtos.EventoDTO;
+import co.edu.uniandes.csw.eventos.dtos.PseDTO;
 import co.edu.uniandes.csw.eventos.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.eventos.resources.EventoResource;
+import co.edu.uniandes.csw.eventos.resources.PseResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -17,14 +17,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Pruebas de integracion del recurso de ActividadEvento.
+ * Pruebas de integracion del recurso de Pse.
  *
- * @author Alberic Despres
+ * @author Germán David Martínez Solano
  */
 @RunWith(Arquillian.class)
-public class ActividadEventoIT {
+public class PseIT {
 
-    private static final String COLLECTION = "ActividadEvento.postman_collection";
+    private static final String COLLECTION = "Pse Tests.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -34,8 +34,8 @@ public class ActividadEventoIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(EventoResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(EventoDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(PseResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(PseDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")

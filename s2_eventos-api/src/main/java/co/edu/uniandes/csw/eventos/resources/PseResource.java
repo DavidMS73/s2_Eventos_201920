@@ -33,12 +33,12 @@ import javax.ws.rs.WebApplicationException;
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class PseResourse {
+public class PseResource {
     
     @Inject
     private PseLogic logica;
     
-    private static final Logger LOGGER= Logger.getLogger(PseResourse.class.getName());
+    private static final Logger LOGGER= Logger.getLogger(PseResource.class.getName());
     
     
     private List<PseDTO> listEntity2DTO(List<PseEntity> entityList) {

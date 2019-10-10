@@ -1,8 +1,8 @@
 package co.edu.uniandes.csw.eventos.tests.postman;
 
-import co.edu.uniandes.csw.eventos.dtos.EventoDTO;
+import co.edu.uniandes.csw.eventos.dtos.ActividadEventoDTO;
 import co.edu.uniandes.csw.eventos.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.eventos.resources.EventoResource;
+import co.edu.uniandes.csw.eventos.resources.ActividadEventoResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- *  Pruebas de integracion del recurso de EventoActividadesEvento.
+ * Pruebas de integracion del recurso de EventoActividadesEvento.
+ *
  * @author Alberic Despres
  */
 @RunWith(Arquillian.class)
@@ -33,8 +34,8 @@ public class EventoActividadesEventoIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(EventoResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(EventoDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(ActividadEventoResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(ActividadEventoDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
