@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -71,6 +72,9 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
+    @PodamExclude
+    @OneToOne
+    private MultimediaEntity multimedia;
 
     public ActividadEventoEntity() {
         //Constructor
@@ -172,6 +176,20 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
      */
     public void setUsuarios(List<UsuarioEntity> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    /**
+     * @return the multimedia
+     */
+    public MultimediaEntity getMultimedia() {
+        return multimedia;
+    }
+
+    /**
+     * @param multimedia the multimedia to set
+     */
+    public void setMultimedia(MultimediaEntity multimedia) {
+        this.multimedia = multimedia;
     }
     
     
