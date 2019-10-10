@@ -1,0 +1,710 @@
+{
+	"info": {
+		"_postman_id": "ff720fa7-d84b-4aaf-83a4-9c377c50389d",
+		"name": "PatrocinioEventos",
+		"description": "Colección de pruebas sobre el recurso PatrocinioEventos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un patrocinio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "694741e6-4794-48fd-b32b-d790963ac9b0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p\", data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"empresa\": \"Fopre\",\n\t\"tipo\": \"Fuerte\"\n\t\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios"
+					]
+				},
+				"description": "Crea un nuevo patrocinio. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un evento",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8306096f-5e2c-449d-b827-efe44fbde283",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\", data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"nombre\": \"Fopre\",\r\n\t\"categoria\": \"General\",\r\n\t\"descripcion\": \"Evento para recaudar fondos\",\r\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\r\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\r\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\r\n\t\"entradasRestantes\": 1000,\r\n\t\"esPago\": \"false\",\r\n\t\"valor\": 0,\r\n\t\"responsable\": null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos"
+					]
+				},
+				"description": "Crea un nuevo evento. El Id es inicializado por la BD y se debe ver en la respuesta. Para la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un evento 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8306096f-5e2c-449d-b827-efe44fbde283",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e2\", data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"nombre\": \"Fopre2\",\r\n\t\"categoria\": \"G2eneral\",\r\n\t\"descripcion\": \"Evednto para recaudar fondos\",\r\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\r\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\r\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\r\n\t\"entradasRestantes\": 1000,\r\n\t\"esPago\": \"false\",\r\n\t\"valor\": 0,\r\n\t\"responsable\": null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos"
+					]
+				},
+				"description": "Crea un nuevo evento. El Id es inicializado por la BD y se debe ver en la respuesta. Para la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar un evento existente a un patrocinio existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e61e78f3-7560-466e-84cf-366a9a4a5305",
+						"exec": [
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos",
+						"{{new_id_e}}"
+					]
+				},
+				"description": "Asocia un evento a un patrocinio en la aplicación. \r\n\r\nSe envía el Id del evento y el del patrocinio a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar un evento que no existe a un patrocinio existente ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e61e78f3-7560-466e-84cf-366a9a4a5305",
+						"exec": [
+							"tests[\"No se deberia asociar el patrocinio ya que el evento no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos",
+						"0"
+					]
+				},
+				"description": "Asocia un evento que no existe a un patrocinio en la aplicación. \r\n\r\nSe envía el Id del patrocinio y el del evento a asociar en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /eventos/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener los eventos de un patrocinio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a06153d9-53e9-4d1e-a135-badf1b38d4fd",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos"
+					]
+				},
+				"description": "Consulta los eventos de un patrocinio en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del patrocinio a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un evento de un patrocinio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d6e646f-022a-4d41-855b-fa662aa1a3a2",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos",
+						"{{new_id_e}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un evento de un patrocinio en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del evento y del patrocinio a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un evento que no existe de un patrocinio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4356c2c8-7242-40aa-ad6d-2349cfdd45df",
+						"exec": [
+							"tests[\"No deberia obtener el evento ya que el evento no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un evento  que no existe de un patrocinio en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un evento existente de un patrocinio inexistante",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3843fb34-456a-425a-832c-43a60966be5f",
+						"exec": [
+							"tests[\"No deberia obtener el evento ya que el patrocinio no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /patrocinios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/0/eventos/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"0",
+						"eventos",
+						"{{new_id_e}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un patrocinio que no esta asociado a un evento en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje El recurso /patrocinios/0 no existe.\".\r\n\r\n**Código http esperado: 412**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar eventos a un patrocinio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3374dff-9bc4-4781-9d8b-11c920e28d41",
+						"exec": [
+							"tests[\"no genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"nombre\": \"Fopre2\",\n\t\"categoria\": \"G2eneral\",\n\t\"descripcion\": \"Evednto para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"id\": {{new_id_a}},\n\t\"valor\": 0,\n\t\"responsable\": null\n},\n{\n\t\"nombre\": \"Fopre3\",\n\t\"categoria\": \"G3eneral\",\n\t\"descripcion\": \"Evedn3to para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1050,\n\t\"esPago\": \"false\",\n\t\"id\": {{new_id_a2}},\n\t\"valor\": 0,\n\t\"responsable\": null\n}]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos",
+						""
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de eventos a un patrocinio existente.\r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar eventos a un patrocinio que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33095ce1-2210-4699-b02f-239aac70ecc2",
+						"exec": [
+							"tests[\"No se deberian asociar los eventos ya que el patrocinio no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /patrocinios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"nombre\": \"Fopre2\",\n\t\"categoria\": \"G2eneral\",\n\t\"descripcion\": \"Evednto para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"id\": {{new_id_a3}},\n\t\"valor\": 0,\n\t\"responsable\": null\n},\n{\n\t\"nombre\": \"Fopre3\",\n\t\"categoria\": \"G3eneral\",\n\t\"descripcion\": \"Evedn3to para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1050,\n\t\"esPago\": \"false\",\n\t\"id\": {{new_id_a4}},\n\t\"valor\": 0,\n\t\"responsable\": null\n}]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/0/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"0",
+						"eventos"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de eventos de un patrocinio que no existe. \r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /patrocinios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un evento a un patrocinio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9510b6cd-b566-4cfa-b16f-9c783800176d",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos",
+						"{{new_id_e}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un evento y un patrocinio. Se envían los ids del evento y del patrocinio creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un evento a un patrocinio que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91d9959e-4825-4dd7-88e3-3e33b988c765",
+						"exec": [
+							"tests[\"No se deberia eliminar ninguna asociacion ya que el patrocinio no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /patrocinios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/0/eventos/{{new_id_e2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"0",
+						"eventos",
+						"{{new_id_e2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nBorra la asociación entre a un evento y un patrocinio que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /patrocinios/0/eventos no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un evento que no existe a un patrocinio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db442b05-4aea-4f64-9db1-a28176069f5e",
+						"exec": [
+							"tests[\"No se deberia eliminar ninguna asociacion ya que el evento no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nBorra la asociación entre un evento que no existe y un patrocinio en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un evento a un patrocinio 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9510b6cd-b566-4cfa-b16f-9c783800176d",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/{{new_id_e2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}",
+						"eventos",
+						"{{new_id_e2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un evento y un patrocinio. Se envían los ids del evento y del patrocinio creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un patrocinio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d403e21b-3da3-4bbc-9b8a-9a2285ec0292",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_p}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra un patrocinio. Se envía el id del patrocinio creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e738a265-9c3c-47f1-bbbf-2fb853b5a48f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3b1bcd54-6a1b-46e0-9532-06d734c236b6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
