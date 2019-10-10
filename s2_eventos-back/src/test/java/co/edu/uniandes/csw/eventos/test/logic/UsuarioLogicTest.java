@@ -100,7 +100,7 @@ public class UsuarioLogicTest {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
             EventoEntity eventoEntity = factory.manufacturePojo(EventoEntity.class);
             em.persist(eventoEntity);
-            entity.setEventoResponsable(eventoEntity);
+            entity.setEvento(eventoEntity);
             eventoEntity.setResponsable(entity);
             em.persist(entity);
             data.add(entity);
@@ -132,7 +132,7 @@ public class UsuarioLogicTest {
         EventoEntity newEventoEntity = factory.manufacturePojo(EventoEntity.class);
 
         newEventoEntity = eventoLogic.createEvento(newEventoEntity);
-        newEntity.setEventoResponsable(newEventoEntity);
+        newEntity.setEvento(newEventoEntity);
 
         UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
         Assert.assertNotNull(result);

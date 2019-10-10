@@ -16,6 +16,8 @@ public class PagoDTO {
 
 
     private Date fecha;
+    
+    private Long id;
 
 
     public PagoDTO() {
@@ -23,11 +25,13 @@ public class PagoDTO {
     }
     public PagoDTO(PagoEntity entidad) {
         setFecha(entidad.getFecha());
+        setId(entidad.getId());
 
     }
      public PagoEntity toEntity() {
          PagoEntity entidad = new PagoEntity();
          entidad.setFecha(this.getFecha());
+         entidad.setId(this.getId());
 
          return entidad;
      }
@@ -44,6 +48,20 @@ public class PagoDTO {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.eventos.ejb;
 import co.edu.uniandes.csw.eventos.entities.PagoEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.PagoPersistence;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -28,6 +29,35 @@ public class PagoLogic {
 
         pago = persistence.create(pago);
         return pago;
+    }
+    
+    public List<PagoEntity> getPagos() {
+        
+        List<PagoEntity> lugares = persistence.findAll();
+        
+        return lugares;
+    }
+    
+    public PagoEntity getPago(Long id) {
+        
+        PagoEntity en = persistence.find(id);
+
+        
+        return en;
+    }
+    
+    
+    public PagoEntity updatePago(Long id, PagoEntity entity) {
+        
+        PagoEntity en = persistence.update(entity);
+        
+        return en;
+    }
+    
+    
+    public void deletePago(Long id) throws BusinessLogicException {
+        
+        persistence.delete(id);
     }
 
 }

@@ -5,6 +5,7 @@ import co.edu.uniandes.csw.eventos.ejb.LugarEventosLogic;
 import co.edu.uniandes.csw.eventos.ejb.LugarLogic;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
+import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import co.edu.uniandes.csw.eventos.persistence.LugarPersistence;
@@ -50,6 +51,10 @@ public class LugarEventosLogicTest {
     private LugarEntity lugar = new LugarEntity();
 
     private List<EventoEntity> data = new ArrayList();
+    
+    private UsuarioEntity responsable = new UsuarioEntity();
+    
+    private UsuarioEntity organizador = new UsuarioEntity();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -93,6 +98,10 @@ public class LugarEventosLogicTest {
     }
 
     private void insertData() {
+        responsable = factory.manufacturePojo(UsuarioEntity.class);
+        em.persist(responsable);
+        organizador = factory.manufacturePojo(UsuarioEntity.class);
+        em.persist(organizador);
         lugar = factory.manufacturePojo(LugarEntity.class);
         lugar.setId(1L);
         lugar.setEventos(new ArrayList<>());
@@ -111,14 +120,19 @@ public class LugarEventosLogicTest {
     @Test
     public void addEventoTest() throws BusinessLogicException {
         EventoEntity newEvento = factory.manufacturePojo(EventoEntity.class);
+        responsable.setEvento(newEvento);
+        organizador.setEvento(newEvento);
+        newEvento.setResponsable(responsable);
+        newEvento.setOrganizador(organizador);
         eventoLogic.createEvento(newEvento);
         EventoEntity eventoEntity = lugarEventosLogic.addEvento(lugar.getId(), newEvento.getId());
         Assert.assertNotNull(eventoEntity);
-
+        
         Assert.assertEquals(eventoEntity.getId(), newEvento.getId());
         Assert.assertEquals(eventoEntity.getNombre(), newEvento.getNombre());
         Assert.assertEquals(eventoEntity.getCategoria(), newEvento.getCategoria());
         Assert.assertEquals(eventoEntity.getValor(), newEvento.getValor());
+        
 
         EventoEntity lastEvento = lugarEventosLogic.getEvento(lugar.getId(), newEvento.getId());
 
@@ -160,6 +174,10 @@ public class LugarEventosLogicTest {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
             entity.setLugares(new ArrayList<>());
             entity.getLugares().add(lugar);
+            responsable.setEvento(entity);
+            organizador.setEvento(entity);
+            entity.setResponsable(responsable);
+            entity.setOrganizador(organizador);
             eventoLogic.createEvento(entity);
             nuevaLista.add(entity);
         }

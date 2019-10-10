@@ -1,17 +1,17 @@
 {
 	"info": {
-		"_postman_id": "ceedddaa-ed1b-4648-93fd-589a79c23caa",
-		"name": "Patrocinio Resource Test",
+		"_postman_id": "c96d8821-6ce3-41a8-9115-3ea3515414b0",
+		"name": "UsuarioTarjetaTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Crear patrocinio",
+			"name": "Post usuario con tarjeta",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5e033681-35b8-473b-bb78-625eeadeb5f1",
+						"id": "f7785be9-93f4-4af6-bf37-23766c0c84bb",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_a\",data.id);",
@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"empresa\": \"Choripaco\",\n\"tipo\":\"platinum\"\n}",
+					"raw": "{\n\t\"nombre\": \"Juaan\",\n\t\"correo\":\"masidf@uniandes.edu.co\",\n\t\"contrasena\":\"1273678\",\n\t\"asiste\":\"false\",\n\t\"codigoQR\":\"fotolpng\",\n\t\"empresa\":\"DoaBjlanca \",\n\t\"tarjeta\":{\n\t\t\"tipoTarjeta\": \"Débito\",\n\t\t\"numeroTarjeta\": \"1234567891127456\",\n\t\t\"expiracion\": \"2020-09-07T00:00:00-08:00\",\n\t\t\"cw\": 122\n}\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,7 +42,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -51,19 +51,19 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
-						"patrocinios"
+						"usuarios"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get patrocinio",
+			"name": "Get usuarios",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "0449814c-96fc-41d2-a27c-abaafe93db46",
+						"id": "296f846c-17f8-4023-aae9-733f4241cfb1",
 						"exec": [
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
@@ -77,7 +77,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/1",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -86,24 +86,23 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
-						"patrocinios",
-						"1"
+						"usuarios"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get patrocinios",
+			"name": "Get usuario con tarjeta",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "d24a09f9-bfb9-4f27-ab00-2236ed28a753",
+						"id": "75baaf01-7da1-4a2c-b1ff-5bca2585e17d",
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
-							"tests[\"patrocinios count\"] = data.length >= 1;"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -113,7 +112,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -122,19 +121,20 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
-						"patrocinios"
+						"usuarios",
+						"{{new_id_a}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Editar un patrocinio",
+			"name": "Put usuario con tarjeta",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "82a98e24-2fb5-4f1c-89a5-a98a6c572acf",
+						"id": "6a3d13e2-bc04-4c07-82ff-b9f2177ff130",
 						"exec": [
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
@@ -156,7 +156,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"empresa\": \"Haceb\",\n\"tipo\":\"platinum\"\n}",
+					"raw": "{\n\t\"nombre\": \"Juaan\",\n\t\"correo\":\"masf@uniandes.edu.co\",\n\t\"contrasena\":\"1273678\",\n\t\"asiste\":\"false\",\n\t\"codigoQR\":\"fotolpng\",\n\t\"empresa\":\"DoaBjlanca \",\n\t\"tarjeta\":{\n\t\t\"tipoTarjeta\": \"Débito\",\n\t\t\"numeroTarjeta\": \"1234567891127456\",\n\t\t\"expiracion\": \"2020-09-07T00:00:00-08:00\",\n\t\t\"cw\": 122\n}\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -164,7 +164,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/3",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -173,20 +173,20 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
-						"patrocinios",
-						"3"
+						"usuarios",
+						"{{new_id_a}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar un patrocinio",
+			"name": "Delete usuario con tarjeta",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "6905b6e4-1d83-4373-a183-c5ba738a1845",
+						"id": "cd1b5f6c-6327-45b9-90b8-2a7c24aa66e0",
 						"exec": [
 							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
 						],
@@ -198,7 +198,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/9",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -207,8 +207,8 @@
 					"path": [
 						"s2_eventos-api",
 						"api",
-						"patrocinios",
-						"9"
+						"usuarios",
+						"{{new_id_a}}"
 					]
 				}
 			},

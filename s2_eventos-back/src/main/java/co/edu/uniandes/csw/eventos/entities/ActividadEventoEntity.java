@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -30,13 +31,13 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     /**
      * Atributo que modela los usuarios asociados a la actividad
     */
-   /* @PodamExclude
+    @PodamExclude
     @ManyToMany
     @JoinTable(
         name = "usuario_asociated", 
         joinColumns = @JoinColumn(name = "actividadEvento_id"), 
         inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<UsuarioEntity> usuarios;*/
+    private List<UsuarioEntity> usuarios;
 
     /**
      * Atributo que modela el evento asociado a la actividad
@@ -71,6 +72,9 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
+    @PodamExclude
+    @OneToOne
+    private MultimediaEntity multimedia;
 
     public ActividadEventoEntity() {
         //Constructor
@@ -163,16 +167,30 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     /**
      * @return the usuarios
      */
-   /* public List<UsuarioEntity> getUsuarios() {
+    public List<UsuarioEntity> getUsuarios() {
         return usuarios;
     }
-*/
+
     /**
      * @param usuarios the usuarios to set
      */
- /*   public void setUsuarios(List<UsuarioEntity> usuarios) {
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
         this.usuarios = usuarios;
-    }*/
+    }
+
+    /**
+     * @return the multimedia
+     */
+    public MultimediaEntity getMultimedia() {
+        return multimedia;
+    }
+
+    /**
+     * @param multimedia the multimedia to set
+     */
+    public void setMultimedia(MultimediaEntity multimedia) {
+        this.multimedia = multimedia;
+    }
     
     
 }

@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -19,6 +21,7 @@ public class MultimediaEntity extends BaseEntity implements Serializable {
     private String nombre;
     private String tipo;
     private MemoriaEntity memoria;
+    private ActividadEventoEntity actividadEvento;
 
     public MultimediaEntity() {
 
@@ -47,6 +50,21 @@ public class MultimediaEntity extends BaseEntity implements Serializable {
     public void setTipo(String pTipo) {
         tipo = pTipo;
     }
+
+    /**
+     * @return the actividadEvento
+     */
+    public ActividadEventoEntity getActividadEvento() {
+        return actividadEvento;
+    }
+
+    /**
+     * @param actividadEvento the actividadEvento to set
+     */
+    public void setActividadEvento(ActividadEventoEntity actividadEvento) {
+        this.actividadEvento = actividadEvento;
+    }
+
     
     public MemoriaEntity getMemoria()
     {

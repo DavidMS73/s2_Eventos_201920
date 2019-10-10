@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.eventos.test.persistence;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
+import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -37,6 +38,9 @@ public class EventoPersistenceTest {
 
     @Inject
     private EventoPersistence ep;
+
+    @Inject
+    private UsuarioPersistence up;
 
     @PersistenceContext
     private EntityManager em;
@@ -79,13 +83,17 @@ public class EventoPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
-            UsuarioEntity usuarioEntity = factory.manufacturePojo(UsuarioEntity.class);
+            UsuarioEntity responsable = factory.manufacturePojo(UsuarioEntity.class);
+            UsuarioEntity organizador = factory.manufacturePojo(UsuarioEntity.class);
 
-            entity.setResponsable(usuarioEntity);
-            usuarioEntity.setEventoResponsable(entity);
+            //entity.setResponsable(responsable);
+            //entity.setOrganizador(organizador);
+            //organizador.setEvento(entity);
+            //responsable.setEvento(entity);
 
             em.persist(entity);
-            em.persist(usuarioEntity);
+           // em.persist(responsable);
+            //em.persist(organizador);
             data.add(entity);
         }
 
@@ -98,7 +106,11 @@ public class EventoPersistenceTest {
     public void createEventoTest() {
         PodamFactory factory = new PodamFactoryImpl();
         EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
+      //  UsuarioEntity responsable = factory.manufacturePojo(UsuarioEntity.class);
+      //  UsuarioEntity organizador = factory.manufacturePojo(UsuarioEntity.class);
 
+      //  responsable = up.create(responsable);
+      //  organizador = up.create(organizador);
         EventoEntity result = ep.create(evento);
 
         Assert.assertNotNull(result);
@@ -120,6 +132,7 @@ public class EventoPersistenceTest {
     @Test
     public void getEventosTest() {
         List<EventoEntity> list = ep.findAll();
+        
         Assert.assertEquals(data.size(), list.size());
         for (EventoEntity ent : list) {
             boolean found = false;

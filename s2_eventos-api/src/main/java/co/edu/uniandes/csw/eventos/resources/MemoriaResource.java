@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.eventos.dtos.MemoriaDTO;
 import co.edu.uniandes.csw.eventos.ejb.MemoriaLogic;
 import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -46,10 +48,30 @@ public class MemoriaResource
         memoriaEntity = logic.createMemoria(memoriaEntity);
         return new MemoriaDTO(memoriaEntity);
     }
+    
+    private List<MemoriaDTO> listEntity2DTO(List<MemoriaEntity> entityList)
+    {
+        List<MemoriaDTO> list = new ArrayList<>();
+        for(MemoriaEntity entity : entityList)
+        {
+            list.add(new MemoriaDTO(entity));
+        }
+        
+        return list;
+    }
    
     @GET
+    public List<MemoriaDTO> getMemorias()
+    {
+        LOGGER.info("MultimediaResource getMemorias: input: void");
+        List<MemoriaDTO> listaMemorias = listEntity2DTO(logic.getMemorias());
+        LOGGER.log(Level.INFO, "MemoriaResource getMemorias: output: {0}");
+        return listaMemorias;
+    }        
+      
+    @GET
     @Path("{memoriasId: \\d+}")
-    public MemoriaDTO getMemoria(@PathParam("memoriassId") Long memoriasId)
+    public MemoriaDTO getMemoria(@PathParam("memoriasId") Long memoriasId)
     {
         LOGGER.log(Level.INFO, "MemoriaResource getMemoria: input: {0}", memoriasId);
         MemoriaEntity entity = logic.getMemoria(memoriasId);
@@ -71,7 +93,7 @@ public class MemoriaResource
         memoria.setId(memoriasId);
         if(logic.getMemoria(memoriasId) == null)
         {
-            throw new WebApplicationException("El recurso /multimedias/" + memoriasId + "no existe.", 404);
+            throw new WebApplicationException("El recurso /memorias/" + memoriasId + "no existe.", 404);
         }
        
         MemoriaDTO memoriaDTO = new MemoriaDTO(logic.updateMemoria(memoriasId, memoria.toEntity()));

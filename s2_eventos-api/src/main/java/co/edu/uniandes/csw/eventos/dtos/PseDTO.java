@@ -16,6 +16,8 @@ public class PseDTO implements Serializable{
     
     private String correo;
     
+    private Long id;
+    
     public PseDTO()
     {
 
@@ -23,11 +25,13 @@ public class PseDTO implements Serializable{
 
     public PseDTO(PseEntity entidad) {
         setCorreo(entidad.getCorreo());
+        setId(entidad.getId());
 
     }
      public PseEntity toEntity() {
          PseEntity entidad = new PseEntity();
          entidad.setCorreo(this.getCorreo());
+         entidad.setId(this.getId());
 
          return entidad;
      }
@@ -43,6 +47,20 @@ public class PseDTO implements Serializable{
      */
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
     
     

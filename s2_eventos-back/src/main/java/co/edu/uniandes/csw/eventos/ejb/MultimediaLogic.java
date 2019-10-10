@@ -40,6 +40,11 @@ public class MultimediaLogic
         if (multimedia.getUrl() == null) {
             throw new BusinessLogicException("Debe añadir un URL para la multimedia");
         }
+        
+        if(!multimedia.getUrl().startsWith("https://"))
+        {
+            throw new BusinessLogicException ("La URL es inválida");
+        }
 
         multimedia = persistence.create(multimedia);
         LOGGER.log(Level.INFO,"Se termina la creacion de multimedias");
@@ -55,12 +60,12 @@ public class MultimediaLogic
         
     }
 
-    public MultimediaEntity getMultimedia(Long id)
+    public MultimediaEntity getMultimedia(Long multimediasId)
     {
-        LOGGER.log(Level.INFO, "Se empieza la busqueda de la multimedia con id = (0)", id);
-        MultimediaEntity en = persistence.find(id);
+        LOGGER.log(Level.INFO, "Se empieza la busqueda de la multimedia con id = (0)", multimediasId);
+        MultimediaEntity en = persistence.find(multimediasId);
         
-        if(id == null)
+        if(multimediasId == null)
         {
             LOGGER.log(Level.INFO, "No existe multimedia con id = (0)");
         }
@@ -69,18 +74,18 @@ public class MultimediaLogic
         return en;
     }
     
-    public MultimediaEntity updateMultimedia(Long id, MultimediaEntity entity)
+    public MultimediaEntity updateMultimedia(Long multimediasId, MultimediaEntity entity)
     {
-        LOGGER.log(Level.INFO, "Se inicia el proceso de actualizar multimedia con id = (0)", id);
+        LOGGER.log(Level.INFO, "Se inicia el proceso de actualizar multimedia con id = (0)", multimediasId);
         MultimediaEntity en = persistence.update(entity);
         LOGGER.log(Level.INFO, "SE termina la actualizacion de la multimedia con id = (0)", entity.getId());
         return en;
     }
     
-    public void deleteMultimedia(Long id)
+    public void deleteMultimedia(Long multimediasId)
     {
-        LOGGER.log(Level.INFO, "Se inicia el proceso de borrar la mutlimedia con id = (0)", id);
-        persistence.delete(id);
-        LOGGER.log(Level.INFO, "Termina el proceso de eliminar la multimedia con id = (0)", id);
+        LOGGER.log(Level.INFO, "Se inicia el proceso de borrar la mutlimedia con id = (0)", multimediasId);
+        persistence.delete(multimediasId);
+        LOGGER.log(Level.INFO, "Termina el proceso de eliminar la multimedia con id = (0)", multimediasId);
     }
 }

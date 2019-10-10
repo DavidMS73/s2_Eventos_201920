@@ -48,8 +48,12 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<PatrocinioEntity> patrocinios = new ArrayList<PatrocinioEntity>();
 
     @PodamExclude
-    @OneToOne(mappedBy = "eventoResponsable", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
     private UsuarioEntity responsable;
+    
+    @PodamExclude
+    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
+    private UsuarioEntity organizador;
 
     @PodamExclude
     @OneToMany(mappedBy = "evento")
@@ -58,9 +62,17 @@ public class EventoEntity extends BaseEntity implements Serializable {
     /**
      * Atributo que modela los pago del evento
      */
-    /*  @PodamExclude
+    @PodamExclude
     @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<PagoEntity> pagos = new ArrayList<PagoEntity>();*/
+    private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
+    
+    @PodamExclude
+    @ManyToMany(mappedBy = "eventosInscritos", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<UsuarioEntity> inscritos = new ArrayList<UsuarioEntity>();
+    
+    @PodamExclude
+    @ManyToMany(mappedBy = "eventosInvitadosEspeciales", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<UsuarioEntity> invitadosEspeciales = new ArrayList<UsuarioEntity>();
     /**
      * Atributo que modela el nombre del evento
      */
@@ -316,19 +328,61 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * @return the organizador
+     */
+    public UsuarioEntity getOrganizador() {
+        return organizador;
+    }
+
+    /**
+     * @param organizador the organizador to set
+     */
+    public void setOrganizador(UsuarioEntity organizador) {
+        this.organizador = organizador;
+    }
+
+    /**
      * @return the pagos
      */
-    /*   public List<PagoEntity> getPagos() {
+    public List<PagoEntity> getPagos() {
         return pagos;
     }
-     */
+     
     /**
      * @param pagos the pagos to set
-     *//*
+     */
     public void setPagos(List<PagoEntity> pagos) {
         this.pagos = pagos;
     }
-    
+
+    /**
+     * @return the inscritos
      */
+    public List<UsuarioEntity> getInscritos() {
+        return inscritos;
+    }
+
+    /**
+     * @param inscritos the inscritos to set
+     */
+    public void setInscritos(List<UsuarioEntity> inscritos) {
+        this.inscritos = inscritos;
+    }
+
+    /**
+     * @return the invitadosEspeciales
+     */
+    public List<UsuarioEntity> getInvitadosEspeciales() {
+        return invitadosEspeciales;
+    }
+
+    /**
+     * @param invitadosEspeciales the invitadosEspeciales to set
+     */
+    public void setInvitadosEspeciales(List<UsuarioEntity> invitadosEspeciales) {
+        this.invitadosEspeciales = invitadosEspeciales;
+    }
+    
+     
 
 }

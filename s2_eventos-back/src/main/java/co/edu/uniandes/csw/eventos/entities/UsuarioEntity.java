@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.eventos.entities;
 import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
@@ -34,19 +35,23 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String codigoQR;
 
     private String empresa;
+    
+    @PodamExclude
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private TarjetaEntity tarjeta;
 
     @PodamExclude
     @OneToOne
-    private EventoEntity eventoResponsable;
-    
-    
-    /**
-     * Atributo que modela las actividades asociadas al usuario
-     */
-  /*  @PodamExclude
-    @ManyToMany(mappedBy="usuarios")
-    private List<ActividadEventoEntity> actividadesEvento;
-*/
+    private EventoEntity evento;
+
+    @PodamExclude
+    @ManyToMany
+    private List<EventoEntity> eventosInscritos;
+
+    @PodamExclude
+    @ManyToMany
+    private List<EventoEntity> eventosInvitadosEspeciales;
+
     public UsuarioEntity() {
         //Constructor
     }
@@ -138,28 +143,50 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     /**
      * @return the eventoResponsable
      */
-    public EventoEntity getEventoResponsable() {
-        return eventoResponsable;
+    public EventoEntity getEvento() {
+        return evento;
     }
 
     /**
      * @param eventoResponsable the eventoResponsable to set
      */
-    public void setEventoResponsable(EventoEntity eventoResponsable) {
-        this.eventoResponsable = eventoResponsable;
+    public void setEvento(EventoEntity eventoResponsable) {
+        this.evento = eventoResponsable;
     }
 
     /**
-     * @return the actividadesEvento
-     *//*
-    public List<ActividadEventoEntity> getActividadesEvento() {
-        return actividadesEvento;
+     * @return the eventosInscritos
+     */
+    public List<EventoEntity> getEventosInscritos() {
+        return eventosInscritos;
     }
-*/
+
     /**
-     * @param actividadesEvento the actividadesEvento to set
-     *//*
-    public void setActividadesEvento(List<ActividadEventoEntity> actividadesEvento) {
-        this.actividadesEvento = actividadesEvento;
-    }*/
+     * @param eventosInscritos the eventosInscritos to set
+     */
+    public void setEventosInscritos(List<EventoEntity> eventosInscritos) {
+        this.eventosInscritos = eventosInscritos;
+    }
+
+    /**
+     * @return the eventosInvitadosEspeciales
+     */
+    public List<EventoEntity> getEventosInvitadosEspeciales() {
+        return eventosInvitadosEspeciales;
+    }
+
+    /**
+     * @param eventosInvitadosEspeciales the eventosInvitadosEspeciales to set
+     */
+    public void setEventosInvitadosEspeciales(List<EventoEntity> eventosInvitadosEspeciales) {
+        this.eventosInvitadosEspeciales = eventosInvitadosEspeciales;
+    }
+    
+    public TarjetaEntity getTarjeta(){
+        return tarjeta;
+    }
+    
+    public void setTarjeta(TarjetaEntity tarjeta){
+        this.tarjeta = tarjeta;
+    }
 }

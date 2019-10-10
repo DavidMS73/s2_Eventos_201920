@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.eventos.dtos.MultimediaDTO;
 import co.edu.uniandes.csw.eventos.ejb.MultimediaLogic;
 import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -23,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -30,8 +33,8 @@ import javax.ws.rs.WebApplicationException;
  */
 
 @Path("multimedias")
-@Produces("application/json")
-@Consumes("application/json")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class MultimediaResource
 {
@@ -47,10 +50,30 @@ public class MultimediaResource
         multimediaEntity = logic.createMultimedia(multimediaEntity);
         return new MultimediaDTO(multimediaEntity);
     }
+    
+    private List<MultimediaDTO> listEntity2DTO(List<MultimediaEntity> entityList)
+    {
+        List<MultimediaDTO> list = new ArrayList<>();
+        for(MultimediaEntity entity : entityList)
+        {
+            list.add(new MultimediaDTO(entity));
+        }
+        
+        return list;
+    }
+    
+    @GET
+    public List<MultimediaDTO> getMultimedias()
+    {
+        LOGGER.info("MultimediaResource getMultimedias: input: void");
+        List<MultimediaDTO> listaMultimedias = listEntity2DTO(logic.getMultimedias());
+        LOGGER.log(Level.INFO, "MultimediaResource getMultimedias: output: {0}", listaMultimedias);
+        return listaMultimedias;
+    }
    
     @GET
     @Path("{multimediasId: \\d+}")
-    public MultimediaDTO getMultimedia(@PathParam("mutlimediasId") Long multimediasId) throws BusinessLogicException
+    public MultimediaDTO getMultimedia(@PathParam("multimediasId") Long multimediasId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "MultimediaResource getMultimedia: input: {0}", multimediasId);
         MultimediaEntity entity = logic.getMultimedia(multimediasId);

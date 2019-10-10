@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.eventos.persistence;
 
 import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +21,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class MultimediaPersistence {
 
+    private static final Logger LOGGER = Logger.getLogger(MultimediaPersistence.class.getName());
+    
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
 
@@ -27,8 +31,8 @@ public class MultimediaPersistence {
         return multimedia;
     }
 
-    public MultimediaEntity find(Long multimediaId) {
-        return em.find(MultimediaEntity.class, multimediaId);
+    public MultimediaEntity find(Long multimediasId) {
+        return em.find(MultimediaEntity.class, multimediasId);
     }
 
     public List<MultimediaEntity> findAll() {

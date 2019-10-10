@@ -87,7 +87,7 @@ public class UsuarioPersistenceTest {
             EventoEntity eventoEntity = factory.manufacturePojo(EventoEntity.class);
 
             eventoEntity.setResponsable(entity);
-            entity.setEventoResponsable(eventoEntity);
+            entity.setEvento(eventoEntity);
 
             em.persist(eventoEntity);
             em.persist(entity);
@@ -102,7 +102,7 @@ public class UsuarioPersistenceTest {
         EventoEntity newEventoEntity = factory.manufacturePojo(EventoEntity.class);
 
         newEventoEntity = ep.create(newEventoEntity);
-        newEntity.setEventoResponsable(newEventoEntity);
+        newEntity.setEvento(newEventoEntity);
 
         UsuarioEntity result = up.create(newEntity);
 
