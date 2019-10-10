@@ -7,13 +7,17 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Entity;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
+import javax.persistence.FetchType;
 
 /**
  *
@@ -30,6 +34,10 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private EventoEntity evento;
+    
+    @PodamExclude
+    @OneToOne(mappedBy = "memoria", fetch = FetchType.LAZY)
+    private MultimediaEntity multimedia;
 
     /**
      * @return the lugar
@@ -73,5 +81,20 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
         this.evento = evento;
 
     }
+    
+    /**
+     * @return the multimedia
+     */
+    public MultimediaEntity getMultimedia() {
+        return multimedia;
+    }
 
+    /**
+     * @param multimedia the multimedia to set
+     */
+    public void setMultimedia(MultimediaEntity multimedia) {
+        this.multimedia = multimedia;
+    }
+    
+    
 }

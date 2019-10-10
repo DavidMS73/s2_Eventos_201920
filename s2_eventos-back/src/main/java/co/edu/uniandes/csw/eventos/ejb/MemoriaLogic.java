@@ -28,9 +28,16 @@ public class MemoriaLogic {
 
     public MemoriaEntity createMemoria(MemoriaEntity memoria) throws BusinessLogicException {
 
-        if (memoria.getLugar() == null || memoria.getFecha() == null) {
-            throw new BusinessLogicException("El lugar o la fecha de memoria esta vacio");
+        if (memoria.getLugar() == null) 
+        {
+            throw new BusinessLogicException("El lugar no puede estar vacio");
         }
+        
+        if(memoria.getFecha() == null)
+        {
+            throw new BusinessLogicException("La fecha de la memoria no puede estar vacia");  
+        }
+       
 
         memoria = persistence.create(memoria);
         return memoria;

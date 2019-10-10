@@ -18,6 +18,7 @@ public class MultimediaEntity extends BaseEntity implements Serializable {
     private String url;
     private String nombre;
     private String tipo;
+    private MemoriaEntity memoria;
 
     public MultimediaEntity() {
 
@@ -46,5 +47,14 @@ public class MultimediaEntity extends BaseEntity implements Serializable {
     public void setTipo(String pTipo) {
         tipo = pTipo;
     }
-
+    
+    public MemoriaEntity getMemoria()
+    {
+        return memoria;
+    }
+    
+    public void setMemoria(MemoriaEntity pMemoria)
+    {
+        this.memoria = pMemoria;
+    }
 }
