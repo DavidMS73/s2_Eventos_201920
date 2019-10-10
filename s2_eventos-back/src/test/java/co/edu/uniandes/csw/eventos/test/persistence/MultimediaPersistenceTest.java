@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.eventos.test.persistence;
 
+import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
+import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
 import co.edu.uniandes.csw.eventos.persistence.MultimediaPersistence;
 import java.util.ArrayList;
@@ -79,15 +81,24 @@ public class MultimediaPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             MultimediaEntity entity = factory.manufacturePojo(MultimediaEntity.class);
+            MemoriaEntity perteneceAMemoria = factory.manufacturePojo(MemoriaEntity.class);
+            ActividadEventoEntity perteneceAActividad = factory.manufacturePojo(ActividadEventoEntity.class);
             em.persist(entity);
             data.add(entity);
+            
+            entity.setMemoria(perteneceAMemoria);
+            entity.setActividadEvento(perteneceAActividad);
         }
+        
+        MultimediaEntity entity = factory.manufacturePojo(MultimediaEntity.class);
+        em.persist(entity);
+        data.add(entity);
     }
 
     @Test
     public void createMultimediaTest() {
-        PodamFactory podam = new PodamFactoryImpl();
-        MultimediaEntity multimedia = podam.manufacturePojo(MultimediaEntity.class);
+        PodamFactory factory = new PodamFactoryImpl();
+        MultimediaEntity multimedia = factory.manufacturePojo(MultimediaEntity.class);
         MultimediaEntity result = mp.create(multimedia);
 
         Assert.assertNotNull(result);
@@ -95,6 +106,7 @@ public class MultimediaPersistenceTest {
         MultimediaEntity entity = em.find(MultimediaEntity.class, result.getId());
 
         Assert.assertEquals(multimedia.getNombre(), entity.getNombre());
+        
     }
 
     @Test

@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.eventos.ejb;
 
 import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.eventos.persistence.ActividadEventoPersistence;
+import co.edu.uniandes.csw.eventos.persistence.MemoriaPersistence;
 import co.edu.uniandes.csw.eventos.persistence.MultimediaPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,6 +28,12 @@ public class MultimediaLogic
     
     @Inject
     private MultimediaPersistence persistence;
+    
+    @Inject
+    private MemoriaPersistence memoriaPersistence;
+    
+    @Inject
+    private ActividadEventoPersistence actividadEventoPersistence;
 
     public MultimediaEntity createMultimedia(MultimediaEntity multimedia) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Se comienza la creacion de multimedias");

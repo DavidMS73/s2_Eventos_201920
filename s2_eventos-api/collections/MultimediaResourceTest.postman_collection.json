@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "0e84a299-16bc-4280-9a4b-5d07474eb134",
+		"name": "MultimediaResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear una Multimedia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba613603-aed8-475f-bfee-d9645542f019",
+						"exec": [
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"EstereoPicnic\",\n\t\"tipo\" : \"festival\",\n\t\"url\" : \"https://static.iris.net.co/semana/upload/images/2014/4/2/382401_17517_1.jpg\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una Multimedia Con URL invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba613603-aed8-475f-bfee-d9645542f019",
+						"exec": [
+							"tests[\"No crea con URL valido\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La URL es inválida\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"PruebaMal\",\n\t\"tipo\" : \"Prueba\",\n\t\"url\" : \"w\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una Multimedia Sin Nombre",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba613603-aed8-475f-bfee-d9645542f019",
+						"exec": [
+							"tests[\"No crea con URL valido\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El nombre de la multimedia esta vacio\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tipo\" : \"Prueba\",\n\t\"url\" : \"https://www.semana.com/cultura/articulo/estereo-picnic-historia-del-festival-musical/382394-3\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una Multimedia Sin Tipo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba613603-aed8-475f-bfee-d9645542f019",
+						"exec": [
+							"tests[\"No crea con URL valido\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La multimedia debe tener un tipo\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\" : \"Prueba 3\",\n\t\"url\" : \"https://www.semana.com/cultura/articulo/estereo-picnic-historia-del-festival-musical/382394-3\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una Multimedia Sin URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba613603-aed8-475f-bfee-d9645542f019",
+						"exec": [
+							"tests[\"No crea con URL valido\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Debe añadir un URL para la multimedia\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\" : \"Prueba 4\",\n\t\"tipo\" : \"prueba\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Multimedias",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad309e51-c9e6-4900-a0ff-f4574a40b3df",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"books count\"] = data.length >= 0;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Multimedia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b671f4fd-2e8e-4662-a534-d450acfc06d0",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Multimedia Que No Existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "febd508c-10d5-415e-b52b-846b9e059291",
+						"exec": [
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404; ",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /multimedias/0no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Multimedia Que No Existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "febd508c-10d5-415e-b52b-846b9e059291",
+						"exec": [
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404; ",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /multimedias/0no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Feria del Libro\",\n    \"url\": \"https://static.iris.net.co/arcadia/upload/images/2017/7/31/64899_1.jpg\",\n    \"tipo\": \"Lectura\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Multimedia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "febd508c-10d5-415e-b52b-846b9e059291",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Feria del Libro\",\n    \"url\": \"https://static.iris.net.co/arcadia/upload/images/2017/7/31/64899_1.jpg\",\n    \"tipo\": \"Lectura\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Multimedia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "febd508c-10d5-415e-b52b-846b9e059291",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Multimedia Que No Existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0c07240-fe4b-447c-9e39-ab2524df2ace",
+						"exec": [
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /multimedias/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/multimedias/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"multimedias",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
