@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.eventos.entities;
 import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
@@ -34,6 +35,10 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String codigoQR;
 
     private String empresa;
+    
+    @PodamExclude
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private TarjetaEntity tarjeta;
 
     @PodamExclude
     @OneToOne
@@ -175,5 +180,13 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      */
     public void setEventosInvitadosEspeciales(List<EventoEntity> eventosInvitadosEspeciales) {
         this.eventosInvitadosEspeciales = eventosInvitadosEspeciales;
+    }
+    
+    public TarjetaEntity getTarjeta(){
+        return tarjeta;
+    }
+    
+    public void setTarjeta(TarjetaEntity tarjeta){
+        this.tarjeta = tarjeta;
     }
 }

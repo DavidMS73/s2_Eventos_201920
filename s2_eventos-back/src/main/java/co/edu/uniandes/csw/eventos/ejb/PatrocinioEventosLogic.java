@@ -39,16 +39,16 @@ public class PatrocinioEventosLogic {
         return eventoPersistence.find(eventosId);
     }
     
-     public List<EventoEntity> getEventos(Long lugaresId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los eventos del patrocinador con id = {0}", lugaresId);
-        return patrocinioPersistence.find(lugaresId).getEventos();
+     public List<EventoEntity> getEventos(Long patrociniosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los eventos del patrocinador con id = {0}", patrociniosId);
+        return patrocinioPersistence.find(patrociniosId).getEventos();
     }
-     public EventoEntity getEvento(Long lugaresId, Long eventosId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0} del patrocinio con id = " + lugaresId, eventosId);
-        List<EventoEntity> eventos = patrocinioPersistence.find(lugaresId).getEventos();
+     public EventoEntity getEvento(Long patrociniosId, Long eventosId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0} del patrocinio con id = " + patrociniosId, eventosId);
+        List<EventoEntity> eventos = patrocinioPersistence.find(patrociniosId).getEventos();
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
         int index = eventos.indexOf(eventoEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0} del patrocinio con id = " + lugaresId, eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0} del patrocinio con id = " + patrociniosId, eventosId);
         if (index >= 0) {
             return eventos.get(index);
         }

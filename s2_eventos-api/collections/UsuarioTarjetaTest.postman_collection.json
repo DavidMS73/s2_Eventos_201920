@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "c96d8821-6ce3-41a8-9115-3ea3515414b0",
+		"name": "UsuarioTarjetaTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post usuario con tarjeta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f7785be9-93f4-4af6-bf37-23766c0c84bb",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Juaan\",\n\t\"correo\":\"masidf@uniandes.edu.co\",\n\t\"contrasena\":\"1273678\",\n\t\"asiste\":\"false\",\n\t\"codigoQR\":\"fotolpng\",\n\t\"empresa\":\"DoaBjlanca \",\n\t\"tarjeta\":{\n\t\t\"tipoTarjeta\": \"Débito\",\n\t\t\"numeroTarjeta\": \"1234567891127456\",\n\t\t\"expiracion\": \"2020-09-07T00:00:00-08:00\",\n\t\t\"cw\": 122\n}\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "296f846c-17f8-4023-aae9-733f4241cfb1",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get usuario con tarjeta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "75baaf01-7da1-4a2c-b1ff-5bca2585e17d",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put usuario con tarjeta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a3d13e2-bc04-4c07-82ff-b9f2177ff130",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Juaan\",\n\t\"correo\":\"masf@uniandes.edu.co\",\n\t\"contrasena\":\"1273678\",\n\t\"asiste\":\"false\",\n\t\"codigoQR\":\"fotolpng\",\n\t\"empresa\":\"DoaBjlanca \",\n\t\"tarjeta\":{\n\t\t\"tipoTarjeta\": \"Débito\",\n\t\t\"numeroTarjeta\": \"1234567891127456\",\n\t\t\"expiracion\": \"2020-09-07T00:00:00-08:00\",\n\t\t\"cw\": 122\n}\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete usuario con tarjeta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cd1b5f6c-6327-45b9-90b8-2a7c24aa66e0",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

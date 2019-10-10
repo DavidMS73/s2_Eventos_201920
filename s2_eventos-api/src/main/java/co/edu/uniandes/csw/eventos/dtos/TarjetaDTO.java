@@ -25,13 +25,23 @@ public class TarjetaDTO implements Serializable{
     private Date expiracion;
 
     private Integer cw;
+    
+    private UsuarioDTO usuario;
+    
+    public TarjetaDTO(){
+        
+    }
 
     public TarjetaDTO(TarjetaEntity newEntity){
-        setId(newEntity.getId());
-        setTipoTarjeta(newEntity.getTipoTarjeta());
-        setNumeroTarjeta(newEntity.getNumeroTarjeta());
-        setExpiracion(newEntity.getExpiracion());
-        setCw(newEntity.getCw());
+        this.id = newEntity.getId();
+        this.tipoTarjeta = (newEntity.getTipoTarjeta());
+        this.numeroTarjeta = newEntity.getNumeroTarjeta();
+        this.expiracion = (newEntity.getExpiracion());
+        this.cw = (newEntity.getCw());
+        if(newEntity.getUsuario() != null)
+            this.usuario = (new UsuarioDTO(newEntity.getUsuario()));
+        else
+            this.usuario = null;
     }
     
     public TarjetaEntity toEntity(){
@@ -42,6 +52,8 @@ public class TarjetaDTO implements Serializable{
         newEntity.setTipoTarjeta(this.getTipoTarjeta());
         newEntity.setExpiracion(this.getExpiracion());
         newEntity.setCw(this.getCw());
+        if(this.usuario != null)
+            newEntity.setUsuario(this.usuario.toEntity());
         
         return newEntity;
     }
@@ -86,4 +98,11 @@ public class TarjetaDTO implements Serializable{
         this.id = pId;
     }
     
+    public UsuarioDTO getUsuario(){
+        return usuario;
+    }
+    
+    public void setUsuario(UsuarioDTO usuario){
+        this.usuario = usuario;
+    }
 }
