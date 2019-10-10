@@ -10,6 +10,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import java.util.Date;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -30,7 +31,13 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private EventoEntity evento;
-
+    
+    
+    
+    public MemoriaEntity()
+    {
+        
+    }
     /**
      * @return the lugar
      */
@@ -73,5 +80,7 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
         this.evento = evento;
 
     }
+
+    
 
 }

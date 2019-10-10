@@ -60,6 +60,4 @@ public class LugarDetailDTO extends LugarDTO implements Serializable {
     public void setEventos(List<EventoDTO> eventos) {
         this.eventos = eventos;
     }
-
-    
 }

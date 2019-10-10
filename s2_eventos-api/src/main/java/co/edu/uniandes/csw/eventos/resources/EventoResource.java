@@ -60,7 +60,7 @@ public class EventoResource {
     }
 
     @GET
-    public List<EventoDetailDTO> getBooks() {
+    public List<EventoDetailDTO> getEventos() {
         LOGGER.info("EventoResource getEventos: input: void");
         List<EventoDetailDTO> listaEventos = listEntity2DetailDTO(eventoLogic.getEventos());
         LOGGER.log(Level.INFO, "EventoResource getEventos: output: {0}", listaEventos);
