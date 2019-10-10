@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.LugarDTO;
+import co.edu.uniandes.csw.eventos.ejb.EventoLogic;
 import co.edu.uniandes.csw.eventos.ejb.EventoLugaresLogic;
 import co.edu.uniandes.csw.eventos.ejb.LugarLogic;
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
@@ -44,6 +45,9 @@ public class EventoLugaresResource {
     
     @Inject
     private LugarLogic lugarLogic;
+    
+    @Inject
+    private EventoLogic eventoLogic;
     
     
     /**
@@ -112,6 +116,9 @@ public class EventoLugaresResource {
         LOGGER.log(Level.INFO, "EventoLugaressResource removeLugar: input: eventosId {0} , lugaresId {1}", new Object[]{eventosId, lugaresId});
         if (lugarLogic.getLugar(lugaresId) == null) {
             throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
+        }
+        if (eventoLogic.getEvento(eventosId) == null) {
+            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
         }
         eventoLugaresLogic.removeLugar(eventosId, lugaresId);
         LOGGER.info("EventoLugaressResource removeLugar: output: void");

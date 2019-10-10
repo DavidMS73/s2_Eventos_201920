@@ -145,7 +145,7 @@ public class LugarResource {
         LOGGER.log(Level.INFO, "LugarResource deleteLugar: input: {0}", lugaresId);
         LugarEntity entity = logica.getLugar(lugaresId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /books/" + lugaresId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
         }
         logica.deleteLugar(lugaresId);
         LOGGER.info("LugarResource deleteLugar: output: void");
