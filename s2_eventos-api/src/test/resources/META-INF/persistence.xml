@@ -13,7 +13,7 @@
     <class>co.edu.uniandes.csw.eventos.entities.PatrocinioEntity</class>
     <class>co.edu.uniandes.csw.eventos.entities.PseEntity</class>
     <class>co.edu.uniandes.csw.eventos.entities.TarjetaEntity</class>
-    <class>co.edu.uniandes.csw.eventos.entities.sUsuarioEntity</class>
+    <class>co.edu.uniandes.csw.eventos.entities.UsuarioEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
  <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
