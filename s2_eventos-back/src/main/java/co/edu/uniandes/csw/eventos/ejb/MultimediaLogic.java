@@ -49,10 +49,10 @@ public class MultimediaLogic
             throw new BusinessLogicException("Debe añadir un URL para la multimedia");
         }
         
-        if(!multimedia.getUrl().startsWith("https://"))
-        {
-            throw new BusinessLogicException ("La URL es inválida");
-        }
+       // if(!multimedia.getUrl().startsWith("https://"))
+       // {
+       //     throw new BusinessLogicException ("La URL es inválida");
+       // }
 
         multimedia = persistence.create(multimedia);
         LOGGER.log(Level.INFO,"Se termina la creacion de multimedias");

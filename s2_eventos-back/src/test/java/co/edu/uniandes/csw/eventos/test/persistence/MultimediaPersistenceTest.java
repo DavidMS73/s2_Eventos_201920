@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.eventos.test.persistence;
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
+import co.edu.uniandes.csw.eventos.persistence.ActividadEventoPersistence;
+import co.edu.uniandes.csw.eventos.persistence.MemoriaPersistence;
 import co.edu.uniandes.csw.eventos.persistence.MultimediaPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,12 @@ public class MultimediaPersistenceTest {
 
     @Inject
     MultimediaPersistence mp;
+    
+    @Inject
+    MemoriaPersistence mep;
+    
+    @Inject
+    ActividadEventoPersistence aep;
 
     private List<MultimediaEntity> data = new ArrayList<MultimediaEntity>();
 
@@ -75,6 +83,8 @@ public class MultimediaPersistenceTest {
 
     private void clearData() {
         em.createQuery("delete from MultimediaEntity").executeUpdate();
+        em.createQuery("delete from MemoriaEntity").executeUpdate();
+        em.createQuery("delete from ActividadEventoEntity").executeUpdate();
     }
 
     private void insertData() {
@@ -89,16 +99,21 @@ public class MultimediaPersistenceTest {
             entity.setMemoria(perteneceAMemoria);
             entity.setActividadEvento(perteneceAActividad);
         }
-        
-        MultimediaEntity entity = factory.manufacturePojo(MultimediaEntity.class);
-        em.persist(entity);
-        data.add(entity);
     }
 
     @Test
     public void createMultimediaTest() {
         PodamFactory factory = new PodamFactoryImpl();
         MultimediaEntity multimedia = factory.manufacturePojo(MultimediaEntity.class);
+        MemoriaEntity memoria = factory.manufacturePojo(MemoriaEntity.class);
+        ActividadEventoEntity actividad = factory.manufacturePojo(ActividadEventoEntity.class);
+        
+        memoria = mep.create(memoria);
+        memoria.setMultimedia(multimedia);
+        
+        actividad = aep.create(actividad);
+        actividad.setMultimedia(multimedia);
+        
         MultimediaEntity result = mp.create(multimedia);
 
         Assert.assertNotNull(result);

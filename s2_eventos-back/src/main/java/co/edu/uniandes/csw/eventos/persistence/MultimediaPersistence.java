@@ -7,11 +7,11 @@ package co.edu.uniandes.csw.eventos.persistence;
 
 import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -36,8 +36,7 @@ public class MultimediaPersistence {
     }
 
     public List<MultimediaEntity> findAll() {
-        TypedQuery<MultimediaEntity> query;
-        query = em.createQuery("select u from MultimediaEntity u", MultimediaEntity.class);
+        Query query = em.createQuery("select u from MultimediaEntity u");
         return query.getResultList();
     }
 
@@ -46,8 +45,8 @@ public class MultimediaPersistence {
     }
 
     public void delete(Long multimediaId) {
-        MultimediaEntity m = em.find(MultimediaEntity.class, multimediaId);
-        em.remove(m);
+        MultimediaEntity entity = em.find(MultimediaEntity.class, multimediaId);
+        em.remove(entity);
     }
 
     public MultimediaEntity findByName(String name) {

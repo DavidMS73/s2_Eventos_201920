@@ -5,10 +5,13 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
+import co.edu.uniandes.csw.eventos.podam.UrlStrategy;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -20,8 +23,15 @@ public class MultimediaEntity extends BaseEntity implements Serializable {
     private String url;
     private String nombre;
     private String tipo;
+    
+    @PodamExclude
+    @OneToOne (cascade = CascadeType.PERSIST)
     private MemoriaEntity memoria;
+    
+    @PodamExclude
+    @OneToOne (cascade = CascadeType.PERSIST)
     private ActividadEventoEntity actividadEvento;
+    
 
     public MultimediaEntity() {
 
