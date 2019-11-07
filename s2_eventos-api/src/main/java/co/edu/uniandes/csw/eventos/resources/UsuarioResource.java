@@ -34,28 +34,29 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class UsuarioResource {
-    
-private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
-@Inject
-private UsuarioLogic ulogic;
-@POST
-public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException
-{
-    LOGGER.log(Level.INFO, "UsuarioResource createEditorial: input: {0}", usuario);
+
+    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+    @Inject
+    private UsuarioLogic ulogic;
+
+    @POST
+    public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "UsuarioResource createEditorial: input: {0}", usuario);
         UsuarioEntity usuarioEntity = usuario.toEntity();
         usuarioEntity = ulogic.createUsuario(usuarioEntity);
         UsuarioDTO nuevoEditorialDTO = new UsuarioDTO(usuarioEntity);
         LOGGER.log(Level.INFO, "UsuarioResource createEditorial: output: {0}", nuevoEditorialDTO);
-    return nuevoEditorialDTO;
-}
+        return nuevoEditorialDTO;
+    }
 
- @GET
-public List<UsuarioDTO> getUsuarios() {
+    @GET
+    public List<UsuarioDTO> getUsuarios() {
         LOGGER.info("UsuarioResource getUsuarios: input: void");
         List<UsuarioDTO> listaUsuarios = listEntity2DTO(ulogic.getUsuarios());
         LOGGER.log(Level.INFO, "UsuarioResource getUsuarios: output: {0}", listaUsuarios);
         return listaUsuarios;
     }
+
     private List<UsuarioDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
         List<UsuarioDTO> list = new ArrayList<>();
         for (UsuarioEntity entity : entityList) {
@@ -63,6 +64,7 @@ public List<UsuarioDTO> getUsuarios() {
         }
         return list;
     }
+
     @GET
     @Path("{usuariosId: \\d+}")
     public UsuarioDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
@@ -75,6 +77,7 @@ public List<UsuarioDTO> getUsuarios() {
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
         return detailDTO;
     }
+
     @PUT
     @Path("{usuariosId: \\d+}")
     public UsuarioDTO updateUsuario(@PathParam("usuariosId") Long usuariosId, UsuarioDTO usuario) {
@@ -87,6 +90,7 @@ public List<UsuarioDTO> getUsuarios() {
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: output: {0}", detailDTO);
         return detailDTO;
     }
+
     @DELETE
     @Path("{usuariosId: \\d+}")
     public void deleteUsuario(@PathParam("usuariosId") Long usuariosId) throws BusinessLogicException {
