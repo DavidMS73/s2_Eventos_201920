@@ -1,2 +1,13 @@
-delete from EventoEntity;
+delete from ActividadEventoEntity;
+delete from EventoEntity_LugarEntity;
+delete from EventoEntity_PatrocinioEntity;
+delete from LugarEntity;
+delete from PatrocinioEntity;
+delete from MultimediaEntity;
+delete from MemoriaEntity;
+delete from MedioPagoEntity;
+delete from PagoEntity;
+delete from UsuarioEntity_EventoEntity;
+delete from UsuarioEntity_Asociated;
 delete from UsuarioEntity;
+delete from EventoEntity;
