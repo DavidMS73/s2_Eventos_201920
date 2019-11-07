@@ -8,6 +8,5 @@ delete from MemoriaEntity;
 delete from MedioPagoEntity;
 delete from PagoEntity;
 delete from UsuarioEntity_EventoEntity;
-delete from UsuarioEntity_Asociated;
 delete from UsuarioEntity;
 delete from EventoEntity;
