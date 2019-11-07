@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.LugarDTO;
+import co.edu.uniandes.csw.eventos.dtos.LugarDetailDTO;
 import co.edu.uniandes.csw.eventos.ejb.LugarLogic;
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
@@ -39,7 +40,7 @@ public class LugarResource {
     private LugarLogic logica;
 
     private static final Logger LOGGER = Logger.getLogger(LugarResource.class.getName());
-    
+
     /**
      * Convierte una lista de entidades a DTO.
      *
@@ -50,10 +51,10 @@ public class LugarResource {
      * vamos a convertir a DTO.
      * @return la lista de lugares en forma DTO (json)
      */
-    private List<LugarDTO> listEntity2DetailDTO(List<LugarEntity> entityList) {
-        List<LugarDTO> list = new ArrayList<>();
+    private List<LugarDetailDTO> listEntity2DetailDTO(List<LugarEntity> entityList) {
+        List<LugarDetailDTO> list = new ArrayList<>();
         for (LugarEntity entity : entityList) {
-            list.add(new LugarDTO(entity));
+            list.add(new LugarDetailDTO(entity));
         }
         return list;
     }
@@ -65,7 +66,7 @@ public class LugarResource {
         lugarEntity = logica.createLugar(lugarEntity);
         return new LugarDTO(lugarEntity);
     }
-    
+
     /**
      * Busca y devuelve todos los lugares que existen en la aplicacion.
      *
@@ -73,13 +74,13 @@ public class LugarResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<LugarDTO> getLugares() {
+    public List<LugarDetailDTO> getLugares() {
         LOGGER.info("LugarResource getLugares: input: void");
-        List<LugarDTO> listLugares = listEntity2DetailDTO(logica.getLugares());
+        List<LugarDetailDTO> listLugares = listEntity2DetailDTO(logica.getLugares());
         LOGGER.log(Level.INFO, "LugarResource getBooks: output: {0}", listLugares);
         return listLugares;
     }
-    
+
     /**
      * Busca el lugar con el id asociado recibido en la URL y lo devuelve.
      *
@@ -91,13 +92,13 @@ public class LugarResource {
      */
     @GET
     @Path("{lugaresId: \\d+}")
-    public LugarDTO getLugar(@PathParam("lugaresId") Long lugaresId) {
+    public LugarDetailDTO getLugar(@PathParam("lugaresId") Long lugaresId) {
         LOGGER.log(Level.INFO, "LugarResource getLugar: input: {0}", lugaresId);
         LugarEntity lugarEntity = logica.getLugar(lugaresId);
         if (lugarEntity == null) {
             throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
         }
-        LugarDTO lugarDTO = new LugarDTO(lugarEntity);
+        LugarDetailDTO lugarDTO = new LugarDetailDTO(lugarEntity);
         LOGGER.log(Level.INFO, "LugarResource getLugar: output: {0}", lugarDTO);
         return lugarDTO;
     }
@@ -106,8 +107,8 @@ public class LugarResource {
      * Actualiza el lugar con el id recibido en la URL con la información que se
      * recibe en el cuerpo de la petición.
      *
-     * @param lugaresId Identificador del lugar que se desea actualizar. Este debe
-     * ser una cadena de dígitos.
+     * @param lugaresId Identificador del lugar que se desea actualizar. Este
+     * debe ser una cadena de dígitos.
      * @param lugar {@link LugarDTO} El lugar que se desea guardar.
      * @return JSON {@link BookDetailDTO} - El lugar guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -132,8 +133,8 @@ public class LugarResource {
     /**
      * Borra el lugar con el id asociado recibido en la URL.
      *
-     * @param lugaresId Identificador del lugar que se desea borrar. Este debe ser
-     * una cadena de dígitos.
+     * @param lugaresId Identificador del lugar que se desea borrar. Este debe
+     * ser una cadena de dígitos.
      * @throws co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException
      * cuando el libro tiene autores asociados.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -

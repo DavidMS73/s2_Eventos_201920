@@ -20,6 +20,7 @@ import javax.inject.Inject;
  *
  * @author Gabriel Jose Gonzalez Pereira
  */
+@Stateless
 public class MemoriasMultimediaLogic 
 {
     private static final Logger LOGGER = Logger.getLogger(MemoriasMultimediaLogic.class.getName());

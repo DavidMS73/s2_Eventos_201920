@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.PatrocinioDTO;
+import co.edu.uniandes.csw.eventos.dtos.PatrocinioDetailDTO;
 import co.edu.uniandes.csw.eventos.ejb.PatrocinioLogic;
 import co.edu.uniandes.csw.eventos.entities.PatrocinioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
@@ -33,48 +34,51 @@ import javax.ws.rs.WebApplicationException;
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class PatrocinioResource 
-{
- private static final Logger LOGGER = Logger.getLogger(PatrocinioResource.class.getName());
-@Inject
-private PatrocinioLogic logic;
-@POST
-public PatrocinioDTO crearPatrocinio(PatrocinioDTO patrocinio) throws BusinessLogicException
-{
-    LOGGER.log(Level.INFO, "PatrocinioResource createPatrocinio: input: {0}", patrocinio);
+public class PatrocinioResource {
+
+    private static final Logger LOGGER = Logger.getLogger(PatrocinioResource.class.getName());
+    @Inject
+    private PatrocinioLogic logic;
+
+    @POST
+    public PatrocinioDTO crearPatrocinio(PatrocinioDTO patrocinio) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "PatrocinioResource createPatrocinio: input: {0}", patrocinio);
         PatrocinioEntity entity = patrocinio.toEntity();
         entity = logic.createPatrocinio(entity);
         PatrocinioDTO nuevoPatrocinioDTO = new PatrocinioDTO(entity);
         LOGGER.log(Level.INFO, "PatrocinioResource createPatrocinio: output: {0}", nuevoPatrocinioDTO);
-    return nuevoPatrocinioDTO;
-}
+        return nuevoPatrocinioDTO;
+    }
 
-@GET
-public List<PatrocinioDTO> getPatrocinios() {
+    @GET
+    public List<PatrocinioDetailDTO> getPatrocinios() {
         LOGGER.info("PatrocinioResource getPatrocinios: input: void");
-        List<PatrocinioDTO> listaPatrocinios = listEntity2DTO(logic.getPatrocinios());
+        List<PatrocinioDetailDTO> listaPatrocinios = listEntity2DTO(logic.getPatrocinios());
         LOGGER.log(Level.INFO, "UsuarioResource getPatrocinios: output: {0}", listaPatrocinios);
         return listaPatrocinios;
     }
-    private List<PatrocinioDTO> listEntity2DTO(List<PatrocinioEntity> entityList) {
-        List<PatrocinioDTO> list = new ArrayList<>();
+
+    private List<PatrocinioDetailDTO> listEntity2DTO(List<PatrocinioEntity> entityList) {
+        List<PatrocinioDetailDTO> list = new ArrayList<>();
         for (PatrocinioEntity entity : entityList) {
-            list.add(new PatrocinioDTO(entity));
+            list.add(new PatrocinioDetailDTO(entity));
         }
         return list;
     }
+
     @GET
     @Path("{patrociniosId: \\d+}")
-    public PatrocinioDTO getPatrocinio(@PathParam("patrociniosId") Long patrociniosId) {
+    public PatrocinioDetailDTO getPatrocinio(@PathParam("patrociniosId") Long patrociniosId) {
         LOGGER.log(Level.INFO, "PatrocinioResource getPatrocinio: input: {0}", patrociniosId);
         PatrocinioEntity entity = logic.getPatrocinio(patrociniosId);
         if (entity == null) {
             throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
         }
-        PatrocinioDTO detailDTO = new PatrocinioDTO(entity);
+        PatrocinioDetailDTO detailDTO = new PatrocinioDetailDTO(entity);
         LOGGER.log(Level.INFO, "PatrocinioResource getPatrocinio: output: {0}", detailDTO);
         return detailDTO;
     }
+
     @PUT
     @Path("{patrociniosId: \\d+}")
     public PatrocinioDTO updatePatrocinio(@PathParam("patrociniosId") Long patrociniosId, PatrocinioDTO patrocinio) {
@@ -87,6 +91,7 @@ public List<PatrocinioDTO> getPatrocinios() {
         LOGGER.log(Level.INFO, "PatrocinioResource updatePatrocinio: output: {0}", detailDTO);
         return detailDTO;
     }
+
     @DELETE
     @Path("{patrociniosId: \\d+}")
     public void deletePatrocinio(@PathParam("patrociniosId") Long patrociniosId) throws BusinessLogicException {
