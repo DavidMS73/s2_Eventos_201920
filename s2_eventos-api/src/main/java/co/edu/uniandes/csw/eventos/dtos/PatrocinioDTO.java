@@ -18,7 +18,7 @@ public class PatrocinioDTO implements Serializable {
 
     private String tipo;
 
-    private long id;
+    private Long id;
 
     public PatrocinioDTO(PatrocinioEntity p) {
         this.empresa = p.getEmpresa();
