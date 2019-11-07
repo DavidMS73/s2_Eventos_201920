@@ -35,7 +35,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String codigoQR;
 
     private String empresa;
-    
+
     @PodamExclude
     @OneToOne(cascade = CascadeType.PERSIST)
     private TarjetaEntity tarjeta;
@@ -181,12 +181,12 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void setEventosInvitadosEspeciales(List<EventoEntity> eventosInvitadosEspeciales) {
         this.eventosInvitadosEspeciales = eventosInvitadosEspeciales;
     }
-    
-    public TarjetaEntity getTarjeta(){
+
+    public TarjetaEntity getTarjeta() {
         return tarjeta;
     }
-    
-    public void setTarjeta(TarjetaEntity tarjeta){
+
+    public void setTarjeta(TarjetaEntity tarjeta) {
         this.tarjeta = tarjeta;
     }
 }

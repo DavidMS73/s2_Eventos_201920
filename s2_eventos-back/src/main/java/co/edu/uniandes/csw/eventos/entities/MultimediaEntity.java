@@ -23,18 +23,17 @@ public class MultimediaEntity extends BaseEntity implements Serializable {
     private String url;
     private String nombre;
     private String tipo;
-    
+
     @PodamExclude
-    @OneToOne (cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private MemoriaEntity memoria;
-    
+
     @PodamExclude
-    @OneToOne (cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private ActividadEventoEntity actividadEvento;
-    
 
     public MultimediaEntity() {
-
+        //Constructor
     }
 
     public String getUrl() {
@@ -75,14 +74,11 @@ public class MultimediaEntity extends BaseEntity implements Serializable {
         this.actividadEvento = actividadEvento;
     }
 
-    
-    public MemoriaEntity getMemoria()
-    {
+    public MemoriaEntity getMemoria() {
         return memoria;
     }
-    
-    public void setMemoria(MemoriaEntity pMemoria)
-    {
+
+    public void setMemoria(MemoriaEntity pMemoria) {
         this.memoria = pMemoria;
     }
 }

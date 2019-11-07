@@ -42,7 +42,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToMany
     private List<LugarEntity> lugares = new ArrayList<LugarEntity>();
-    
+
     @PodamExclude
     @ManyToMany
     private List<PatrocinioEntity> patrocinios = new ArrayList<PatrocinioEntity>();
@@ -50,7 +50,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
     private UsuarioEntity responsable;
-    
+
     @PodamExclude
     @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
     private UsuarioEntity organizador;
@@ -65,11 +65,11 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
-    
+
     @PodamExclude
     @ManyToMany(mappedBy = "eventosInscritos", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<UsuarioEntity> inscritos = new ArrayList<UsuarioEntity>();
-    
+
     @PodamExclude
     @ManyToMany(mappedBy = "eventosInvitadosEspeciales", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<UsuarioEntity> invitadosEspeciales = new ArrayList<UsuarioEntity>();
@@ -347,7 +347,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public List<PagoEntity> getPagos() {
         return pagos;
     }
-     
+
     /**
      * @param pagos the pagos to set
      */
@@ -382,7 +382,5 @@ public class EventoEntity extends BaseEntity implements Serializable {
     public void setInvitadosEspeciales(List<UsuarioEntity> invitadosEspeciales) {
         this.invitadosEspeciales = invitadosEspeciales;
     }
-    
-     
 
 }

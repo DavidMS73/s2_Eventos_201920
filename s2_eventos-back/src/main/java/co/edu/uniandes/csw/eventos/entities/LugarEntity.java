@@ -22,7 +22,7 @@ public class LugarEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToMany(mappedBy = "lugares")
     private List<EventoEntity> eventos = new ArrayList<EventoEntity>();
-    
+
     private Integer capacidadAsistentes;
     private String ubicacionGeografica;
     private String nombre;

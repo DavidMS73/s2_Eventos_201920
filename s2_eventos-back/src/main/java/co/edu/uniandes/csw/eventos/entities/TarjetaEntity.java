@@ -33,14 +33,13 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
     private Date expiracion;
 
     private Integer cw;
-    
-     @PodamExclude
+
+    @PodamExclude
     @OneToOne(cascade = CascadeType.PERSIST)
     private UsuarioEntity usuario;
-     
-    public TarjetaEntity()
-    {
-        
+
+    public TarjetaEntity() {
+        //Constructor
     }
 
     /**
@@ -114,12 +113,12 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
     public void setCw(Integer pCw) {
         this.cw = pCw;
     }
-    
-    public UsuarioEntity getUsuario(){
+
+    public UsuarioEntity getUsuario() {
         return usuario;
     }
-    
-    public void setUsuario(UsuarioEntity usuario){
+
+    public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
 }

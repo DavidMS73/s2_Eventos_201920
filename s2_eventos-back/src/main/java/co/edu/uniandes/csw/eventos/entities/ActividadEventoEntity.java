@@ -27,16 +27,16 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  */
 @Entity
 public class ActividadEventoEntity extends BaseEntity implements Serializable {
-    
+
     /**
      * Atributo que modela los usuarios asociados a la actividad
-    */
+     */
     @PodamExclude
     @ManyToMany
     @JoinTable(
-        name = "usuario_asociated", 
-        joinColumns = @JoinColumn(name = "actividadEvento_id"), 
-        inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+            name = "usuario_asociated",
+            joinColumns = @JoinColumn(name = "actividadEvento_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<UsuarioEntity> usuarios;
 
     /**
@@ -191,6 +191,5 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     public void setMultimedia(MultimediaEntity multimedia) {
         this.multimedia = multimedia;
     }
-    
-    
+
 }

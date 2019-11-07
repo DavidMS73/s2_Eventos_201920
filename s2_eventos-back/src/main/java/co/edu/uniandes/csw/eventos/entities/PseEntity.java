@@ -16,10 +16,9 @@ import javax.persistence.Entity;
 public class PseEntity extends MedioPagoEntity implements Serializable {
 
     private String correo;
-    
-    public PseEntity()
-    {
-        
+
+    public PseEntity() {
+        //Constructor
     }
 
     /**

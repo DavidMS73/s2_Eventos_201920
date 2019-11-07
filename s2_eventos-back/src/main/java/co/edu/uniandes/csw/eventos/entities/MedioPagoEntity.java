@@ -13,20 +13,19 @@ import javax.persistence.Entity;
  * @author Samuel Osorio
  */
 @Entity
-public class MedioPagoEntity extends BaseEntity implements Serializable{
+public class MedioPagoEntity extends BaseEntity implements Serializable {
+
     private String numeroRecibo;
-    
-    
-    public MedioPagoEntity()
-    {
-        
+
+    public MedioPagoEntity() {
+        //Constructor
     }
 
-    public String getNumeroRecibo(){
+    public String getNumeroRecibo() {
         return numeroRecibo;
     }
 
-    public void setNumeroRecibo(String pRecibo){
+    public void setNumeroRecibo(String pRecibo) {
         this.numeroRecibo = pRecibo;
     }
 }

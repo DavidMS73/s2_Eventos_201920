@@ -35,9 +35,9 @@ public class PatrocinioEntity extends BaseEntity implements Serializable {
 
     private String empresa;
     private String tipo;
-    
+
     @PodamExclude
-    @ManyToMany(mappedBy="patrocinios")
+    @ManyToMany(mappedBy = "patrocinios")
     private List<EventoEntity> eventos = new ArrayList<EventoEntity>();
 
     public PatrocinioEntity() {

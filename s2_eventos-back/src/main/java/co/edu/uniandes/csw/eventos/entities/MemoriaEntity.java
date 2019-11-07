@@ -34,7 +34,7 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private EventoEntity evento;
-    
+
     @PodamExclude
     @OneToOne(mappedBy = "memoria", fetch = FetchType.LAZY)
     private MultimediaEntity multimedia;
@@ -81,7 +81,7 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
         this.evento = evento;
 
     }
-    
+
     /**
      * @return the multimedia
      */
@@ -95,6 +95,5 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     public void setMultimedia(MultimediaEntity multimedia) {
         this.multimedia = multimedia;
     }
-    
-    
+
 }
