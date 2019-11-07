@@ -12,29 +12,29 @@ import java.io.Serializable;
  *
  * @author Estudiante
  */
-public class PseDTO implements Serializable{
-    
-    private String correo;
-    
-    private Long id;
-    
-    public PseDTO()
-    {
+public class PseDTO implements Serializable {
 
-    }
+    private String correo;
+
+    private Long id;
 
     public PseDTO(PseEntity entidad) {
         setCorreo(entidad.getCorreo());
         setId(entidad.getId());
+    }
+
+    public PseDTO() {
 
     }
-     public PseEntity toEntity() {
-         PseEntity entidad = new PseEntity();
-         entidad.setCorreo(this.getCorreo());
-         entidad.setId(this.getId());
 
-         return entidad;
-     }
+    public PseEntity toEntity() {
+        PseEntity entidad = new PseEntity();
+        entidad.setCorreo(this.getCorreo());
+        entidad.setId(this.getId());
+
+        return entidad;
+    }
+
     /**
      * @return the correo
      */
@@ -62,6 +62,5 @@ public class PseDTO implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
+
 }

@@ -5,56 +5,57 @@
  */
 package co.edu.uniandes.csw.eventos.dtos;
 
-
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import java.io.Serializable;
 import java.util.Date;
-
 
 /**
  *
  * @author Samuelillo el pillo.
  */
-public class TarjetaDTO implements Serializable{
+public class TarjetaDTO implements Serializable {
+
     private Long id;
-    
+
     private String tipoTarjeta;
-  
+
     private String numeroTarjeta;
-    
+
     private Date expiracion;
 
     private Integer cw;
-    
-    private UsuarioDTO usuario;
-    
-    public TarjetaDTO(){
-        
-    }
 
-    public TarjetaDTO(TarjetaEntity newEntity){
+    private UsuarioDTO usuario;
+
+    public TarjetaDTO(TarjetaEntity newEntity) {
         this.id = newEntity.getId();
         this.tipoTarjeta = (newEntity.getTipoTarjeta());
         this.numeroTarjeta = newEntity.getNumeroTarjeta();
         this.expiracion = (newEntity.getExpiracion());
         this.cw = (newEntity.getCw());
-        if(newEntity.getUsuario() != null)
+        if (newEntity.getUsuario() != null) {
             this.usuario = (new UsuarioDTO(newEntity.getUsuario()));
-        else
+        } else {
             this.usuario = null;
+        }
     }
-    
-    public TarjetaEntity toEntity(){
+
+    public TarjetaDTO() {
+
+    }
+
+    public TarjetaEntity toEntity() {
         TarjetaEntity newEntity = new TarjetaEntity();
-        
+
         newEntity.setId(this.getId());
         newEntity.setNumeroTarjeta(this.getNumeroTarjeta());
         newEntity.setTipoTarjeta(this.getTipoTarjeta());
         newEntity.setExpiracion(this.getExpiracion());
         newEntity.setCw(this.getCw());
-        if(this.usuario != null)
+        if (this.usuario != null) {
             newEntity.setUsuario(this.usuario.toEntity());
-        
+        }
+
         return newEntity;
     }
 
@@ -89,20 +90,20 @@ public class TarjetaDTO implements Serializable{
     public void setCw(Integer cw) {
         this.cw = cw;
     }
-    
-    public Long getId(){
+
+    public Long getId() {
         return id;
     }
-    
-    public void setId(Long pId){
+
+    public void setId(Long pId) {
         this.id = pId;
     }
-    
-    public UsuarioDTO getUsuario(){
+
+    public UsuarioDTO getUsuario() {
         return usuario;
     }
-    
-    public void setUsuario(UsuarioDTO usuario){
+
+    public void setUsuario(UsuarioDTO usuario) {
         this.usuario = usuario;
     }
 }

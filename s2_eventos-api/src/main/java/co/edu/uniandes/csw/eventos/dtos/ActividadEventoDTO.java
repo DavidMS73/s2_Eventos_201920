@@ -47,9 +47,6 @@ public class ActividadEventoDTO implements Serializable {
      */
     private Date fecha;
 
-    public ActividadEventoDTO() {
-        // Constructor
-    }
     public ActividadEventoDTO(ActividadEventoEntity entidad) {
         setId(entidad.getId());
         if(entidad.getEvento() == null){
@@ -63,6 +60,10 @@ public class ActividadEventoDTO implements Serializable {
         setHoraInicio(entidad.getHoraInicio());
         setHoraFin(entidad.getHoraFin());
         setFecha(entidad.getFecha());
+    }
+    
+    public ActividadEventoDTO() {
+        // Constructor
     }
     
     public ActividadEventoEntity toEntity() {

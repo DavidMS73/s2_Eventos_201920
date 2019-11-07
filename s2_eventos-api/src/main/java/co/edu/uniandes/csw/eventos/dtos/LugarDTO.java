@@ -13,6 +13,7 @@ import java.io.Serializable;
  * @author Alberic Despres
  */
 public class LugarDTO implements Serializable {
+
     private Long id;
     private Integer capacidadAsistentes;
     private String ubicacionGeografica;
@@ -20,13 +21,8 @@ public class LugarDTO implements Serializable {
     private String bloque;
     private String piso;
     private String salon;
-    
-     public LugarDTO() {
-        // Constructor
-    }
 
-    public LugarDTO(LugarEntity entidad) 
-    {
+    public LugarDTO(LugarEntity entidad) {
         setId(entidad.getId());
         setNombre(entidad.getNombre());
         setCapacidadAsistentes(entidad.getCapacidadAsistentes());
@@ -34,7 +30,10 @@ public class LugarDTO implements Serializable {
         setBloque(entidad.getBloque());
         setPiso(entidad.getPiso());
         setSalon(entidad.getSalon());
-        
+    }
+
+    public LugarDTO() {
+        // Constructor
     }
 
     public LugarEntity toEntity() {
@@ -147,7 +146,5 @@ public class LugarDTO implements Serializable {
     public void setSalon(String salon) {
         this.salon = salon;
     }
-    
-    
-    
+
 }

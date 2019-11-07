@@ -12,22 +12,21 @@ import java.io.Serializable;
  *
  * @author Daniel Betancurth Dorado
  */
-public class PatrocinioDTO implements Serializable
-{
+public class PatrocinioDTO implements Serializable {
+
     private String empresa;
-    
+
     private String tipo;
-    
+
     private long id;
-    
-    public PatrocinioDTO()
-    {
+
+    public PatrocinioDTO(PatrocinioEntity p) {
+        this.empresa = p.getEmpresa();
+        this.tipo = p.getTipo();
+        this.id = p.getId();
     }
-     public PatrocinioDTO(PatrocinioEntity p)
-    {
-        this.empresa=p.getEmpresa();
-        this.tipo=p.getTipo();
-        this.id=p.getId();
+
+    public PatrocinioDTO() {
     }
 
     /**
@@ -36,14 +35,15 @@ public class PatrocinioDTO implements Serializable
     public String getEmpresa() {
         return empresa;
     }
-    public PatrocinioEntity toEntity()
-    {
-        PatrocinioEntity patrocinio= new PatrocinioEntity();
+
+    public PatrocinioEntity toEntity() {
+        PatrocinioEntity patrocinio = new PatrocinioEntity();
         patrocinio.setEmpresa(this.getEmpresa());
         patrocinio.setTipo(this.getTipo());
         patrocinio.setId(this.getId());
         return patrocinio;
     }
+
     /**
      * @param empresa the empresa to set
      */
@@ -78,6 +78,5 @@ public class PatrocinioDTO implements Serializable
     public void setId(long id) {
         this.id = id;
     }
-     
-    
+
 }

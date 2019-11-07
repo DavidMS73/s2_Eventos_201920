@@ -28,12 +28,6 @@ public class MemoriaDTO implements Serializable {
      */
     private Date fecha;
 
-   
-
-    public MemoriaDTO() {
-        // Constructor
-    }
-
     public MemoriaDTO(MemoriaEntity entidad) {
         setId(entidad.getId());
         setLugar(entidad.getLugar());
@@ -44,7 +38,10 @@ public class MemoriaDTO implements Serializable {
         else{
             this.evento=null;
         }
-                
+    }
+    
+    public MemoriaDTO() {
+        // Constructor
     }
 
     public MemoriaEntity toEntity() {

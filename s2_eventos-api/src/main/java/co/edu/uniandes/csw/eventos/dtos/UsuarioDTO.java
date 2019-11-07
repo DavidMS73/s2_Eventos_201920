@@ -14,7 +14,8 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  *
  * @author Daniel Betancurth Dorado
  */
-public class UsuarioDTO implements Serializable{
+public class UsuarioDTO implements Serializable {
+
     private String nombre;
 
     @PodamStrategyValue(CorreoStrategy.class)
@@ -27,36 +28,36 @@ public class UsuarioDTO implements Serializable{
     private String codigoQR;
 
     private String empresa;
-    
+
     private Long id;
-    
+
     private TarjetaDTO tarjeta;
-    
+
+    public UsuarioDTO(UsuarioEntity usuario) {
+        this.id = usuario.getId();
+        this.nombre = usuario.getNombre();
+        this.empresa = usuario.getEmpresa();
+        this.correo = usuario.getCorreo();
+        this.contrasena = usuario.getContrasena();
+        this.codigoQR = usuario.getCodigoQR();
+        this.asiste = usuario.getAsiste();
+        if (usuario.getTarjeta() != null) {
+            this.tarjeta = new TarjetaDTO(usuario.getTarjeta());
+        } else {
+            this.tarjeta = null;
+        }
+
+    }
+
     /**
      * Constructor vacio
      */
-    public UsuarioDTO()
-    {
-        
+    public UsuarioDTO() {
+
     }
-    public UsuarioDTO(UsuarioEntity usuario)
-    {
-            this.id = usuario.getId();
-            this.nombre=usuario.getNombre();
-            this.empresa=usuario.getEmpresa();
-            this.correo=usuario.getCorreo();
-            this.contrasena=usuario.getContrasena();
-            this.codigoQR=usuario.getCodigoQR();
-            this.asiste=usuario.getAsiste();
-            if(usuario.getTarjeta() != null)
-                this.tarjeta = new TarjetaDTO(usuario.getTarjeta());
-            else
-                this.tarjeta = null;
-        
-    }
-    public UsuarioEntity toEntity()
-    {
-        UsuarioEntity usuario= new UsuarioEntity();
+
+    public UsuarioEntity toEntity() {
+        UsuarioEntity usuario = new UsuarioEntity();
         usuario.setId(this.getId());
         usuario.setAsiste(this.getAsiste());
         usuario.setCodigoQR(this.getCodigoQR());
@@ -64,10 +65,12 @@ public class UsuarioDTO implements Serializable{
         usuario.setCorreo(this.getCorreo());
         usuario.setEmpresa(this.getEmpresa());
         usuario.setNombre(this.getNombre());
-        if(this.tarjeta != null)
+        if (this.tarjeta != null) {
             usuario.setTarjeta(this.tarjeta.toEntity());
+        }
         return usuario;
     }
+
     /**
      * @return the nombre
      */
@@ -165,12 +168,12 @@ public class UsuarioDTO implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public TarjetaDTO getTarjeta(){
+
+    public TarjetaDTO getTarjeta() {
         return tarjeta;
     }
-    
-    public void setTarjeta(TarjetaDTO tarjeta){
+
+    public void setTarjeta(TarjetaDTO tarjeta) {
         this.tarjeta = tarjeta;
     }
 }

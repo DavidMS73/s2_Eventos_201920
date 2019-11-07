@@ -19,18 +19,17 @@ public class MultimediaDTO implements Serializable
     private String nombre;
     private String tipo;
     
-    public MultimediaDTO()
-    {
-        //Constructor
-    }
-    
-    @SuppressWarnings("OverridableMethodCallInConstructor")
     public MultimediaDTO(MultimediaEntity entity)
     {
         setId(entity.getId());
         setNombre(entity.getNombre());
         setUrl(entity.getUrl());
         setTipo(entity.getTipo());
+    }
+    
+    public MultimediaDTO()
+    {
+        //Constructor
     }
     
     public MultimediaEntity toEntity()
