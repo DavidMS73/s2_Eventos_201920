@@ -6,35 +6,35 @@
 package co.edu.uniandes.csw.eventos.dtos;
 
 import co.edu.uniandes.csw.eventos.entities.PagoEntity;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Santiago Tenjo Leal
  */
-public class PagoDTO {
-
+public class PagoDTO implements Serializable {
 
     private Date fecha;
-    
+
     private Long id;
 
+    public PagoDTO(PagoEntity entidad) {
+        setFecha(entidad.getFecha());
+        setId(entidad.getId());
+    }
 
     public PagoDTO() {
         // Constructor
     }
-    public PagoDTO(PagoEntity entidad) {
-        setFecha(entidad.getFecha());
-        setId(entidad.getId());
 
+    public PagoEntity toEntity() {
+        PagoEntity entidad = new PagoEntity();
+        entidad.setFecha(this.getFecha());
+        entidad.setId(this.getId());
+
+        return entidad;
     }
-     public PagoEntity toEntity() {
-         PagoEntity entidad = new PagoEntity();
-         entidad.setFecha(this.getFecha());
-         entidad.setId(this.getId());
-
-         return entidad;
-     }
 
     /**
      * @return the fecha
@@ -64,5 +64,3 @@ public class PagoDTO {
         this.id = id;
     }
 }
-
-

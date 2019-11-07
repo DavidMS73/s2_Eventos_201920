@@ -61,10 +61,6 @@ public class EventoDTO implements Serializable {
      */
     private Long valor;
 
-    public EventoDTO() {
-        // Constructor
-    }
-
     public EventoDTO(EventoEntity entidad) {
         setId(entidad.getId());
         setNombre(entidad.getNombre());
@@ -76,6 +72,10 @@ public class EventoDTO implements Serializable {
         setValor(entidad.getValor());
         setDetallesAdicionales(entidad.getDetallesAdicionales());
         setEntradasRestantes(entidad.getEntradasRestantes());
+    }
+
+    public EventoDTO() {
+        // Constructor
     }
 
     public EventoEntity toEntity() {
