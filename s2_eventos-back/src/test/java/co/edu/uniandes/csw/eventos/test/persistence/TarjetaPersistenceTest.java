@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.test.persistence;
 
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
+import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.persistence.TarjetaPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,8 @@ public class TarjetaPersistenceTest {
     private EntityManager em;
 
     private List<TarjetaEntity> data = new ArrayList<>();
+    
+    private List<UsuarioEntity> dataUsuario = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -75,8 +78,16 @@ public class TarjetaPersistenceTest {
 
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
+        for(int i = 0; i < 3; i++){
+            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            em.persist(entity);
+            dataUsuario.add(entity);
+        }
         for (int i = 0; i < 3; i++) {
             TarjetaEntity entity = factory.manufacturePojo(TarjetaEntity.class);
+            if(i == 0){
+                entity.setUsuario(dataUsuario.get(0));
+            }
             em.persist(entity);
             data.add(entity);
         }
@@ -103,7 +114,7 @@ public class TarjetaPersistenceTest {
     }
 
     @Test
-    public void getTarjetaTest() {
+    public void getTarjetasTest() {
         List<TarjetaEntity> list = ep.findAll();
         Assert.assertEquals(data.size(), list.size());
         for (TarjetaEntity ent : list) {
@@ -118,11 +129,13 @@ public class TarjetaPersistenceTest {
     }
 
     @Test
-    public void getEventoTest() {
+    public void getTarjetaTest() {
         TarjetaEntity entity = data.get(0);
-        TarjetaEntity newEntity = ep.find(entity.getId());
+        TarjetaEntity newEntity = ep.find(dataUsuario.get(0).getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNumeroTarjeta(), newEntity.getNumeroTarjeta());
+        Assert.assertEquals(entity.getExpiracion(), newEntity.getExpiracion());
+        Assert.assertEquals(entity.getCw(), newEntity.getCw());
     }
 
     @Test
@@ -146,6 +159,8 @@ public class TarjetaPersistenceTest {
         TarjetaEntity newEntity = ep.findByNumber(entity.getNumeroTarjeta());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNumeroTarjeta(), newEntity.getNumeroTarjeta());
+        Assert.assertEquals(entity.getExpiracion(), newEntity.getExpiracion());
+        Assert.assertEquals(entity.getCw(), newEntity.getCw());
 
         newEntity = ep.findByNumber(null);
         Assert.assertNull(newEntity);

@@ -10,8 +10,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
@@ -37,8 +37,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String empresa;
 
     @PodamExclude
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private TarjetaEntity tarjeta;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<TarjetaEntity> tarjetas;
 
     @PodamExclude
     @OneToOne
@@ -182,11 +182,11 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.eventosInvitadosEspeciales = eventosInvitadosEspeciales;
     }
 
-    public TarjetaEntity getTarjeta() {
-        return tarjeta;
+    public List<TarjetaEntity> getTarjetas() {
+        return tarjetas;
     }
 
-    public void setTarjeta(TarjetaEntity tarjeta) {
-        this.tarjeta = tarjeta;
+    public void setTarjeta(List<TarjetaEntity> tarjetas) {
+        this.tarjetas = tarjetas;
     }
 }

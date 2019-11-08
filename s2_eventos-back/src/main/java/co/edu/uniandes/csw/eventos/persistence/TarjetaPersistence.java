@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.eventos.persistence;
 
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +20,8 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class TarjetaPersistence {
+    
+    private static final Logger LOGGER = Logger.getLogger(TarjetaPersistence.class.getName());
 
     @PersistenceContext(unitName = "eventosPU")
     protected EntityManager em;
@@ -27,8 +31,24 @@ public class TarjetaPersistence {
         return pMedio;
     }
 
-    public TarjetaEntity find(Long medioPagoId) {
-        return em.find(TarjetaEntity.class, medioPagoId);
+    public TarjetaEntity find(Long usuarioId, Long tarjetaId) {
+        LOGGER.log(Level.INFO, "Consultando la tarjeta del usuario con id = {0} del usuario con id = " + usuarioId, tarjetaId);
+        TypedQuery<TarjetaEntity> q = em.createQuery("select p from TarjetaEntity p where(p.usuario.id = :usuarioId) and (p.id = :tarjetaId)", TarjetaEntity.class);
+        q.setParameter("usuarioId", usuarioId);
+        q.setParameter("tarjetaId", tarjetaId);
+        
+        List<TarjetaEntity> results = q.getResultList();
+        TarjetaEntity tarjeta = null;
+        if (results == null) {
+            tarjeta = null;
+        } else if (results.isEmpty()) {
+            tarjeta = null;
+        } else if (results.size() >= 1) {
+            tarjeta = results.get(0);
+        }
+        
+        LOGGER.log(Level.INFO, "Saliendo de consultar la tarjeta del usuario con id = {0} del usuario con id = " + usuarioId, tarjetaId);
+        return tarjeta;
     }
 
     public List<TarjetaEntity> findAll() {
@@ -37,6 +57,7 @@ public class TarjetaPersistence {
     }
 
     public TarjetaEntity update(TarjetaEntity pNuevo) {
+        LOGGER.log(Level.INFO, "Actualizando la tarjeta con id = {0}", pNuevo.getId());
         return em.merge(pNuevo);
     }
 
@@ -46,6 +67,8 @@ public class TarjetaPersistence {
     }
 
     public TarjetaEntity findByNumber(String pNumero) {
+        LOGGER.log(Level.INFO, "Consultando la tarjeta con numero = {0}", pNumero);
+        
         TypedQuery q = em.createQuery("select u from TarjetaEntity u where u.numeroTarjeta = :pNumero", TarjetaEntity.class);
         q = q.setParameter("pNumero", pNumero);
         List<TarjetaEntity> sameNumber = q.getResultList();

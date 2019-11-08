@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -35,7 +35,7 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
     private Integer cw;
 
     @PodamExclude
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private UsuarioEntity usuario;
 
     public TarjetaEntity() {

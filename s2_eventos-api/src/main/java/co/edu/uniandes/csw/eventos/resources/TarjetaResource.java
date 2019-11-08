@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.TarjetaDTO;
 import co.edu.uniandes.csw.eventos.ejb.TarjetaLogic;
+import co.edu.uniandes.csw.eventos.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.eventos.ejb.UsuarioTarjetasLogic;
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Samuelillo el pillo.
  */
-@Path("tarjetas")
+@Path("usuarios/{usuariosId: \\d+}/tarjetas")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -40,33 +42,37 @@ public class TarjetaResource {
     @Inject
     private TarjetaLogic tp;
     
+    @Inject
+    private UsuarioTarjetasLogic utp;
+    
     @POST
-    public TarjetaDTO createTarjeta(TarjetaDTO tarjeta) throws BusinessLogicException{
+    public TarjetaDTO createTarjeta(@PathParam("usuariosId") Long usuariosId, TarjetaDTO tarjeta) throws BusinessLogicException{
+        LOGGER.log(Level.INFO, "TarjetaResource createTarjeta: input: {0}", tarjeta);
         TarjetaEntity newEntity = tarjeta.toEntity();
-        newEntity = tp.createTarjeta(newEntity);
-        
+        newEntity = tp.createTarjeta(usuariosId, newEntity);
+        LOGGER.log(Level.INFO, "TarjetaResource createTarjeta: input: {0}", tarjeta);
         return new TarjetaDTO(newEntity);
     } 
     
     @GET
     @Path("{tarjetasId: \\d+}")
-    public TarjetaDTO getTarjeta(@PathParam("tarjetasId") Long tarjetasId)throws BusinessLogicException {
+    public TarjetaDTO getTarjeta(@PathParam("usuariosId") Long usuariosId, @PathParam("tarjetasId") Long tarjetasId)throws BusinessLogicException {
         LOGGER.log(Level.INFO, "TarjetaResource getTarjeta: input: {0}", tarjetasId);
-        TarjetaEntity tarjetaEntity = tp.getTarjeta(tarjetasId);
+        TarjetaEntity tarjetaEntity = tp.getTarjeta(usuariosId, tarjetasId);
         if (tarjetaEntity == null) {
-            throw new WebApplicationException("El recurso /books/" + tarjetasId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /tarjetas/" + tarjetasId + " no existe.", 404);
         }
         TarjetaDTO tarjetaDTO = new TarjetaDTO(tarjetaEntity);
-        LOGGER.log(Level.INFO, "BookResource getBook: output: {0}", tarjetaDTO);
+        LOGGER.log(Level.INFO, "TarjetaResource getTarjeta: output: {0}", tarjetaDTO);
         return tarjetaDTO;
     }
     
     @PUT
     @Path("{tarjetasId: \\d+}")
-    public TarjetaDTO updateTarjeta(@PathParam("tarjetasId") Long tarjetasId, TarjetaDTO tarjeta) throws BusinessLogicException {
+    public TarjetaDTO updateTarjeta(@PathParam("usuariosId") Long usuariosId, @PathParam("tarjetasId") Long tarjetasId, TarjetaDTO tarjeta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "TarjetaResource updateTarjeta: input: id: {0} , tarjeta: {1}", new Object[]{tarjetasId, tarjeta});
         tarjeta.setId(tarjetasId);
-        if (tp.getTarjeta(tarjetasId) == null) {
+        if (tp.getTarjeta(usuariosId, tarjetasId) == null) {
             throw new WebApplicationException("El recurso /tarjetas/" + tarjetasId + " no existe.", 404);
         }
         TarjetaDTO tarjetaDTO = new TarjetaDTO(tp.updateTarjeta(tarjetasId, tarjeta.toEntity()));
@@ -76,31 +82,30 @@ public class TarjetaResource {
     
     @DELETE
     @Path("{tarjetasId: \\d+}")
-    public void deleteTarjeta(@PathParam("tarjetasId") Long tarjetasId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "TarjetaResource deleteTarjeta: input: {0}", tarjetasId);
-        TarjetaEntity entity = tp.getTarjeta(tarjetasId);
+    public void deleteTarjeta(@PathParam("usuariosId") Long usuariosId, @PathParam("tarjetasId") Long tarjetasId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "TarjetaResource updateTarjeta: input: id: {0} , tarjeta: {1}", new Object[]{tarjetasId, tarjetasId});
+        TarjetaEntity entity = tp.getTarjeta(usuariosId, tarjetasId);
         if (entity == null) {
             throw new WebApplicationException("El recurso /tarjetas/" + tarjetasId + " no existe.", 404);
         }
-        tp.deleteTarjeta(tarjetasId);
+        tp.deleteTarjeta(usuariosId, tarjetasId);
+        utp.removeTarjeta(usuariosId, tarjetasId);
         LOGGER.info("TarjetaResource deleteTarjeta: output: void");
     }
     
     @GET
-    public List<TarjetaDTO> getTarjetas(@PathParam("tarjetasId") Long tarjetasId){
-      LOGGER.log(Level.INFO, "TarjetasResource getTarjetas: input: {0}", tarjetasId);
-      List<TarjetaDTO> tarjetasDTO = tarjetasEntityToDTO(tp.getTarjetas());
+    public List<TarjetaDTO> getTarjetas(@PathParam("usuariosId") Long usuariosId){
+      LOGGER.log(Level.INFO, "TarjetasResource getTarjetas: input: {0}", usuariosId);
+      List<TarjetaDTO> tarjetasDTO = tarjetasEntityToDTO(tp.getTarjetas(usuariosId));
       LOGGER.log(Level.INFO, "EventoResource getLugares: output: {0}", tarjetasDTO);
       return tarjetasDTO;
     }
     
     private List<TarjetaDTO> tarjetasEntityToDTO(List<TarjetaEntity> list){
         List<TarjetaDTO> listDTO = new ArrayList();
-        
         for(TarjetaEntity entity : list){
             listDTO.add(new TarjetaDTO(entity));
         }
-        
         return listDTO;
     }
 }
