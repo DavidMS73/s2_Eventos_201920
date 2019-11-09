@@ -14,7 +14,10 @@ import javax.persistence.Entity;
  */
 @Entity
 public class PseEntity extends MedioPagoEntity implements Serializable {
-
+    
+    /**
+     * El correo de conectado a pse
+     */
     private String correo;
 
     public PseEntity() {

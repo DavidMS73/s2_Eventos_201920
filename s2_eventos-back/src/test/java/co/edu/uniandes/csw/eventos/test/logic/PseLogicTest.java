@@ -9,14 +9,18 @@ import co.edu.uniandes.csw.eventos.ejb.PseLogic;
 import co.edu.uniandes.csw.eventos.entities.PseEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.PsePersistence;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -30,12 +34,18 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 public class PseLogicTest {
 
     private PodamFactory factory = new PodamFactoryImpl();
+    
+    
+    private List<PseEntity> data = new ArrayList<>();
 
     @Inject
     private PseLogic pseLogic;
 
     @PersistenceContext
     private EntityManager em;
+    
+    @Inject
+    private UserTransaction utx;
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -45,6 +55,38 @@ public class PseLogicTest {
                 .addPackage(PsePersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+    }
+    
+    
+    @Before
+    public void configTest() {
+        try {
+            utx.begin();
+            clearData();
+            insertData();
+            utx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+    
+    private void clearData() {
+        em.createQuery("delete from PseEntity").executeUpdate();
+        em.createQuery("delete from MedioPagoEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
+    }
+    
+    private void insertData() {
+        for (int i = 0; i < 3; i++) {
+            PseEntity entity = factory.manufacturePojo(PseEntity.class);
+            em.persist(entity);
+            data.add(entity);
+        }
     }
 
     @Test
@@ -72,6 +114,53 @@ public class PseLogicTest {
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
         newEntity.setCorreo("GermancitoElsexi");
         pseLogic.createPse(newEntity);
+    }
+    
+    
+    @Test
+    public void getPsesTest() {
+        List<PseEntity> list = pseLogic.getPses();
+        Assert.assertEquals(data.size(), list.size());
+        for (PseEntity entity : list) {
+            boolean found = false;
+            for (PseEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    
+    
+    @Test
+    public void getPseTest() {
+        PseEntity entity = data.get(0);
+        PseEntity resultEntity = pseLogic.getPse(entity.getId());
+        Assert.assertNotNull(resultEntity);
+        Assert.assertEquals(entity.getId(), resultEntity.getId());
+        Assert.assertEquals(entity.getCorreo(), resultEntity.getCorreo());
+        
+    }
+    
+    @Test
+    public void updatePseTest() {
+        PseEntity entity = data.get(0);
+        PseEntity pojoEntity = factory.manufacturePojo(PseEntity.class);
+        pojoEntity.setId(entity.getId());
+        pseLogic.updatePse(pojoEntity.getId(), pojoEntity);
+        PseEntity resp = em.find(PseEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+        Assert.assertEquals(pojoEntity.getCorreo(), resp.getCorreo());
+    }
+    
+    @Test
+    public void deletePseTest() throws BusinessLogicException {
+        PseEntity entity = data.get(1);
+        pseLogic.deletePse(entity.getId());
+        PseEntity deleted = em.find(PseEntity.class, entity.getId());
+        Assert.assertNull(deleted);
     }
 
 }

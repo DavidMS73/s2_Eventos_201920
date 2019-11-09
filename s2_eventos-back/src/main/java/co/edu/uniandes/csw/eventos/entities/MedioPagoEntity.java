@@ -15,6 +15,9 @@ import javax.persistence.Entity;
 @Entity
 public class MedioPagoEntity extends BaseEntity implements Serializable {
 
+    /**
+     * numero de Recibo del pago
+     */
     private String numeroRecibo;
 
     public MedioPagoEntity() {

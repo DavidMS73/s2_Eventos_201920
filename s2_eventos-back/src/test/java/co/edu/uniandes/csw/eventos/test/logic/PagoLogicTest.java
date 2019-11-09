@@ -9,15 +9,19 @@ import co.edu.uniandes.csw.eventos.ejb.PagoLogic;
 import co.edu.uniandes.csw.eventos.entities.PagoEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.PagoPersistence;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -41,12 +45,48 @@ public class PagoLogicTest {
     }
 
     private PodamFactory factory = new PodamFactoryImpl();
+    
+    private List<PagoEntity> data = new ArrayList<>();
 
     @Inject
     private PagoLogic pagoLogic;
 
     @PersistenceContext
     private EntityManager em;
+    
+    @Inject
+    private UserTransaction utx;
+    
+    
+    @Before
+    public void configTest() {
+        try {
+            utx.begin();
+            clearData();
+            insertData();
+            utx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+    
+    private void clearData() {
+        em.createQuery("delete from PagoEntity").executeUpdate();
+        em.createQuery("delete from EventoEntity").executeUpdate();
+    }
+    
+    private void insertData() {
+        for (int i = 0; i < 3; i++) {
+            PagoEntity entity = factory.manufacturePojo(PagoEntity.class);
+            em.persist(entity);
+            data.add(entity);
+        }
+    }
 
     @Test
     public void createPagoTest() throws BusinessLogicException {
@@ -64,5 +104,8 @@ public class PagoLogicTest {
         newEntity.setFecha(null);
         PagoEntity result = pagoLogic.createPago(newEntity);
     }
+    
+    
+    
 
 }
