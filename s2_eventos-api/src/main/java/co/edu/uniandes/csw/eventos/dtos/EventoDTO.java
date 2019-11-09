@@ -5,17 +5,26 @@
  */
 package co.edu.uniandes.csw.eventos.dtos;
 
+import co.edu.uniandes.csw.eventos.adapters.DateAdapter;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import java.io.Serializable;
 import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * EventoDTO Objeto de transferencia de datos de Eventos
  *
  * @author Germán David Martínez Solano
  */
 public class EventoDTO implements Serializable {
 
+    /**
+     * Atributo que modela el id del evento
+     */
     private Long id;
+
     /**
      * Atributo que modela el nombre del evento
      */
@@ -34,11 +43,13 @@ public class EventoDTO implements Serializable {
     /**
      * Atributo que modela la fecha inicial del evento
      */
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaInicio;
 
     /**
      * Atributo que modela la fecha final del evento
      */
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaFin;
 
     /**
@@ -61,19 +72,29 @@ public class EventoDTO implements Serializable {
      */
     private Long valor;
 
+    /**
+     * Constructor a partir de la entidad
+     *
+     * @param entidad Entidad del Evento
+     */
     public EventoDTO(EventoEntity entidad) {
-        setId(entidad.getId());
-        setNombre(entidad.getNombre());
-        setCategoria(entidad.getCategoria());
-        setDescripcion(entidad.getDescripcion());
-        setEsPago(entidad.getEsPago());
-        setFechaInicio(entidad.getFechaInicio());
-        setFechaFin(entidad.getFechaFin());
-        setValor(entidad.getValor());
-        setDetallesAdicionales(entidad.getDetallesAdicionales());
-        setEntradasRestantes(entidad.getEntradasRestantes());
+        if (entidad != null) {
+            this.id = entidad.getId();
+            this.nombre = entidad.getNombre();
+            this.categoria = entidad.getCategoria();
+            this.descripcion = entidad.getDescripcion();
+            this.esPago = entidad.getEsPago();
+            this.fechaInicio = entidad.getFechaInicio();
+            this.fechaFin = entidad.getFechaFin();
+            this.valor = entidad.getValor();
+            this.detallesAdicionales = entidad.getDetallesAdicionales();
+            this.entradasRestantes = entidad.getEntradasRestantes();
+        }
     }
 
+    /**
+     * Constructor por defecto
+     */
     public EventoDTO() {
         // Constructor
     }
@@ -234,4 +255,8 @@ public class EventoDTO implements Serializable {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
 }

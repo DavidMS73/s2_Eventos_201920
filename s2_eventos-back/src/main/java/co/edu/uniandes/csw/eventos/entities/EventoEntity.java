@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,18 +35,18 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     @PodamExclude
     @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<ActividadEventoEntity> actividadesEvento = new ArrayList<ActividadEventoEntity>();
+    private List<ActividadEventoEntity> actividadesEvento = new ArrayList<>();
 
     /**
      * Atributo que modela las actividadesEvento del evento
      */
     @PodamExclude
     @ManyToMany
-    private List<LugarEntity> lugares = new ArrayList<LugarEntity>();
+    private List<LugarEntity> lugares = new ArrayList<>();
 
     @PodamExclude
     @ManyToMany
-    private List<PatrocinioEntity> patrocinios = new ArrayList<PatrocinioEntity>();
+    private List<PatrocinioEntity> patrocinios = new ArrayList<>();
 
     @PodamExclude
     @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
@@ -57,22 +58,22 @@ public class EventoEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @OneToMany(mappedBy = "evento")
-    private List<MemoriaEntity> memorias = new ArrayList<MemoriaEntity>();
+    private List<MemoriaEntity> memorias = new ArrayList<>();
 
     /**
      * Atributo que modela los pago del evento
      */
     @PodamExclude
     @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
+    private List<PagoEntity> pagos = new ArrayList<>();
 
     @PodamExclude
     @ManyToMany(mappedBy = "eventosInscritos", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<UsuarioEntity> inscritos = new ArrayList<UsuarioEntity>();
+    private List<UsuarioEntity> inscritos = new ArrayList<>();
 
     @PodamExclude
     @ManyToMany(mappedBy = "eventosInvitadosEspeciales", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<UsuarioEntity> invitadosEspeciales = new ArrayList<UsuarioEntity>();
+    private List<UsuarioEntity> invitadosEspeciales = new ArrayList<>();
     /**
      * Atributo que modela el nombre del evento
      */
@@ -381,6 +382,21 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     public void setInvitadosEspeciales(List<UsuarioEntity> invitadosEspeciales) {
         this.invitadosEspeciales = invitadosEspeciales;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BaseEntity other = (BaseEntity) obj;
+        return Objects.equals(this.getId(), other.getId());
     }
 
 }
