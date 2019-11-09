@@ -116,101 +116,17 @@ public class EventoDTO implements Serializable {
     }
 
     /**
-     * @return the nombre
+     * @return the valor
      */
-    public String getNombre() {
-        return nombre;
+    public Long getValor() {
+        return valor;
     }
 
     /**
-     * @param nombre the nombre to set
+     * @param valor the valor to set
      */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the categoria
-     */
-    public String getCategoria() {
-        return categoria;
-    }
-
-    /**
-     * @param categoria the categoria to set
-     */
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    /**
-     * @return the descripcion
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    /**
-     * @param descripcion the descripcion to set
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    /**
-     * @return the fechaInicio
-     */
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    /**
-     * @param fechaInicio the fechaInicio to set
-     */
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    /**
-     * @return the fechaFin
-     */
-    public Date getFechaFin() {
-        return fechaFin;
-    }
-
-    /**
-     * @param fechaFin the fechaFin to set
-     */
-    public void setFechaFin(Date fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    /**
-     * @return the detallesAdicionales
-     */
-    public String getDetallesAdicionales() {
-        return detallesAdicionales;
-    }
-
-    /**
-     * @param detallesAdicionales the detallesAdicionales to set
-     */
-    public void setDetallesAdicionales(String detallesAdicionales) {
-        this.detallesAdicionales = detallesAdicionales;
-    }
-
-    /**
-     * @return the entradasRestantes
-     */
-    public Integer getEntradasRestantes() {
-        return entradasRestantes;
-    }
-
-    /**
-     * @param entradasRestantes the entradasRestantes to set
-     */
-    public void setEntradasRestantes(Integer entradasRestantes) {
-        this.entradasRestantes = entradasRestantes;
+    public void setValor(Long valor) {
+        this.valor = valor;
     }
 
     /**
@@ -228,17 +144,102 @@ public class EventoDTO implements Serializable {
     }
 
     /**
-     * @return the valor
+     * @return the entradasRestantes
      */
-    public Long getValor() {
-        return valor;
+    public Integer getEntradasRestantes() {
+        return entradasRestantes;
     }
 
     /**
-     * @param valor the valor to set
+     * @param entradasRestantes the entradasRestantes to set
      */
-    public void setValor(Long valor) {
-        this.valor = valor;
+    public void setEntradasRestantes(Integer entradasRestantes) {
+        this.entradasRestantes = entradasRestantes;
+    }
+
+    /**
+     * @return the detallesAdicionales
+     */
+    public String getDetallesAdicionales() {
+        return detallesAdicionales;
+    }
+
+    /**
+     * @param detallesAdicionales the detallesAdicionales to set
+     */
+    public void setDetallesAdicionales(String detallesAdicionales) {
+        this.detallesAdicionales = detallesAdicionales;
+    }
+    
+    /**
+     * @return the fechaFin
+     */
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    /**
+     * @param fechaFin the fechaFin to set
+     */
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+    
+    /**
+     * @return the fechaInicio
+     */
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    /**
+     * @param fechaInicio the fechaInicio to set
+     */
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+    
+    
+    /**
+     * @return the descripcion
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * @param descripcion the descripcion to set
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
+    /**
+     * @return the categoria
+     */
+    public String getCategoria() {
+        return categoria;
+    }
+
+    /**
+     * @param categoria the categoria to set
+     */
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+    
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
