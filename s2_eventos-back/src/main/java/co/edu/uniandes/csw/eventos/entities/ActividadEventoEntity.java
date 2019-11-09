@@ -207,4 +207,12 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
         final BaseEntity other = (BaseEntity) obj;
         return Objects.equals(this.getId(), other.getId());
     }
+    
+    @Override
+    public int hashCode() {
+        if (this.getId() != null) {
+            return this.getId().hashCode();
+        }
+        return super.hashCode();
+    }
 }
