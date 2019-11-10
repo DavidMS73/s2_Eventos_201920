@@ -5,23 +5,31 @@
  */
 package co.edu.uniandes.csw.eventos.dtos;
 
+import co.edu.uniandes.csw.eventos.adapters.DateAdapter;
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import java.io.Serializable;
 import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * Actividad Evento DTO
  *
  * @author Estudiante
  */
 public class ActividadEventoDTO implements Serializable {
 
+    /**
+     * Atributo que modela el id de la actividad
+     */
     private Long id;
-    
+
     /**
      * Atributo que modela el evento asociado a la actividad
      */
     private EventoDTO evento;
-    
+
     /**
      * Atributo que modela el nombre de la actividad del evento
      */
@@ -45,82 +53,67 @@ public class ActividadEventoDTO implements Serializable {
     /**
      * Atributo que modela la fecha de la actividad del evento
      */
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fecha;
 
+    /**
+     * Constructor a partir de una entidad
+     *
+     * @param entidad Entidad de la cual se construye el DTO
+     */
     public ActividadEventoDTO(ActividadEventoEntity entidad) {
-        setId(entidad.getId());
-        if(entidad.getEvento() == null){
-            setEvento(null);
+        if (entidad != null) {
+            this.id = entidad.getId();
+            this.nombre = entidad.getNombre();
+            this.descripcion = entidad.getDescripcion();
+            this.horaInicio = entidad.getHoraInicio();
+            this.horaFin = entidad.getHoraFin();
+            this.fecha = entidad.getFecha();
+            if (entidad.getEvento() != null) {
+                this.evento = new EventoDTO(entidad.getEvento());
+            } else {
+                this.evento = null;
+            }
         }
-        else{
-            setEvento(new EventoDTO(entidad.getEvento()));
-        }
-        setNombre(entidad.getNombre());
-        setDescripcion(entidad.getDescripcion());
-        setHoraInicio(entidad.getHoraInicio());
-        setHoraFin(entidad.getHoraFin());
-        setFecha(entidad.getFecha());
     }
-    
+
+    /**
+     * Constructor por defecto
+     */
     public ActividadEventoDTO() {
         // Constructor
     }
-    
+
+    /**
+     * Método para transformar el DTO a una entidad
+     * @return entidad de la actividad del evento
+     */
     public ActividadEventoEntity toEntity() {
         ActividadEventoEntity entidad = new ActividadEventoEntity();
-        entidad.setId(this.getId());
-        entidad.setNombre(this.getNombre());
-        entidad.setDescripcion(this.getDescripcion());
-        entidad.setHoraInicio(this.getHoraInicio());
-        entidad.setHoraFin(this.getHoraFin());
-        entidad.setFecha(this.getFecha());
-        if (this.getEvento() != null) {
-            entidad.setEvento(this.getEvento().toEntity());
+        entidad.setId(this.id);
+        entidad.setNombre(this.nombre);
+        entidad.setDescripcion(this.descripcion);
+        entidad.setHoraInicio(this.horaInicio);
+        entidad.setHoraFin(this.horaFin);
+        entidad.setFecha(this.fecha);
+        if (this.evento != null) {
+            entidad.setEvento(this.evento.toEntity());
         }
-
         return entidad;
     }
 
     /**
-     * @return the nombre
+     * @return the fecha
      */
-    public String getNombre() {
-        return nombre;
+    public Date getFecha() {
+        return fecha;
     }
 
     /**
-     * @param nombre the nombre to set
+     * @param fecha the fecha to set
      */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the descripcion
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    /**
-     * @param descripcion the descripcion to set
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    /**
-     * @return the horaInicio
-     */
-    public String getHoraInicio() {
-        return horaInicio;
-    }
-
-    /**
-     * @param horaInicio the horaInicio to set
-     */
-    public void setHoraInicio(String horaInicio) {
-        this.horaInicio = horaInicio;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     /**
@@ -138,17 +131,45 @@ public class ActividadEventoDTO implements Serializable {
     }
 
     /**
-     * @return the fecha
+     * @return the horaInicio
      */
-    public Date getFecha() {
-        return fecha;
+    public String getHoraInicio() {
+        return horaInicio;
     }
 
     /**
-     * @param fecha the fecha to set
+     * @param horaInicio the horaInicio to set
      */
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    /**
+     * @return the descripcion
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * @param descripcion the descripcion to set
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
@@ -178,7 +199,9 @@ public class ActividadEventoDTO implements Serializable {
     public void setEvento(EventoDTO evento) {
         this.evento = evento;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
 }

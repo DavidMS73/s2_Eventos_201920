@@ -63,11 +63,6 @@ public class EventoDTO implements Serializable {
     private Integer entradasRestantes;
 
     /**
-     * Atributo que modela si un evento es pago o no
-     */
-    private Boolean esPago;
-
-    /**
      * Atributo que modela el valor del evento
      */
     private Long valor;
@@ -83,7 +78,6 @@ public class EventoDTO implements Serializable {
             this.nombre = entidad.getNombre();
             this.categoria = entidad.getCategoria();
             this.descripcion = entidad.getDescripcion();
-            this.esPago = entidad.getEsPago();
             this.fechaInicio = entidad.getFechaInicio();
             this.fechaFin = entidad.getFechaFin();
             this.valor = entidad.getValor();
@@ -99,13 +93,17 @@ public class EventoDTO implements Serializable {
         // Constructor
     }
 
+    /**
+     * Método para transformar el DTO a una entidad
+     *
+     * @return Entidad del evento
+     */
     public EventoEntity toEntity() {
         EventoEntity entidad = new EventoEntity();
         entidad.setId(this.id);
         entidad.setNombre(this.nombre);
         entidad.setCategoria(this.categoria);
         entidad.setDescripcion(this.descripcion);
-        entidad.setEsPago(this.esPago);
         entidad.setFechaInicio(this.fechaInicio);
         entidad.setFechaFin(this.fechaFin);
         entidad.setValor(this.valor);
@@ -127,20 +125,6 @@ public class EventoDTO implements Serializable {
      */
     public void setValor(Long valor) {
         this.valor = valor;
-    }
-
-    /**
-     * @return the esPago
-     */
-    public Boolean getEsPago() {
-        return esPago;
-    }
-
-    /**
-     * @param esPago the esPago to set
-     */
-    public void setEsPago(Boolean esPago) {
-        this.esPago = esPago;
     }
 
     /**
@@ -170,7 +154,7 @@ public class EventoDTO implements Serializable {
     public void setDetallesAdicionales(String detallesAdicionales) {
         this.detallesAdicionales = detallesAdicionales;
     }
-    
+
     /**
      * @return the fechaFin
      */
@@ -184,7 +168,7 @@ public class EventoDTO implements Serializable {
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
-    
+
     /**
      * @return the fechaInicio
      */
@@ -198,8 +182,7 @@ public class EventoDTO implements Serializable {
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-    
-    
+
     /**
      * @return the descripcion
      */
@@ -213,7 +196,7 @@ public class EventoDTO implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
     /**
      * @return the categoria
      */
@@ -227,7 +210,7 @@ public class EventoDTO implements Serializable {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-    
+
     /**
      * @return the nombre
      */

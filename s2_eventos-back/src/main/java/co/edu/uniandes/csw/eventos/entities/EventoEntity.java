@@ -5,13 +5,13 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
-import co.edu.uniandes.csw.eventos.podam.DateStrategy;
+import co.edu.uniandes.csw.eventos.podam.DateStrategy1;
+import co.edu.uniandes.csw.eventos.podam.DateStrategy2;
 import co.edu.uniandes.csw.eventos.podam.IntegerPositiveStrategy;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,6 +24,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
+ * Entidad evento
  *
  * @author Germán David Martínez Solano
  */
@@ -44,18 +45,9 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @ManyToMany
     private List<LugarEntity> lugares = new ArrayList<>();
 
-    @PodamExclude
-    @ManyToMany
-    private List<PatrocinioEntity> patrocinios = new ArrayList<>();
-
-    @PodamExclude
-    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
-    private UsuarioEntity responsable;
-
-    @PodamExclude
-    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
-    private UsuarioEntity organizador;
-
+    /**
+     * Atributo que modela las memorias
+     */
     @PodamExclude
     @OneToMany(mappedBy = "evento")
     private List<MemoriaEntity> memorias = new ArrayList<>();
@@ -67,13 +59,41 @@ public class EventoEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<PagoEntity> pagos = new ArrayList<>();
 
+    /**
+     * Atributo que modela los patrocinios
+     */
+    @PodamExclude
+    @ManyToMany
+    private List<PatrocinioEntity> patrocinios = new ArrayList<>();
+
+    /**
+     * Atributo que modela los responsables
+     */
+    @PodamExclude
+    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
+    private UsuarioEntity responsable;
+
+    /**
+     * Atributo que modela los organizadores
+     */
+    @PodamExclude
+    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
+    private UsuarioEntity organizador;
+
+    /**
+     * Atributo que modela los inscritos
+     */
     @PodamExclude
     @ManyToMany(mappedBy = "eventosInscritos", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<UsuarioEntity> inscritos = new ArrayList<>();
 
+    /**
+     * Atributo que modela los invitados especiales
+     */
     @PodamExclude
     @ManyToMany(mappedBy = "eventosInvitadosEspeciales", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<UsuarioEntity> invitadosEspeciales = new ArrayList<>();
+
     /**
      * Atributo que modela el nombre del evento
      */
@@ -93,14 +113,14 @@ public class EventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela la fecha inicial del evento
      */
     @Temporal(TemporalType.DATE)
-    @PodamStrategyValue(DateStrategy.class)
+    @PodamStrategyValue(DateStrategy1.class)
     private Date fechaInicio;
 
     /**
      * Atributo que modela la fecha final del evento
      */
     @Temporal(TemporalType.DATE)
-    @PodamStrategyValue(DateStrategy.class)
+    @PodamStrategyValue(DateStrategy2.class)
     private Date fechaFin;
 
     /**
@@ -113,11 +133,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     @PodamStrategyValue(IntegerPositiveStrategy.class)
     private Integer entradasRestantes;
-
-    /**
-     * Atributo que modela si un evento es pago o no
-     */
-    private Boolean esPago;
 
     /**
      * Atributo que modela el valor del evento
@@ -224,20 +239,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     public void setEntradasRestantes(Integer entradasRestantes) {
         this.entradasRestantes = entradasRestantes;
-    }
-
-    /**
-     * @return the esPago
-     */
-    public Boolean getEsPago() {
-        return esPago;
-    }
-
-    /**
-     * @param esPago the esPago to set
-     */
-    public void setEsPago(Boolean esPago) {
-        this.esPago = esPago;
     }
 
     /**

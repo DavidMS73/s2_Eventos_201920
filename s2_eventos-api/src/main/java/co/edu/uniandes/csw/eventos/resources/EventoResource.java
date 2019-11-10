@@ -27,6 +27,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 
 /**
+ * Clase que implementa el recurso evento
  *
  * @author Germán David Martínez Solano
  */
@@ -36,11 +37,28 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class EventoResource {
 
+    /**
+     * Variable para acceder a la lógica del evento
+     */
     @Inject
     private EventoLogic eventoLogic;
 
+    /**
+     * Logger del recurso
+     */
     private static final Logger LOGGER = Logger.getLogger(EventoResource.class.getName());
 
+    /**
+     * Crea un nuevo evento con la información que se recibe en el cuerpo de la
+     * petición y se regresa un objeto idéntico con un id auto-generado por la
+     * base de datos
+     *
+     * @param evento (@link EventoDTO) - El evento que se desea guardar
+     * @return JSON {@link EventoDTO} - El evento guardado con el atributo id
+     * autogenerado.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera si el evento ingresado es inválida.
+     */
     @POST
     public EventoDTO createEvento(EventoDTO evento) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "EventoResource createEvento: input: {0}", evento);
@@ -51,14 +69,12 @@ public class EventoResource {
         return nuevoEventoDTO;
     }
 
-    private List<EventoDetailDTO> listEntity2DetailDTO(List<EventoEntity> entityList) {
-        List<EventoDetailDTO> list = new ArrayList<>();
-        for (EventoEntity entity : entityList) {
-            list.add(new EventoDetailDTO(entity));
-        }
-        return list;
-    }
-
+    /**
+     * Busca y devuelve todos los eventos que existen en la app
+     *
+     * @return JSONArray {@link EventoDetailDTO} - Los eventos encontrados en la
+     * aplicación. Si no hay ninguno retorna una lista vacía.
+     */
     @GET
     public List<EventoDetailDTO> getEventos() {
         LOGGER.info("EventoResource getEventos: input: void");
@@ -67,16 +83,42 @@ public class EventoResource {
         return listaEventos;
     }
 
+    /**
+     * Busca el evento con el id asociado recibido en la URL y lo devuelve.
+     *
+     * @param eventosId Identificador del evento que se está buscando. Este debe
+     * ser una cadena de dígitos.
+     * @return JSON {@link EventoDetailDTO} - El evento buscado
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el evento.
+     */
     @GET
     @Path("{eventosId: \\d+}")
     public EventoDetailDTO getEvento(@PathParam("eventosId") Long eventosId) {
+        LOGGER.log(Level.INFO, "EventoResource getEvento: input: {0}", eventosId);
         EventoEntity entidad = eventoLogic.getEvento(eventosId);
         if (entidad == null) {
             throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
         }
-        return new EventoDetailDTO(entidad);
+        EventoDetailDTO eventoDetailDTO = new EventoDetailDTO(entidad);
+        LOGGER.log(Level.INFO, "EventoResource getEvento: output: {0}", eventoDetailDTO);
+        return eventoDetailDTO;
     }
 
+    /**
+     * Actualiza el evento con el id recibido en la URL con la información que
+     * se recibe en el cuerpo de la petición.
+     *
+     * @param eventosId Identificador del evento que se desea actualizar. Este
+     * debe ser una cadena de dígitos.
+     * @param evento {@link EventoDTO} El evento que se desea guardar.
+     * @return JSON {@link EventoDetailDTO} - El evento guardado.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el evento a
+     * actualizar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede actualizar el evento.
+     */
     @PUT
     @Path("{eventosId: \\d+}")
     public EventoDetailDTO updateEvento(@PathParam("eventosId") Long eventosId, EventoDetailDTO evento) throws BusinessLogicException {
@@ -90,9 +132,19 @@ public class EventoResource {
         return detailDTO;
     }
 
+    /**
+     * Borra el evento con el id asociado recibido en la URL.
+     *
+     * @param eventosId Identificador del evento que se desea borrar. Este debe
+     * ser una cadena de dígitos.
+     * @throws BusinessLogicException - cuando el evento tiene un error en
+     * lógica.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el evento.
+     */
     @DELETE
     @Path("{eventosId: \\d+}")
-    public void deleteBook(@PathParam("eventosId") Long eventosId) throws BusinessLogicException {
+    public void deleteEvento(@PathParam("eventosId") Long eventosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "EventoResource deleteEvento: input: {0}", eventosId);
         EventoEntity entity = eventoLogic.getEvento(eventosId);
         if (entity == null) {
@@ -100,5 +152,45 @@ public class EventoResource {
         }
         eventoLogic.deleteEvento(eventosId);
         LOGGER.info("EventoResource deleteEvento: output: void");
+    }
+
+    /**
+     * Conexión con el servicio de actividades para un evento.
+     * {@link ActividadEventoResource}
+     *
+     * Este método conecta la ruta de /eventos con las rutas de
+     * /actividadesEvento que dependen del evento, es una redirección al
+     * servicio que maneja el segmento de la URL que se encarga de las reseñas.
+     *
+     * @param eventosId El ID del evento con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de Actividad para ese evento en particular.\
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el evento.
+     */
+    @Path("{eventosId: \\d+}/actividades")
+    public Class<ActividadEventoResource> getActividadEventoResource(@PathParam("eventosId") Long eventosId) {
+        if (eventoLogic.getEvento(eventosId) == null) {
+            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/actividades no existe.", 404);
+        }
+        return ActividadEventoResource.class;
+    }
+
+    /**
+     * Convierte una lista de entidad a DTO
+     *
+     * Este método convierte una lista de objetos EventoEntity a una lista de
+     * objetos EventoDetailDTO (JSON)
+     *
+     * @param entityList corresponde a la lista de eventos de tipo Entity que
+     * vamos a convertir a DTO.
+     * @return la lista de eventos en forma DTO (JSON)
+     */
+    private List<EventoDetailDTO> listEntity2DetailDTO(List<EventoEntity> entityList) {
+        List<EventoDetailDTO> list = new ArrayList<>();
+        for (EventoEntity entity : entityList) {
+            list.add(new EventoDetailDTO(entity));
+        }
+        return list;
     }
 }

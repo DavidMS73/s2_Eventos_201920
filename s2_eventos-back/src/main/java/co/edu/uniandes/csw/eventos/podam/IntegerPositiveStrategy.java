@@ -9,7 +9,7 @@ import java.security.SecureRandom;
 import uk.co.jemos.podam.common.AttributeStrategy;
 
 /**
- *
+ * Crear un número positivo
  * @author Germán David Martínez Solano
  */
 public class IntegerPositiveStrategy implements AttributeStrategy<Integer> {

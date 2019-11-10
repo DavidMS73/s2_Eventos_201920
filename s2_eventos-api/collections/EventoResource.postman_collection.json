@@ -28,13 +28,13 @@
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"valor\": 0\n}",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0\n}\n\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -159,7 +159,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"valor\": 1000\n}",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 1000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -211,7 +211,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": \"1000\",\n\t\"esPago\": \"false\",\n\t\"valor\": \"2000\"\n}",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 2000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -340,14 +340,14 @@
 	],
 	"variable": [
 		{
-			"id": "b522e2ff-93d3-4a91-81b6-70d8ff26e0b9",
+			"id": "f97bc0cb-b1ba-4c9a-b9a2-76420adc8dd2",
 			"key": "ip",
 			"value": "localhost",
 			"type": "string",
 			"disabled": true
 		},
 		{
-			"id": "182b2991-2290-49fb-adf3-b458fd317050",
+			"id": "cfe1def8-ae8c-4078-972f-82676be4e708",
 			"key": "puerto",
 			"value": "8080",
 			"type": "string",

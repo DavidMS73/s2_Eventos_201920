@@ -6,12 +6,14 @@
 package co.edu.uniandes.csw.eventos.test.logic;
 
 import co.edu.uniandes.csw.eventos.ejb.EventoLogic;
+import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
 import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -29,29 +31,61 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
+ * Pruebas de lógica de evento
  *
  * @author Germán David Martínez Solano
  */
 @RunWith(Arquillian.class)
 public class EventoLogicTest {
 
+    /**
+     * Pdam factory
+     */
     private PodamFactory factory = new PodamFactoryImpl();
 
+    /**
+     * Lógica del evento
+     */
     @Inject
     private EventoLogic eventoLogic;
 
+    /**
+     * Contexto de persistencias
+     */
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * Transacción
+     */
     @Inject
     private UserTransaction utx;
 
+    /**
+     * Lista con datos del evento
+     */
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
 
+    /**
+     * Lista de memorias
+     */
     private List<MemoriaEntity> memoriaData = new ArrayList();
 
+    /**
+     * Lista de usuarios
+     */
     private List<UsuarioEntity> usuarioData = new ArrayList();
 
+    /**
+     * Lista de actividad
+     */
+    private List<ActividadEventoEntity> actividadesData = new ArrayList();
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -62,6 +96,9 @@ public class EventoLogicTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Before
     public void configTest() {
         try {
@@ -79,12 +116,19 @@ public class EventoLogicTest {
         }
     }
 
+    /**
+     * Limpia las tablas que están implicadas en la prueba.
+     */
     private void clearData() {
         em.createQuery("delete from UsuarioEntity").executeUpdate();
         em.createQuery("delete from MemoriaEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
+     */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
             MemoriaEntity memorias = factory.manufacturePojo(MemoriaEntity.class);
@@ -98,9 +142,13 @@ public class EventoLogicTest {
             if (i == 0) {
                 memoriaData.get(i).setEvento(entity);
             }
-
         }
-        
+        for (int i = 0; i < 3; i++) {
+            ActividadEventoEntity actividades = factory.manufacturePojo(ActividadEventoEntity.class);
+            em.persist(actividades);
+            actividadesData.add(actividades);
+        }
+
         UsuarioEntity responsable = factory.manufacturePojo(UsuarioEntity.class);
         UsuarioEntity organizador = factory.manufacturePojo(UsuarioEntity.class);
         em.persist(responsable);
@@ -108,13 +156,18 @@ public class EventoLogicTest {
         responsable.setEvento(data.get(2));
         data.get(2).setResponsable(responsable);
         data.get(2).setOrganizador(organizador);
-        
+
     }
 
+    /**
+     * Prueba para crear un evento
+     *
+     * @throws BusinessLogicException en caso de fallar alguna regla de negocio
+     */
     @Test
     public void createEventoTest() throws BusinessLogicException {
 
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
         EventoEntity result = eventoLogic.createEvento(newEntity);
         Assert.assertNotNull(result);
 
@@ -124,65 +177,138 @@ public class EventoLogicTest {
         Assert.assertEquals(entity.getDescripcion(), result.getDescripcion());
         Assert.assertEquals(entity.getCategoria(), result.getCategoria());
         Assert.assertEquals(entity.getEntradasRestantes(), result.getEntradasRestantes());
-        Assert.assertEquals(entity.getEsPago(), result.getEsPago());
+        Assert.assertEquals(entity.getDetallesAdicionales(), result.getDetallesAdicionales());
+        Assert.assertEquals(entity.getFechaInicio(), result.getFechaInicio());
+        Assert.assertEquals(entity.getFechaFin(), result.getFechaFin());
+        Assert.assertEquals(entity.getValor(), result.getValor());
     }
 
+    /**
+     * Prueba para crear un evento con nombre nulo
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test(expected = BusinessLogicException.class)
     public void createEventoNombreNullTest() throws BusinessLogicException {
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
         newEntity.setNombre(null);
         eventoLogic.createEvento(newEntity);
     }
 
+    /**
+     * Prueba para crear un evento con categoría con nula
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test(expected = BusinessLogicException.class)
     public void createEventoCategoriaNullTest() throws BusinessLogicException {
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
         newEntity.setCategoria(null);
         eventoLogic.createEvento(newEntity);
     }
 
+    /**
+     * Prueba para crear un evento con descripción nula
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test(expected = BusinessLogicException.class)
     public void createEventoDescripcionNullTest() throws BusinessLogicException {
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
         newEntity.setDescripcion(null);
         eventoLogic.createEvento(newEntity);
     }
 
+    /**
+     * Prueba para crear un evento con fecha de inicio nula
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test(expected = BusinessLogicException.class)
     public void createEventoFechaInicioNullTest() throws BusinessLogicException {
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
         newEntity.setFechaInicio(null);
         eventoLogic.createEvento(newEntity);
     }
 
+    /**
+     * Prueba para crear un evento con fecha de fin nula
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test(expected = BusinessLogicException.class)
     public void createEventoFechaFinNullTest() throws BusinessLogicException {
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
         newEntity.setFechaFin(null);
         eventoLogic.createEvento(newEntity);
     }
 
+    /**
+     * Prueba para crear un evento con entradas restantes nulas
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test(expected = BusinessLogicException.class)
     public void createEventoEntradasRestantesNullTest() throws BusinessLogicException {
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
         newEntity.setEntradasRestantes(null);
         eventoLogic.createEvento(newEntity);
     }
 
+    /**
+     * Prueba para crear un evento con entradas restantes negativas
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test(expected = BusinessLogicException.class)
     public void createEventoEntradasRestantesNegativeTest() throws BusinessLogicException {
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
         newEntity.setEntradasRestantes(-2);
         eventoLogic.createEvento(newEntity);
     }
 
+    /**
+     * Prueba para crear evento con fecha de inicio sin una semana de
+     * anterioridad
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test(expected = BusinessLogicException.class)
-    public void createEventoEsPagoNullTest() throws BusinessLogicException {
-        EventoEntity newEntity =em.find(EventoEntity.class, data.get(2).getId()) ;
-        newEntity.setEsPago(null);
+    public void createEventoFechaInicioSinUnaSemanaTest() throws BusinessLogicException {
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
+        Calendar c = Calendar.getInstance();
+        newEntity.setFechaInicio(c.getTime());
         eventoLogic.createEvento(newEntity);
     }
 
+    /**
+     * Prueba para crear un evento con fecha inicial luego de la fecha final
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoFechaInicioLuegoFechaFinTest() throws BusinessLogicException {
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
+        Calendar c = Calendar.getInstance();
+        newEntity.setFechaFin(c.getTime());
+        eventoLogic.createEvento(newEntity);
+    }
+
+    /**
+     * Prueba para crear un evento con valor negativo
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoValorNegativoTest() throws BusinessLogicException {
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
+        newEntity.setValor(new Long(-1));
+        eventoLogic.createEvento(newEntity);
+    }
+
+    /**
+     * Prueba para consultar la lista de eventos
+     */
     @Test
     public void getEventosTest() {
         List<EventoEntity> list = eventoLogic.getEventos();
@@ -198,6 +324,9 @@ public class EventoLogicTest {
         }
     }
 
+    /**
+     * Prueba para consultar un evento
+     */
     @Test
     public void getEventoTest() {
         EventoEntity entity = data.get(0);
@@ -209,12 +338,14 @@ public class EventoLogicTest {
         Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion());
         Assert.assertEquals(entity.getFechaInicio(), resultEntity.getFechaInicio());
         Assert.assertEquals(entity.getFechaFin(), resultEntity.getFechaFin());
-        Assert.assertEquals(entity.getEsPago(), resultEntity.getEsPago());
         Assert.assertEquals(entity.getDetallesAdicionales(), resultEntity.getDetallesAdicionales());
         Assert.assertEquals(entity.getEntradasRestantes(), resultEntity.getEntradasRestantes());
         Assert.assertEquals(entity.getValor(), resultEntity.getValor());
     }
 
+    /**
+     * Prueba para actualizar un evento
+     */
     @Test
     public void updateEventoTest() {
         EventoEntity entity = data.get(0);
@@ -229,17 +360,32 @@ public class EventoLogicTest {
         Assert.assertEquals(pojoEntity.getDescripcion(), resp.getDescripcion());
         Assert.assertEquals(pojoEntity.getFechaInicio(), resp.getFechaInicio());
         Assert.assertEquals(pojoEntity.getFechaFin(), resp.getFechaFin());
-        Assert.assertEquals(pojoEntity.getEsPago(), resp.getEsPago());
         Assert.assertEquals(pojoEntity.getDetallesAdicionales(), resp.getDetallesAdicionales());
         Assert.assertEquals(pojoEntity.getEntradasRestantes(), resp.getEntradasRestantes());
         Assert.assertEquals(pojoEntity.getValor(), resp.getValor());
     }
 
+    /**
+     * Prueba para eliminar un evento
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
     @Test
     public void deleteEventoTest() throws BusinessLogicException {
         EventoEntity entity = data.get(1);
         eventoLogic.deleteEvento(entity.getId());
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
+    }
+
+    /**
+     * Prueba para eliminar un eventos con actividades asociadas
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEventoConActividadesAsociadasTest() throws BusinessLogicException {
+        EventoEntity entity = data.get(0);
+        eventoLogic.deleteEvento(entity.getId());
     }
 }

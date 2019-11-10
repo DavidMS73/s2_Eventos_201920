@@ -5,16 +5,11 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
-import co.edu.uniandes.csw.eventos.podam.DateStrategy;
+import co.edu.uniandes.csw.eventos.podam.DateStrategy1;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -30,22 +25,15 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 public class ActividadEventoEntity extends BaseEntity implements Serializable {
 
     /**
-     * Atributo que modela los usuarios asociados a la actividad
-     */
-    @PodamExclude
-    @ManyToMany
-    @JoinTable(
-            name = "usuario_asociated",
-            joinColumns = @JoinColumn(name = "actividadEvento_id"),
-            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<UsuarioEntity> usuarios;
-
-    /**
      * Atributo que modela el evento asociado a la actividad
      */
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private EventoEntity evento;
+
+    @PodamExclude
+    @OneToOne
+    private MultimediaEntity multimedia;
 
     /**
      * Atributo que modela el nombre de la actividad del evento
@@ -71,11 +59,8 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela la fecha de la actividad del evento
      */
     @Temporal(TemporalType.DATE)
-    @PodamStrategyValue(DateStrategy.class)
+    @PodamStrategyValue(DateStrategy1.class)
     private Date fecha;
-    @PodamExclude
-    @OneToOne
-    private MultimediaEntity multimedia;
 
     public ActividadEventoEntity() {
         //Constructor
@@ -163,20 +148,6 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
      */
     public void setEvento(EventoEntity evento) {
         this.evento = evento;
-    }
-
-    /**
-     * @return the usuarios
-     */
-    public List<UsuarioEntity> getUsuarios() {
-        return usuarios;
-    }
-
-    /**
-     * @param usuarios the usuarios to set
-     */
-    public void setUsuarios(List<UsuarioEntity> usuarios) {
-        this.usuarios = usuarios;
     }
 
     /**

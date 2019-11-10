@@ -23,37 +23,53 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
+ * Clase que implementa la conexión con la persistencia para la entidad de
+ * Evento.
  *
- * @author Germàn David Martìnez Solano
+ * @author Germán David Martínez Solano
  */
 @Stateless
 public class EventoLogic {
 
+    /**
+     * Logger del evento
+     */
     private static final Logger LOGGER = Logger.getLogger(EventoLogic.class.getName());
 
+    /**
+     * Persistencia del evento
+     */
     @Inject
     private EventoPersistence persistence;
 
     @Inject
     private UsuarioPersistence up;
 
-    public Date sumarRestarDiasFecha(Date fecha, int dias) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha); // Configuramos la fecha que se recibe
-        calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
-        return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
+    /**
+     * Fecha 7 días adelante para comparar con la del evento
+     *
+     * @return Fecha 7 días adelante
+     */
+    public Date fecha7Adelante() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 7);
+        c.set(Calendar.HOUR_OF_DAY, c.getActualMinimum(Calendar.HOUR_OF_DAY));
+        c.set(Calendar.MINUTE, c.getActualMinimum(Calendar.MINUTE));
+        c.set(Calendar.SECOND, c.getActualMinimum(Calendar.SECOND));
+        c.set(Calendar.MILLISECOND, c.getActualMinimum(Calendar.MILLISECOND));
+        return c.getTime();
     }
 
+    /**
+     * Crea un evento en la persistencia
+     *
+     * @param evento La entidad que representa el evento a persistir
+     * @return Entidad del evento luego de persistirla
+     * @throws BusinessLogicException En caso de fallar una de las reglas de
+     * negocio
+     */
     public EventoEntity createEvento(EventoEntity evento) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del evento");
-        /**UsuarioEntity responsable = up.find(evento.getResponsable().getId());
-        if (responsable == null) {
-            throw new BusinessLogicException("El responsable es invalido");
-        }
-        UsuarioEntity organizador = up.find(evento.getOrganizador().getId());
-        if (organizador == null) {
-            throw new BusinessLogicException("El organizador es invalido");
-        }*/
         if (evento.getNombre() == null) {
             throw new BusinessLogicException("El nombre de evento está vacío");
         }
@@ -66,15 +82,22 @@ public class EventoLogic {
         if (evento.getFechaInicio() == null) {
             throw new BusinessLogicException("Debe definir una fecha de inicio");
         }
-        /**
-         * Date fechaComparar = new Date(); Date fechaAdelante =
-         * sumarRestarDiasFecha(fechaComparar, 7); if
-         * (evento.getFechaInicio().before(fechaAdelante)) { throw new
-         * BusinessLogicException("No se puede crear un evento si no tiene una
-         * semana de anterioridad"); }
-         */
+
+        if (evento.getFechaInicio().before(fecha7Adelante())) {
+            throw new BusinessLogicException("No se puede crear un evento si no tiene una "
+                    + "semana de anterioridad");
+        }
+
         if (evento.getFechaFin() == null) {
             throw new BusinessLogicException("Debe definir una fecha de fin");
+        }
+
+        java.util.Date fecha = new Date();
+        if (evento.getFechaInicio().before(fecha)) {
+            throw new BusinessLogicException("La fecha de inicio no puede ser anterior a la actual");
+        }
+        if (evento.getFechaInicio().after(evento.getFechaFin())) {
+            throw new BusinessLogicException("La fecha de inicio no puede ser después de la de fin");
         }
         if (evento.getEntradasRestantes() == null) {
             throw new BusinessLogicException("Debe definir un número de entradas iniciales");
@@ -82,15 +105,21 @@ public class EventoLogic {
         if (evento.getEntradasRestantes() < 0) {
             throw new BusinessLogicException("El número de entradas restantes debe ser positivo");
         }
-        if (evento.getEsPago() == null) {
-            throw new BusinessLogicException("Debe definir si el evento es pago o no");
+        if (evento.getValor() < 0) {
+            throw new BusinessLogicException("El valor del evento debe ser poositivo");
         }
-
+        System.out.println(evento.getFechaInicio());
+        System.out.println(evento.getFechaFin());
         evento = persistence.create(evento);
         LOGGER.log(Level.INFO, "Termina proceso de creación del evento");
         return evento;
     }
 
+    /**
+     * Obtener todos los eventos existentes en la base de datos
+     *
+     * @return lsita de eventos
+     */
     public List<EventoEntity> getEventos() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los eventos");
         List<EventoEntity> eventos = persistence.findAll();
@@ -98,6 +127,12 @@ public class EventoLogic {
         return eventos;
     }
 
+    /**
+     * Obtener un evento por medio de su Id
+     *
+     * @param eventosId: id del evento para ser buscado
+     * @return el evento solicitado por medio de su id
+     */
     public EventoEntity getEvento(Long eventosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0}", eventosId);
         EventoEntity eventoEntity = persistence.find(eventosId);
@@ -108,6 +143,13 @@ public class EventoLogic {
         return eventoEntity;
     }
 
+    /**
+     * Actualiza un evento
+     *
+     * @param eventosId: id del evento para buscarlo en la base de datos
+     * @param eventoEntity: eventos con los cambios para ser actualizado
+     * @return el evento con los cambios actualizados en la base de datos
+     */
     public EventoEntity updateEvento(Long eventosId, EventoEntity eventoEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el evento con id = {0}", eventosId);
 
@@ -116,6 +158,13 @@ public class EventoLogic {
         return newEntity;
     }
 
+    /**
+     * Borrar un evento
+     *
+     * @param eventosId: id del evento a borrar
+     * @throws BusinessLogicException si el evento a borrar tiene actividades,
+     * memorias, patrocinios, usuarios y lugares asociadoss
+     */
     public void deleteEvento(Long eventosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el evento con id = {0}", eventosId);
         List<LugarEntity> lugares = getEvento(eventosId).getLugares();
@@ -140,7 +189,7 @@ public class EventoLogic {
         }
         List<ActividadEventoEntity> actividadesEvento = getEvento(eventosId).getActividadesEvento();
         if (actividadesEvento != null && !actividadesEvento.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene actividades evento asociadas");
+            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene actividades asociadas");
         }
         persistence.delete(eventosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el evento con id = {0}", eventosId);

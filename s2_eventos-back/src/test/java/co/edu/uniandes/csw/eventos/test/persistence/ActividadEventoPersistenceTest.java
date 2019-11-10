@@ -26,12 +26,46 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
+ * Pruebas de persistencia de Actividades
  *
  * @author Germán David Martínez Solano
  */
 @RunWith(Arquillian.class)
 public class ActividadEventoPersistenceTest {
 
+    /**
+     * Transacción
+     */
+    @Inject
+    UserTransaction utx;
+
+    /**
+     * Persistencia de la actividad
+     */
+    @Inject
+    private ActividadEventoPersistence ep;
+
+    /**
+     * Contexto de persistencia
+     */
+    @PersistenceContext
+    private EntityManager em;
+
+    /**
+     * Lista de actividades
+     */
+    private List<ActividadEventoEntity> data = new ArrayList<ActividadEventoEntity>();
+
+    /**
+     * Lista de eventos
+     */
+    private List<EventoEntity> dataEvento = new ArrayList<EventoEntity>();
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -41,19 +75,9 @@ public class ActividadEventoPersistenceTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
-    @Inject
-    UserTransaction utx;
-
-    @Inject
-    private ActividadEventoPersistence ep;
-
-    @PersistenceContext
-    private EntityManager em;
-
-    private List<ActividadEventoEntity> data = new ArrayList<ActividadEventoEntity>();
-
-    private List<EventoEntity> dataEvento = new ArrayList<EventoEntity>();
-
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Before
     public void setUp() {
         try {
@@ -72,11 +96,18 @@ public class ActividadEventoPersistenceTest {
         }
     }
 
+    /**
+     * Limpia las tablas que están implicadas en la prueba.
+     */
     private void clearData() {
         em.createQuery("delete from ActividadEventoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
+     */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
@@ -94,6 +125,9 @@ public class ActividadEventoPersistenceTest {
         }
     }
 
+    /**
+     * Prueba para crear una actividad.
+     */
     @Test
     public void createActividadEventoTest() {
         PodamFactory factory = new PodamFactoryImpl();
@@ -112,21 +146,9 @@ public class ActividadEventoPersistenceTest {
         Assert.assertEquals(actividadEvento.getHoraFin(), entity.getHoraFin());
     }
 
-    @Test
-    public void getActividadesEventosTest() {
-        List<ActividadEventoEntity> list = ep.findAllOfAnEvent(dataEvento.get(0).getId());
-        Assert.assertEquals(1, list.size());
-        for (ActividadEventoEntity ent : list) {
-            boolean found = false;
-            for (ActividadEventoEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
-    }
-
+    /**
+     * Prueba para consultar una actividad.
+     */
     @Test
     public void getActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);
@@ -140,6 +162,9 @@ public class ActividadEventoPersistenceTest {
         Assert.assertEquals(entity.getHoraFin(), newEntity.getHoraFin());
     }
 
+    /**
+     * Prueba para eliminar una actividad.
+     */
     @Test
     public void deleteActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);
@@ -148,6 +173,9 @@ public class ActividadEventoPersistenceTest {
         Assert.assertNull(deleted);
     }
 
+    /**
+     * Prueba para actualizar una actividad.
+     */
     @Test
     public void updateActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);

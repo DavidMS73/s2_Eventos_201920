@@ -14,14 +14,22 @@ import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * Clase que extiende de {@link EventoDTO} para manejar las relaciones entre los
+ * Eventos JSON y otros DTOs.
  *
  * @author Germán David Martínez Solano
  */
 public class EventoDetailDTO extends EventoDTO implements Serializable {
 
-    private List<ActividadEventoDTO> actividadesEvento;
+    /**
+     * Lista de tipo ActividadEventoDTO que contiene las actividades que están
+     * asociadas a un evento
+     */
+    private List<ActividadEventoDTO> actividades;
 
     private List<LugarDTO> lugares;
 
@@ -33,56 +41,71 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
 
     private List<UsuarioDTO> invitadosEspeciales;
 
+    /**
+     * Constructor por defecto
+     */
     public EventoDetailDTO() {
         super();
     }
 
+    /**
+     * Constructor para transformar un Entity a un DTO
+     *
+     * @param eventoEntity entidad del evento para tranformar a DTO
+     */
     public EventoDetailDTO(EventoEntity eventoEntity) {
         super(eventoEntity);
-        if (eventoEntity.getActividadesEvento() != null) {
-            actividadesEvento = new ArrayList<>();
-            for (ActividadEventoEntity entityReview : eventoEntity.getActividadesEvento()) {
-                actividadesEvento.add(new ActividadEventoDTO(entityReview));
+        if (eventoEntity != null) {
+            if (eventoEntity.getActividadesEvento() != null) {
+                actividades = new ArrayList<>();
+                for (ActividadEventoEntity entityActividad : eventoEntity.getActividadesEvento()) {
+                    actividades.add(new ActividadEventoDTO(entityActividad));
+                }
             }
-        }
-        if (eventoEntity.getLugares() != null) {
-            lugares = new ArrayList<>();
-            for (LugarEntity entityLugar : eventoEntity.getLugares()) {
-                lugares.add(new LugarDTO(entityLugar));
+            if (eventoEntity.getLugares() != null) {
+                lugares = new ArrayList<>();
+                for (LugarEntity entityLugar : eventoEntity.getLugares()) {
+                    lugares.add(new LugarDTO(entityLugar));
+                }
             }
-        }
-        if (eventoEntity.getMemorias() != null) {
-            memorias = new ArrayList<>();
-            for (MemoriaEntity memoria : eventoEntity.getMemorias()) {
-                memorias.add(new MemoriaDTO(memoria));
+            if (eventoEntity.getMemorias() != null) {
+                memorias = new ArrayList<>();
+                for (MemoriaEntity memoria : eventoEntity.getMemorias()) {
+                    memorias.add(new MemoriaDTO(memoria));
+                }
             }
-        }
-        if (eventoEntity.getPatrocinios() != null) {
-            patrocinios = new ArrayList<>();
-            for (PatrocinioEntity patrocinio : eventoEntity.getPatrocinios()) {
-                patrocinios.add(new PatrocinioDTO(patrocinio));
+            if (eventoEntity.getPatrocinios() != null) {
+                patrocinios = new ArrayList<>();
+                for (PatrocinioEntity patrocinio : eventoEntity.getPatrocinios()) {
+                    patrocinios.add(new PatrocinioDTO(patrocinio));
+                }
             }
-        }
-        if (eventoEntity.getInscritos() != null) {
-            inscritos = new ArrayList<>();
-            for (UsuarioEntity inscrito : eventoEntity.getInscritos()) {
-                inscritos.add(new UsuarioDTO(inscrito));
+            if (eventoEntity.getInscritos() != null) {
+                inscritos = new ArrayList<>();
+                for (UsuarioEntity inscrito : eventoEntity.getInscritos()) {
+                    inscritos.add(new UsuarioDTO(inscrito));
+                }
             }
-        }
-        if (eventoEntity.getInvitadosEspeciales() != null) {
-            invitadosEspeciales = new ArrayList<>();
-            for (UsuarioEntity invitadoE : eventoEntity.getInscritos()) {
-                invitadosEspeciales.add(new UsuarioDTO(invitadoE));
+            if (eventoEntity.getInvitadosEspeciales() != null) {
+                invitadosEspeciales = new ArrayList<>();
+                for (UsuarioEntity invitadoE : eventoEntity.getInscritos()) {
+                    invitadosEspeciales.add(new UsuarioDTO(invitadoE));
+                }
             }
         }
     }
 
+    /**
+     * Transformar un DTO a un Entity
+     *
+     * @return DTO del evento para tranformar a Entity
+     */
     @Override
     public EventoEntity toEntity() {
         EventoEntity entidad = super.toEntity();
-        if (getActividadesEvento() != null) {
+        if (actividades != null) {
             List<ActividadEventoEntity> actividadesEntity = new ArrayList<>();
-            for (ActividadEventoDTO dtoActividad : getActividadesEvento()) {
+            for (ActividadEventoDTO dtoActividad : actividades) {
                 actividadesEntity.add(dtoActividad.toEntity());
             }
             entidad.setActividadesEvento(actividadesEntity);
@@ -130,14 +153,14 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
      * @return the actividadesEvento
      */
     public List<ActividadEventoDTO> getActividadesEvento() {
-        return actividadesEvento;
+        return actividades;
     }
 
     /**
      * @param actividadesEvento the actividadesEvento to set
      */
     public void setActividadesEvento(List<ActividadEventoDTO> actividadesEvento) {
-        this.actividadesEvento = actividadesEvento;
+        this.actividades = actividadesEvento;
     }
 
     /**

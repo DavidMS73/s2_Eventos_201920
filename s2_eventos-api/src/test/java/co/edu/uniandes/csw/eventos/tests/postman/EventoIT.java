@@ -57,7 +57,7 @@ public class EventoIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(EventoResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(EventoResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquete
                 .addPackage(EventoDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.

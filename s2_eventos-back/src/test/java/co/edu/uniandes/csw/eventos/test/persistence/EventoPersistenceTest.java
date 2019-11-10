@@ -27,26 +27,46 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- *
+ * Pruebas de persistencia de Eventos
  * @author Germán David Martínez Solano
  */
 @RunWith(Arquillian.class)
 public class EventoPersistenceTest {
 
+    /**
+     * Transacción
+     */
     @Inject
     UserTransaction utx;
 
+    /**
+     * Persistencia del evento
+     */
     @Inject
     private EventoPersistence ep;
 
+    /**
+     * Persistencia del usuario
+     */
     @Inject
     private UsuarioPersistence up;
 
+    /**
+     * Contexto de persistencia
+     */
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * Lista de eventos
+     */
     private List<EventoEntity> data = new ArrayList<EventoEntity>();
 
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -56,6 +76,9 @@ public class EventoPersistenceTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Before
     public void setUp() {
         try {
@@ -74,43 +97,33 @@ public class EventoPersistenceTest {
         }
     }
 
+    /**
+     * Limpia las tablas que están implicadas en la prueba.
+     */
     private void clearData() {
-        em.createQuery("delete from UsuarioEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
+     */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
-            UsuarioEntity responsable = factory.manufacturePojo(UsuarioEntity.class);
-            UsuarioEntity organizador = factory.manufacturePojo(UsuarioEntity.class);
-
-            //entity.setResponsable(responsable);
-            //entity.setOrganizador(organizador);
-            //organizador.setEvento(entity);
-            //responsable.setEvento(entity);
-
             em.persist(entity);
-           // em.persist(responsable);
-            //em.persist(organizador);
             data.add(entity);
         }
-
-        EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
-        em.persist(entity);
-        data.add(entity);
     }
 
+    /**
+     * Pruebas para crear un evento
+     */
     @Test
     public void createEventoTest() {
         PodamFactory factory = new PodamFactoryImpl();
         EventoEntity evento = factory.manufacturePojo(EventoEntity.class);
-      //  UsuarioEntity responsable = factory.manufacturePojo(UsuarioEntity.class);
-      //  UsuarioEntity organizador = factory.manufacturePojo(UsuarioEntity.class);
-
-      //  responsable = up.create(responsable);
-      //  organizador = up.create(organizador);
         EventoEntity result = ep.create(evento);
 
         Assert.assertNotNull(result);
@@ -125,10 +138,12 @@ public class EventoPersistenceTest {
         Assert.assertEquals(evento.getFechaFin(), entity.getFechaFin());
         Assert.assertEquals(evento.getDetallesAdicionales(), entity.getDetallesAdicionales());
         Assert.assertEquals(evento.getEntradasRestantes(), entity.getEntradasRestantes());
-        Assert.assertEquals(evento.getEsPago(), entity.getEsPago());
         Assert.assertEquals(evento.getValor(), entity.getValor());
     }
 
+    /**
+     * Prueba para consultar la lista de eventos
+     */
     @Test
     public void getEventosTest() {
         List<EventoEntity> list = ep.findAll();
@@ -145,6 +160,9 @@ public class EventoPersistenceTest {
         }
     }
 
+    /**
+     * Prueba para consultar un evento
+     */
     @Test
     public void getEventoTest() {
         EventoEntity entity = data.get(0);
@@ -161,18 +179,23 @@ public class EventoPersistenceTest {
         Assert.assertEquals(entity.getFechaFin(), newEntity.getFechaFin());
         Assert.assertEquals(entity.getDetallesAdicionales(), newEntity.getDetallesAdicionales());
         Assert.assertEquals(entity.getEntradasRestantes(), newEntity.getEntradasRestantes());
-        Assert.assertEquals(entity.getEsPago(), newEntity.getEsPago());
         Assert.assertEquals(entity.getValor(), newEntity.getValor());
     }
 
+    /**
+     * Prueba para eliminar un evento
+     */
     @Test
     public void deleteEventoTest() {
-        EventoEntity entity = data.get(3);
+        EventoEntity entity = data.get(0);
         ep.delete(entity.getId());
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 
+    /**
+     * Prueba para actualizar un evento
+     */
     @Test
     public void updateEventoTest() {
         EventoEntity entity = data.get(0);
@@ -193,10 +216,12 @@ public class EventoPersistenceTest {
         Assert.assertEquals(newEntity.getFechaFin(), resp.getFechaFin());
         Assert.assertEquals(newEntity.getDetallesAdicionales(), resp.getDetallesAdicionales());
         Assert.assertEquals(newEntity.getEntradasRestantes(), resp.getEntradasRestantes());
-        Assert.assertEquals(newEntity.getEsPago(), resp.getEsPago());
         Assert.assertEquals(newEntity.getValor(), resp.getValor());
     }
 
+    /**
+     * Prueba para encontrar un evento por nombre
+     */
     @Test
     public void findEventoByNameTest() {
         EventoEntity entity = data.get(0);
