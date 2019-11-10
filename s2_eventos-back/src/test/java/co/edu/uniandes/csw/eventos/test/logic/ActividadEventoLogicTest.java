@@ -246,33 +246,7 @@ public class ActividadEventoLogicTest {
         newEntity.setFecha(c.getTime());
         actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
     }
-
-    /**
-     * Prueba para crear una actividad con un evento que no existe.
-     *
-     * @throws BusinessLogicException incumple la regla de negocio
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void createActividadTestConEventoInexistenteTest() throws BusinessLogicException {
-        ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        EventoEntity eventoEntity = new EventoEntity();
-        eventoEntity.setId(Long.MIN_VALUE);
-        newEntity.setEvento(eventoEntity);
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
-    }
-
-    /**
-     * Prueba para crear una actividad con evento en null.
-     *
-     * @throws BusinessLogicException incumple la regla de negocio
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void createActividadTestConNullEvento() throws BusinessLogicException {
-        ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(null);
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
-    }
-
+    
     /**
      * Prueba para consultar la lista de libros
      *

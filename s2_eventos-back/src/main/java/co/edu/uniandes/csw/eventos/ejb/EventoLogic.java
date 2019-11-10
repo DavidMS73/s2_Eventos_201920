@@ -108,8 +108,6 @@ public class EventoLogic {
         if (evento.getValor() < 0) {
             throw new BusinessLogicException("El valor del evento debe ser poositivo");
         }
-        System.out.println(evento.getFechaInicio());
-        System.out.println(evento.getFechaFin());
         evento = persistence.create(evento);
         LOGGER.log(Level.INFO, "Termina proceso de creación del evento");
         return evento;
@@ -167,29 +165,30 @@ public class EventoLogic {
      */
     public void deleteEvento(Long eventosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el evento con id = {0}", eventosId);
+        String errorMeg = "No se puede borrar el evento con id = ";
         List<LugarEntity> lugares = getEvento(eventosId).getLugares();
         if (lugares != null && !lugares.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene lugares asociados");
+            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene lugares asociados");
         }
         List<MemoriaEntity> memorias = getEvento(eventosId).getMemorias();
         if (memorias != null && !memorias.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene memorias asociadas");
+            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene memorias asociadas");
         }
         List<PatrocinioEntity> patrocinios = getEvento(eventosId).getPatrocinios();
         if (patrocinios != null && !patrocinios.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene patrocinios asociadas");
+            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene patrocinios asociadas");
         }
         List<UsuarioEntity> inscritos = getEvento(eventosId).getInscritos();
         if (inscritos != null && !inscritos.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene inscritos asociados");
+            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene inscritos asociados");
         }
         List<UsuarioEntity> invitadosEspeciales = getEvento(eventosId).getInvitadosEspeciales();
         if (invitadosEspeciales != null && !invitadosEspeciales.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene invitados especiales asociados");
+            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene invitados especiales asociados");
         }
         List<ActividadEventoEntity> actividadesEvento = getEvento(eventosId).getActividadesEvento();
         if (actividadesEvento != null && !actividadesEvento.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el evento con id = " + eventosId + " porque tiene actividades asociadas");
+            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene actividades asociadas");
         }
         persistence.delete(eventosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el evento con id = {0}", eventosId);
