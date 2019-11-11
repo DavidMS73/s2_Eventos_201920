@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c96d8821-6ce3-41a8-9115-3ea3515414b0",
+		"_postman_id": "8be4308b-1d0d-4e46-aa08-f4f394968f65",
 		"name": "UsuarioTarjetaTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juaan\",\n\t\"correo\":\"masidf@uniandes.edu.co\",\n\t\"contrasena\":\"1273678\",\n\t\"asiste\":\"false\",\n\t\"codigoQR\":\"fotolpng\",\n\t\"empresa\":\"DoaBjlanca \",\n\t\"tarjeta\":{\n\t\t\"tipoTarjeta\": \"Débito\",\n\t\t\"numeroTarjeta\": \"1234567891127456\",\n\t\t\"expiracion\": \"2020-09-07T00:00:00-08:00\",\n\t\t\"cw\": 122\n}\n}\n",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\",\n\t\"tarjeta\":{\n\t\t\"tipoTarjeta\": \"Débito\",\n\t\t\"numeroTarjeta\": \"1234567891127456\",\n\t\t\"expiracion\": \"2020-09-07T00:00:00-08:00\",\n\t\t\"cw\": 122\n\t}\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -156,7 +156,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juaan\",\n\t\"correo\":\"masf@uniandes.edu.co\",\n\t\"contrasena\":\"1273678\",\n\t\"asiste\":\"false\",\n\t\"codigoQR\":\"fotolpng\",\n\t\"empresa\":\"DoaBjlanca \",\n\t\"tarjeta\":{\n\t\t\"tipoTarjeta\": \"Débito\",\n\t\t\"numeroTarjeta\": \"1234567891127456\",\n\t\t\"expiracion\": \"2020-09-07T00:00:00-08:00\",\n\t\t\"cw\": 122\n}\n}\n",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\",\n\t\"tarjeta\":{\n\t\t\"tipoTarjeta\": \"Débito\",\n\t\t\"numeroTarjeta\": \"1234567891127456\",\n\t\t\"expiracion\": \"2020-09-07T00:00:00-08:00\",\n\t\t\"cw\": 123\n\t}\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"

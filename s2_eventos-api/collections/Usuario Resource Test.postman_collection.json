@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4f5f999d-df63-4e6f-9d41-0a5f820693a8",
+		"_postman_id": "c440e03a-b8ad-4f9a-9bd5-03cc81958667",
 		"name": "Usuario Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -34,7 +34,59 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"nombre\": \"Juaan\",\n\"correo\":\"maff@uniandes.edu.co\",\n\"contrasena\":\"1273678\",\n\"asiste\":\"false\",\n\"codigoQR\":\"fotolpng\",\n\"empresa\":\"DoaBjlanca \"\n}\n",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un usuario 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77f614aa-9eec-40e6-8f5f-5534c7093171",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Juan Pedraza\",\n\t\"correo\":\"juan2@uniandes.edu.co\",\n\t\"contrasena\":\"234567\",\n\t\"codigoQR\":\"foto2.png\",\n\t\"tipo\":\"Asistente\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -129,6 +181,42 @@
 			"response": []
 		},
 		{
+			"name": "Obtener un usuario que no existe Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39dc353d-ae0a-41c6-99a5-89218360c4d3",
+						"exec": [
+							"tests[\"No se deberia obtener un usuario con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /usuarios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un usuario que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
 			"name": "Editar un usuario",
 			"event": [
 				{
@@ -156,7 +244,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n\"nombre\": \"Juean\",\n\"correo\":\"chupameUnHuevo@uniandes.edu.co\",\n\"contrasena\":\"1273678\",\n\"asiste\":\"false\",\n\"codigoQR\":\"fotolpng\",\n\"empresa\":\"DoaBjlanca \"\n    }",
+					"raw": "{\n\t\"nombre\": \"Juan Martínez\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -177,6 +265,51 @@
 						"{{new_id_a}}"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "15a70f62-2a66-469a-9ca6-d1125b0c8774",
+						"exec": [
+							"tests[\"No se deberia actualizar un usuario con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /usuarios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Juan Martínez 2.0\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"0"
+					]
+				},
+				"description": "Para la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
 			},
 			"response": []
 		},
@@ -211,6 +344,80 @@
 						"{{new_id_a}}"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar el usuario 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a0b025f-39be-480e-ac99-7044ed101bbf",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c0905623-e468-4838-b24e-56e8402ea65c",
+						"exec": [
+							"tests[\"No se deberia borrar un autor con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /usuarios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"0"
+					]
+				},
+				"description": "Borra un usuario que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		}

@@ -77,7 +77,7 @@ public class UsuarioResource {
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: input: usuariosId: {0} , usuario: {1}", new Object[]{usuariosId, usuario});
         usuario.setId(usuariosId);
         if (uLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /authors/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(uLogic.updateUsuario(usuariosId, usuario.toEntity()));
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: output: {0}", detailDTO);

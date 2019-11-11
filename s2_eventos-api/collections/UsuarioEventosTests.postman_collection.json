@@ -1,0 +1,806 @@
+{
+	"info": {
+		"_postman_id": "c9a6dff1-5056-4a6b-ac77-ad071ac7c9dd",
+		"name": "UsuarioEventosTests",
+		"description": "Colección de pruebas sobre el recurso UsuarioEventos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un evento",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "694741e6-4794-48fd-b32b-d790963ac9b0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_b\", data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos"
+					]
+				},
+				"description": "**Release: Ciclo 1**\r\n\r\nCrea un nuevo evento. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un evento 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "694741e6-4794-48fd-b32b-d790963ac9b0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_b2\", data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos"
+					]
+				},
+				"description": "**Release: Ciclo 1**\r\n\r\nCrea un nuevo evento. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77f614aa-9eec-40e6-8f5f-5534c7093171",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar un evento a un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5295fcb5-7252-463d-b81a-5124c1a067be",
+						"exec": [
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "Asocia un evento a un usuario en la aplicación. \r\n\r\nSe envía el Id del usuario y del evento a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar un libro que no existe a un autor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3c06212-e39e-4bc3-9fd1-8abbd1c29ace",
+						"exec": [
+							"tests[\"No se deberia asociar el usuario ya que el evento no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos",
+						"0"
+					]
+				},
+				"description": "Asocia un evento que no existe a un usuario en la aplicación. \r\nSe envía el Id del usuario y el del evento a asociar en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /eventos/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un evento de un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7e73fe8-8e21-4eae-a1bf-973c5ccfbfbc",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "Consulta un evento de un usuario en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del usuario y del evento a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un evento que no existe de un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fe51cc4-6ef5-40d2-bc5f-e1200af00028",
+						"exec": [
+							"tests[\"No se deberia obtener ningun evento ya que el evento no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos",
+						"0"
+					]
+				},
+				"description": "Consulta un evento que no existe de un usuario en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un evento no asociado de un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10a04ef5-aca6-43ae-bd0a-b1006aa19487",
+						"exec": [
+							"tests[\"No se puede obtener un book que no esta asociado\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El evento no está asociado al usuario\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos/{{new_id_b2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos",
+						"{{new_id_b2}}"
+					]
+				},
+				"description": "Consulta un evento que no esta asociado a un usuario en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El evento no está asociado al usuario\".\r\n\r\n**Código http esperado: 412**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar eventos a un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7c5215a-ed1c-498e-9d19-9f5570cfd17d",
+						"exec": [
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"categoria\": \"General\",\n    \"descripcion\": \"Evento para recaudar fondos\",\n    \"detallesAdicionales\": \"Ayudar a los estudiantes\",\n    \"entradasRestantes\": 1000,\n    \"fechaFin\": \"2020-09-10T05:00:00Z[UTC]\",\n    \"fechaInicio\": \"2020-09-06T05:00:00Z[UTC]\",\n    \"id\": {{new_id_b}},\n    \"nombre\": \"Fopre\",\n    \"valor\": 0,\n    \"usuarios\": [\n        {\n            \"codigoQR\": \"fotol0.png\",\n            \"contrasena\": \"1234567\",\n            \"correo\": \"juan3@uniandes.edu.co\",\n            \"id\": {{new_id_e}},\n            \"nombre\": \"Juan3\",\n            \"tipo\": \"Responsable\"\n        }\n    ]\n}\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos"
+					]
+				},
+				"description": "Actualiza la lista de eventos a un usuario existente.\r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener los eventos de un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "49c94c15-1d54-43ee-adef-aec230710223",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
+							"tests[\"books count - author\"] = data.length >= 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos"
+					]
+				},
+				"description": "Consulta los eventos de un usuario en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del usuario y el del evento a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar libros que no existen a un autor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5f1389a0-da68-45bc-90aa-eb08f3c8ac36",
+						"exec": [
+							"tests[\"No se pueden asociar los eventos ya que estos no existen\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"id\": 0,\n    \"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000\n}\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos"
+					]
+				},
+				"description": "Actualiza la lista de eventos existentes con eventos que no existen. \r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /eventos/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un evento a un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9510b6cd-b566-4cfa-b16f-9c783800176d",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "Borra la asociación entre un evento y un usuario. Se envían los ids del usuario y del evento creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un evento2 a un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dca29117-b352-4fc0-893d-46bfdd4cd9bf",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos/{{new_id_b2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos",
+						"{{new_id_b2}}"
+					]
+				},
+				"description": "Borra la asociación entre un evento y un usuario. Se envían los ids del usuario y del evemto creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un evento a un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91d9959e-4825-4dd7-88e3-3e33b988c765",
+						"exec": [
+							"tests[\"No se deberia eliminar ninguna asociación ya que el usuario no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /usuarios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/0/eventos/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"0",
+						"eventos",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "Borra la asociación entre un evento y un usuario que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un evento que no existe a un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db442b05-4aea-4f64-9db1-a28176069f5e",
+						"exec": [
+							"tests[\"No se deberia eliminar ninguna asociacion ya que el evento no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/eventos/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}",
+						"eventos",
+						"0"
+					]
+				},
+				"description": "Borra la asociación entre un evento que no existe y un usuario en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un evento",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4f1e4dc3-ca8a-4517-a81e-7e899528fbf4",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "Borra un evento. Se envía el id del evento creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un evento 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac2c9e22-f152-46e9-8d4e-206c81e38e7b",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos/{{new_id_b2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"eventos",
+						"{{new_id_b2}}"
+					]
+				},
+				"description": "Borra un evento. Se envía el id del evento creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b1ff16df-2255-4221-9b63-b026ee61a544",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"usuarios",
+						"{{new_id_a}}"
+					]
+				},
+				"description": "Borra un usuario. Se envía el id del usuario creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "abcf9e66-ab71-40eb-b132-268e8563ad4d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "99c46863-220f-4853-9796-88ddc37ae16a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

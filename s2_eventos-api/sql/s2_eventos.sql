@@ -7,6 +7,6 @@ delete from MultimediaEntity;
 delete from MemoriaEntity;
 delete from MedioPagoEntity;
 delete from PagoEntity;
-delete from UsuarioEntity_EventoEntity;
+delete from EventoEntity_UsuarioEntity;
 delete from UsuarioEntity;
 delete from EventoEntity;

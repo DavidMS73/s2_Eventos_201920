@@ -100,7 +100,7 @@ public class UsuarioEventosResource {
      */
     @GET
     @Path("{eventosId: \\d+}")
-    public EventoDetailDTO getBook(@PathParam("usuariosId") Long usuariosId, @PathParam("eventosId") Long eventosId) throws BusinessLogicException {
+    public EventoDetailDTO getEvento(@PathParam("usuariosId") Long usuariosId, @PathParam("eventosId") Long eventosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UsuarioEventosResource getEvento: input: usuariosId {0} , eventosId {1}", new Object[]{usuariosId, eventosId});
         if (eventoLogic.getEvento(eventosId) == null) {
             throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
@@ -122,11 +122,11 @@ public class UsuarioEventosResource {
      * Error de lógica que se genera cuando no se encuentra el evento.
      */
     @PUT
-    public List<EventoDetailDTO> replaceBooks(@PathParam("usuariosId") Long usuariosId, List<EventoDetailDTO> eventos) {
+    public List<EventoDetailDTO> replaceEventos(@PathParam("usuariosId") Long usuariosId, List<EventoDetailDTO> eventos) {
         LOGGER.log(Level.INFO, "UsuarioEventosResource replaceEventos: input: usuariosId {0} , eventos {1}", new Object[]{usuariosId, eventos});
         for (EventoDetailDTO book : eventos) {
             if (eventoLogic.getEvento(book.getId()) == null) {
-                throw new WebApplicationException("El recurso /books/" + book.getId() + " no existe.", 404);
+                throw new WebApplicationException("El recurso /eventos/" + book.getId() + " no existe.", 404);
             }
         }
         List<EventoDetailDTO> lista = eventosListEntity2DTO(usuarioEventoLogic.replaceEventos(usuariosId, eventosListDTO2Entity(eventos)));
@@ -148,7 +148,7 @@ public class UsuarioEventosResource {
     public void removeBook(@PathParam("usuariosId") Long usuariosId, @PathParam("eventosId") Long eventosId) {
         LOGGER.log(Level.INFO, "UsuarioEventosResource deleteEvento: input: usuariosId {0} , eventosId {1}", new Object[]{usuariosId, eventosId});
         if (eventoLogic.getEvento(eventosId) == null) {
-            throw new WebApplicationException("El recurso /books/" + eventosId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
         }
         usuarioEventoLogic.removeEvento(usuariosId, eventosId);
         LOGGER.info("UsuarioEventosResource deleteEvento: output: void");
