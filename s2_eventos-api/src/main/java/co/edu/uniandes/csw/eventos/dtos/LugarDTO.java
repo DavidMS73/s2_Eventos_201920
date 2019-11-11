@@ -23,13 +23,15 @@ public class LugarDTO implements Serializable {
     private String salon;
 
     public LugarDTO(LugarEntity entidad) {
-        setId(entidad.getId());
-        setNombre(entidad.getNombre());
-        setCapacidadAsistentes(entidad.getCapacidadAsistentes());
-        setUbicacionGeografica(entidad.getUbicacionGeografica());
-        setBloque(entidad.getBloque());
-        setPiso(entidad.getPiso());
-        setSalon(entidad.getSalon());
+        if (entidad != null) {
+            setId(entidad.getId());
+            setNombre(entidad.getNombre());
+            setCapacidadAsistentes(entidad.getCapacidadAsistentes());
+            setUbicacionGeografica(entidad.getUbicacionGeografica());
+            setBloque(entidad.getBloque());
+            setPiso(entidad.getPiso());
+            setSalon(entidad.getSalon());
+        }
     }
 
     public LugarDTO() {

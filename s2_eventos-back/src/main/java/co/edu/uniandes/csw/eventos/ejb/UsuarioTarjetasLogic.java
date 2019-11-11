@@ -11,12 +11,14 @@ import co.edu.uniandes.csw.eventos.persistence.TarjetaPersistence;
 import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- *
- * @author Estudiante
+ * Clase que implemententa la relación entre Usuario - Tarjetas
+ * @author Germán David Martínez Solano
  */
+@Stateless
 public class UsuarioTarjetasLogic {
     private static final Logger LOGGER = Logger.getLogger(UsuarioTarjetasLogic.class.getName());
 

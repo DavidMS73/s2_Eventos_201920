@@ -12,34 +12,33 @@ import java.io.Serializable;
  *
  * @author Gabriel Gonzalez
  */
-public class MultimediaDTO implements Serializable 
-{
+public class MultimediaDTO implements Serializable {
+
     private Long id;
     private String url;
     private String nombre;
     private String tipo;
-    
-    public MultimediaDTO(MultimediaEntity entity)
-    {
-        setId(entity.getId());
-        setNombre(entity.getNombre());
-        setUrl(entity.getUrl());
-        setTipo(entity.getTipo());
+
+    public MultimediaDTO(MultimediaEntity entity) {
+        if (entity != null) {
+            setId(entity.getId());
+            setNombre(entity.getNombre());
+            setUrl(entity.getUrl());
+            setTipo(entity.getTipo());
+        }
     }
-    
-    public MultimediaDTO()
-    {
+
+    public MultimediaDTO() {
         //Constructor
     }
-    
-    public MultimediaEntity toEntity()
-    {
+
+    public MultimediaEntity toEntity() {
         MultimediaEntity entity = new MultimediaEntity();
         entity.setId(this.getId());
         entity.setNombre(this.getNombre());
         entity.setTipo(this.getTipo());
         entity.setUrl(this.getUrl());
-        
+
         return entity;
     }
 

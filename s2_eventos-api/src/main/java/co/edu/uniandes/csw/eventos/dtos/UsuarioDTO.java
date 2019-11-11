@@ -11,18 +11,30 @@ import java.io.Serializable;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
+ * UsuarioDTO Objeto de transferencia de datos de Usuarios
  *
  * @author Daniel Betancurth Dorado
  */
 public class UsuarioDTO implements Serializable {
 
+    /**
+     * Atributo que modela el nombre del usuario
+     */
     private String nombre;
 
-    @PodamStrategyValue(CorreoStrategy.class)
+    /**
+     * Atributo que modela el correo de un usuario
+     */
     private String correo;
 
+    /**
+     * Atributo que modela la contraseña de un usuario
+     */
     private String contrasena;
 
+    /**
+     * Atributo que modela si un usuario asiste al evento
+     */
     private String asiste;
 
     private String codigoQR;
@@ -31,23 +43,23 @@ public class UsuarioDTO implements Serializable {
 
     private Long id;
 
-
     public UsuarioDTO(UsuarioEntity usuario) {
-        this.id = usuario.getId();
-        this.nombre = usuario.getNombre();
-        this.empresa = usuario.getEmpresa();
-        this.correo = usuario.getCorreo();
-        this.contrasena = usuario.getContrasena();
-        this.codigoQR = usuario.getCodigoQR();
-        this.asiste = usuario.getAsiste();
-
+        if (usuario != null) {
+            this.id = usuario.getId();
+            this.nombre = usuario.getNombre();
+            this.empresa = usuario.getEmpresa();
+            this.correo = usuario.getCorreo();
+            this.contrasena = usuario.getContrasena();
+            this.codigoQR = usuario.getCodigoQR();
+            this.asiste = usuario.getAsiste();
+        }
     }
 
     /**
      * Constructor vacio
      */
     public UsuarioDTO() {
-
+        //Constructor
     }
 
     public UsuarioEntity toEntity() {

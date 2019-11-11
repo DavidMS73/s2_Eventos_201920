@@ -14,8 +14,6 @@ import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Clase que extiende de {@link EventoDTO} para manejar las relaciones entre los
@@ -31,12 +29,24 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
      */
     private List<ActividadEventoDTO> actividades;
 
+    /**
+     * Lista de tipo LugarDTO que contiene los lugares que están asociados a un evento
+     */
     private List<LugarDTO> lugares;
 
+    /**
+     * Lista de tipo MemoriaDTO que contiene las memorias que están asociadas a un evento
+     */
     private List<MemoriaDTO> memorias;
 
+    /**
+     * Lista de tipo PatrocinioDTO que contiene los patrocinios que están asociados a un evento
+     */
     private List<PatrocinioDTO> patrocinios;
 
+    /**
+     * Lista de tipo UsuarioDTO que contiene los usuarios que están asociados a un evento
+     */
     private List<UsuarioDTO> inscritos;
 
     private List<UsuarioDTO> invitadosEspeciales;

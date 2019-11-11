@@ -7,10 +7,8 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
-import java.util.ArrayList;
 import javax.persistence.Entity;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -40,6 +38,20 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     private MultimediaEntity multimedia;
 
     /**
+     * @return the evento
+     */
+    public EventoEntity getEvento() {
+        return evento;
+    }
+
+    /**
+     * @param evento the evento to set
+     */
+    public void setEvento(EventoEntity evento) {
+        this.evento = evento;
+    }
+    
+    /**
      * @return the lugar
      */
     public String getLugar() {
@@ -65,21 +77,6 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    /**
-     * @return the evento
-     */
-    public EventoEntity getEvento() {
-        return evento;
-    }
-
-    /**
-     * @param evento the evento to set
-     */
-    public void setEvento(EventoEntity evento) {
-        this.evento = evento;
-
     }
 
     /**

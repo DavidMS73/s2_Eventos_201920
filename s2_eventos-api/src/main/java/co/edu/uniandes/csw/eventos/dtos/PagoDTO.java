@@ -20,8 +20,10 @@ public class PagoDTO implements Serializable {
     private Long id;
 
     public PagoDTO(PagoEntity entidad) {
-        setFecha(entidad.getFecha());
-        setId(entidad.getId());
+        if (entidad != null) {
+            setFecha(entidad.getFecha());
+            setId(entidad.getId());
+        }
     }
 
     public PagoDTO() {

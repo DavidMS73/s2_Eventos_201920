@@ -19,12 +19,14 @@ public class PseDTO implements Serializable {
     private Long id;
 
     public PseDTO(PseEntity entidad) {
-        setCorreo(entidad.getCorreo());
-        setId(entidad.getId());
+        if (entidad != null) {
+            setCorreo(entidad.getCorreo());
+            setId(entidad.getId());
+        }
     }
 
     public PseDTO() {
-
+        // Constructor
     }
 
     public PseEntity toEntity() {

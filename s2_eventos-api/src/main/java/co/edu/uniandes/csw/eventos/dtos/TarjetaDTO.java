@@ -28,20 +28,22 @@ public class TarjetaDTO implements Serializable {
     private UsuarioDTO usuario;
 
     public TarjetaDTO(TarjetaEntity newEntity) {
-        this.id = newEntity.getId();
-        this.tipoTarjeta = (newEntity.getTipoTarjeta());
-        this.numeroTarjeta = newEntity.getNumeroTarjeta();
-        this.expiracion = (newEntity.getExpiracion());
-        this.cw = (newEntity.getCw());
-        if (newEntity.getUsuario() != null) {
-            this.usuario = (new UsuarioDTO(newEntity.getUsuario()));
-        } else {
-            this.usuario = null;
+        if (newEntity != null) {
+            this.id = newEntity.getId();
+            this.tipoTarjeta = (newEntity.getTipoTarjeta());
+            this.numeroTarjeta = newEntity.getNumeroTarjeta();
+            this.expiracion = (newEntity.getExpiracion());
+            this.cw = (newEntity.getCw());
+            if (newEntity.getUsuario() != null) {
+                this.usuario = (new UsuarioDTO(newEntity.getUsuario()));
+            } else {
+                this.usuario = null;
+            }
         }
     }
 
     public TarjetaDTO() {
-
+        // Constructor
     }
 
     public TarjetaEntity toEntity() {

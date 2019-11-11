@@ -29,17 +29,18 @@ public class MemoriaDTO implements Serializable {
     private Date fecha;
 
     public MemoriaDTO(MemoriaEntity entidad) {
-        setId(entidad.getId());
-        setLugar(entidad.getLugar());
-        setFecha(entidad.getFecha());
-        if(entidad.getEvento()!=null){
-            this.evento = new EventoDTO(entidad.getEvento());
-        }
-        else{
-            this.evento=null;
+        if (entidad != null) {
+            setId(entidad.getId());
+            setLugar(entidad.getLugar());
+            setFecha(entidad.getFecha());
+            if (entidad.getEvento() != null) {
+                this.evento = new EventoDTO(entidad.getEvento());
+            } else {
+                this.evento = null;
+            }
         }
     }
-    
+
     public MemoriaDTO() {
         // Constructor
     }
@@ -49,8 +50,8 @@ public class MemoriaDTO implements Serializable {
         entidad.setId(this.getId());
         entidad.setLugar(this.getLugar());
         entidad.setFecha(this.getFecha());
-        if(this.evento !=null){
-           entidad.setEvento(this.evento.toEntity());
+        if (this.evento != null) {
+            entidad.setEvento(this.evento.toEntity());
         }
         return entidad;
     }
@@ -68,28 +69,28 @@ public class MemoriaDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     /**
      * @return the lugar
      */
     public String getLugar() {
         return lugar;
     }
-    
+
     /**
      * @param lugar the lugar to set
      */
     public void setLugar(String lugar) {
         this.lugar = lugar;
     }
-    
+
     /**
      * @return the fecha
      */
     public Date getFecha() {
         return fecha;
     }
-    
+
     /**
      * @param fecha the fecha to set
      */
