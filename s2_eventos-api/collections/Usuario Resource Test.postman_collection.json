@@ -181,7 +181,7 @@
 			"response": []
 		},
 		{
-			"name": "Obtener un usuario que no existe Copy",
+			"name": "Obtener un usuario que no existe",
 			"event": [
 				{
 					"listen": "test",
@@ -212,7 +212,7 @@
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un usuario que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "Consulta un usuario que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		},

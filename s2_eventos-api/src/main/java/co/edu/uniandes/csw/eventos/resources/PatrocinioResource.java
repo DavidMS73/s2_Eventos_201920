@@ -85,7 +85,7 @@ public class PatrocinioResource {
         LOGGER.log(Level.INFO, "PatrocinioResource updatePatrocinio: input: patrociniosId: {0} , patrocinio: {1}", new Object[]{patrociniosId, patrocinio});
         patrocinio.setId(patrociniosId);
         if (logic.getPatrocinio(patrociniosId) == null) {
-            throw new WebApplicationException("El recurso /authors/" + patrociniosId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
         }
         PatrocinioDTO detailDTO = new PatrocinioDTO(logic.updatePatrocinio(patrociniosId, patrocinio.toEntity()));
         LOGGER.log(Level.INFO, "PatrocinioResource updatePatrocinio: output: {0}", detailDTO);

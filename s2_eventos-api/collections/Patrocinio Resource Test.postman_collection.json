@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ceedddaa-ed1b-4648-93fd-589a79c23caa",
+		"_postman_id": "5b818fb0-b240-4495-9fc7-12a02bfc7a47",
 		"name": "Patrocinio Resource Test",
 		"description": "# Introduction\nWhat does your API do?\nRevisa la implementacion del recurso de Patrocinio\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -35,7 +35,59 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"empresa\": \"Choripaco\",\n\"tipo\":\"platinum\"\n}",
+					"raw": "{\n\t\"empresa\": \"Choripaco\",\n\t\"tipo\":\"silver\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear patrocinio 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5e033681-35b8-473b-bb78-625eeadeb5f1",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"empresa\": \"Los Alpes\",\n\t\"tipo\":\"gold\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -78,7 +130,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/1",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -88,7 +140,7 @@
 						"s2_eventos-api",
 						"api",
 						"patrocinios",
-						"1"
+						"{{new_id_a}}"
 					]
 				}
 			},
@@ -130,6 +182,42 @@
 			"response": []
 		},
 		{
+			"name": "Obtener un patrocinio que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39dc353d-ae0a-41c6-99a5-89218360c4d3",
+						"exec": [
+							"tests[\"No se deberia obtener un patrocinio con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /patrocinios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"0"
+					]
+				},
+				"description": "Consulta un patrocinio que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /patrocinios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
 			"name": "Editar un patrocinio",
 			"event": [
 				{
@@ -157,7 +245,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"empresa\": \"Haceb\",\n\"tipo\":\"platinum\"\n}",
+					"raw": "{\n\t\"empresa\": \"Haceb\",\n\t\"tipo\":\"silver\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -165,7 +253,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/3",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -175,9 +263,54 @@
 						"s2_eventos-api",
 						"api",
 						"patrocinios",
-						"3"
+						"{{new_id_a}}"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar un patrocinio que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "15a70f62-2a66-469a-9ca6-d1125b0c8774",
+						"exec": [
+							"tests[\"No se deberia actualizar un patrocinio con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /patrocinios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"empresa\": \"Haceb\",\n\t\"tipo\":\"silver\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"0"
+					]
+				},
+				"description": "Para la prueba se verifica que se genera el error y el mensaje \"El recurso /patrocinios/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
 			},
 			"response": []
 		},
@@ -199,7 +332,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/9",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -209,9 +342,83 @@
 						"s2_eventos-api",
 						"api",
 						"patrocinios",
-						"9"
+						"{{new_id_a}}"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un patrocinio 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6905b6e4-1d83-4373-a183-c5ba738a1845",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_a2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"{{new_id_a2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un patrocinio que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c0905623-e468-4838-b24e-56e8402ea65c",
+						"exec": [
+							"tests[\"No se deberia borrar un patrocinio con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /patrocinios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_eventos-api",
+						"api",
+						"patrocinios",
+						"0"
+					]
+				},
+				"description": "Borra un patrocinio  que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /patrocinios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		}
