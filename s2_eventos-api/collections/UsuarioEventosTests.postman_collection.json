@@ -337,7 +337,7 @@
 					"script": {
 						"id": "10a04ef5-aca6-43ae-bd0a-b1006aa19487",
 						"exec": [
-							"tests[\"No se puede obtener un book que no esta asociado\"] = responseCode.code === 412;",
+							"tests[\"No se puede obtener un evento que no está asociado\"] = responseCode.code === 412;",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El evento no está asociado al usuario\");"
 						],
 						"type": "text/javascript"

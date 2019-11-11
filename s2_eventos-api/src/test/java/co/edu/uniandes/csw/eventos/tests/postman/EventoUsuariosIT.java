@@ -17,14 +17,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Pruebas de integracion del recurso de UsuarioEventos.
+ * Pruebas de integracion del recurso de EventoUsuarios.
  *
  * @author Germán David Martínez Solano
  */
 @RunWith(Arquillian.class)
-public class UsuarioEventosIT {
+public class EventoUsuariosIT {
 
-    private static final String COLLECTION = "UsuarioEventosTests.postman_collection";
+    private static final String COLLECTION = "EventoUsuariosTests.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
