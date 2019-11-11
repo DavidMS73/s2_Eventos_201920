@@ -64,7 +64,7 @@ public class EventoUsuariosResource {
     public UsuarioDetailDTO addUsuario(@PathParam("eventosId") Long eventosId, @PathParam("usuariosId") Long usuariosId) {
         LOGGER.log(Level.INFO, "EventoUsuariosResource addUsuario: input: eventosId {0} , usuariosId {1}", new Object[]{eventosId, usuariosId});
         if (usuarioLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /authors/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(eventoUsuarioLogic.addUsuario(eventosId, usuariosId));
         LOGGER.log(Level.INFO, "EventoUsuariosResource addUsuario: output: {0}", detailDTO);
