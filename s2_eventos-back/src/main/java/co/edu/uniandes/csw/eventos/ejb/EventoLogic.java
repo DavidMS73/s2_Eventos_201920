@@ -42,9 +42,6 @@ public class EventoLogic {
     @Inject
     private EventoPersistence persistence;
 
-    @Inject
-    private UsuarioPersistence up;
-
     /**
      * Fecha 7 días adelante para comparar con la del evento
      *
@@ -178,13 +175,9 @@ public class EventoLogic {
         if (patrocinios != null && !patrocinios.isEmpty()) {
             throw new BusinessLogicException(errorMeg + eventosId + " porque tiene patrocinios asociadas");
         }
-        List<UsuarioEntity> inscritos = getEvento(eventosId).getInscritos();
-        if (inscritos != null && !inscritos.isEmpty()) {
-            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene inscritos asociados");
-        }
-        List<UsuarioEntity> invitadosEspeciales = getEvento(eventosId).getInvitadosEspeciales();
-        if (invitadosEspeciales != null && !invitadosEspeciales.isEmpty()) {
-            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene invitados especiales asociados");
+        List<UsuarioEntity> usuarios = getEvento(eventosId).getUsuarios();
+        if (usuarios != null && !usuarios.isEmpty()) {
+            throw new BusinessLogicException(errorMeg + eventosId + " porque tiene usuarios asociados");
         }
         List<ActividadEventoEntity> actividadesEvento = getEvento(eventosId).getActividadesEvento();
         if (actividadesEvento != null && !actividadesEvento.isEmpty()) {

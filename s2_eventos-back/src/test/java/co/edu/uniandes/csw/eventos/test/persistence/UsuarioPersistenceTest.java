@@ -37,9 +37,6 @@ public class UsuarioPersistenceTest {
     @Inject
     UsuarioPersistence up;
 
-    @Inject
-    EventoPersistence ep;
-
     @PersistenceContext
     EntityManager em;
 
@@ -77,19 +74,12 @@ public class UsuarioPersistenceTest {
 
     private void clearData() {
         em.createQuery("delete from UsuarioEntity").executeUpdate();
-        em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
-            EventoEntity eventoEntity = factory.manufacturePojo(EventoEntity.class);
-
-            eventoEntity.setResponsable(entity);
-            entity.setEvento(eventoEntity);
-
-            em.persist(eventoEntity);
             em.persist(entity);
             data.add(entity);
         }
@@ -99,18 +89,18 @@ public class UsuarioPersistenceTest {
     public void createUsuarioTest() {
         PodamFactory factory = new PodamFactoryImpl();
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        EventoEntity newEventoEntity = factory.manufacturePojo(EventoEntity.class);
-
-        newEventoEntity = ep.create(newEventoEntity);
-        newEntity.setEvento(newEventoEntity);
-
         UsuarioEntity result = up.create(newEntity);
 
         Assert.assertNotNull(result);
 
         UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
 
+        Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getCorreo(), entity.getCorreo());
+        Assert.assertEquals(newEntity.getContrasena(), entity.getContrasena());
+        Assert.assertEquals(newEntity.getCodigoQR(), entity.getCodigoQR());
+        Assert.assertEquals(newEntity.getTipo(), entity.getTipo());
     }
 
     @Test
@@ -133,7 +123,13 @@ public class UsuarioPersistenceTest {
         UsuarioEntity entity = data.get(0);
         UsuarioEntity newEntity = up.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getCorreo(), entity.getCorreo());
+        Assert.assertEquals(newEntity.getContrasena(), entity.getContrasena());
+        Assert.assertEquals(newEntity.getCodigoQR(), entity.getCodigoQR());
+        Assert.assertEquals(newEntity.getTipo(), entity.getTipo());
     }
 
     @Test
@@ -155,8 +151,13 @@ public class UsuarioPersistenceTest {
         up.update(newEntity);
 
         UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
-
+        
+        Assert.assertEquals(newEntity.getId(), resp.getId());
         Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getCorreo(), resp.getCorreo());
+        Assert.assertEquals(newEntity.getContrasena(), resp.getContrasena());
+        Assert.assertEquals(newEntity.getCodigoQR(), resp.getCodigoQR());
+        Assert.assertEquals(newEntity.getTipo(), resp.getTipo());
     }
 
     @Test

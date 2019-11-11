@@ -148,15 +148,6 @@ public class EventoLogicTest {
             em.persist(actividades);
             actividadesData.add(actividades);
         }
-
-        UsuarioEntity responsable = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity organizador = factory.manufacturePojo(UsuarioEntity.class);
-        em.persist(responsable);
-        em.persist(organizador);
-        responsable.setEvento(data.get(2));
-        data.get(2).setResponsable(responsable);
-        data.get(2).setOrganizador(organizador);
-
     }
 
     /**

@@ -7,51 +7,66 @@ package co.edu.uniandes.csw.eventos.entities;
 
 import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
+ * Entidad usuario
  *
  * @author Daniel Betancurth Dorado
  */
 @Entity
 public class UsuarioEntity extends BaseEntity implements Serializable {
 
+    /**
+     * Atributo que modela el nombre del usuario
+     */
     private String nombre;
 
+    /**
+     * Atributo que modela el correo del usuario
+     */
     @PodamStrategyValue(CorreoStrategy.class)
     private String correo;
 
+    /**
+     * Atributo que modela la contraseña del usuario
+     */
     private String contrasena;
 
-    private String asiste;
-
+    /**
+     * Atributo que modela el códigoQR del usuario
+     */
     private String codigoQR;
 
-    private String empresa;
+    /**
+     * Atributo que modela el tipo de usuario
+     */
+    private String tipo;
 
+    /**
+     * Atributo que modela la relación Usuario - Tarjetas
+     */
     @PodamExclude
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<TarjetaEntity> tarjetas;
 
+    /**
+     * Atributo que modela la relación Usuarios - Eventos
+     */
     @PodamExclude
-    @OneToOne
-    private EventoEntity evento;
+    @ManyToMany(mappedBy = "usuarios")
+    private List<EventoEntity> eventos = new ArrayList<>();
 
-    @PodamExclude
-    @ManyToMany
-    private List<EventoEntity> eventosInscritos;
-
-    @PodamExclude
-    @ManyToMany
-    private List<EventoEntity> eventosInvitadosEspeciales;
-
+    /**
+     * Constructor por defecto
+     */
     public UsuarioEntity() {
         //Constructor
     }
@@ -99,20 +114,6 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the asiste
-     */
-    public String getAsiste() {
-        return asiste;
-    }
-
-    /**
-     * @param asiste the asiste to set
-     */
-    public void setAsiste(String asiste) {
-        this.asiste = asiste;
-    }
-
-    /**
      * @return the codigoQR
      */
     public String getCodigoQR() {
@@ -127,66 +128,44 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the empresa
+     * @return the eventos
      */
-    public String getEmpresa() {
-        return empresa;
+    public List<EventoEntity> getEventos() {
+        return eventos;
     }
 
     /**
-     * @param empresa the empresa to set
+     * @param eventos the eventos to set
      */
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
+    public void setEventos(List<EventoEntity> eventos) {
+        this.eventos = eventos;
     }
 
     /**
-     * @return the eventoResponsable
+     * @return the tarjetas
      */
-    public EventoEntity getEvento() {
-        return evento;
-    }
-
-    /**
-     * @param eventoResponsable the eventoResponsable to set
-     */
-    public void setEvento(EventoEntity eventoResponsable) {
-        this.evento = eventoResponsable;
-    }
-
-    /**
-     * @return the eventosInscritos
-     */
-    public List<EventoEntity> getEventosInscritos() {
-        return eventosInscritos;
-    }
-
-    /**
-     * @param eventosInscritos the eventosInscritos to set
-     */
-    public void setEventosInscritos(List<EventoEntity> eventosInscritos) {
-        this.eventosInscritos = eventosInscritos;
-    }
-
-    /**
-     * @return the eventosInvitadosEspeciales
-     */
-    public List<EventoEntity> getEventosInvitadosEspeciales() {
-        return eventosInvitadosEspeciales;
-    }
-
-    /**
-     * @param eventosInvitadosEspeciales the eventosInvitadosEspeciales to set
-     */
-    public void setEventosInvitadosEspeciales(List<EventoEntity> eventosInvitadosEspeciales) {
-        this.eventosInvitadosEspeciales = eventosInvitadosEspeciales;
-    }
-
     public List<TarjetaEntity> getTarjetas() {
         return tarjetas;
     }
 
-    public void setTarjeta(List<TarjetaEntity> tarjetas) {
+    /**
+     * @param tarjetas the tarjetas to set
+     */
+    public void setTarjetas(List<TarjetaEntity> tarjetas) {
         this.tarjetas = tarjetas;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

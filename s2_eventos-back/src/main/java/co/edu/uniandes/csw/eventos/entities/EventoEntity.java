@@ -67,32 +67,11 @@ public class EventoEntity extends BaseEntity implements Serializable {
     private List<PatrocinioEntity> patrocinios = new ArrayList<>();
 
     /**
-     * Atributo que modela los responsables
+     * Atributo que modela los usuarios
      */
     @PodamExclude
-    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
-    private UsuarioEntity responsable;
-
-    /**
-     * Atributo que modela los organizadores
-     */
-    @PodamExclude
-    @OneToOne(mappedBy = "evento", fetch = FetchType.LAZY)
-    private UsuarioEntity organizador;
-
-    /**
-     * Atributo que modela los inscritos
-     */
-    @PodamExclude
-    @ManyToMany(mappedBy = "eventosInscritos", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<UsuarioEntity> inscritos = new ArrayList<>();
-
-    /**
-     * Atributo que modela los invitados especiales
-     */
-    @PodamExclude
-    @ManyToMany(mappedBy = "eventosInvitadosEspeciales", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<UsuarioEntity> invitadosEspeciales = new ArrayList<>();
+    @ManyToMany
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
 
     /**
      * Atributo que modela el nombre del evento
@@ -284,20 +263,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the responsable
-     */
-    public UsuarioEntity getResponsable() {
-        return responsable;
-    }
-
-    /**
-     * @param responsable the responsable to set
-     */
-    public void setResponsable(UsuarioEntity responsable) {
-        this.responsable = responsable;
-    }
-
-    /**
      * @return the memorias
      */
     public List<MemoriaEntity> getMemorias() {
@@ -330,20 +295,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the organizador
-     */
-    public UsuarioEntity getOrganizador() {
-        return organizador;
-    }
-
-    /**
-     * @param organizador the organizador to set
-     */
-    public void setOrganizador(UsuarioEntity organizador) {
-        this.organizador = organizador;
-    }
-
-    /**
      * @return the pagos
      */
     public List<PagoEntity> getPagos() {
@@ -358,31 +309,17 @@ public class EventoEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the inscritos
+     * @return the usuarios
      */
-    public List<UsuarioEntity> getInscritos() {
-        return inscritos;
+    public List<UsuarioEntity> getUsuarios() {
+        return usuarios;
     }
 
     /**
-     * @param inscritos the inscritos to set
+     * @param usuarios the usuarios to set
      */
-    public void setInscritos(List<UsuarioEntity> inscritos) {
-        this.inscritos = inscritos;
-    }
-
-    /**
-     * @return the invitadosEspeciales
-     */
-    public List<UsuarioEntity> getInvitadosEspeciales() {
-        return invitadosEspeciales;
-    }
-
-    /**
-     * @param invitadosEspeciales the invitadosEspeciales to set
-     */
-    public void setInvitadosEspeciales(List<UsuarioEntity> invitadosEspeciales) {
-        this.invitadosEspeciales = invitadosEspeciales;
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
+        this.usuarios = usuarios;
     }
 
 }

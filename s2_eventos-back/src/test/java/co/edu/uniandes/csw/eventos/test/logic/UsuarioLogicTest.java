@@ -41,9 +41,6 @@ public class UsuarioLogicTest {
     private UsuarioLogic usuarioLogic;
 
     @Inject
-    private EventoLogic eventoLogic;
-
-    @Inject
     private UserTransaction utx;
 
     @PersistenceContext
@@ -51,13 +48,10 @@ public class UsuarioLogicTest {
 
     private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
 
-    private List<EventoEntity> eventoData = new ArrayList<>();
-
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(UsuarioEntity.class.getPackage())
-                .addPackage(EventoEntity.class.getPackage())
                 .addPackage(UsuarioLogic.class.getPackage())
                 .addPackage(UsuarioPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
@@ -88,6 +82,7 @@ public class UsuarioLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
+        em.createQuery("delete from EventoEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
     }
 
@@ -98,14 +93,29 @@ public class UsuarioLogicTest {
     private void insertData() {
         for (int i = 0; i < 3; i++) {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
-            EventoEntity eventoEntity = factory.manufacturePojo(EventoEntity.class);
-            em.persist(eventoEntity);
-            entity.setEvento(eventoEntity);
-            eventoEntity.setResponsable(entity);
             em.persist(entity);
+            entity.setEventos(new ArrayList<>());
             data.add(entity);
-            eventoData.add(eventoEntity);
         }
+
+        UsuarioEntity usuario = data.get(2);
+        EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+        entity.getUsuarios().add(usuario);
+        em.persist(entity);
+        usuario.getEventos().add(entity);
+    }
+
+    @Test
+    public void createUsuarioTest() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
+        Assert.assertNotNull(result);
+        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
+        Assert.assertEquals(entity.getNombre(), result.getNombre());
+        Assert.assertEquals(entity.getCorreo(), result.getCorreo());
+        Assert.assertEquals(entity.getContrasena(), result.getContrasena());
+        Assert.assertEquals(entity.getCodigoQR(), result.getCodigoQR());
+        Assert.assertEquals(entity.getTipo(), result.getTipo());
     }
 
     /**
@@ -124,27 +134,6 @@ public class UsuarioLogicTest {
             }
             Assert.assertTrue(found);
         }
-    }
-
-    @Test
-    public void createUsuarioTest() throws BusinessLogicException {
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        EventoEntity newEventoEntity = factory.manufacturePojo(EventoEntity.class);
-
-        newEventoEntity = eventoLogic.createEvento(newEventoEntity);
-        newEntity.setEvento(newEventoEntity);
-
-        UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
-        Assert.assertNotNull(result);
-
-        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
-        Assert.assertEquals(entity.getNombre(), result.getNombre());
-        Assert.assertEquals(entity.getEmpresa(), result.getEmpresa());
-        Assert.assertEquals(entity.getCorreo(), result.getCorreo());
-        Assert.assertEquals(entity.getContrasena(), result.getContrasena());
-        Assert.assertEquals(entity.getCodigoQR(), result.getCodigoQR());
-        Assert.assertEquals(entity.getAsiste(), result.getAsiste());
-
     }
 
     @Test(expected = BusinessLogicException.class)
@@ -177,14 +166,6 @@ public class UsuarioLogicTest {
     }
 
     @Test(expected = BusinessLogicException.class)
-    public void createUsuarioAsisteNull() throws BusinessLogicException {
-
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        newEntity.setAsiste(null);
-        usuarioLogic.createUsuario(newEntity);
-    }
-
-    @Test(expected = BusinessLogicException.class)
     public void createUsuarioCodigoQRNull() throws BusinessLogicException {
 
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
@@ -193,9 +174,9 @@ public class UsuarioLogicTest {
     }
 
     @Test(expected = BusinessLogicException.class)
-    public void createUsuarioEmpresaNull() throws BusinessLogicException {
+    public void createUsuarioTipoNull() throws BusinessLogicException {
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        newEntity.setEmpresa(null);
+        newEntity.setTipo(null);
         usuarioLogic.createUsuario(newEntity);
     }
 
@@ -213,6 +194,9 @@ public class UsuarioLogicTest {
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
         Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
         Assert.assertEquals(pojoEntity.getCorreo(), resp.getCorreo());
+        Assert.assertEquals(pojoEntity.getContrasena(), resp.getContrasena());
+        Assert.assertEquals(pojoEntity.getCodigoQR(), resp.getCodigoQR());
+        Assert.assertEquals(pojoEntity.getTipo(), resp.getTipo());
     }
 
     @Test
@@ -221,5 +205,15 @@ public class UsuarioLogicTest {
         usuarioLogic.deleteUsuario(entity.getId());
         UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
         Assert.assertNull(deleted);
+    }
+    
+    /**
+     * Prueba para eliminar un Usuario asociado a un evento
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteUsuarioConEventoTest() throws BusinessLogicException {
+        usuarioLogic.deleteUsuario(data.get(2).getId());
     }
 }

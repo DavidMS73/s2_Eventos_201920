@@ -31,22 +31,19 @@ public class UsuarioLogic {
     public UsuarioEntity createUsuario(UsuarioEntity usuario) throws BusinessLogicException {
         LOGGER.info("Inicia proceso de creación de un usuario");
         if (usuario.getNombre() == null) {
-            throw new BusinessLogicException("El nombre del usuario esta vacio");
-        }
-        if (usuario.getEmpresa() == null) {
-            throw new BusinessLogicException("El nombre de la empresa del usuario esta vacio");
+            throw new BusinessLogicException("El nombre del usuario esta vacío");
         }
         if (usuario.getCorreo() == null) {
-            throw new BusinessLogicException("El correo del usuario esta vacio");
+            throw new BusinessLogicException("El correo del usuario esta vacío");
         }
         if (usuario.getContrasena() == null) {
-            throw new BusinessLogicException("La contraseña del usuario esta vacia");
+            throw new BusinessLogicException("La contraseña del usuario esta vacía");
         }
         if (usuario.getCodigoQR() == null) {
             throw new BusinessLogicException("El codigo QR del usuario es nulo");
         }
-        if (usuario.getAsiste() == null) {
-            throw new BusinessLogicException("La informacion de asistencia del usuario es nula");
+        if (usuario.getTipo() == null) {
+            throw new BusinessLogicException("El tipo del usuario es nulo");
         }
         if (usuario.getCorreo().contains("@uniandes.edu.co") == false) {
             throw new BusinessLogicException("El correo del usuario no es valido");
@@ -55,6 +52,7 @@ public class UsuarioLogic {
             throw new BusinessLogicException("El correo del usuario ya existe");
         }
         usuario = persistence.create(usuario);
+        LOGGER.log(Level.INFO, "Termina proceso de creación del usuario");
         return usuario;
     }
 
@@ -84,16 +82,12 @@ public class UsuarioLogic {
 
     public void deleteUsuario(Long usuariosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el evento con id = {0}", usuariosId);
-        List<EventoEntity> inscritos = getUsuario(usuariosId).getEventosInscritos();
-        if (inscritos != null && !inscritos.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el usuario con id = " + usuariosId + " porque tiene eventos inscritos asociados");
-        }
-        List<EventoEntity> iEspeciales = getUsuario(usuariosId).getEventosInvitadosEspeciales();
-        if (iEspeciales != null && !iEspeciales.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el usuario con id = " + usuariosId + " porque tiene eventos como invitado especial asociados");
+        List<EventoEntity> eventos = getUsuario(usuariosId).getEventos();
+        if (eventos != null && !eventos.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el usuario con id = " + usuariosId + " porque tiene eventos asociados");
         }
         List<TarjetaEntity> tarjetas = getUsuario(usuariosId).getTarjetas();
-        if(tarjetas != null && !tarjetas.isEmpty()){
+        if (tarjetas != null && !tarjetas.isEmpty()) {
             throw new BusinessLogicException("No se puede borrar el usuario con id  = " + usuariosId + " porque tiene tarjetas registradas.");
         }
         persistence.delete(usuariosId);

@@ -33,25 +33,28 @@ public class UsuarioDTO implements Serializable {
     private String contrasena;
 
     /**
-     * Atributo que modela si un usuario asiste al evento
+     * Atributo que modela el tipo de usuario
      */
-    private String asiste;
+    private String tipo;
 
+    /**
+     * Artibuto que modela el código QR del usuario
+     */
     private String codigoQR;
 
-    private String empresa;
-
+    /**
+     * Atributo que modela el id del usuario
+     */
     private Long id;
 
     public UsuarioDTO(UsuarioEntity usuario) {
         if (usuario != null) {
             setId(usuario.getId());
             setNombre(usuario.getNombre());
-            setEmpresa(usuario.getEmpresa());
             setCorreo(usuario.getCorreo());
             setContrasena(usuario.getContrasena());
             setCodigoQR(usuario.getCodigoQR());
-            setAsiste(usuario.getAsiste());
+            setTipo(usuario.getTipo());
         }
     }
 
@@ -65,11 +68,10 @@ public class UsuarioDTO implements Serializable {
     public UsuarioEntity toEntity() {
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setId(this.getId());
-        usuario.setAsiste(this.getAsiste());
+        usuario.setTipo(this.getTipo());
         usuario.setCodigoQR(this.getCodigoQR());
         usuario.setContrasena(this.getContrasena());
         usuario.setCorreo(this.getCorreo());
-        usuario.setEmpresa(this.getEmpresa());
         usuario.setNombre(this.getNombre());
         return usuario;
     }
@@ -117,20 +119,6 @@ public class UsuarioDTO implements Serializable {
     }
 
     /**
-     * @return the asiste
-     */
-    public String getAsiste() {
-        return asiste;
-    }
-
-    /**
-     * @param asiste the asiste to set
-     */
-    public void setAsiste(String asiste) {
-        this.asiste = asiste;
-    }
-
-    /**
      * @return the codigoQR
      */
     public String getCodigoQR() {
@@ -145,20 +133,6 @@ public class UsuarioDTO implements Serializable {
     }
 
     /**
-     * @return the empresa
-     */
-    public String getEmpresa() {
-        return empresa;
-    }
-
-    /**
-     * @param empresa the empresa to set
-     */
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
-    }
-
-    /**
      * @return the id
      */
     public Long getId() {
@@ -170,5 +144,19 @@ public class UsuarioDTO implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

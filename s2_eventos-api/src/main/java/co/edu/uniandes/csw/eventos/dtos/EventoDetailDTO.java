@@ -30,26 +30,28 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
     private List<ActividadEventoDTO> actividades;
 
     /**
-     * Lista de tipo LugarDTO que contiene los lugares que están asociados a un evento
+     * Lista de tipo LugarDTO que contiene los lugares que están asociados a un
+     * evento
      */
     private List<LugarDTO> lugares;
 
     /**
-     * Lista de tipo MemoriaDTO que contiene las memorias que están asociadas a un evento
+     * Lista de tipo MemoriaDTO que contiene las memorias que están asociadas a
+     * un evento
      */
     private List<MemoriaDTO> memorias;
 
     /**
-     * Lista de tipo PatrocinioDTO que contiene los patrocinios que están asociados a un evento
+     * Lista de tipo PatrocinioDTO que contiene los patrocinios que están
+     * asociados a un evento
      */
     private List<PatrocinioDTO> patrocinios;
 
     /**
-     * Lista de tipo UsuarioDTO que contiene los usuarios que están asociados a un evento
+     * Lista de tipo UsuarioDTO que contiene los usuarios que están asociados a
+     * un evento
      */
-    private List<UsuarioDTO> inscritos;
-
-    private List<UsuarioDTO> invitadosEspeciales;
+    private List<UsuarioDTO> usuarios;
 
     /**
      * Constructor por defecto
@@ -90,16 +92,10 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
                     patrocinios.add(new PatrocinioDTO(patrocinio));
                 }
             }
-            if (eventoEntity.getInscritos() != null) {
-                inscritos = new ArrayList<>();
-                for (UsuarioEntity inscrito : eventoEntity.getInscritos()) {
-                    inscritos.add(new UsuarioDTO(inscrito));
-                }
-            }
-            if (eventoEntity.getInvitadosEspeciales() != null) {
-                invitadosEspeciales = new ArrayList<>();
-                for (UsuarioEntity invitadoE : eventoEntity.getInscritos()) {
-                    invitadosEspeciales.add(new UsuarioDTO(invitadoE));
+            if (eventoEntity.getUsuarios() != null) {
+                usuarios = new ArrayList<>();
+                for (UsuarioEntity invitadoE : eventoEntity.getUsuarios()) {
+                    usuarios.add(new UsuarioDTO(invitadoE));
                 }
             }
         }
@@ -142,19 +138,12 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
             }
             entidad.setPatrocinios(patrociniosEntity);
         }
-        if (getInscritos() != null) {
-            List<UsuarioEntity> ins = new ArrayList<>();
-            for (UsuarioDTO pat : getInscritos()) {
-                ins.add(pat.toEntity());
+        if (getUsuarios() != null) {
+            List<UsuarioEntity> usuariosEntity = new ArrayList<>();
+            for (UsuarioDTO dtoUsuario : getUsuarios()) {
+                usuariosEntity.add(dtoUsuario.toEntity());
             }
-            entidad.setInscritos(ins);
-        }
-        if (getInvitadosEspeciales() != null) {
-            List<UsuarioEntity> invs = new ArrayList<>();
-            for (UsuarioDTO pat : getInvitadosEspeciales()) {
-                invs.add(pat.toEntity());
-            }
-            entidad.setInvitadosEspeciales(invs);
+            entidad.setUsuarios(usuariosEntity);
         }
         return entidad;
     }
@@ -216,30 +205,17 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
     }
 
     /**
-     * @return the inscritos
+     * @return the usuarios
      */
-    public List<UsuarioDTO> getInscritos() {
-        return inscritos;
+    public List<UsuarioDTO> getUsuarios() {
+        return usuarios;
     }
 
     /**
-     * @param inscritos the inscritos to set
+     * @param usuarios the usuarios to set
      */
-    public void setInscritos(List<UsuarioDTO> inscritos) {
-        this.inscritos = inscritos;
+    public void setUsuarios(List<UsuarioDTO> usuarios) {
+        this.usuarios = usuarios;
     }
 
-    /**
-     * @return the invitadosEspeciales
-     */
-    public List<UsuarioDTO> getInvitadosEspeciales() {
-        return invitadosEspeciales;
-    }
-
-    /**
-     * @param invitadosEspeciales the invitadosEspeciales to set
-     */
-    public void setInvitadosEspeciales(List<UsuarioDTO> invitadosEspeciales) {
-        this.invitadosEspeciales = invitadosEspeciales;
-    }
 }
