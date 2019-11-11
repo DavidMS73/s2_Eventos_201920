@@ -54,8 +54,8 @@ public class TarjetaDTO implements Serializable {
         newEntity.setTipoTarjeta(this.getTipoTarjeta());
         newEntity.setExpiracion(this.getExpiracion());
         newEntity.setCw(this.getCw());
-        if (this.usuario != null) {
-            newEntity.setUsuario(this.usuario.toEntity());
+        if (this.getUsuario() != null) {
+            newEntity.setUsuario(this.getUsuario().toEntity());
         }
 
         return newEntity;

@@ -74,15 +74,15 @@ public class EventoDTO implements Serializable {
      */
     public EventoDTO(EventoEntity entidad) {
         if (entidad != null) {
-            this.id = entidad.getId();
-            this.nombre = entidad.getNombre();
-            this.categoria = entidad.getCategoria();
-            this.descripcion = entidad.getDescripcion();
-            this.fechaInicio = entidad.getFechaInicio();
-            this.fechaFin = entidad.getFechaFin();
-            this.valor = entidad.getValor();
-            this.detallesAdicionales = entidad.getDetallesAdicionales();
-            this.entradasRestantes = entidad.getEntradasRestantes();
+            setId(entidad.getId());
+            setNombre(entidad.getNombre());
+            setCategoria(entidad.getCategoria());
+            setDescripcion(entidad.getDescripcion());
+            setFechaInicio(entidad.getFechaInicio());
+            setFechaFin(entidad.getFechaFin());
+            setValor(entidad.getValor());
+            setDetallesAdicionales(entidad.getDetallesAdicionales());
+            setEntradasRestantes(entidad.getEntradasRestantes());
         }
     }
 
@@ -100,15 +100,15 @@ public class EventoDTO implements Serializable {
      */
     public EventoEntity toEntity() {
         EventoEntity entidad = new EventoEntity();
-        entidad.setId(this.id);
-        entidad.setNombre(this.nombre);
-        entidad.setCategoria(this.categoria);
-        entidad.setDescripcion(this.descripcion);
-        entidad.setFechaInicio(this.fechaInicio);
-        entidad.setFechaFin(this.fechaFin);
-        entidad.setValor(this.valor);
-        entidad.setDetallesAdicionales(this.detallesAdicionales);
-        entidad.setEntradasRestantes(this.entradasRestantes);
+        entidad.setId(this.getId());
+        entidad.setNombre(this.getNombre());
+        entidad.setCategoria(this.getCategoria());
+        entidad.setDescripcion(this.getDescripcion());
+        entidad.setFechaInicio(this.getFechaInicio());
+        entidad.setFechaFin(this.getFechaFin());
+        entidad.setValor(this.getValor());
+        entidad.setDetallesAdicionales(this.getDetallesAdicionales());
+        entidad.setEntradasRestantes(this.getEntradasRestantes());
 
         return entidad;
     }

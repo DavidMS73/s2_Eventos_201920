@@ -63,16 +63,16 @@ public class ActividadEventoDTO implements Serializable {
      */
     public ActividadEventoDTO(ActividadEventoEntity entidad) {
         if (entidad != null) {
-            this.id = entidad.getId();
-            this.nombre = entidad.getNombre();
-            this.descripcion = entidad.getDescripcion();
-            this.horaInicio = entidad.getHoraInicio();
-            this.horaFin = entidad.getHoraFin();
-            this.fecha = entidad.getFecha();
+            setId(entidad.getId());
+            setNombre(entidad.getNombre());
+            setDescripcion(entidad.getDescripcion());
+            setHoraInicio(entidad.getHoraInicio());
+            setHoraFin(entidad.getHoraFin());
+            setFecha(entidad.getFecha());
             if (entidad.getEvento() != null) {
-                this.evento = new EventoDTO(entidad.getEvento());
+                this.setEvento(new EventoDTO(entidad.getEvento()));
             } else {
-                this.evento = null;
+                this.setEvento(null);
             }
         }
     }
@@ -86,18 +86,19 @@ public class ActividadEventoDTO implements Serializable {
 
     /**
      * Método para transformar el DTO a una entidad
+     *
      * @return entidad de la actividad del evento
      */
     public ActividadEventoEntity toEntity() {
         ActividadEventoEntity entidad = new ActividadEventoEntity();
-        entidad.setId(this.id);
-        entidad.setNombre(this.nombre);
-        entidad.setDescripcion(this.descripcion);
-        entidad.setHoraInicio(this.horaInicio);
-        entidad.setHoraFin(this.horaFin);
-        entidad.setFecha(this.fecha);
-        if (this.evento != null) {
-            entidad.setEvento(this.evento.toEntity());
+        entidad.setId(this.getId());
+        entidad.setNombre(this.getNombre());
+        entidad.setDescripcion(this.getDescripcion());
+        entidad.setHoraInicio(this.getHoraInicio());
+        entidad.setHoraFin(this.getHoraFin());
+        entidad.setFecha(this.getFecha());
+        if (this.getEvento() != null) {
+            entidad.setEvento(this.getEvento().toEntity());
         }
         return entidad;
     }

@@ -39,9 +39,9 @@ public class PatrocinioDTO implements Serializable {
      */
     public PatrocinioDTO(PatrocinioEntity p) {
         if (p != null) {
-            this.empresa = p.getEmpresa();
-            this.tipo = p.getTipo();
-            this.id = p.getId();
+            setEmpresa(p.getEmpresa());
+            setTipo(p.getTipo());
+            setId(p.getId());
         }
     }
 
@@ -53,14 +53,7 @@ public class PatrocinioDTO implements Serializable {
     }
 
     /**
-     * @return the empresa
-     */
-    public String getEmpresa() {
-        return empresa;
-    }
-
-    /**
-     * M'etodo para tranformar el DTO a una entidad
+     * Método para tranformar el DTO a una entidad
      *
      * @return Entidad del Patrocinio
      */
@@ -70,6 +63,13 @@ public class PatrocinioDTO implements Serializable {
         patrocinio.setTipo(this.getTipo());
         patrocinio.setId(this.getId());
         return patrocinio;
+    }
+
+    /**
+     * @return the empresa
+     */
+    public String getEmpresa() {
+        return empresa;
     }
 
     /**
