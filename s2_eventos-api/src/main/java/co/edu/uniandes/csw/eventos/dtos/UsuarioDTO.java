@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.eventos.dtos;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
 import java.io.Serializable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -158,5 +160,10 @@ public class UsuarioDTO implements Serializable {
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+    
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

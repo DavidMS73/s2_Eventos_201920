@@ -67,36 +67,34 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
      */
     public EventoDetailDTO(EventoEntity eventoEntity) {
         super(eventoEntity);
-        if (eventoEntity != null) {
-            if (eventoEntity.getActividadesEvento() != null) {
-                actividades = new ArrayList<>();
-                for (ActividadEventoEntity entityActividad : eventoEntity.getActividadesEvento()) {
-                    actividades.add(new ActividadEventoDTO(entityActividad));
-                }
+        if (eventoEntity.getActividadesEvento() != null) {
+            actividades = new ArrayList<>();
+            for (ActividadEventoEntity entityActividad : eventoEntity.getActividadesEvento()) {
+                actividades.add(new ActividadEventoDTO(entityActividad));
             }
-            if (eventoEntity.getLugares() != null) {
-                lugares = new ArrayList<>();
-                for (LugarEntity entityLugar : eventoEntity.getLugares()) {
-                    lugares.add(new LugarDTO(entityLugar));
-                }
+        }
+        if (eventoEntity.getLugares() != null) {
+            lugares = new ArrayList<>();
+            for (LugarEntity entityLugar : eventoEntity.getLugares()) {
+                lugares.add(new LugarDTO(entityLugar));
             }
-            if (eventoEntity.getMemorias() != null) {
-                memorias = new ArrayList<>();
-                for (MemoriaEntity memoria : eventoEntity.getMemorias()) {
-                    memorias.add(new MemoriaDTO(memoria));
-                }
+        }
+        if (eventoEntity.getMemorias() != null) {
+            memorias = new ArrayList<>();
+            for (MemoriaEntity memoria : eventoEntity.getMemorias()) {
+                memorias.add(new MemoriaDTO(memoria));
             }
-            if (eventoEntity.getPatrocinios() != null) {
-                patrocinios = new ArrayList<>();
-                for (PatrocinioEntity patrocinio : eventoEntity.getPatrocinios()) {
-                    patrocinios.add(new PatrocinioDTO(patrocinio));
-                }
+        }
+        if (eventoEntity.getPatrocinios() != null) {
+            patrocinios = new ArrayList<>();
+            for (PatrocinioEntity patrocinio : eventoEntity.getPatrocinios()) {
+                patrocinios.add(new PatrocinioDTO(patrocinio));
             }
-            if (eventoEntity.getUsuarios() != null) {
-                usuarios = new ArrayList<>();
-                for (UsuarioEntity invitadoE : eventoEntity.getUsuarios()) {
-                    usuarios.add(new UsuarioDTO(invitadoE));
-                }
+        }
+        if (eventoEntity.getUsuarios() != null) {
+            usuarios = new ArrayList<>();
+            for (UsuarioEntity invitadoE : eventoEntity.getUsuarios()) {
+                usuarios.add(new UsuarioDTO(invitadoE));
             }
         }
     }
@@ -138,7 +136,7 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
             }
             entidad.setPatrocinios(patrociniosEntity);
         }
-        if (getUsuarios() != null) {
+        if (usuarios != null) {
             List<UsuarioEntity> usuariosEntity = new ArrayList<>();
             for (UsuarioDTO dtoUsuario : getUsuarios()) {
                 usuariosEntity.add(dtoUsuario.toEntity());

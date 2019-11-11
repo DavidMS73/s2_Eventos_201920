@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.UsuarioDTO;
+import co.edu.uniandes.csw.eventos.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.csw.eventos.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
@@ -37,56 +38,48 @@ public class UsuarioResource {
 
     private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
     @Inject
-    private UsuarioLogic ulogic;
+    private UsuarioLogic uLogic;
 
     @POST
     public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UsuarioResource createEditorial: input: {0}", usuario);
         UsuarioEntity usuarioEntity = usuario.toEntity();
-        usuarioEntity = ulogic.createUsuario(usuarioEntity);
+        usuarioEntity = uLogic.createUsuario(usuarioEntity);
         UsuarioDTO nuevoEditorialDTO = new UsuarioDTO(usuarioEntity);
         LOGGER.log(Level.INFO, "UsuarioResource createEditorial: output: {0}", nuevoEditorialDTO);
         return nuevoEditorialDTO;
     }
 
     @GET
-    public List<UsuarioDTO> getUsuarios() {
+    public List<UsuarioDetailDTO> getUsuarios() {
         LOGGER.info("UsuarioResource getUsuarios: input: void");
-        List<UsuarioDTO> listaUsuarios = listEntity2DTO(ulogic.getUsuarios());
+        List<UsuarioDetailDTO> listaUsuarios = listEntity2DTO(uLogic.getUsuarios());
         LOGGER.log(Level.INFO, "UsuarioResource getUsuarios: output: {0}", listaUsuarios);
         return listaUsuarios;
     }
 
-    private List<UsuarioDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
-        List<UsuarioDTO> list = new ArrayList<>();
-        for (UsuarioEntity entity : entityList) {
-            list.add(new UsuarioDTO(entity));
-        }
-        return list;
-    }
-
     @GET
     @Path("{usuariosId: \\d+}")
-    public UsuarioDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
+    public UsuarioDetailDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: input: {0}", usuariosId);
-        UsuarioEntity usuarioEntity = ulogic.getUsuario(usuariosId);
+        UsuarioEntity usuarioEntity = uLogic.getUsuario(usuariosId);
         if (usuarioEntity == null) {
             throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
         }
-        UsuarioDTO detailDTO = new UsuarioDTO(usuarioEntity);
+        UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(usuarioEntity);
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
         return detailDTO;
     }
 
     @PUT
     @Path("{usuariosId: \\d+}")
-    public UsuarioDTO updateUsuario(@PathParam("usuariosId") Long usuariosId, UsuarioDTO usuario) {
+    public UsuarioDetailDTO updateUsuario(@PathParam("usuariosId") Long usuariosId, UsuarioDetailDTO usuario) {
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: input: usuariosId: {0} , usuario: {1}", new Object[]{usuariosId, usuario});
         usuario.setId(usuariosId);
-        if (ulogic.getUsuario(usuariosId) == null) {
+        if (uLogic.getUsuario(usuariosId) == null) {
             throw new WebApplicationException("El recurso /authors/" + usuariosId + " no existe.", 404);
         }
-        UsuarioDTO detailDTO = new UsuarioDTO(ulogic.updateUsuario(usuariosId, usuario.toEntity()));
+        UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(uLogic.updateUsuario(usuariosId, usuario.toEntity()));
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: output: {0}", detailDTO);
         return detailDTO;
     }
@@ -95,11 +88,26 @@ public class UsuarioResource {
     @Path("{usuariosId: \\d+}")
     public void deleteUsuario(@PathParam("usuariosId") Long usuariosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UsuarioResource deleteUsuario: input: {0}", usuariosId);
-        if (ulogic.getUsuario(usuariosId) == null) {
+        if (uLogic.getUsuario(usuariosId) == null) {
             throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
         }
-        ulogic.deleteUsuario(usuariosId);
+        uLogic.deleteUsuario(usuariosId);
         LOGGER.info("UsuarioResource deleteUsuario: output: void");
     }
 
+    @Path("{usuariosId: \\d+}/eventos")
+    public Class<UsuarioEventosResource> getUsuarioEventosResource(@PathParam("usuariosId") Long usuariosId) {
+        if (uLogic.getUsuario(usuariosId) == null) {
+            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+        }
+        return UsuarioEventosResource.class;
+    }
+
+    private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
+        List<UsuarioDetailDTO> list = new ArrayList<>();
+        for (UsuarioEntity entity : entityList) {
+            list.add(new UsuarioDetailDTO(entity));
+        }
+        return list;
+    }
 }

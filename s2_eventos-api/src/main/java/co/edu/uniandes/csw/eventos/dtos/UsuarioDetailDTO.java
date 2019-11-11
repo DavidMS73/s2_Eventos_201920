@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Clase que extiende de {@link UsuarioDTO} para manejar las relaciones entre
@@ -81,4 +83,8 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         this.eventos = eventos;
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
 }

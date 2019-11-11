@@ -64,7 +64,7 @@ public class EventoUsuariosLogic {
         return eventoPersistence.find(eventosId).getUsuarios();
     }
 
-    public void removeInscrito(Long eventosId, Long usuariosId) {
+    public void removeUsuario (Long eventosId, Long usuariosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un usuario del evento con id = {0}", eventosId);
         UsuarioEntity usuarioEntity = usuarioPersistence.find(usuariosId);
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
