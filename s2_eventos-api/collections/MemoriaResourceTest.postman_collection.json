@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2f37c88c-ac22-479e-981d-8d22c50ac0d7",
+		"_postman_id": "55471f38-3b16-456d-9d84-54db52b0eaf2",
 		"name": "MemoriaResourceTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -13,7 +13,10 @@
 					"script": {
 						"id": "ba613603-aed8-475f-bfee-d9645542f019",
 						"exec": [
-							"tests[\"No genera error en el Post\"] = responseCode.code === 200;"
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a\", data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
 						],
 						"type": "text/javascript"
 					}
@@ -176,9 +179,9 @@
 					"script": {
 						"id": "ad309e51-c9e6-4900-a0ff-f4574a40b3df",
 						"exec": [
-							"var data= JSON.parse(responseBody);",
-							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
-							"tests[\"books count\"] = data.length >= 0;"
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
@@ -188,7 +191,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/memorias/1",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/memorias/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -198,7 +201,7 @@
 						"s2_eventos-api",
 						"api",
 						"memorias",
-						"1"
+						"{{new_id_a}}"
 					]
 				}
 			},
@@ -312,7 +315,7 @@
 					"raw": "{\n   \"lugar\" : \"Corferias\",\n   \"fecha\" : \"2020-09-11T00:00:00-17:00\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/memorias/1",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/memorias/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -322,7 +325,7 @@
 						"s2_eventos-api",
 						"api",
 						"memorias",
-						"1"
+						"{{new_id_a}}"
 					]
 				}
 			},
@@ -350,7 +353,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/memorias/1",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/memorias/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -360,7 +363,7 @@
 						"s2_eventos-api",
 						"api",
 						"memorias",
-						"1"
+						"{{new_id_a}}"
 					]
 				}
 			},
