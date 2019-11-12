@@ -27,7 +27,7 @@ public class PseLogic {
             throw new BusinessLogicException("El correo está vacio");
         }
         if (pse.getCorreo().contains("@") == false) {
-            throw new BusinessLogicException("El correo debe ser valido");
+            throw new BusinessLogicException("El correo debe existir ");
         }
 
         pse = persistence.create(pse);
