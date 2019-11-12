@@ -201,7 +201,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pagos/2",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pagos/9",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -211,7 +211,7 @@
 						"s2_eventos-api",
 						"api",
 						"pagos",
-						"2"
+						"9"
 					]
 				}
 			},

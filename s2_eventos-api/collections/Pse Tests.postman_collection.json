@@ -219,7 +219,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pse/1",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pse/9",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -229,7 +229,7 @@
 						"s2_eventos-api",
 						"api",
 						"pse",
-						"1"
+						"9"
 					]
 				},
 				"description": "Borra un pse"
