@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.eventos.resources;
 
-
 import co.edu.uniandes.csw.eventos.dtos.MemoriaDTO;
 import co.edu.uniandes.csw.eventos.ejb.MemoriaLogic;
 import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
@@ -34,85 +33,74 @@ import javax.ws.rs.WebApplicationException;
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class MemoriaResource
-{
+public class MemoriaResource {
+
     @Inject
     private MemoriaLogic logic;
-    
-   
+
     private static final Logger LOGGER = Logger.getLogger(MemoriaResource.class.getName());
-   
+
     @POST
-    public MemoriaDTO createMemoria(MemoriaDTO memoria) throws BusinessLogicException
-    {
+    public MemoriaDTO createMemoria(MemoriaDTO memoria) throws BusinessLogicException {
         MemoriaEntity memoriaEntity = memoria.toEntity();
         memoriaEntity = logic.createMemoria(memoriaEntity);
         return new MemoriaDTO(memoriaEntity);
     }
-    
-    private List<MemoriaDTO> listEntity2DTO(List<MemoriaEntity> entityList)
-    {
+
+    private List<MemoriaDTO> listEntity2DTO(List<MemoriaEntity> entityList) {
         List<MemoriaDTO> list = new ArrayList<>();
-        for(MemoriaEntity entity : entityList)
-        {
+        for (MemoriaEntity entity : entityList) {
             list.add(new MemoriaDTO(entity));
         }
-        
+
         return list;
     }
-   
+
     @GET
-    public List<MemoriaDTO> getMemorias()
-    {
+    public List<MemoriaDTO> getMemorias() {
         LOGGER.info("MultimediaResource getMemorias: input: void");
         List<MemoriaDTO> listaMemorias = listEntity2DTO(logic.getMemorias());
         LOGGER.log(Level.INFO, "MemoriaResource getMemorias: output: {0}");
         return listaMemorias;
-    }        
-      
+    }
+
     @GET
     @Path("{memoriasId: \\d+}")
-    public MemoriaDTO getMemoria(@PathParam("memoriasId") Long memoriasId)
-    {
+    public MemoriaDTO getMemoria(@PathParam("memoriasId") Long memoriasId) {
         LOGGER.log(Level.INFO, "MemoriaResource getMemoria: input: {0}", memoriasId);
         MemoriaEntity entity = logic.getMemoria(memoriasId);
-        if(entity == null)
-        {
+        if (entity == null) {
             throw new WebApplicationException("El recurso /memorias/" + memoriasId + "no existe.", 404);
         }
-       
+
         MemoriaDTO memoriaDTO = new MemoriaDTO(entity);
         LOGGER.log(Level.INFO, "MemoriaResource getMemoria: output: {0}", memoriaDTO);
         return memoriaDTO;
     }
-   
+
     @PUT
     @Path("{memoriasId: \\d+}")
-    public MemoriaDTO updateMultimedia(@PathParam("memoriasId") Long memoriasId, MemoriaDTO memoria) throws BusinessLogicException
-    {
+    public MemoriaDTO updateMultimedia(@PathParam("memoriasId") Long memoriasId, MemoriaDTO memoria) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "MemoriaResource updateMemoria: input: id: {0}, memoria: {1}", new Object[]{memoriasId, memoria});
         memoria.setId(memoriasId);
-        if(logic.getMemoria(memoriasId) == null)
-        {
+        if (logic.getMemoria(memoriasId) == null) {
             throw new WebApplicationException("El recurso /memorias/" + memoriasId + "no existe.", 404);
         }
-       
+
         MemoriaDTO memoriaDTO = new MemoriaDTO(logic.updateMemoria(memoriasId, memoria.toEntity()));
         LOGGER.log(Level.INFO, "MemoriaResource updateMemoria: output: {0}", memoriaDTO);
         return memoriaDTO;
     }
-   
+
     @DELETE
     @Path("{memoriasId: \\d+}")
-    public void deleteMemoria(@PathParam("memoriasId") Long memoriasId) throws BusinessLogicException
-    {
+    public void deleteMemoria(@PathParam("memoriasId") Long memoriasId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "MemoriaResource deleteMemoria: input: {0}", memoriasId);
         MemoriaEntity entity = logic.getMemoria(memoriasId);
-        if(entity == null)
-        {
+        if (entity == null) {
             throw new WebApplicationException("El recurso /memorias/" + memoriasId + "no existe.", 404);
         }
-       
+
         logic.deleteMemoria(memoriasId);
         LOGGER.info("MemoriaResource deleteMemoria: output: void");
     }
