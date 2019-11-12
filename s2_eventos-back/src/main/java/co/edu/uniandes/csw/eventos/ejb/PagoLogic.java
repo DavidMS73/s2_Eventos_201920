@@ -33,9 +33,9 @@ public class PagoLogic {
     
     public List<PagoEntity> getPagos() {
         
-        List<PagoEntity> lugares = persistence.findAll();
+        List<PagoEntity> pagos = persistence.findAll();
         
-        return lugares;
+        return pagos;
     }
     
     public PagoEntity getPago(Long id) {

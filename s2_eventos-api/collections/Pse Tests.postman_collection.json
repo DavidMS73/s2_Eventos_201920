@@ -1,12 +1,27 @@
 {
 	"info": {
-		"_postman_id": "3691956a-9a8a-4830-b675-4c0fff7b03ff",
+		"_postman_id": "90d5f618-7fcd-4126-817b-6a78c1f91f1b",
 		"name": "Pse Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Crear un pse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "30b06090-d882-48f0-b78b-48d72ec347d6",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -19,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\n\t\"correo\":\"dianitaladiva@uniandes.edu.co\"\n\t\n}",
+					"raw": "{\n\n\t\"correo\":\"germanElNegritoDeOjosClaros@uniandes.edu.co\"\n\t\n} \n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,6 +59,20 @@
 		},
 		{
 			"name": "Obtener un pse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "31fd2241-1907-4b01-ab3e-8323de0d3854",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -85,6 +114,20 @@
 		},
 		{
 			"name": "Obetener todos los pses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7a6132de-7752-4f4c-ac99-839b56f13687",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
+							"tests[\"pses count\"] = data.length >= 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -107,6 +150,20 @@
 		},
 		{
 			"name": "Editar un pse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f6519a7-3bd5-471e-9e09-ed6197b52c31",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -119,7 +176,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"correo\":\"dianitalamasdiva@mequieromorir.edu.co\"\n}",
+					"raw": "{\n\t\"correo\":\"dianitalamascrack@mequieromorir.edu.co\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -146,11 +203,23 @@
 		},
 		{
 			"name": "Borrar un pse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65ea44b1-6286-4f5e-877b-36e7a7776d90",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pse/2",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/pse/1",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -160,7 +229,7 @@
 						"s2_eventos-api",
 						"api",
 						"pse",
-						"2"
+						"1"
 					]
 				},
 				"description": "Borra un pse"

@@ -1,12 +1,27 @@
 {
 	"info": {
-		"_postman_id": "c0e4c498-af65-4c1a-b2d5-937b25bfd462",
+		"_postman_id": "e63ece01-4c1e-4f7c-b304-01baf12bd736",
 		"name": "Pago Resource Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Crear un pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6419561a-c791-4089-89a9-99bf3b2dbc7b",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -45,6 +60,20 @@
 		},
 		{
 			"name": "Obtener todos los pagos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0645ffb8-7521-4caf-83d3-faa5cb034c7b",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
+							"tests[\"pagos count\"] = data.length >= 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -67,6 +96,20 @@
 		},
 		{
 			"name": "Obtener un pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4047473f-0b9c-4d7d-80a9-e66a25fee94b",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -89,6 +132,20 @@
 		},
 		{
 			"name": "Modifica un pago ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c6a7d8b-e84e-47e1-b319-0eef8342aa46",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -101,7 +158,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fecha\": \"2020-10-07T00:00:00-08:00\"\n}",
+					"raw": "{\n\t\"fecha\": \"2020-10-07T01:00:00-08:00\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -128,6 +185,18 @@
 		},
 		{
 			"name": "Borra un pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "beb3e48c-5de4-4bae-9dff-5625e4e5f518",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],

@@ -32,7 +32,7 @@ public class PagoPersistence {
     }
 
     public List<PagoEntity> findAll() {
-        TypedQuery<PagoEntity> query = em.createQuery("select u from EventoEntity u", PagoEntity.class);
+        TypedQuery<PagoEntity> query = em.createQuery("select u from PagoEntity u", PagoEntity.class);
         return query.getResultList();
     }
 
