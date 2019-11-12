@@ -13,7 +13,6 @@ import co.edu.uniandes.csw.eventos.entities.PatrocinioEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
-import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -103,7 +102,7 @@ public class EventoLogic {
             throw new BusinessLogicException("El número de entradas restantes debe ser positivo");
         }
         if (evento.getValor() < 0) {
-            throw new BusinessLogicException("El valor del evento debe ser poositivo");
+            throw new BusinessLogicException("El valor del evento debe ser positivo");
         }
         evento = persistence.create(evento);
         LOGGER.log(Level.INFO, "Termina proceso de creación del evento");

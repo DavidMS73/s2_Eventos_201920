@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * Clase adaptador que formatea las fechas en formato serialiable utilizando la
+ * Clase adaptador que formatea las fechas en formato serializable utilizando la
  * convención: yyyy-MM-dd. Ej: 2018-02-12
  *
  * @author ISIS2603
