@@ -59,6 +59,9 @@ public class TarjetaLogic {
         UsuarioEntity u = usuarioPersistence.find(usuariosId);
         pTarjeta.setUsuario(u);
         TarjetaEntity update = persistence.update(pTarjeta);
+        List<TarjetaEntity> lista=u.getTarjetas();
+        lista.add(update);
+        u.setTarjetas(lista);
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar tarjeta con id = {0}", pTarjeta.getId());
         return update;
     }
