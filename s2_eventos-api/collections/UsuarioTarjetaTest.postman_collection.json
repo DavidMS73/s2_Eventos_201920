@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "267f4ad1-07e8-4348-89ec-b03d3506677f",
+		"_postman_id": "6710c52d-ac03-46cf-b695-7af5f0779bd0",
 		"name": "UsuarioTarjetaTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"jukbef78781@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"jukbef78782@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
