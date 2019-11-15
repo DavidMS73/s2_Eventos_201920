@@ -64,10 +64,7 @@ public class ActividadEventoLogicTest {
      */
     private List<ActividadEventoEntity> data = new ArrayList<>();
 
-    /**
-     * Lista de eventos
-     */
-    private List<EventoEntity> dataEvento = new ArrayList<>();
+    
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -117,14 +114,9 @@ public class ActividadEventoLogicTest {
      * pruebas.
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++) {
-            EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
-            em.persist(entity);
-            dataEvento.add(entity);
-        }
+       
         for (int i = 0; i < 3; i++) {
             ActividadEventoEntity entity = factory.manufacturePojo(ActividadEventoEntity.class);
-            entity.setEvento(dataEvento.get(1));
             em.persist(entity);
             data.add(entity);
         }
@@ -138,8 +130,8 @@ public class ActividadEventoLogicTest {
     @Test
     public void createActividadEventoTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
-        ActividadEventoEntity result = actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
+        
+        ActividadEventoEntity result = actividadLogic.createActividadEvento(newEntity);
         Assert.assertNotNull(result);
 
         ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, result.getId());
@@ -160,9 +152,9 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoNombreNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
+        
         newEntity.setNombre(null);
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
+        actividadLogic.createActividadEvento(newEntity);
     }
 
     /**
@@ -173,9 +165,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoDescripcionNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
         newEntity.setDescripcion(null);
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
+        actividadLogic.createActividadEvento(newEntity);
     }
 
     /**
@@ -186,9 +177,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoFechaNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
         newEntity.setFecha(null);
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
+        actividadLogic.createActividadEvento(newEntity);
     }
 
     /**
@@ -199,9 +189,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoHoraInicioNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
         newEntity.setHoraInicio(null);
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
+        actividadLogic.createActividadEvento( newEntity);
     }
 
     /**
@@ -212,9 +201,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoHoraFinNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
         newEntity.setHoraFin(null);
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
+        actividadLogic.createActividadEvento( newEntity);
     }
 
     /**
@@ -225,10 +213,9 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoFechaAntesEventoTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
         Calendar c = Calendar.getInstance();
         newEntity.setFecha(c.getTime());
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
+        actividadLogic.createActividadEvento(newEntity);
     }
 
     /**
@@ -240,11 +227,10 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoFechaDespuesEventoTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 20);
         newEntity.setFecha(c.getTime());
-        actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
+        actividadLogic.createActividadEvento(newEntity);
     }
     
     /**
@@ -254,7 +240,7 @@ public class ActividadEventoLogicTest {
      */
     @Test
     public void getActividadesEventoTest() throws BusinessLogicException {
-        List<ActividadEventoEntity> list = actividadLogic.getActividadesEvento(dataEvento.get(1).getId());
+        List<ActividadEventoEntity> list = actividadLogic.getActividadesEvento();
         Assert.assertEquals(data.size(), list.size());
         for (ActividadEventoEntity entity : list) {
             boolean found = false;
@@ -273,7 +259,7 @@ public class ActividadEventoLogicTest {
     @Test
     public void getActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);
-        ActividadEventoEntity resultEntity = actividadLogic.getActividadEvento(dataEvento.get(1).getId(), entity.getId());
+        ActividadEventoEntity resultEntity = actividadLogic.getActividadEvento(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
@@ -293,7 +279,7 @@ public class ActividadEventoLogicTest {
 
         pojoEntity.setId(entity.getId());
 
-        actividadLogic.updateActividadEvento(dataEvento.get(1).getId(), pojoEntity);
+        actividadLogic.updateActividadEvento(pojoEntity);
 
         ActividadEventoEntity resp = em.find(ActividadEventoEntity.class, entity.getId());
 
@@ -314,7 +300,7 @@ public class ActividadEventoLogicTest {
     @Test
     public void deleteActividadEventoTest() throws BusinessLogicException {
         ActividadEventoEntity entity = data.get(0);
-        actividadLogic.deleteActividadEvento(dataEvento.get(1).getId(), entity.getId());
+        actividadLogic.deleteActividadEvento(entity.getId());
         ActividadEventoEntity deleted = em.find(ActividadEventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
@@ -327,6 +313,6 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void deleteActividadConEventoNoAsociadoTest() throws BusinessLogicException {
         ActividadEventoEntity entity = data.get(0);
-        actividadLogic.deleteActividadEvento(dataEvento.get(0).getId(), entity.getId());
+        actividadLogic.deleteActividadEvento(entity.getId());
     }
 }

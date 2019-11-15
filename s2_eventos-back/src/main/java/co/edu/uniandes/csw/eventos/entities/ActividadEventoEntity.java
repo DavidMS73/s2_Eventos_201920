@@ -32,7 +32,7 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     private EventoEntity evento;
 
     @PodamExclude
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private MultimediaEntity multimedia;
 
     /**
