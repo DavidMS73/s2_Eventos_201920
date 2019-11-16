@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -59,20 +58,16 @@ public class ActividadEventoPersistence {
      * actividades devuelve siempre la primera que encuentra
      */
     public ActividadEventoEntity find(Long eventosId, Long actividadEventoEventosId) {
-        LOGGER.log(Level.INFO, "Consultando la actividad del evento con id={0} del evento con id = " + eventosId, actividadEventoEventosId);
+        LOGGER.log(Level.INFO, "Consultando la actividad del evento con id={0}", actividadEventoEventosId);
         TypedQuery<ActividadEventoEntity> q = em.createQuery("select p from ActividadEventoEntity p where (p.evento.id = :eventoid) and (p.id = :actividadesEventoId)", ActividadEventoEntity.class);
         q.setParameter("eventoid", eventosId);
         q.setParameter("actividadesEventoId", actividadEventoEventosId);
         List<ActividadEventoEntity> results = q.getResultList();
         ActividadEventoEntity actividad = null;
-        if (results == null) {
-            actividad = null;
-        } else if (results.isEmpty()) {
-            actividad = null;
-        } else if (results.size() >= 1) {
+        if (results != null && !results.isEmpty()) {
             actividad = results.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar la actividad del evento con id = {0} del evento con id =" + eventosId, actividadEventoEventosId);
+        LOGGER.log(Level.INFO, "Saliendo de consultar la actividad del evento con id = {0}", actividadEventoEventosId);
         return actividad;
     }
 

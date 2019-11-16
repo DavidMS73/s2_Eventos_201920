@@ -101,19 +101,15 @@ public class EventoPersistence {
      * existe alguna devuelve la primera.
      */
     public EventoEntity findByName(String name) {
-        LOGGER.log(Level.INFO, "Consultando eventos por nombre ", name);
+        LOGGER.log(Level.INFO, "Consultando eventos por nombre {0}", name);
         TypedQuery query = em.createQuery("select u from EventoEntity u where u.nombre = :name", EventoEntity.class);
         query = query.setParameter("name", name);
         List<EventoEntity> sameName = query.getResultList();
-        EventoEntity result;
-        if (sameName == null) {
-            result = null;
-        } else if (sameName.isEmpty()) {
-            result = null;
-        } else {
+        EventoEntity result = null;
+        if (sameName != null && !sameName.isEmpty()) {
             result = sameName.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar eventos por nombre ", name);
+        LOGGER.log(Level.INFO, "Saliendo de consultar eventos por nombre {0}", name);
         return result;
     }
 }
