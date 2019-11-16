@@ -186,7 +186,7 @@ public class EventoResource {
      *
      * @param eventosId El ID del evento con respecto al cual se accede al
      * servicio.
-     * @return El servicio de usuarios para ese libro en paricular.
+     * @return El servicio de usuarios para ese evento en paricular.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el evento.
      */
@@ -197,7 +197,7 @@ public class EventoResource {
         }
         return EventoUsuariosResource.class;
     }
-    
+
     /**
      * Conexión con el servicio de patrocinios para un evento.
      * {@link EventoUsuariosResource}
@@ -208,17 +208,17 @@ public class EventoResource {
      *
      * @param eventosId El ID del evento con respecto al cual se accede al
      * servicio.
-     * @return El servicio de usuarios para ese libro en paricular.
+     * @return El servicio de patrocinios para ese evento en paricular.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el evento.
      */
-//    @Path("{eventosId: \\d+}/usuarios")
-//    public Class<EventoPatrociniosResource> getEventoUsuariosResource(@PathParam("eventosId") Long eventosId) {
-//        if (eventoLogic.getEvento(eventosId) == null) {
-//            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
-//        }
-//        return EventoUsuariosResource.class;
-//    }
+    @Path("{eventosId: \\d+}/patrocinios")
+    public Class<EventoPatrociniosResource> getEventoPatrociniosResource(@PathParam("eventosId") Long eventosId) {
+        if (eventoLogic.getEvento(eventosId) == null) {
+            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
+        }
+        return EventoPatrociniosResource.class;
+    }
 
     /**
      * Convierte una lista de entidad a DTO
