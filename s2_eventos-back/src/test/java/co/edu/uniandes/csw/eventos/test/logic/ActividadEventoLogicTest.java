@@ -244,8 +244,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoFechaAntesEventoTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
-        newEntity.setMultimedia(dataMultimedia.get(1));
+        //newEntity.setEvento(dataEvento.get(1));
+        //newEntity.setMultimedia(dataMultimedia.get(1));
         Calendar c = Calendar.getInstance();
         newEntity.setFecha(c.getTime());
         actividadLogic.createActividadEvento(newEntity);
@@ -260,8 +260,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoFechaDespuesEventoTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        newEntity.setEvento(dataEvento.get(1));
-        newEntity.setMultimedia(dataMultimedia.get(1));
+        //newEntity.setEvento(dataEvento.get(1));
+        //newEntity.setMultimedia(dataMultimedia.get(1));
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 20);
         newEntity.setFecha(c.getTime());
