@@ -17,7 +17,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -117,6 +116,11 @@ public class EventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela el valor del evento
      */
     private Long valor;
+
+    /**
+     * Atributo que modela la dirección de la imagen
+     */
+    private String imagen;
 
     public EventoEntity() {
         //Constructor
@@ -320,6 +324,20 @@ public class EventoEntity extends BaseEntity implements Serializable {
      */
     public void setUsuarios(List<UsuarioEntity> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
 }

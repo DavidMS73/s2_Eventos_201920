@@ -35,7 +35,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000\n}\n\n",
+					"raw": "{\n\t\"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000,\n\t\"imagen\": \"123.jpg\"\n}\n\n",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T12:00:00\",\n\t\"fechaFin\": \"2020-09-11T23:59:59\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0\n}\n\n",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T12:00:00\",\n\t\"fechaFin\": \"2020-09-11T23:59:59\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0,\n\t\"imagen\": \"123.jpg\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -340,14 +340,14 @@
 	],
 	"variable": [
 		{
-			"id": "117bf613-cc3a-4897-8b7e-38a84f70cebe",
+			"id": "cd5b274a-a2bb-4e0a-b50c-a4d979c2c904",
 			"key": "ip",
 			"value": "localhost",
 			"type": "string",
 			"disabled": true
 		},
 		{
-			"id": "fd2f6137-5069-4262-a24e-c2badf87d1d9",
+			"id": "37714d08-d646-4b95-b3a5-334489b3d0cb",
 			"key": "puerto",
 			"value": "8080",
 			"type": "string",

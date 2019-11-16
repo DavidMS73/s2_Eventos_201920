@@ -24,9 +24,12 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
 
     private String lugar;
 
+    private String imagen;
+
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
+
     @PodamExclude
     @ManyToOne
     private EventoEntity evento;
@@ -44,7 +47,7 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     public void setEvento(EventoEntity evento) {
         this.evento = evento;
     }
-    
+
     /**
      * @return the lugar
      */
@@ -71,5 +74,19 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

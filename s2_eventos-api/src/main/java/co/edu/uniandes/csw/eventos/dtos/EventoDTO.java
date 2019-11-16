@@ -68,6 +68,11 @@ public class EventoDTO implements Serializable {
     private Long valor;
 
     /**
+     * Atributo que modela la imagen del evento
+     */
+    private String imagen;
+
+    /**
      * Constructor a partir de la entidad
      *
      * @param entidad Entidad del Evento
@@ -83,6 +88,7 @@ public class EventoDTO implements Serializable {
             setValor(entidad.getValor());
             setDetallesAdicionales(entidad.getDetallesAdicionales());
             setEntradasRestantes(entidad.getEntradasRestantes());
+            setImagen(entidad.getImagen());
         }
     }
 
@@ -109,7 +115,7 @@ public class EventoDTO implements Serializable {
         entidad.setValor(this.getValor());
         entidad.setDetallesAdicionales(this.getDetallesAdicionales());
         entidad.setEntradasRestantes(this.getEntradasRestantes());
-
+        entidad.setImagen(this.getImagen());
         return entidad;
     }
 
@@ -223,6 +229,20 @@ public class EventoDTO implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     /**

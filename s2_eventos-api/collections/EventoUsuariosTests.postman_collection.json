@@ -139,7 +139,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0\n}\n\n",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0,\n\t\"imagen\": \"123.jpg\"\n}\n\n",
 					"options": {
 						"raw": {
 							"language": "json"

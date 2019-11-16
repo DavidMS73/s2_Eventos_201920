@@ -296,6 +296,18 @@ public class EventoLogicTest {
         newEntity.setValor(new Long(-1));
         eventoLogic.createEvento(newEntity);
     }
+    
+    /**
+     * Prueba para crear un evento sin imagen
+     *
+     * @throws BusinessLogicException incumple la regla de negocio
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createEventoSinImagenTest() throws BusinessLogicException {
+        EventoEntity newEntity = em.find(EventoEntity.class, data.get(2).getId());
+        newEntity.setImagen(null);
+        eventoLogic.createEvento(newEntity);
+    }
 
     /**
      * Prueba para consultar la lista de eventos
@@ -332,6 +344,7 @@ public class EventoLogicTest {
         Assert.assertEquals(entity.getDetallesAdicionales(), resultEntity.getDetallesAdicionales());
         Assert.assertEquals(entity.getEntradasRestantes(), resultEntity.getEntradasRestantes());
         Assert.assertEquals(entity.getValor(), resultEntity.getValor());
+        Assert.assertEquals(entity.getImagen(), resultEntity.getImagen());
     }
 
     /**
@@ -354,6 +367,7 @@ public class EventoLogicTest {
         Assert.assertEquals(pojoEntity.getDetallesAdicionales(), resp.getDetallesAdicionales());
         Assert.assertEquals(pojoEntity.getEntradasRestantes(), resp.getEntradasRestantes());
         Assert.assertEquals(pojoEntity.getValor(), resp.getValor());
+        Assert.assertEquals(pojoEntity.getImagen(), resp.getImagen());
     }
 
     /**

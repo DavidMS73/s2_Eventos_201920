@@ -78,6 +78,9 @@ public class EventoLogic {
         if (evento.getFechaInicio() == null) {
             throw new BusinessLogicException("Debe definir una fecha de inicio");
         }
+        if (evento.getImagen() == null) {
+            throw new BusinessLogicException("Debe definir una imagen");
+        }
 
         if (evento.getFechaInicio().before(fecha7Adelante())) {
             throw new BusinessLogicException("No se puede crear un evento si no tiene una "
