@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ff720fa7-d84b-4aaf-83a4-9c377c50389d",
+		"_postman_id": "02d080fa-7359-416f-9656-b3790e6f9c4f",
 		"name": "PatrocinioEventos",
 		"description": "Colección de pruebas sobre el recurso PatrocinioEventos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -33,7 +33,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"empresa\": \"Fopre\",\n\t\"tipo\": \"Fuerte\"\n\t\n}"
+					"raw": "{\n\t\"empresa\": \"Fopre\",\n\t\"tipo\": \"General\"\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios",
@@ -81,7 +81,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"nombre\": \"Fopre\",\r\n\t\"categoria\": \"General\",\r\n\t\"descripcion\": \"Evento para recaudar fondos\",\r\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\r\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\r\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\r\n\t\"entradasRestantes\": 1000,\r\n\t\"esPago\": \"false\",\r\n\t\"valor\": 0,\r\n\t\"responsable\": null\r\n}\r\n",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0,\n\t\"imagen\": \"123.jpg\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -134,7 +134,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"nombre\": \"Fopre2\",\r\n\t\"categoria\": \"G2eneral\",\r\n\t\"descripcion\": \"Evednto para recaudar fondos\",\r\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\r\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\r\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\r\n\t\"entradasRestantes\": 1000,\r\n\t\"esPago\": \"false\",\r\n\t\"valor\": 0,\r\n\t\"responsable\": null\r\n}\r\n",
+					"raw": "{\n\t\"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000,\n\t\"imagen\": \"123.jpg\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -349,7 +349,7 @@
 			"response": []
 		},
 		{
-			"name": "Obtener un evento existente de un patrocinio inexistante",
+			"name": "Obtener un evento existente de un patrocinio inexistente",
 			"event": [
 				{
 					"listen": "test",
@@ -410,7 +410,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[{\n\t\"nombre\": \"Fopre2\",\n\t\"categoria\": \"G2eneral\",\n\t\"descripcion\": \"Evednto para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"id\": {{new_id_a}},\n\t\"valor\": 0,\n\t\"responsable\": null\n},\n{\n\t\"nombre\": \"Fopre3\",\n\t\"categoria\": \"G3eneral\",\n\t\"descripcion\": \"Evedn3to para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1050,\n\t\"esPago\": \"false\",\n\t\"id\": {{new_id_a2}},\n\t\"valor\": 0,\n\t\"responsable\": null\n}]"
+					"raw": "[{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0,\n\t\"imagen\": \"123.jpg\",\n\t\"id\": {{new_id_e}}\n},\n{\n\t\"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000,\n\t\"imagen\": \"123.jpg\",\n\t\"id\": {{new_id_e2}}\n}]"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos/",
@@ -433,15 +433,15 @@
 			"response": []
 		},
 		{
-			"name": "Asociar eventos a un patrocinio que no existe",
+			"name": "Asociar eventos que no existen a un  patrocinio",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "33095ce1-2210-4699-b02f-239aac70ecc2",
+						"id": "5f1389a0-da68-45bc-90aa-eb08f3c8ac36",
 						"exec": [
-							"tests[\"No se deberian asociar los eventos ya que el patrocinio no existe.\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /patrocinios/0 no existe.\");"
+							"tests[\"No se pueden asociar los eventos ya que estos no existen\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /eventos/0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -457,10 +457,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[{\n\t\"nombre\": \"Fopre2\",\n\t\"categoria\": \"G2eneral\",\n\t\"descripcion\": \"Evednto para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"id\": {{new_id_a3}},\n\t\"valor\": 0,\n\t\"responsable\": null\n},\n{\n\t\"nombre\": \"Fopre3\",\n\t\"categoria\": \"G3eneral\",\n\t\"descripcion\": \"Evedn3to para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1050,\n\t\"esPago\": \"false\",\n\t\"id\": {{new_id_a4}},\n\t\"valor\": 0,\n\t\"responsable\": null\n}]"
+					"raw": "[{\n    \"id\": 0,\n    \"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000,\n\t\"imagen\": \"123.jpg\"\n}\n]"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/0/eventos",
+					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/patrocinios/{{new_id_p}}/eventos",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -470,11 +470,11 @@
 						"s2_eventos-api",
 						"api",
 						"patrocinios",
-						"0",
+						"{{new_id_p}}",
 						"eventos"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de eventos de un patrocinio que no existe. \r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /patrocinios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "Actualiza la lista de eventos existentes con eventos que no existen. \r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /eventos/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		},

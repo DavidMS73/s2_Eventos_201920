@@ -35,7 +35,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0,\n\t\"imagen\": \"123.jpg\"\n}\n\n",
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"valor\": 0,\n\t\"imagen\": \"123.jpg\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -88,7 +88,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000,\n\t\"imagen\": \"123.jpg\"\n}\n\n",
+					"raw": "{\n\t\"nombre\": \"Concierto\",\n\t\"categoria\": \"Cultural\",\n\t\"descripcion\": \"Evento de música clásica\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ninguno\",\n\t\"entradasRestantes\": 800,\n\t\"valor\": 2000,\n\t\"imagen\": \"123.jpg\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -211,7 +211,7 @@
 			"response": []
 		},
 		{
-			"name": "Agregar un libro que no existe a un autor",
+			"name": "Agregar un evento que no existe a un usuario",
 			"event": [
 				{
 					"listen": "test",

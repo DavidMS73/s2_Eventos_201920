@@ -197,6 +197,28 @@ public class EventoResource {
         }
         return EventoUsuariosResource.class;
     }
+    
+    /**
+     * Conexión con el servicio de patrocinios para un evento.
+     * {@link EventoUsuariosResource}
+     *
+     * Este método conecta la ruta de /eventos con las rutas de /patrocinios que
+     * dependen del evento, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de los usuarios
+     *
+     * @param eventosId El ID del evento con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de usuarios para ese libro en paricular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el evento.
+     */
+//    @Path("{eventosId: \\d+}/usuarios")
+//    public Class<EventoPatrociniosResource> getEventoUsuariosResource(@PathParam("eventosId") Long eventosId) {
+//        if (eventoLogic.getEvento(eventosId) == null) {
+//            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
+//        }
+//        return EventoUsuariosResource.class;
+//    }
 
     /**
      * Convierte una lista de entidad a DTO

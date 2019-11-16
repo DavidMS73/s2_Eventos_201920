@@ -102,4 +102,12 @@ public class PatrocinioResource {
         logic.deletePatrocinio(patrociniosId);
         LOGGER.info("PatrocinioResource deletePatrocinio: output: void");
     }
+
+    @Path("{patrociniosId: \\d+}/eventos")
+    public Class<PatrocinioEventosResource> getPatrocinioEventosResource(@PathParam("patrociniosId") Long patrociniosId) {
+        if (logic.getPatrocinio(patrociniosId) == null) {
+            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
+        }
+        return PatrocinioEventosResource.class;
+    }
 }

@@ -124,9 +124,9 @@ public class UsuarioEventosResource {
     @PUT
     public List<EventoDetailDTO> replaceEventos(@PathParam("usuariosId") Long usuariosId, List<EventoDetailDTO> eventos) {
         LOGGER.log(Level.INFO, "UsuarioEventosResource replaceEventos: input: usuariosId {0} , eventos {1}", new Object[]{usuariosId, eventos});
-        for (EventoDetailDTO book : eventos) {
-            if (eventoLogic.getEvento(book.getId()) == null) {
-                throw new WebApplicationException("El recurso /eventos/" + book.getId() + " no existe.", 404);
+        for (EventoDetailDTO evento : eventos) {
+            if (eventoLogic.getEvento(evento.getId()) == null) {
+                throw new WebApplicationException("El recurso /eventos/" + evento.getId() + " no existe.", 404);
             }
         }
         List<EventoDetailDTO> lista = eventosListEntity2DTO(usuarioEventoLogic.replaceEventos(usuariosId, eventosListDTO2Entity(eventos)));
