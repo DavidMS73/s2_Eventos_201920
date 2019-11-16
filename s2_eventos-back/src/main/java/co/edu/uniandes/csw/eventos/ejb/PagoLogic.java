@@ -32,7 +32,7 @@ public class PagoLogic {
             throw new BusinessLogicException("La fecha del pago está vacio");
         }
         pago = persistence.create(pago);
-        LOGGER.log(Level.INFO, "Termina proceso de creación del evento");
+        LOGGER.log(Level.INFO, "Termina proceso de creación del pago");
         return pago;
     }
 

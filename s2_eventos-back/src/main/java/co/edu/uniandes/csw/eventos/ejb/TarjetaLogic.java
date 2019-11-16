@@ -54,8 +54,6 @@ public class TarjetaLogic {
     
     public TarjetaEntity updateTarjeta(Long usuariosId, TarjetaEntity pTarjeta) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar tarjeta del usuario con id = {0}", usuariosId);
-        if(!validateNumero(pTarjeta.getNumeroTarjeta()))
-            throw new BusinessLogicException("El nuevo número de tarjeta es inválido.");
         UsuarioEntity u = usuarioPersistence.find(usuariosId);
         pTarjeta.setUsuario(u);
         TarjetaEntity update = persistence.update(pTarjeta);
@@ -129,6 +127,6 @@ public class TarjetaLogic {
     
     
     private boolean validateNumero(String pNumero){
-        return !(pNumero == null || pNumero.isEmpty() || !(pNumero.length() == 16));
+        return !(pNumero == null || pNumero.isEmpty() || pNumero.length() != 16);
     }
 }
