@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.eventos.test.logic;
 import co.edu.uniandes.csw.eventos.ejb.ActividadEventoLogic;
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.ActividadEventoPersistence;
 import java.util.ArrayList;
@@ -64,7 +65,15 @@ public class ActividadEventoLogicTest {
      */
     private List<ActividadEventoEntity> data = new ArrayList<>();
 
+    /**
+     * Lista de eventos
+     */
+    private List<EventoEntity> dataEvento = new ArrayList<>();
     
+    /**
+     * Lista de multimedias
+     */
+    private List<MultimediaEntity> dataMultimedia = new ArrayList<>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -107,6 +116,7 @@ public class ActividadEventoLogicTest {
     private void clearData() {
         em.createQuery("delete from ActividadEventoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
+        em.createQuery("delete from MultimediaEntity").executeUpdate();
     }
 
     /**
@@ -114,9 +124,20 @@ public class ActividadEventoLogicTest {
      * pruebas.
      */
     private void insertData() {
-       
+        for (int i = 0; i < 3; i++) {
+            EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+            em.persist(entity);
+            dataEvento.add(entity);
+        }
+        for (int i = 0; i < 3; i++) {
+            MultimediaEntity entity = factory.manufacturePojo(MultimediaEntity.class);
+            em.persist(entity);
+            dataMultimedia.add(entity);
+        }
         for (int i = 0; i < 3; i++) {
             ActividadEventoEntity entity = factory.manufacturePojo(ActividadEventoEntity.class);
+            entity.setEvento(dataEvento.get(1));
+            entity.setMultimedia(dataMultimedia.get(1));
             em.persist(entity);
             data.add(entity);
         }
@@ -130,7 +151,8 @@ public class ActividadEventoLogicTest {
     @Test
     public void createActividadEventoTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setMultimedia(dataMultimedia.get(1));
         ActividadEventoEntity result = actividadLogic.createActividadEvento(newEntity);
         Assert.assertNotNull(result);
 
@@ -152,7 +174,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoNombreNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
-        
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setMultimedia(dataMultimedia.get(1));
         newEntity.setNombre(null);
         actividadLogic.createActividadEvento(newEntity);
     }
@@ -165,6 +188,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoDescripcionNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setMultimedia(dataMultimedia.get(1));
         newEntity.setDescripcion(null);
         actividadLogic.createActividadEvento(newEntity);
     }
@@ -177,6 +202,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoFechaNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setMultimedia(dataMultimedia.get(1));
         newEntity.setFecha(null);
         actividadLogic.createActividadEvento(newEntity);
     }
@@ -189,8 +216,10 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoHoraInicioNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setMultimedia(dataMultimedia.get(1));
         newEntity.setHoraInicio(null);
-        actividadLogic.createActividadEvento( newEntity);
+        actividadLogic.createActividadEvento(newEntity);
     }
 
     /**
@@ -201,8 +230,10 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoHoraFinNullTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setMultimedia(dataMultimedia.get(1));
         newEntity.setHoraFin(null);
-        actividadLogic.createActividadEvento( newEntity);
+        actividadLogic.createActividadEvento(newEntity);
     }
 
     /**
@@ -213,6 +244,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoFechaAntesEventoTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setMultimedia(dataMultimedia.get(1));
         Calendar c = Calendar.getInstance();
         newEntity.setFecha(c.getTime());
         actividadLogic.createActividadEvento(newEntity);
@@ -227,6 +260,8 @@ public class ActividadEventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createActividadEventoFechaDespuesEventoTest() throws BusinessLogicException {
         ActividadEventoEntity newEntity = factory.manufacturePojo(ActividadEventoEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setMultimedia(dataMultimedia.get(1));
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 20);
         newEntity.setFecha(c.getTime());
@@ -303,16 +338,5 @@ public class ActividadEventoLogicTest {
         actividadLogic.deleteActividadEvento(entity.getId());
         ActividadEventoEntity deleted = em.find(ActividadEventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    }
-
-    /**
-     * Prueba para eliminarle una actividad a un evento del cual no pertenece.
-     *
-     * @throws BusinessLogicException incumple la regla de negocio
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void deleteActividadConEventoNoAsociadoTest() throws BusinessLogicException {
-        ActividadEventoEntity entity = data.get(0);
-        actividadLogic.deleteActividadEvento(entity.getId());
     }
 }
