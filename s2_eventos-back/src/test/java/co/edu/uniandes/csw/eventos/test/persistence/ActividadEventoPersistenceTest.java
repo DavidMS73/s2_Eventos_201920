@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.eventos.test.persistence;
 
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
-import co.edu.uniandes.csw.eventos.entities.MultimediaEntity;
 import co.edu.uniandes.csw.eventos.persistence.ActividadEventoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +60,6 @@ public class ActividadEventoPersistenceTest {
      * Lista de eventos
      */
     private List<EventoEntity> dataEvento = new ArrayList<EventoEntity>();
-    
-    /**
-     * Lista de multimedias
-     */
-    private List<MultimediaEntity> dataMultimedia = new ArrayList<MultimediaEntity>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -108,7 +102,6 @@ public class ActividadEventoPersistenceTest {
     private void clearData() {
         em.createQuery("delete from ActividadEventoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
-        em.createQuery("delete from MultimediaEntity").executeUpdate();
     }
 
     /**
@@ -123,15 +116,9 @@ public class ActividadEventoPersistenceTest {
             dataEvento.add(entity);
         }
         for (int i = 0; i < 3; i++) {
-            MultimediaEntity entity = factory.manufacturePojo(MultimediaEntity.class);
-            em.persist(entity);
-            dataMultimedia.add(entity);
-        }
-        for (int i = 0; i < 3; i++) {
             ActividadEventoEntity entity = factory.manufacturePojo(ActividadEventoEntity.class);
             if (i == 0) {
                 entity.setEvento(dataEvento.get(0));
-                entity.setMultimedia(dataMultimedia.get(0));
             }
             em.persist(entity);
             data.add(entity);
@@ -165,7 +152,7 @@ public class ActividadEventoPersistenceTest {
     @Test
     public void getActividadEventoTest() {
         ActividadEventoEntity entity = data.get(0);
-        ActividadEventoEntity newEntity = ep.find(entity.getId());
+        ActividadEventoEntity newEntity = ep.find(dataEvento.get(0).getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());

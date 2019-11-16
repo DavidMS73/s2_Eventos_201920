@@ -10,12 +10,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import java.util.Date;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
-import javax.persistence.FetchType;
 
 /**
  *
@@ -32,10 +30,6 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private EventoEntity evento;
-
-    @PodamExclude
-    @OneToOne(mappedBy = "memoria", fetch = FetchType.LAZY)
-    private MultimediaEntity multimedia;
 
     /**
      * @return the evento
@@ -78,19 +72,4 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
-    /**
-     * @return the multimedia
-     */
-    public MultimediaEntity getMultimedia() {
-        return multimedia;
-    }
-
-    /**
-     * @param multimedia the multimedia to set
-     */
-    public void setMultimedia(MultimediaEntity multimedia) {
-        this.multimedia = multimedia;
-    }
-
 }

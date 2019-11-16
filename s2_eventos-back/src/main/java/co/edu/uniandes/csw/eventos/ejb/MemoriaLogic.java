@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
 import co.edu.uniandes.csw.eventos.persistence.MemoriaPersistence;
-import co.edu.uniandes.csw.eventos.persistence.MultimediaPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,9 +29,6 @@ public class MemoriaLogic {
     
     @Inject
     private EventoPersistence eventoPersistence;
-    
-   @Inject
-    private MultimediaPersistence multimediaPersistence;
 
     public MemoriaEntity createMemoria(MemoriaEntity memoria) throws BusinessLogicException {
 

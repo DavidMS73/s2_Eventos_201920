@@ -47,24 +47,21 @@ public class ActividadEventoPersistence {
         LOGGER.log(Level.INFO, "Actividad del Evento creada");
         return actividadEvento;
     }
-    
-     public List<ActividadEventoEntity> findAll() {
-        TypedQuery<ActividadEventoEntity> query;
-        query = em.createQuery("Select u from ActividadEventoEntity u", ActividadEventoEntity.class);
-        return query.getResultList();
-    }
 
     /**
      * Buscar una actividad
      *
+     * Busca si hay alguna actividad asociada a un evento y con un ID específico
      *
+     * @param eventosId El ID del evento con respecto al cual se busca
      * @param actividadEventoEventosId El ID de la actividad buscada
      * @return La actividad encontrada o null. Nota: Si existe una o más
      * actividades devuelve siempre la primera que encuentra
      */
-    public ActividadEventoEntity find(Long actividadEventoEventosId) {
-        LOGGER.log(Level.INFO, "Consultando la actividad con id= {0}", actividadEventoEventosId);
-        TypedQuery<ActividadEventoEntity> q = em.createQuery("select p from ActividadEventoEntity p where (p.id = :actividadesEventoId)", ActividadEventoEntity.class);
+    public ActividadEventoEntity find(Long eventosId, Long actividadEventoEventosId) {
+        LOGGER.log(Level.INFO, "Consultando la actividad del evento con id={0} del evento con id = " + eventosId, actividadEventoEventosId);
+        TypedQuery<ActividadEventoEntity> q = em.createQuery("select p from ActividadEventoEntity p where (p.evento.id = :eventoid) and (p.id = :actividadesEventoId)", ActividadEventoEntity.class);
+        q.setParameter("eventoid", eventosId);
         q.setParameter("actividadesEventoId", actividadEventoEventosId);
         List<ActividadEventoEntity> results = q.getResultList();
         ActividadEventoEntity actividad = null;
@@ -75,7 +72,7 @@ public class ActividadEventoPersistence {
         } else if (results.size() >= 1) {
             actividad = results.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar la actividad con id = {0}", actividadEventoEventosId);
+        LOGGER.log(Level.INFO, "Saliendo de consultar la actividad del evento con id = {0} del evento con id =" + eventosId, actividadEventoEventosId);
         return actividad;
     }
 

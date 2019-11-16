@@ -11,7 +11,6 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -30,10 +29,6 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private EventoEntity evento;
-
-    @PodamExclude
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private MultimediaEntity multimedia;
 
     /**
      * Atributo que modela el nombre de la actividad del evento
@@ -148,19 +143,5 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
      */
     public void setEvento(EventoEntity evento) {
         this.evento = evento;
-    }
-
-    /**
-     * @return the multimedia
-     */
-    public MultimediaEntity getMultimedia() {
-        return multimedia;
-    }
-
-    /**
-     * @param multimedia the multimedia to set
-     */
-    public void setMultimedia(MultimediaEntity multimedia) {
-        this.multimedia = multimedia;
     }
 }

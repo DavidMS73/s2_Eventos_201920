@@ -9,11 +9,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 
 /**
- *
  * @author Samuel Osorio
  */
 @Entity
-public class MedioPagoEntity extends BaseEntity implements Serializable {
+public abstract class MedioPagoEntity extends BaseEntity implements Serializable {
 
     /**
      * numero de Recibo del pago
