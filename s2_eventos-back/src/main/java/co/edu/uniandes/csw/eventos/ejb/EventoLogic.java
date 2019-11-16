@@ -149,7 +149,6 @@ public class EventoLogic {
      */
     public EventoEntity updateEvento(Long eventosId, EventoEntity eventoEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el evento con id = {0}", eventosId);
-
         EventoEntity newEntity = persistence.update(eventoEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el evento con id = {0}", eventoEntity.getId());
         return newEntity;

@@ -61,31 +61,31 @@ public class LugarLogic {
     }
 
     public LugarEntity getLugar(Long id) {
-        LOGGER.log(Level.INFO, "Se empieza la busqueda de lugar con id = (0)", id);
+        LOGGER.log(Level.INFO, "Se empieza la busqueda de lugar con id = {0}", id);
         LugarEntity en = persistence.find(id);
 
         if (id == null) {
-            LOGGER.log(Level.INFO, "No existe multimedia con id = (0)");
+            LOGGER.log(Level.INFO, "No existe multimedia con id = {0}");
         }
 
-        LOGGER.log(Level.INFO, "Termina el proceso de consultar el lugar con id = (0)");
+        LOGGER.log(Level.INFO, "Termina el proceso de consultar el lugar con id = {0}");
         return en;
     }
 
     public LugarEntity updateLugar(Long id, LugarEntity entity) {
-        LOGGER.log(Level.INFO, "Se inicia el proceso de actualizar la multimedia con id = (0)", id);
+        LOGGER.log(Level.INFO, "Se inicia el proceso de actualizar la multimedia con id = {0}", id);
         LugarEntity en = persistence.update(entity);
-        LOGGER.log(Level.INFO, "Se termina la actualizacion del lugar con id = (0)", entity.getId());
+        LOGGER.log(Level.INFO, "Se termina la actualizacion del lugar con id = {0}", entity.getId());
         return en;
     }
 
     public void deleteLugar(Long id) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Se inicia el proceso de eliminar el lugar con id = (0)");
+        LOGGER.log(Level.INFO, "Se inicia el proceso de eliminar el lugar con id = {0}");
         List<EventoEntity> eventos = getLugar(id).getEventos();
         if (eventos != null && !eventos.isEmpty()) {
             throw new BusinessLogicException("No se puede borrar el lugar con id = " + id + " porque tiene eventos asociados");
         }
         persistence.delete(id);
-        LOGGER.log(Level.INFO, "Termina el proceso de elminar la multimedia con id = (0)");
+        LOGGER.log(Level.INFO, "Termina el proceso de elminar la multimedia con id = {0}");
     }
 }
