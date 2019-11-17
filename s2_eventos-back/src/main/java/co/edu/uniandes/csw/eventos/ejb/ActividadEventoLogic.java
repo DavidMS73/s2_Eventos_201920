@@ -92,9 +92,9 @@ public class ActividadEventoLogic {
      * @return Colección de objetos de ActividadEventoEntity.
      */
     public List<ActividadEventoEntity> getActividadesEvento(Long eventosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar las actividad asociadas al evento con id = {0}", eventosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar las actividades asociadas al evento con id = {0}", eventosId);
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar las actividad asociadas al evento con id = {0}", eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar las actividades asociadas al evento con id = {0}", eventosId);
         return eventoEntity.getActividadesEvento();
     }
 
@@ -144,7 +144,7 @@ public class ActividadEventoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la actividad con id = {0}", actividadesId);
         ActividadEventoEntity old = getActividadEvento(eventosId, actividadesId);
         if (old == null) {
-            throw new BusinessLogicException("La actividad con id = " + actividadesId + " no esta asociado al evento con id = " + eventosId);
+            throw new BusinessLogicException("La actividad con id = " + actividadesId + " no está asociada al evento con id = " + eventosId);
         }
         persistence.delete(old.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar la actividad con id = {0}", actividadesId);

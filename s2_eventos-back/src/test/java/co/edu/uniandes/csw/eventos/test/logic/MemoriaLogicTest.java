@@ -34,6 +34,21 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class MemoriaLogicTest {
 
+    private PodamFactory factory = new PodamFactoryImpl();
+
+    @Inject
+    private MemoriaLogic memoriaLogic;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Inject
+    private UserTransaction utx;
+
+    private List<MemoriaEntity> data = new ArrayList<>();
+
+    private List<EventoEntity> dataEvento = new ArrayList<>();
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -43,24 +58,6 @@ public class MemoriaLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-
-    private PodamFactory factory = new PodamFactoryImpl();
-
-    @Inject
-    private MemoriaLogic memoriaLogic;
-
-    @PersistenceContext
-    private EntityManager em;
-    
-      @Inject
-    private MemoriaPersistence memoriaPersistence;
-
-    @Inject
-    private UserTransaction utx;
-
-    private List<MemoriaEntity> data = new ArrayList<>();
-
-    private List<EventoEntity> dataEventos = new ArrayList<>();
 
     @Before
     public void configTest() {
@@ -87,56 +84,60 @@ public class MemoriaLogicTest {
 
     private void insertData() {
         for (int i = 0; i < 3; i++) {
+            EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
+            em.persist(entity);
+            dataEvento.add(entity);
+        }
+        for (int i = 0; i < 3; i++) {
             MemoriaEntity entity = factory.manufacturePojo(MemoriaEntity.class);
+            entity.setEvento(dataEvento.get(1));
             em.persist(entity);
             data.add(entity);
         }
-        for (int i = 0; i < 3; i++) {
-            EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
-            em.persist(entity);
-            dataEventos.add(entity);
-        }
-        dataEventos.get(0).setMemorias(data);
-        for(MemoriaEntity m: dataEventos.get(0).getMemorias())
-        {
-            m.setEvento(dataEventos.get(0));
-           memoriaPersistence.update(m); 
-        }
-        
     }
 
     @Test
     public void createMemoria() throws BusinessLogicException {
-
-        MemoriaEntity newMemoria = data.get(0);
-        MemoriaEntity result = memoriaLogic.createMemoria(newMemoria);
+        MemoriaEntity newEntity = factory.manufacturePojo(MemoriaEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
+        MemoriaEntity result = memoriaLogic.createMemoria(dataEvento.get(1).getId(), newEntity);
         Assert.assertNotNull(result);
 
         MemoriaEntity entity = em.find(MemoriaEntity.class, result.getId());
-        Assert.assertEquals(entity.getLugar(), result.getLugar());
-        Assert.assertEquals(entity.getFecha(), result.getFecha());
 
+        Assert.assertEquals(entity.getId(), result.getId());
+        Assert.assertEquals(entity.getFecha(), result.getFecha());
+        Assert.assertEquals(entity.getLugar(), result.getLugar());
+        Assert.assertEquals(entity.getImagen(), result.getImagen());
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createMemoriaLugarNull() throws BusinessLogicException {
-
         MemoriaEntity newEntity = factory.manufacturePojo(MemoriaEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
         newEntity.setLugar(null);
-        MemoriaEntity result = memoriaLogic.createMemoria(newEntity);
+        memoriaLogic.createMemoria(dataEvento.get(1).getId(), newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createMemoriaFechaNull() throws BusinessLogicException {
-
         MemoriaEntity newEntity = factory.manufacturePojo(MemoriaEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
         newEntity.setFecha(null);
-        MemoriaEntity result = memoriaLogic.createMemoria(newEntity);
+        memoriaLogic.createMemoria(dataEvento.get(1).getId(), newEntity);
+    }
+
+    @Test(expected = BusinessLogicException.class)
+    public void createMemoriaImagenNull() throws BusinessLogicException {
+        MemoriaEntity newEntity = factory.manufacturePojo(MemoriaEntity.class);
+        newEntity.setEvento(dataEvento.get(1));
+        newEntity.setImagen(null);
+        memoriaLogic.createMemoria(dataEvento.get(1).getId(), newEntity);
     }
 
     @Test
     public void getMemoriasTest() {
-        List<MemoriaEntity> list = memoriaLogic.getMemorias();
+        List<MemoriaEntity> list = memoriaLogic.getMemorias(dataEvento.get(1).getId());
         Assert.assertEquals(data.size(), list.size());
         for (MemoriaEntity entity : list) {
             boolean found = false;
@@ -152,11 +153,12 @@ public class MemoriaLogicTest {
     @Test
     public void getMemoriaTest() {
         MemoriaEntity entity = data.get(0);
-        MemoriaEntity resultEntity = memoriaLogic.getMemoria(entity.getId());
+        MemoriaEntity resultEntity = memoriaLogic.getMemoria(dataEvento.get(1).getId(), entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getLugar(), resultEntity.getLugar());
         Assert.assertEquals(entity.getFecha(), resultEntity.getFecha());
+        Assert.assertEquals(entity.getImagen(), resultEntity.getImagen());
     }
 
     @Test
@@ -164,18 +166,28 @@ public class MemoriaLogicTest {
         MemoriaEntity entity = data.get(0);
         MemoriaEntity pojoEntity = factory.manufacturePojo(MemoriaEntity.class);
         pojoEntity.setId(entity.getId());
-        memoriaLogic.updateMemoria(pojoEntity.getId(), pojoEntity);
+
+        memoriaLogic.updateMemoria(dataEvento.get(1).getId(), pojoEntity);
+
         MemoriaEntity resp = em.find(MemoriaEntity.class, entity.getId());
+
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
         Assert.assertEquals(pojoEntity.getLugar(), resp.getLugar());
         Assert.assertEquals(pojoEntity.getFecha(), resp.getFecha());
+        Assert.assertEquals(pojoEntity.getImagen(), resp.getImagen());
     }
 
     @Test
     public void deleteMemoriaTest() throws BusinessLogicException {
-        MemoriaEntity entity = data.get(1);
-        memoriaLogic.deleteMemoria(entity.getId());
+        MemoriaEntity entity = data.get(0);
+        memoriaLogic.deleteMemoria(dataEvento.get(1).getId(), entity.getId());
         MemoriaEntity deleted = em.find(MemoriaEntity.class, entity.getId());
         Assert.assertNull(deleted);
+    }
+
+    @Test(expected = BusinessLogicException.class)
+    public void deleteMemoriaConEventoNoAsociadoTest() throws BusinessLogicException {
+        MemoriaEntity entity = data.get(0);
+        memoriaLogic.deleteMemoria(dataEvento.get(0).getId(), entity.getId());
     }
 }

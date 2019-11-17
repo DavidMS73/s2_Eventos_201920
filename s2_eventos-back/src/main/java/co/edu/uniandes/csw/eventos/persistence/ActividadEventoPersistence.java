@@ -92,6 +92,6 @@ public class ActividadEventoPersistence {
         LOGGER.log(Level.INFO, "Borrando la actividad del evento con id={0}", actividadEventoId);
         ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, actividadEventoId);
         em.remove(entity);
-        LOGGER.log(Level.INFO, "Saliendo de borrar la actididad con id = {0}", actividadEventoId);
+        LOGGER.log(Level.INFO, "Saliendo de borrar la actividad con id = {0}", actividadEventoId);
     }
 }

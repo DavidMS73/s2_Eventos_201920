@@ -160,11 +160,11 @@ public class EventoResource {
      *
      * Este método conecta la ruta de /eventos con las rutas de
      * /actividadesEvento que dependen del evento, es una redirección al
-     * servicio que maneja el segmento de la URL que se encarga de las reseñas.
+     * servicio que maneja el segmento de la URL que se encarga de las actividades.
      *
      * @param eventosId El ID del evento con respecto al cual se accede al
      * servicio.
-     * @return El servicio de Actividad para ese evento en particular.\
+     * @return El servicio de Actividad para ese evento en particular.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el evento.
      */
@@ -174,6 +174,28 @@ public class EventoResource {
             throw new WebApplicationException("El recurso /eventos/" + eventosId + "/actividades no existe.", 404);
         }
         return ActividadEventoResource.class;
+    }
+    
+    /**
+     * Conexión con el servicio de memorias para un evento.
+     * {@link MemoriaResource}
+     *
+     * Este método conecta la ruta de /eventos con las rutas de
+     * /memorias que dependen del evento, es una redirección al
+     * servicio que maneja el segmento de la URL que se encarga de las memorias.
+     *
+     * @param eventosId El ID del evento con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de Memoria para ese evento en particular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el evento.
+     */
+    @Path("{eventosId: \\d+}/memorias")
+    public Class<MemoriaResource> getMemoriaResource(@PathParam("eventosId") Long eventosId) {
+        if (eventoLogic.getEvento(eventosId) == null) {
+            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/memorias no existe.", 404);
+        }
+        return MemoriaResource.class;
     }
 
     /**

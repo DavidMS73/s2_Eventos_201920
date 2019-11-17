@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.eventos.podam.DateStrategy;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,7 +32,7 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     private Date fecha;
 
     @PodamExclude
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private EventoEntity evento;
 
     /**

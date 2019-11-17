@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class MemoriaIT {
 
-    private static final String COLLECTION = "MemoriaResourceTest.postman_collection";
+    private static final String COLLECTION = "MemoriaResource.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {

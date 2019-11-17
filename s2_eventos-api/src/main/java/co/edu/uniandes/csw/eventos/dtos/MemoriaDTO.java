@@ -5,9 +5,11 @@
  */
 package co.edu.uniandes.csw.eventos.dtos;
 
+import co.edu.uniandes.csw.eventos.adapters.DateAdapter;
 import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
 import java.io.Serializable;
 import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -23,9 +25,12 @@ public class MemoriaDTO implements Serializable {
 
     private EventoDTO evento;
 
+    private String imagen;
+
     /**
      * Atributo que modela la fecha de la memoria
      */
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fecha;
 
     public MemoriaDTO(MemoriaEntity entidad) {
@@ -33,10 +38,11 @@ public class MemoriaDTO implements Serializable {
             setId(entidad.getId());
             setLugar(entidad.getLugar());
             setFecha(entidad.getFecha());
+            setImagen(entidad.getImagen());
             if (entidad.getEvento() != null) {
-                this.evento = new EventoDTO(entidad.getEvento());
+                this.setEvento(new EventoDTO(entidad.getEvento()));
             } else {
-                this.evento = null;
+                this.setEvento(null);
             }
         }
     }
@@ -50,8 +56,9 @@ public class MemoriaDTO implements Serializable {
         entidad.setId(this.getId());
         entidad.setLugar(this.getLugar());
         entidad.setFecha(this.getFecha());
-        if (this.evento != null) {
-            entidad.setEvento(this.evento.toEntity());
+        entidad.setImagen(this.getImagen());
+        if (this.getEvento() != null) {
+            entidad.setEvento(this.getEvento().toEntity());
         }
         return entidad;
     }
@@ -82,6 +89,20 @@ public class MemoriaDTO implements Serializable {
      */
     public void setLugar(String lugar) {
         this.lugar = lugar;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     /**

@@ -48,7 +48,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
      * Atributo que modela las memorias
      */
     @PodamExclude
-    @OneToMany(mappedBy = "evento")
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MemoriaEntity> memorias = new ArrayList<>();
 
     /**

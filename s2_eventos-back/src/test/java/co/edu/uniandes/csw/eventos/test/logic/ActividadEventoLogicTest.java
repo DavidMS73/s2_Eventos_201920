@@ -246,7 +246,7 @@ public class ActividadEventoLogicTest {
         newEntity.setFecha(c.getTime());
         actividadLogic.createActividadEvento(dataEvento.get(1).getId(), newEntity);
     }
-
+    
     /**
      * Prueba para consultar la lista de libros
      *
