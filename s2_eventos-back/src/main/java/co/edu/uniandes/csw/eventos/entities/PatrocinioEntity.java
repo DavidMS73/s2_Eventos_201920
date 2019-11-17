@@ -38,7 +38,7 @@ public class PatrocinioEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @ManyToMany(mappedBy = "patrocinios")
-    private List<EventoEntity> eventos = new ArrayList<EventoEntity>();
+    private List<EventoEntity> eventos = new ArrayList<>();
 
     public PatrocinioEntity() {
         //Constructor

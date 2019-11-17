@@ -24,7 +24,6 @@ public class LongPositiveStrategy implements AttributeStrategy<Long> {
     @Override
     public Long getValue() {
         long leftLimit = 1L;
-        long r = leftLimit + sr.nextLong();
-        return r;
+        return leftLimit + sr.nextLong();
     }
 }

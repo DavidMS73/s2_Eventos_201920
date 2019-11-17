@@ -32,22 +32,17 @@ public class TarjetaPersistence {
     }
 
     public TarjetaEntity find(Long usuarioId, Long tarjetaId) {
-        LOGGER.log(Level.INFO, "Consultando la tarjeta del usuario con id = {0} del usuario con id = " + usuarioId, tarjetaId);
+        LOGGER.log(Level.INFO, "Consultando la tarjeta del usuario con id = {0}", tarjetaId);
         TypedQuery<TarjetaEntity> q = em.createQuery("select p from TarjetaEntity p where(p.usuario.id = :usuarioId) and (p.id = :tarjetaId)", TarjetaEntity.class);
         q.setParameter("usuarioId", usuarioId);
         q.setParameter("tarjetaId", tarjetaId);
         
         List<TarjetaEntity> results = q.getResultList();
         TarjetaEntity tarjeta = null;
-        if (results == null) {
-            tarjeta = null;
-        } else if (results.isEmpty()) {
-            tarjeta = null;
-        } else if (results.size() >= 1) {
+        if (results != null && !results.isEmpty()) {
             tarjeta = results.get(0);
         }
-        
-        LOGGER.log(Level.INFO, "Saliendo de consultar la tarjeta del usuario con id = {0} del usuario con id = " + usuarioId, tarjetaId);
+        LOGGER.log(Level.INFO, "Saliendo de consultar la tarjeta del usuario con id = {0}", tarjetaId);
         return tarjeta;
     }
 
