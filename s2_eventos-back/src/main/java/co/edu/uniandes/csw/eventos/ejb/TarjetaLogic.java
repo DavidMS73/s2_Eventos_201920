@@ -52,7 +52,7 @@ public class TarjetaLogic {
     }
     
     
-    public TarjetaEntity updateTarjeta(Long usuariosId, TarjetaEntity pTarjeta) throws BusinessLogicException{
+    public TarjetaEntity updateTarjeta(Long usuariosId, TarjetaEntity pTarjeta){
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar tarjeta del usuario con id = {0}", usuariosId);
         UsuarioEntity u = usuarioPersistence.find(usuariosId);
         pTarjeta.setUsuario(u);
@@ -123,10 +123,5 @@ public class TarjetaLogic {
         UsuarioEntity u = usuarioPersistence.find(usuariosId);
         LOGGER.log(Level.INFO, "Termina proceso de consultar todas las tarjetas");
         return u.getTarjetas();
-    }
-    
-    
-    private boolean validateNumero(String pNumero){
-        return !(pNumero == null || pNumero.isEmpty() || pNumero.length() != 16);
     }
 }
