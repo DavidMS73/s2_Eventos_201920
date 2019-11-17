@@ -274,10 +274,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
         return memorias;
     }
 
-    public void addMemorias(MemoriaEntity m) {
-        getMemorias().add(m);
-    }
-
     /**
      * @param memorias the memorias to set
      */
