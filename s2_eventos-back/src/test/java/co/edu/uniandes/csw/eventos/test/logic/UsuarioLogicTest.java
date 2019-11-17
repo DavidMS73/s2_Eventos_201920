@@ -117,6 +117,18 @@ public class UsuarioLogicTest {
         Assert.assertEquals(entity.getCodigoQR(), result.getCodigoQR());
         Assert.assertEquals(entity.getTipo(), result.getTipo());
     }
+    
+    /**
+     * Prueba para crear un Usuario con un correo que ya existe
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConMismoCorreoTest() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setCorreo(data.get(0).getCorreo());
+        usuarioLogic.createUsuario(newEntity);
+    }
 
     /**
      * Prueba para consultar la lista de Authors.

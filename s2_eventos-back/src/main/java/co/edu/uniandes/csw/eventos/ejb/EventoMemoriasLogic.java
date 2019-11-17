@@ -47,11 +47,11 @@ public class EventoMemoriasLogic {
     }
 
     public MemoriaEntity getMemoria(Long eventosId, Long memoriasId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la memoria con id = {0} del evento con id = " + eventosId, memoriasId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la memoria con id = {0}", memoriasId);
         List<MemoriaEntity> memorias = eventoPersistence.find(eventosId).getMemorias();
         MemoriaEntity memoriaEntity = memoriaPersistence.find(memoriasId);
         int index = memorias.indexOf(memoriaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la memoria con id = {0} del evento con id = " + eventosId, memoriasId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la memoria con id = {0}", memoriasId);
         if (index >= 0) {
             return memorias.get(index);
         }

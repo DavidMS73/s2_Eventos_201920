@@ -44,11 +44,11 @@ public class PatrocinioEventosLogic {
         return patrocinioPersistence.find(patrociniosId).getEventos();
     }
      public EventoEntity getEvento(Long patrociniosId, Long eventosId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0} del patrocinio con id = " + patrociniosId, eventosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0}", eventosId);
         List<EventoEntity> eventos = patrocinioPersistence.find(patrociniosId).getEventos();
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
         int index = eventos.indexOf(eventoEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0} del patrocinio con id = " + patrociniosId, eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0}", eventosId);
         if (index >= 0) {
             return eventos.get(index);
         }

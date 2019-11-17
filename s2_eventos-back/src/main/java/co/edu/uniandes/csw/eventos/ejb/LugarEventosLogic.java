@@ -49,11 +49,11 @@ public class LugarEventosLogic {
     }
 
     public EventoEntity getEvento(Long lugaresId, Long eventosId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0} del lugar con id = " + lugaresId, eventosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0}", eventosId);
         List<EventoEntity> eventos = lugarPersistence.find(lugaresId).getEventos();
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
         int index = eventos.indexOf(eventoEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0} del lugar con id = " + lugaresId, eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0}", eventosId);
         if (index >= 0) {
             return eventos.get(index);
         }

@@ -71,11 +71,11 @@ public class UsuarioEventosLogic {
      * @throws BusinessLogicException Si el evento no está asociado al usuario
      */
     public EventoEntity getEvento(Long usuariosId, Long eventosId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0} del usuario con id = " + usuariosId, eventosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el evento con id = {0}", eventosId);
         List<EventoEntity> eventos = usuarioPersistence.find(usuariosId).getEventos();
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
         int index = eventos.indexOf(eventoEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0} del usuario con id = " + usuariosId, eventosId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el evento con id = {0}", eventosId);
         if (index >= 0) {
             return eventos.get(index);
         }

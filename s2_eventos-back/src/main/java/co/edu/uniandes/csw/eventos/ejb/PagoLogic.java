@@ -61,7 +61,7 @@ public class PagoLogic {
         return en;
     }
 
-    public void deletePago(Long id) throws BusinessLogicException {
+    public void deletePago(Long id){
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el pago con id = {0}", id);
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el pago con id = {0}", id);

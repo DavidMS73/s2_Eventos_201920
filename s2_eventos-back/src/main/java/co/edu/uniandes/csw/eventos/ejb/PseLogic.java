@@ -67,7 +67,7 @@ public class PseLogic {
         return en;
     }
 
-    public void deletePse(Long id) throws BusinessLogicException {
+    public void deletePse(Long id) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el PSE con id = {0}", id);
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el PSE con id = {0}", id);

@@ -109,7 +109,7 @@ public class ActividadEventoLogic {
      *
      */
     public ActividadEventoEntity getActividadEvento(Long eventosId, Long actividadesId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la actividad con id = {0} del evento con id = " + eventosId, actividadesId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la actividad con id = {0}", actividadesId);
         return persistence.find(eventosId, actividadesId);
     }
 
@@ -122,12 +122,12 @@ public class ActividadEventoLogic {
      * @return actividad con los cambios actualizados en la base de datos
      */
     public ActividadEventoEntity updateActividadEvento(Long eventosId, ActividadEventoEntity actividadEventoEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0} del evento con id = " + eventosId, actividadEventoEntity.getId());
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0}", actividadEventoEntity.getId());
 
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
         actividadEventoEntity.setEvento(eventoEntity);
         persistence.update(actividadEventoEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0} del evento con id = " + eventosId, actividadEventoEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", actividadEventoEntity.getId());
         return actividadEventoEntity;
     }
 
@@ -141,12 +141,12 @@ public class ActividadEventoLogic {
      *
      */
     public void deleteActividadEvento(Long eventosId, Long actividadesId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la actividad con id = {0} del evento con id = " + eventosId, actividadesId);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la actividad con id = {0}", actividadesId);
         ActividadEventoEntity old = getActividadEvento(eventosId, actividadesId);
         if (old == null) {
             throw new BusinessLogicException("La actividad con id = " + actividadesId + " no esta asociado al evento con id = " + eventosId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la actividad con id = {0} del evento con id = " + eventosId, actividadesId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la actividad con id = {0}", actividadesId);
     }
 }
