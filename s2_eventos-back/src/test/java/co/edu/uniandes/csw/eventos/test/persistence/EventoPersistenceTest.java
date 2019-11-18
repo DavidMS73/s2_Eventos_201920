@@ -145,7 +145,9 @@ public class EventoPersistenceTest {
         
         evento.setId(null);
         Assert.assertNotNull(evento.hashCode());
-        Assert.assertFalse(evento.equals(entity));
+        
+        String test = "test";
+        Assert.assertFalse(evento.equals(test));
     }
 
     /**
