@@ -339,7 +339,7 @@ public class EventoEntity extends BaseEntity implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (! super.equals(obj)) {
+        if (!super.equals(obj)) {
             return false;
         }
         EventoEntity other = (EventoEntity) obj;
@@ -348,22 +348,6 @@ public class EventoEntity extends BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 13 * hash + Objects.hashCode(this.actividadesEvento);
-        hash = 13 * hash + Objects.hashCode(this.lugares);
-        hash = 13 * hash + Objects.hashCode(this.memorias);
-        hash = 13 * hash + Objects.hashCode(this.pagos);
-        hash = 13 * hash + Objects.hashCode(this.patrocinios);
-        hash = 13 * hash + Objects.hashCode(this.usuarios);
-        hash = 13 * hash + Objects.hashCode(this.nombre);
-        hash = 13 * hash + Objects.hashCode(this.categoria);
-        hash = 13 * hash + Objects.hashCode(this.descripcion);
-        hash = 13 * hash + Objects.hashCode(this.fechaInicio);
-        hash = 13 * hash + Objects.hashCode(this.fechaFin);
-        hash = 13 * hash + Objects.hashCode(this.detallesAdicionales);
-        hash = 13 * hash + Objects.hashCode(this.entradasRestantes);
-        hash = 13 * hash + Objects.hashCode(this.valor);
-        hash = 13 * hash + Objects.hashCode(this.imagen);
-        return hash;
+        return super.hashCode();
     }
 }
