@@ -142,6 +142,10 @@ public class EventoPersistenceTest {
         Assert.assertEquals(evento.getDetallesAdicionales(), entity.getDetallesAdicionales());
         Assert.assertEquals(evento.getEntradasRestantes(), entity.getEntradasRestantes());
         Assert.assertEquals(evento.getValor(), entity.getValor());
+        
+        evento.setId(null);
+        Assert.assertNotNull(evento.hashCode());
+        Assert.assertFalse(evento.equals(entity));
     }
 
     /**
