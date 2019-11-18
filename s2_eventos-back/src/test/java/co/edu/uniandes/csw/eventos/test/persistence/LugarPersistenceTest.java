@@ -151,13 +151,12 @@ public class LugarPersistenceTest {
     @Test
     public void findLugarByNameTest() {
         LugarEntity entity = data.get(0);
-        LugarEntity lugEntity = lp.findByName(entity.getSalon());
+        LugarEntity newEntity = lp.findByName(entity.getNombre());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
 
-        Assert.assertNotNull(lugEntity);
-        Assert.assertEquals(entity.getSalon(), lugEntity.getSalon());
-
-        lugEntity = lp.findByName(null);
-        Assert.assertNull(lugEntity);
+        newEntity = lp.findByName(null);
+        Assert.assertNull(newEntity);
     }
 
 }

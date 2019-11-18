@@ -22,11 +22,24 @@ import javax.inject.Inject;
 @Stateless
 public class LugarLogic {
 
+    /**
+     * Logger del lugar
+     */
     private static final Logger LOGGER = Logger.getLogger(LugarLogic.class.getName());
 
+    /**
+     * Persistencia del lugar
+     */
     @Inject
     private LugarPersistence persistence;
 
+    /**
+     * Crea un lugar en la persistencia
+     * 
+     * @param lugar la entidad que representa el lugar a persistir
+     * @return Entidad del lugar luego de persistirla
+     * @throws BusinessLogicException En caso de fallar una de las reglas de negocio
+     */
     public LugarEntity createLugar(LugarEntity lugar) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Se comienza la creacion de lugares");
         if (lugar.getSalon() == null) {
@@ -53,6 +66,11 @@ public class LugarLogic {
         return lugar;
     }
 
+    /**
+     * Obtener todos los lugares existentes en la base de datos
+     *
+     * @return lsita de eventos
+     */
     public List<LugarEntity> getLugares() {
         LOGGER.log(Level.INFO, "Se empieza el proceso de buscar lugares.");
         List<LugarEntity> lugares = persistence.findAll();
@@ -60,6 +78,12 @@ public class LugarLogic {
         return lugares;
     }
 
+    /**
+     * Obtener un lugar por medio de su Id
+     *
+     * @param id: id del evento para ser buscado
+     * @return el evento solicitado por medio de su id
+     */
     public LugarEntity getLugar(Long id) {
         LOGGER.log(Level.INFO, "Se empieza la busqueda de lugar con id = {0}", id);
         LugarEntity en = persistence.find(id);
@@ -72,6 +96,13 @@ public class LugarLogic {
         return en;
     }
 
+    /**
+     * Actualiza un lugar
+     *
+     * @param id: id del evento para buscarlo en la base de datos
+     * @param entity: eventos con los cambios para ser actualizado
+     * @return el evento con los cambios actualizados en la base de datos
+     */
     public LugarEntity updateLugar(Long id, LugarEntity entity) {
         LOGGER.log(Level.INFO, "Se inicia el proceso de actualizar la multimedia con id = {0}", id);
         LugarEntity en = persistence.update(entity);
@@ -79,6 +110,12 @@ public class LugarLogic {
         return en;
     }
 
+    /**
+     * Borrar un lugar
+     *
+     * @param id: id del evento a borrar
+     * @throws BusinessLogicException si el lugar a borrar tiene eventos o no exisre
+     */
     public void deleteLugar(Long id) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Se inicia el proceso de eliminar el lugar con id = {0}");
         List<EventoEntity> eventos = getLugar(id).getEventos();
