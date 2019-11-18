@@ -339,24 +339,31 @@ public class EventoEntity extends BaseEntity implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+        if (! super.equals(obj)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final EventoEntity other = (EventoEntity) obj;
-        return Objects.equals(this.getId(), other.getId());
+        EventoEntity other = (EventoEntity) obj;
+        return this.getId().equals(other.getId());
     }
 
     @Override
     public int hashCode() {
-        if (this.getId() != null) {
-            return this.getId().hashCode();
-        }
-        return super.hashCode();
+        int hash = 3;
+        hash = 13 * hash + Objects.hashCode(this.actividadesEvento);
+        hash = 13 * hash + Objects.hashCode(this.lugares);
+        hash = 13 * hash + Objects.hashCode(this.memorias);
+        hash = 13 * hash + Objects.hashCode(this.pagos);
+        hash = 13 * hash + Objects.hashCode(this.patrocinios);
+        hash = 13 * hash + Objects.hashCode(this.usuarios);
+        hash = 13 * hash + Objects.hashCode(this.nombre);
+        hash = 13 * hash + Objects.hashCode(this.categoria);
+        hash = 13 * hash + Objects.hashCode(this.descripcion);
+        hash = 13 * hash + Objects.hashCode(this.fechaInicio);
+        hash = 13 * hash + Objects.hashCode(this.fechaFin);
+        hash = 13 * hash + Objects.hashCode(this.detallesAdicionales);
+        hash = 13 * hash + Objects.hashCode(this.entradasRestantes);
+        hash = 13 * hash + Objects.hashCode(this.valor);
+        hash = 13 * hash + Objects.hashCode(this.imagen);
+        return hash;
     }
 }
