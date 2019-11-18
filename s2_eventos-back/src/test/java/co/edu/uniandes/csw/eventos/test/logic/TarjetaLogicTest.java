@@ -51,15 +51,15 @@ public class TarjetaLogicTest {
 
     @Inject
     private TarjetaLogic tarjetaLogic;
-    
+
     @Inject
     private UserTransaction utx;
-    
+
     private ArrayList<TarjetaEntity> data = new ArrayList<>();
-    
+
     private ArrayList<UsuarioEntity> dataUsuario = new ArrayList<>();
-    
-     /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -78,7 +78,7 @@ public class TarjetaLogicTest {
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
@@ -91,19 +91,18 @@ public class TarjetaLogicTest {
      * pruebas.
      */
     private void insertData() {
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
             em.persist(entity);
             dataUsuario.add(entity);
         }
-         for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             TarjetaEntity entity = factory.manufacturePojo(TarjetaEntity.class);
             entity.setUsuario(dataUsuario.get(1));
             em.persist(entity);
             data.add(entity);
-        }       
+        }
     }
-
 
     @Test
     public void createTarjetaTest() throws BusinessLogicException {
@@ -123,46 +122,46 @@ public class TarjetaLogicTest {
     public void createTarjetaNumNullTest() throws BusinessLogicException {
         TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
         newEntity.setNumeroTarjeta(null);
-        TarjetaEntity result = tarjetaLogic.createTarjeta(dataUsuario.get(0).getId(), newEntity);
+        tarjetaLogic.createTarjeta(dataUsuario.get(0).getId(), newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createTarjetaNumeroInvalidoTest1() throws BusinessLogicException {
         TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
         newEntity.setNumeroTarjeta("1000");
-        TarjetaEntity result = tarjetaLogic.createTarjetaNumeroInvalido(newEntity);
+        tarjetaLogic.createTarjeta(dataUsuario.get(0).getId(), newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createTarjetaNumeroInvalidoTest2() throws BusinessLogicException {
         TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
         newEntity.setNumeroTarjeta("11111111111111111");
-        TarjetaEntity result = tarjetaLogic.createTarjetaNumeroInvalido(newEntity);
+        tarjetaLogic.createTarjeta(dataUsuario.get(0).getId(), newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createTarjetaTipoNullTest() throws BusinessLogicException {
         TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
         newEntity.setTipoTarjeta(null);
-        TarjetaEntity result = tarjetaLogic.createTarjetaTipoNull(newEntity);
+        tarjetaLogic.createTarjeta(dataUsuario.get(0).getId(), newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createTarjetaCWInvalidoTest() throws BusinessLogicException {
         TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
         newEntity.setCw(null);
-        TarjetaEntity result = tarjetaLogic.createTarjetaCWInvalido(newEntity);
+        tarjetaLogic.createTarjeta(dataUsuario.get(0).getId(), newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createTarjetaExpiracionInvalidaTest() throws BusinessLogicException {
         TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
         newEntity.setExpiracion(null);
-        TarjetaEntity result = tarjetaLogic.createTarjetaExpiracionInvalida(newEntity);
+        tarjetaLogic.createTarjeta(dataUsuario.get(0).getId(), newEntity);
     }
-    
+
     @Test
-    public void updateTarjetaTest() throws BusinessLogicException{
+    public void updateTarjetaTest() throws BusinessLogicException {
         TarjetaEntity entity = data.get(0);
         TarjetaEntity pojoEntity = factory.manufacturePojo(TarjetaEntity.class);
         pojoEntity.setId(entity.getId());
@@ -174,28 +173,28 @@ public class TarjetaLogicTest {
         Assert.assertEquals(pojoEntity.getExpiracion(), result.getExpiracion());
         Assert.assertEquals(pojoEntity.getTipoTarjeta(), result.getTipoTarjeta());
     }
-    
+
     @Test
-    public void deleteTarjetaTest() throws BusinessLogicException{
+    public void deleteTarjetaTest() throws BusinessLogicException {
         TarjetaEntity result = data.get(0);
         tarjetaLogic.deleteTarjeta(dataUsuario.get(1).getId(), result.getId());
         TarjetaEntity deleted = em.find(TarjetaEntity.class, result.getId());
         Assert.assertNull(deleted);
     }
-    
+
     @Test
-    public void getTarjetaTest() throws BusinessLogicException{
+    public void getTarjetaTest() throws BusinessLogicException {
         TarjetaEntity entity = data.get(0);
-        TarjetaEntity result = tarjetaLogic.getTarjeta(dataUsuario.get(1).getId(),entity.getId());
+        TarjetaEntity result = tarjetaLogic.getTarjeta(dataUsuario.get(1).getId(), entity.getId());
         Assert.assertNotNull(result);
         Assert.assertEquals(entity.getNumeroTarjeta(), result.getNumeroTarjeta());
         Assert.assertEquals(entity.getCw(), result.getCw());
         Assert.assertEquals(entity.getExpiracion(), result.getExpiracion());
         Assert.assertEquals(entity.getTipoTarjeta(), result.getTipoTarjeta());
     }
-    
+
     @Test
-    public void getTarjetasTest(){
+    public void getTarjetasTest() {
         List<TarjetaEntity> list = tarjetaLogic.getTarjetas(dataUsuario.get(1).getId());
         Assert.assertEquals(data.size(), list.size());
         for (TarjetaEntity entity : list) {

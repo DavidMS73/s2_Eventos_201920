@@ -81,42 +81,6 @@ public class TarjetaLogic {
         
         return result;
     }
-
-    public TarjetaEntity createTarjetaNumeroInvalido(TarjetaEntity pTarjeta) throws BusinessLogicException {
-        if (pTarjeta.getNumeroTarjeta().length() != 16) {
-            throw new BusinessLogicException("No es un número válido de tarjeta.");
-        } else {
-            pTarjeta = persistence.create(pTarjeta);
-            return pTarjeta;
-        }
-    }
-
-    public TarjetaEntity createTarjetaTipoNull(TarjetaEntity pTarjeta) throws BusinessLogicException {
-        if (pTarjeta.getTipoTarjeta() == null) {
-            throw new BusinessLogicException("No es un tipo válido de tarjeta.");
-        } else {
-            pTarjeta = persistence.create(pTarjeta);
-            return pTarjeta;
-        }
-    }
-
-    public TarjetaEntity createTarjetaCWInvalido(TarjetaEntity pTarjeta) throws BusinessLogicException {
-        if (pTarjeta.getCw() == null) {
-            throw new BusinessLogicException("No es un cw válido de tarjeta.");
-        } else {
-            pTarjeta = persistence.create(pTarjeta);
-            return pTarjeta;
-        }
-    }
-
-    public TarjetaEntity createTarjetaExpiracionInvalida(TarjetaEntity pTarjeta) throws BusinessLogicException {
-        if (pTarjeta.getExpiracion() == null) {
-            throw new BusinessLogicException("No es un cw válido de tarjeta.");
-        } else {
-            pTarjeta = persistence.create(pTarjeta);
-            return pTarjeta;
-        }
-    }
     
     public List<TarjetaEntity> getTarjetas(Long usuariosId){
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las tarjetas");
