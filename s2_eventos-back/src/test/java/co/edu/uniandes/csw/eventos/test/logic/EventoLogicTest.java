@@ -447,19 +447,7 @@ public class EventoLogicTest {
         EventoEntity entity = data.get(1);
         eventoLogic.deleteEvento(entity.getId());
     }
-
-    /**
-     * Prueba para eliminar un evento con actividades null
-     *
-     * @throws BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void deleteEventoConActividadesNullTest() throws BusinessLogicException {
-        EventoEntity entity = data.get(1);
-        entity.setActividadesEvento(null);
-        eventoLogic.deleteEvento(entity.getId());
-    }
-
+    
     /**
      * Prueba para eliminar un evento con lugares asociados
      *
