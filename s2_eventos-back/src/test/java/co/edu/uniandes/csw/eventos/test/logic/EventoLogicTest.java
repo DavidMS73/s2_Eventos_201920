@@ -8,7 +8,9 @@ package co.edu.uniandes.csw.eventos.test.logic;
 import co.edu.uniandes.csw.eventos.ejb.EventoLogic;
 import co.edu.uniandes.csw.eventos.entities.ActividadEventoEntity;
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.LugarEntity;
 import co.edu.uniandes.csw.eventos.entities.MemoriaEntity;
+import co.edu.uniandes.csw.eventos.entities.PatrocinioEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.EventoPersistence;
@@ -77,7 +79,7 @@ public class EventoLogicTest {
     private List<UsuarioEntity> usuarioData = new ArrayList();
 
     /**
-     * Lista de actividad
+     * Lista de actividades
      */
     private List<ActividadEventoEntity> actividadesData = new ArrayList();
 
@@ -123,6 +125,8 @@ public class EventoLogicTest {
         em.createQuery("delete from UsuarioEntity").executeUpdate();
         em.createQuery("delete from MemoriaEntity").executeUpdate();
         em.createQuery("delete from ActividadEventoEntity").executeUpdate();
+        em.createQuery("delete from LugarEntity").executeUpdate();
+        em.createQuery("delete from PatrocinioEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
@@ -141,7 +145,7 @@ public class EventoLogicTest {
             em.persist(actividades);
             actividadesData.add(actividades);
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
             em.persist(entity);
             data.add(entity);
@@ -152,6 +156,20 @@ public class EventoLogicTest {
                 actividadesData.get(i).setEvento(entity);
             }
         }
+        LugarEntity lugar = factory.manufacturePojo(LugarEntity.class);
+        em.persist(lugar);
+        lugar.getEventos().add(data.get(2));
+        data.get(2).getLugares().add(lugar);
+        
+        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
+        em.persist(usuario);
+        usuario.getEventos().add(data.get(3));
+        data.get(3).getUsuarios().add(usuario);
+        
+        PatrocinioEntity patrocinio = factory.manufacturePojo(PatrocinioEntity.class);
+        em.persist(patrocinio);
+        patrocinio.getEventos().add(data.get(4));
+        data.get(4).getPatrocinios().add(patrocinio);
     }
 
     /**
@@ -390,7 +408,7 @@ public class EventoLogicTest {
      */
     @Test
     public void deleteEventoTest() throws BusinessLogicException {
-        EventoEntity entity = data.get(2);
+        EventoEntity entity = data.get(5);
         eventoLogic.deleteEvento(entity.getId());
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
@@ -437,8 +455,41 @@ public class EventoLogicTest {
      */
     @Test(expected = BusinessLogicException.class)
     public void deleteEventoConActividadesNullTest() throws BusinessLogicException {
-        EventoEntity entity = data.get(0);
+        EventoEntity entity = data.get(1);
         entity.setActividadesEvento(null);
+        eventoLogic.deleteEvento(entity.getId());
+    }
+
+    /**
+     * Prueba para eliminar un evento con lugares asociados
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEventoConLugaresAsociadosTest() throws BusinessLogicException {
+        EventoEntity entity = data.get(2);
+        eventoLogic.deleteEvento(entity.getId());
+    }
+    
+    /**
+     * Prueba para eliminar un evento con usuarios asociados
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEventoConUsuariosAsociadosTest() throws BusinessLogicException {
+        EventoEntity entity = data.get(3);
+        eventoLogic.deleteEvento(entity.getId());
+    }
+    
+    /**
+     * Prueba para eliminar un evento con patrocinios asociados
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEventoConPatrociniosAsociadosTest() throws BusinessLogicException {
+        EventoEntity entity = data.get(4);
         eventoLogic.deleteEvento(entity.getId());
     }
 }
