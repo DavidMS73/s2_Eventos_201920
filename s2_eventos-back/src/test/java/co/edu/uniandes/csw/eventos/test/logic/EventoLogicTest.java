@@ -122,6 +122,7 @@ public class EventoLogicTest {
     private void clearData() {
         em.createQuery("delete from UsuarioEntity").executeUpdate();
         em.createQuery("delete from MemoriaEntity").executeUpdate();
+        em.createQuery("delete from ActividadEventoEntity").executeUpdate();
         em.createQuery("delete from EventoEntity").executeUpdate();
     }
 
@@ -136,17 +137,18 @@ public class EventoLogicTest {
             memoriaData.add(memorias);
         }
         for (int i = 0; i < 3; i++) {
+            ActividadEventoEntity actividades = factory.manufacturePojo(ActividadEventoEntity.class);
+            em.persist(actividades);
+            actividadesData.add(actividades);
+        }
+        for (int i = 0; i < 3; i++) {
             EventoEntity entity = factory.manufacturePojo(EventoEntity.class);
             em.persist(entity);
             data.add(entity);
             if (i == 0) {
                 memoriaData.get(i).setEvento(entity);
+                actividadesData.get(i).setEvento(entity);
             }
-        }
-        for (int i = 0; i < 3; i++) {
-            ActividadEventoEntity actividades = factory.manufacturePojo(ActividadEventoEntity.class);
-            em.persist(actividades);
-            actividadesData.add(actividades);
         }
     }
 
