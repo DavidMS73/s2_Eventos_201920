@@ -346,6 +346,15 @@ public class EventoLogicTest {
         Assert.assertEquals(entity.getValor(), resultEntity.getValor());
         Assert.assertEquals(entity.getImagen(), resultEntity.getImagen());
     }
+    
+    /**
+     * Prueba para obtener un evento inexistente
+     */
+    @Test
+    public void getEventoInexistenteTest() {
+        EventoEntity resultEntity = eventoLogic.getEvento(0L);
+        Assert.assertNull(resultEntity);
+    }
 
     /**
      * Prueba para actualizar un evento
