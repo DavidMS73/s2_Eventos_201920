@@ -300,7 +300,7 @@ public class EventoLogicTest {
         newEntity.setValor(new Long(-1));
         eventoLogic.createEvento(newEntity);
     }
-    
+
     /**
      * Prueba para crear un evento sin imagen
      *
@@ -350,7 +350,7 @@ public class EventoLogicTest {
         Assert.assertEquals(entity.getValor(), resultEntity.getValor());
         Assert.assertEquals(entity.getImagen(), resultEntity.getImagen());
     }
-    
+
     /**
      * Prueba para obtener un evento inexistente
      */
@@ -397,7 +397,7 @@ public class EventoLogicTest {
     }
 
     /**
-     * Prueba para eliminar un eventos con memorias asociadas
+     * Prueba para eliminar un evento con memorias asociadas
      *
      * @throws BusinessLogicException
      */
@@ -406,7 +406,19 @@ public class EventoLogicTest {
         EventoEntity entity = data.get(0);
         eventoLogic.deleteEvento(entity.getId());
     }
-    
+
+    /**
+     * Prueba para eliminar un evento con memorias null
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEventoConMemoriasNullTest() throws BusinessLogicException {
+        EventoEntity entity = data.get(0);
+        entity.setMemorias(null);
+        eventoLogic.deleteEvento(entity.getId());
+    }
+
     /**
      * Prueba para eliminar un eventos con actividades asociadas
      *
@@ -415,6 +427,18 @@ public class EventoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void deleteEventoConActividadesAsociadasTest() throws BusinessLogicException {
         EventoEntity entity = data.get(1);
+        eventoLogic.deleteEvento(entity.getId());
+    }
+
+    /**
+     * Prueba para eliminar un evento con actividades null
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEventoConActividadesNullTest() throws BusinessLogicException {
+        EventoEntity entity = data.get(0);
+        entity.setActividadesEvento(null);
         eventoLogic.deleteEvento(entity.getId());
     }
 }
