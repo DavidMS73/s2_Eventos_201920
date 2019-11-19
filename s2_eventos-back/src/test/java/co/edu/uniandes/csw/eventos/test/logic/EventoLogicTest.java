@@ -147,6 +147,8 @@ public class EventoLogicTest {
             data.add(entity);
             if (i == 0) {
                 memoriaData.get(i).setEvento(entity);
+            }
+            if (i == 1) {
                 actividadesData.get(i).setEvento(entity);
             }
         }
@@ -388,12 +390,23 @@ public class EventoLogicTest {
      */
     @Test
     public void deleteEventoTest() throws BusinessLogicException {
-        EventoEntity entity = data.get(1);
+        EventoEntity entity = data.get(2);
         eventoLogic.deleteEvento(entity.getId());
         EventoEntity deleted = em.find(EventoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 
+    /**
+     * Prueba para eliminar un eventos con memorias asociadas
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEventoConMemoriasAsociadasTest() throws BusinessLogicException {
+        EventoEntity entity = data.get(0);
+        eventoLogic.deleteEvento(entity.getId());
+    }
+    
     /**
      * Prueba para eliminar un eventos con actividades asociadas
      *
@@ -401,7 +414,7 @@ public class EventoLogicTest {
      */
     @Test(expected = BusinessLogicException.class)
     public void deleteEventoConActividadesAsociadasTest() throws BusinessLogicException {
-        EventoEntity entity = data.get(0);
+        EventoEntity entity = data.get(1);
         eventoLogic.deleteEvento(entity.getId());
     }
 }
