@@ -40,6 +40,16 @@ public class UsuarioResource {
     @Inject
     private UsuarioLogic uLogic;
 
+    /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /usuarios/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = " no existe.";
+
     @POST
     public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UsuarioResource createEditorial: input: {0}", usuario);
@@ -64,7 +74,7 @@ public class UsuarioResource {
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: input: {0}", usuariosId);
         UsuarioEntity usuarioEntity = uLogic.getUsuario(usuariosId);
         if (usuarioEntity == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(usuarioEntity);
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
@@ -77,7 +87,7 @@ public class UsuarioResource {
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: input: usuariosId: {0} , usuario: {1}", new Object[]{usuariosId, usuario});
         usuario.setId(usuariosId);
         if (uLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(uLogic.updateUsuario(usuariosId, usuario.toEntity()));
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: output: {0}", detailDTO);
@@ -89,7 +99,7 @@ public class UsuarioResource {
     public void deleteUsuario(@PathParam("usuariosId") Long usuariosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UsuarioResource deleteUsuario: input: {0}", usuariosId);
         if (uLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         uLogic.deleteUsuario(usuariosId);
         LOGGER.info("UsuarioResource deleteUsuario: output: void");
@@ -98,7 +108,7 @@ public class UsuarioResource {
     @Path("{usuariosId: \\d+}/eventos")
     public Class<UsuarioEventosResource> getUsuarioEventosResource(@PathParam("usuariosId") Long usuariosId) {
         if (uLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         return UsuarioEventosResource.class;
     }
