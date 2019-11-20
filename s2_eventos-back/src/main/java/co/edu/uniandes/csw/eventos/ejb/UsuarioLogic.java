@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.ejb;
 
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.PseEntity;
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
@@ -89,6 +90,10 @@ public class UsuarioLogic {
         List<TarjetaEntity> tarjetas = getUsuario(usuariosId).getTarjetas();
         if (tarjetas != null && !tarjetas.isEmpty()) {
             throw new BusinessLogicException("No se puede borrar el usuario con id  = " + usuariosId + " porque tiene tarjetas registradas.");
+        }
+        List<PseEntity> pses = getUsuario(usuariosId).getPse();
+        if (pses != null && !pses.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el usuario con id  = " + usuariosId + " porque tiene pses registrados.");
         }
         persistence.delete(usuariosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrer el evento con id = {0}", usuariosId);
