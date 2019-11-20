@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.test.persistence;
 
 import co.edu.uniandes.csw.eventos.entities.PseEntity;
+import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.persistence.PsePersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,8 @@ public class PsePersistenceTest {
     private EntityManager em;
 
     private List<PseEntity> data = new ArrayList<PseEntity>();
+    
+    private List<UsuarioEntity> dataUsuario = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -73,9 +76,17 @@ public class PsePersistenceTest {
     }
 
     private void insertData() {
-        PodamFactory factory = new PodamFactoryImpl();
+         PodamFactory factory = new PodamFactoryImpl();
+        for(int i = 0; i < 3; i++){
+            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            em.persist(entity);
+            dataUsuario.add(entity);
+        }
         for (int i = 0; i < 3; i++) {
             PseEntity entity = factory.manufacturePojo(PseEntity.class);
+            if(i == 0){
+                entity.setUsuario(dataUsuario.get(0));
+            }
             em.persist(entity);
             data.add(entity);
         }
@@ -90,9 +101,6 @@ public class PsePersistenceTest {
 
         PseEntity entity = em.find(PseEntity.class, result.getId());
 
-        Assert.assertFalse(pse.equals(null));
-        Assert.assertEquals(pse.hashCode(), entity.hashCode());
-
         Assert.assertEquals(pse.getCorreo(), entity.getCorreo());
     }
 
@@ -100,7 +108,7 @@ public class PsePersistenceTest {
     public void getPsesTest() {
         List<PseEntity> list = ep.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for (PseEntity ent : list) {
+        for(PseEntity ent : list) {
             boolean found = false;
             for (PseEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
@@ -110,11 +118,10 @@ public class PsePersistenceTest {
             Assert.assertTrue(found);
         }
     }
-
     @Test
     public void getPseTest() {
         PseEntity entity = data.get(0);
-        PseEntity newEntity = ep.find(entity.getId());
+        PseEntity newEntity = ep.find(dataUsuario.get(0).getId(),entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getCorreo(), newEntity.getCorreo());
     }
@@ -143,7 +150,8 @@ public class PsePersistenceTest {
     }
 
     @Test
-    public void findPseByCorreoTest() {
+    public void findPseByCorreoTest() 
+    {
         PseEntity entity = data.get(0);
         PseEntity newEntity = ep.findByName(entity.getCorreo());
         Assert.assertNotNull(newEntity);
@@ -153,3 +161,4 @@ public class PsePersistenceTest {
         Assert.assertNull(newEntity);
     }
 }
+

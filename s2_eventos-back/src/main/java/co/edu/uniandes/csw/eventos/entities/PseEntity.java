@@ -5,8 +5,13 @@
  */
 package co.edu.uniandes.csw.eventos.entities;
 
+import co.edu.uniandes.csw.eventos.podam.CorreoStrategy;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -16,9 +21,29 @@ import javax.persistence.Entity;
 public class PseEntity extends MedioPagoEntity implements Serializable {
 
     /**
+     * @return the usuario
+     */
+    public UsuarioEntity getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(UsuarioEntity usuario) {
+        this.usuario = usuario;
+    }
+    
+    /**
      * El correo de conectado a pse
      */
+    @PodamStrategyValue(CorreoStrategy.class)
     private String correo;
+    
+    
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private UsuarioEntity usuario;
 
     public PseEntity() {
         //Constructor
@@ -38,13 +63,4 @@ public class PseEntity extends MedioPagoEntity implements Serializable {
         this.correo = pCorreo;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }

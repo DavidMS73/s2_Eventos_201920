@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.eventos.ejb;
 
 import co.edu.uniandes.csw.eventos.entities.PseEntity;
+import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.PsePersistence;
+import co.edu.uniandes.csw.eventos.persistence.UsuarioPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +27,12 @@ public class PseLogic {
 
     @Inject
     private PsePersistence persistence;
+    
+    
+    @Inject 
+    private UsuarioPersistence usuarioPersistence;
 
-    public PseEntity createPse(PseEntity pse) throws BusinessLogicException {
+    public PseEntity createPse(Long usuariosId, PseEntity pse) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de PSE");
 
         if (pse.getCorreo() == null) {
@@ -36,22 +42,25 @@ public class PseLogic {
             throw new BusinessLogicException("El correo debe existir ");
         }
 
+        UsuarioEntity usuario = usuarioPersistence.find(usuariosId);
+        pse.setUsuario(usuario);
+        
         pse = persistence.create(pse);
         LOGGER.log(Level.INFO, "Termina proceso de creación de PSE");
 
         return pse;
     }
 
-    public List<PseEntity> getPses() {
+    public List<PseEntity> getPses(Long usuariosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los PSE");
-        List<PseEntity> pses = persistence.findAll();
+        UsuarioEntity u =usuarioPersistence.find(usuariosId);
         LOGGER.log(Level.INFO, "Termina proceso de consultar todos los PSE");
-        return pses;
+        return u.getPse();
     }
 
-    public PseEntity getPse(Long pseId) {
+    public PseEntity getPse(Long usuarioId, Long pseId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el PSE con id = {0}", pseId);
-        PseEntity pseEntity = persistence.find(pseId);
+        PseEntity pseEntity = persistence.find(usuarioId, pseId);
         if (pseEntity == null) {
             LOGGER.log(Level.SEVERE, "El PSE con el id = {0} no existe", pseId);
         }
@@ -60,15 +69,27 @@ public class PseLogic {
         return pseEntity;
     }
 
-    public PseEntity updatePse(Long id, PseEntity entity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el PSE con id = {0}", id);
+    public PseEntity updatePse(Long usuarioId,Long pseId, PseEntity entity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el PSE con id = {0}", pseId);
+        UsuarioEntity u = usuarioPersistence.find(usuarioId);
+        entity.setUsuario(u);
+        PseEntity update = persistence.update(entity);
+        List<PseEntity> lista=u.getPse();
+        lista.add(update);
+        u.setPse(lista);
+
         PseEntity en = persistence.update(entity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el PSE con id = {0}", entity.getId());
         return en;
     }
 
-    public void deletePse(Long id) {
+    public void deletePse(Long usuariosId,Long id) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el PSE con id = {0}", id);
+        
+        PseEntity vieja= getPse(usuariosId, id);
+        
+        if(vieja == null)
+            throw new BusinessLogicException("El pse con id = " + id + " no existe en la cuenta del usario con id = " + usuariosId);
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el PSE con id = {0}", id);
     }
