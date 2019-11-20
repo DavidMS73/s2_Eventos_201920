@@ -14,7 +14,7 @@ import javax.persistence.Entity;
  */
 @Entity
 public class PseEntity extends MedioPagoEntity implements Serializable {
-    
+
     /**
      * El correo de conectado a pse
      */
@@ -38,4 +38,13 @@ public class PseEntity extends MedioPagoEntity implements Serializable {
         this.correo = pCorreo;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

@@ -90,6 +90,9 @@ public class PsePersistenceTest {
 
         PseEntity entity = em.find(PseEntity.class, result.getId());
 
+        Assert.assertFalse(pse.equals(null));
+        Assert.assertEquals(pse.hashCode(), entity.hashCode());
+
         Assert.assertEquals(pse.getCorreo(), entity.getCorreo());
     }
 
@@ -97,7 +100,7 @@ public class PsePersistenceTest {
     public void getPsesTest() {
         List<PseEntity> list = ep.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for(PseEntity ent : list) {
+        for (PseEntity ent : list) {
             boolean found = false;
             for (PseEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
@@ -107,6 +110,7 @@ public class PsePersistenceTest {
             Assert.assertTrue(found);
         }
     }
+
     @Test
     public void getPseTest() {
         PseEntity entity = data.get(0);
@@ -139,8 +143,7 @@ public class PsePersistenceTest {
     }
 
     @Test
-    public void findPseByCorreoTest() 
-    {
+    public void findPseByCorreoTest() {
         PseEntity entity = data.get(0);
         PseEntity newEntity = ep.findByName(entity.getCorreo());
         Assert.assertNotNull(newEntity);

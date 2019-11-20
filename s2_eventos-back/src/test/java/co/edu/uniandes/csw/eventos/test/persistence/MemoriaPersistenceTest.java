@@ -101,11 +101,14 @@ public class MemoriaPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         MemoriaEntity memoria = factory.manufacturePojo(MemoriaEntity.class);
         MemoriaEntity newMem = mp.create(memoria);
-        
+
         Assert.assertNotNull(newMem);
 
         MemoriaEntity myEntity = em.find(MemoriaEntity.class, newMem.getId());
-        
+
+        Assert.assertFalse(memoria.equals(null));
+        Assert.assertEquals(memoria.hashCode(), myEntity.hashCode());
+
         Assert.assertEquals(memoria.getId(), myEntity.getId());
         Assert.assertEquals(memoria.getLugar(), myEntity.getLugar());
         Assert.assertEquals(memoria.getFecha(), myEntity.getFecha());

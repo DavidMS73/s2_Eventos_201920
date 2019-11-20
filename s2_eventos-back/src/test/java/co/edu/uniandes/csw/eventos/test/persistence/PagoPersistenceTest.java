@@ -96,8 +96,11 @@ public class PagoPersistenceTest {
         PagoEntity result = up.create(pago);
 
         Assert.assertNotNull(result);
-
+        
         PagoEntity entity = em.find(PagoEntity.class, result.getId());
+
+        Assert.assertFalse(pago.equals(null));
+        Assert.assertEquals(pago.hashCode(), entity.hashCode());
 
         Assert.assertEquals(pago.getId(), entity.getId());
     }

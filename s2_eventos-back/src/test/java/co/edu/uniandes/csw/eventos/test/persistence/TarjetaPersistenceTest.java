@@ -51,7 +51,7 @@ public class TarjetaPersistenceTest {
     private EntityManager em;
 
     private List<TarjetaEntity> data = new ArrayList<>();
-    
+
     private List<UsuarioEntity> dataUsuario = new ArrayList<>();
 
     @Before
@@ -78,14 +78,14 @@ public class TarjetaPersistenceTest {
 
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
             em.persist(entity);
             dataUsuario.add(entity);
         }
         for (int i = 0; i < 3; i++) {
             TarjetaEntity entity = factory.manufacturePojo(TarjetaEntity.class);
-            if(i == 0){
+            if (i == 0) {
                 entity.setUsuario(dataUsuario.get(0));
             }
             em.persist(entity);
@@ -101,6 +101,9 @@ public class TarjetaPersistenceTest {
         Assert.assertNotNull(result);
 
         TarjetaEntity entity = em.find(TarjetaEntity.class, result.getId());
+
+        Assert.assertFalse(tarjeta.equals(null));
+        Assert.assertEquals(tarjeta.hashCode(), entity.hashCode());
 
         Assert.assertEquals(tarjeta.getNumeroTarjeta(), entity.getNumeroTarjeta());
     }

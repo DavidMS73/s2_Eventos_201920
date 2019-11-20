@@ -93,8 +93,16 @@ public class LugarPersistenceTest {
         Assert.assertNotNull(result);
 
         LugarEntity entity = em.find(LugarEntity.class, result.getId());
+        
+        Assert.assertFalse(lugar.equals(null));
+        Assert.assertEquals(lugar.hashCode(), entity.hashCode());
 
+        Assert.assertEquals(lugar.getId(), entity.getId());
         Assert.assertEquals(lugar.getSalon(), entity.getSalon());
+        Assert.assertEquals(lugar.getPiso(), entity.getPiso());
+        Assert.assertEquals(lugar.getBloque(), entity.getBloque());
+        Assert.assertEquals(lugar.getCapacidadAsistentes(), entity.getCapacidadAsistentes());
+        Assert.assertEquals(lugar.getUbicacionGeografica(), entity.getUbicacionGeografica());
     }
 
     @Test
@@ -122,7 +130,13 @@ public class LugarPersistenceTest {
         LugarEntity lugEntity = lp.find(entity.getId());
 
         Assert.assertNotNull(lugEntity);
+
+        Assert.assertEquals(entity.getId(), lugEntity.getId());
         Assert.assertEquals(entity.getSalon(), lugEntity.getSalon());
+        Assert.assertEquals(entity.getPiso(), lugEntity.getPiso());
+        Assert.assertEquals(entity.getBloque(), lugEntity.getBloque());
+        Assert.assertEquals(entity.getCapacidadAsistentes(), lugEntity.getCapacidadAsistentes());
+        Assert.assertEquals(entity.getUbicacionGeografica(), lugEntity.getUbicacionGeografica());
     }
 
     @Test
@@ -145,7 +159,12 @@ public class LugarPersistenceTest {
 
         LugarEntity resp = em.find(LugarEntity.class, entity.getId());
 
+        Assert.assertEquals(lugEntity.getId(), resp.getId());
         Assert.assertEquals(lugEntity.getSalon(), resp.getSalon());
+        Assert.assertEquals(lugEntity.getPiso(), resp.getPiso());
+        Assert.assertEquals(lugEntity.getBloque(), resp.getBloque());
+        Assert.assertEquals(lugEntity.getCapacidadAsistentes(), resp.getCapacidadAsistentes());
+        Assert.assertEquals(lugEntity.getUbicacionGeografica(), resp.getUbicacionGeografica());
     }
 
     @Test

@@ -121,4 +121,14 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
     public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
