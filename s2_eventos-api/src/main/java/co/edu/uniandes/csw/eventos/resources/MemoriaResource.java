@@ -39,6 +39,21 @@ public class MemoriaResource {
 
     private static final Logger LOGGER = Logger.getLogger(MemoriaResource.class.getName());
 
+    /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /eventos/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = "/memorias/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg3 = " no existe.";
+
     @POST
     public MemoriaDTO createMemoria(@PathParam("eventosId") Long eventosId, MemoriaDTO memoria) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "MemoriaResource createMemoria: input: {0}", memoria);
@@ -61,7 +76,7 @@ public class MemoriaResource {
         LOGGER.log(Level.INFO, "MemoriaResource getMemoria: input: {0}", memoriasId);
         MemoriaEntity entity = memoriaLogic.getMemoria(eventosId, memoriasId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/memorias/" + memoriasId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2 + memoriasId + msg3, 404);
         }
         MemoriaDTO memoriaDTO = new MemoriaDTO(entity);
         LOGGER.log(Level.INFO, "MemoriaResource getMemoria: output: {0}", memoriaDTO);
@@ -77,7 +92,7 @@ public class MemoriaResource {
         }
         MemoriaEntity entity = memoriaLogic.getMemoria(eventosId, memoriasId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/memorias/" + memoriasId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2 + memoriasId + msg3, 404);
 
         }
         MemoriaDTO actividadDTO = new MemoriaDTO(memoriaLogic.updateMemoria(eventosId, memoria.toEntity()));
@@ -90,7 +105,7 @@ public class MemoriaResource {
     public void deleteReview(@PathParam("eventosId") Long eventosId, @PathParam("memoriasId") Long memoriasId) throws BusinessLogicException {
         MemoriaEntity entity = memoriaLogic.getMemoria(eventosId, memoriasId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/memorias/" + memoriasId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2 + memoriasId + msg3, 404);
         }
         memoriaLogic.deleteMemoria(eventosId, memoriasId);
     }

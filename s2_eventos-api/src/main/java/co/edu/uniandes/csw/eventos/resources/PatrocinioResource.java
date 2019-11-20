@@ -40,6 +40,16 @@ public class PatrocinioResource {
     @Inject
     private PatrocinioLogic logic;
 
+    /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /patrocinios/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = " no existe.";
+
     @POST
     public PatrocinioDTO crearPatrocinio(PatrocinioDTO patrocinio) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "PatrocinioResource createPatrocinio: input: {0}", patrocinio);
@@ -72,7 +82,7 @@ public class PatrocinioResource {
         LOGGER.log(Level.INFO, "PatrocinioResource getPatrocinio: input: {0}", patrociniosId);
         PatrocinioEntity entity = logic.getPatrocinio(patrociniosId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + patrociniosId + msg2, 404);
         }
         PatrocinioDetailDTO detailDTO = new PatrocinioDetailDTO(entity);
         LOGGER.log(Level.INFO, "PatrocinioResource getPatrocinio: output: {0}", detailDTO);
@@ -85,7 +95,7 @@ public class PatrocinioResource {
         LOGGER.log(Level.INFO, "PatrocinioResource updatePatrocinio: input: patrociniosId: {0} , patrocinio: {1}", new Object[]{patrociniosId, patrocinio});
         patrocinio.setId(patrociniosId);
         if (logic.getPatrocinio(patrociniosId) == null) {
-            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + patrociniosId + msg2, 404);
         }
         PatrocinioDTO detailDTO = new PatrocinioDTO(logic.updatePatrocinio(patrociniosId, patrocinio.toEntity()));
         LOGGER.log(Level.INFO, "PatrocinioResource updatePatrocinio: output: {0}", detailDTO);
@@ -97,7 +107,7 @@ public class PatrocinioResource {
     public void deletePatrocinio(@PathParam("patrociniosId") Long patrociniosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "PatrocinioResource deletePatrocinio: input: {0}", patrociniosId);
         if (logic.getPatrocinio(patrociniosId) == null) {
-            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + patrociniosId + msg2, 404);
         }
         logic.deletePatrocinio(patrociniosId);
         LOGGER.info("PatrocinioResource deletePatrocinio: output: void");
@@ -106,7 +116,7 @@ public class PatrocinioResource {
     @Path("{patrociniosId: \\d+}/eventos")
     public Class<PatrocinioEventosResource> getPatrocinioEventosResource(@PathParam("patrociniosId") Long patrociniosId) {
         if (logic.getPatrocinio(patrociniosId) == null) {
-            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + patrociniosId + msg2, 404);
         }
         return PatrocinioEventosResource.class;
     }
