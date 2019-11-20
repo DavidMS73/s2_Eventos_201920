@@ -33,7 +33,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"valor\": 0,\n\t\"responsable\": null\n}"
+					"raw": "{\n\t\"nombre\": \"Fopre\",\n\t\"categoria\": \"General\",\n\t\"descripcion\": \"Evento para recaudar fondos\",\n\t\"fechaInicio\": \"2020-09-07T00:00:00-08:00\",\n\t\"fechaFin\": \"2020-09-11T00:00:00-17:00\",\n\t\"detallesAdicionales\": \"Ayudar a los estudiantes\",\n\t\"entradasRestantes\": 1000,\n\t\"esPago\": \"false\",\n\t\"valor\": 0,\n\t\"responsable\": null,\n\t\"multimedia\": null,\n\t\"imagen\": \"...\"\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/eventos",
@@ -191,7 +191,7 @@
 						"{{new_id_l}}"
 					]
 				},
-				"description": "Asocia un lugar a un evento en la aplicación. \r\n\r\nSe envía el Id del evento y el del evento a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "Asocia un lugar a un evento en la aplicación. \r\n\r\nSe envía el Id del lugar y el del evento a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
