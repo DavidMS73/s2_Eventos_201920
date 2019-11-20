@@ -51,6 +51,16 @@ public class EventoPatrociniosResource {
     private PatrocinioLogic patrocinioLogic;
 
     /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /patrocinios/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = " no existe.";
+
+    /**
      * Asocia un patrocinio existente con un evento existente
      *
      * @param patrociniosId El ID del patrocinio que se va a asociar
@@ -65,7 +75,7 @@ public class EventoPatrociniosResource {
     public PatrocinioDetailDTO addPatrocinio(@PathParam("eventosId") Long eventosId, @PathParam("patrociniosId") Long patrociniosId) {
         LOGGER.log(Level.INFO, "EventoPatrociniosResource addPatrocinio: input: eventosId {0} , patrociniosId {1}", new Object[]{eventosId, patrociniosId});
         if (patrocinioLogic.getPatrocinio(patrociniosId) == null) {
-            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + patrociniosId + msg2, 404);
         }
         PatrocinioDetailDTO detailDTO = new PatrocinioDetailDTO(eventoPatrociniosLogic.addPatrocinio(eventosId, patrociniosId));
         LOGGER.log(Level.INFO, "EventoPatrociniosResource addPatrocinio: output: {0}", detailDTO);
@@ -103,7 +113,7 @@ public class EventoPatrociniosResource {
     public PatrocinioDetailDTO getPatrocinio(@PathParam("eventosId") Long eventosId, @PathParam("patrociniosId") Long patrociniosId) {
         LOGGER.log(Level.INFO, "EventoPatrociniosResource getPatrocinio: input: eventosId {0} , patrociniosId {1}", new Object[]{eventosId, patrociniosId});
         if (patrocinioLogic.getPatrocinio(patrociniosId) == null) {
-            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + patrociniosId + msg2, 404);
         }
         PatrocinioDetailDTO detailDTO = new PatrocinioDetailDTO(eventoPatrociniosLogic.getPatrocinio(eventosId, patrociniosId));
         LOGGER.log(Level.INFO, "EventoPatrociniosResource getPatrocinio: output: {0}", detailDTO);
@@ -127,7 +137,7 @@ public class EventoPatrociniosResource {
         LOGGER.log(Level.INFO, "EventoPatrociniosResource replacePatrocinios: input: eventosId {0} , usuarios {1}", new Object[]{eventosId, patrocinios});
         for (PatrocinioDetailDTO patrocinio : patrocinios) {
             if (patrocinioLogic.getPatrocinio(patrocinio.getId()) == null) {
-                throw new WebApplicationException("El recurso /patrocinios/" + patrocinio.getId() + " no existe.", 404);
+                throw new WebApplicationException(msg1 + patrocinio.getId() + msg2, 404);
             }
         }
         List<PatrocinioDetailDTO> lista = patrociniosListEntity2DTO(eventoPatrociniosLogic.replacePatrocinios(eventosId, patrociniosListDTO2Entity(patrocinios)));
@@ -149,7 +159,7 @@ public class EventoPatrociniosResource {
     public void removePatrocinio(@PathParam("eventosId") Long eventosId, @PathParam("patrociniosId") Long patrociniosId) {
         LOGGER.log(Level.INFO, "EventoPatrociniosResource removePatrocinio: input: eventosId {0} , patrociniosId {1}", new Object[]{eventosId, patrociniosId});
         if (patrocinioLogic.getPatrocinio(patrociniosId) == null) {
-            throw new WebApplicationException("El recurso /patrocinios/" + patrociniosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + patrociniosId + msg2, 404);
         }
         eventoPatrociniosLogic.removePatrocinio(eventosId, patrociniosId);
         LOGGER.info("EventoPatrociniosResource removePatrocinio: output: void");

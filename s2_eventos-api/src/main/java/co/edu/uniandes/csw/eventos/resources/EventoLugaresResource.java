@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.LugarDTO;
 import co.edu.uniandes.csw.eventos.dtos.LugarDetailDTO;
-import co.edu.uniandes.csw.eventos.ejb.EventoLogic;
 import co.edu.uniandes.csw.eventos.ejb.EventoLugaresLogic;
 import co.edu.uniandes.csw.eventos.ejb.LugarLogic;
 import co.edu.uniandes.csw.eventos.entities.LugarEntity;
@@ -47,8 +46,15 @@ public class EventoLugaresResource {
     @Inject
     private LugarLogic lugarLogic;
 
-    @Inject
-    private EventoLogic eventoLogic;
+    /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /lugares/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = " no existe.";
 
     /**
      * Convierte una lista de LugarEntity a una lista de LugarDTO.
@@ -95,7 +101,7 @@ public class EventoLugaresResource {
     public LugarDTO addLugar(@PathParam("lugaresId") Long lugaresId, @PathParam("eventosId") Long eventosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "EventoLugaresResource addLugar: input: lugaresId {0} , eventosId {1}", new Object[]{lugaresId, eventosId});
         if (lugarLogic.getLugar(lugaresId) == null) {
-            throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + lugaresId + msg2, 404);
         }
         LugarDTO lugarDTO = new LugarDTO(eventoLugaresLogic.addLugar(eventosId, lugaresId));
         LOGGER.log(Level.INFO, "EventoLugaresResource addLugar: output: {0}", lugarDTO);
@@ -115,10 +121,7 @@ public class EventoLugaresResource {
     public void removeLugar(@PathParam("eventosId") Long eventosId, @PathParam("lugaresId") Long lugaresId) {
         LOGGER.log(Level.INFO, "EventoLugaressResource removeLugar: input: eventosId {0} , lugaresId {1}", new Object[]{eventosId, lugaresId});
         if (lugarLogic.getLugar(lugaresId) == null) {
-            throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
-        }
-        if (eventoLogic.getEvento(eventosId) == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + lugaresId + msg2, 404);
         }
         eventoLugaresLogic.removeLugar(eventosId, lugaresId);
         LOGGER.info("EventoLugaressResource removeLugar: output: void");

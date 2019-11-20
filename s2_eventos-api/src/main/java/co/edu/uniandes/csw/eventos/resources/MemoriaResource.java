@@ -86,7 +86,7 @@ public class MemoriaResource {
     @PUT
     @Path("{memoriasId: \\d+}")
     public MemoriaDTO updateMemoria(@PathParam("eventosId") Long eventosId, @PathParam("memoriasId") Long memoriasId, MemoriaDTO memoria) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "MemoriaResource updateActividad: input: eventosId: {0} , memoriasId: {1} , memoria:{2}", new Object[]{eventosId, memoriasId, memoria});
+        LOGGER.log(Level.INFO, "MemoriaResource updateMemoria: input: eventosId: {0} , memoriasId: {1} , memoria:{2}", new Object[]{eventosId, memoriasId, memoria});
         if (memoriasId.equals(memoria.getId())) {
             throw new BusinessLogicException("Los ids de la memoria no coinciden.");
         }
@@ -96,7 +96,7 @@ public class MemoriaResource {
 
         }
         MemoriaDTO actividadDTO = new MemoriaDTO(memoriaLogic.updateMemoria(eventosId, memoria.toEntity()));
-        LOGGER.log(Level.INFO, "MemoriaResource updateActividad: output:{0}", actividadDTO);
+        LOGGER.log(Level.INFO, "MemoriaResource updateMemoria: output:{0}", actividadDTO);
         return actividadDTO;
     }
 

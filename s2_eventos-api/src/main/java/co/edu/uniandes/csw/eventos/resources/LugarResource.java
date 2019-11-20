@@ -42,6 +42,16 @@ public class LugarResource {
     private static final Logger LOGGER = Logger.getLogger(LugarResource.class.getName());
 
     /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /lugares/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = " no existe.";
+
+    /**
      * Convierte una lista de entidades a DTO.
      *
      * Este método convierte una lista de objetos LugarEntity a una lista de
@@ -61,10 +71,12 @@ public class LugarResource {
 
     @POST
     public LugarDTO createLugar(LugarDTO lugar) throws BusinessLogicException {
-
+        LOGGER.log(Level.INFO, "LugarResource createLugar: input: {0}", lugar);
         LugarEntity lugarEntity = lugar.toEntity();
         lugarEntity = logica.createLugar(lugarEntity);
-        return new LugarDTO(lugarEntity);
+        LugarDTO nuevoLugarDTO = new LugarDTO(lugarEntity);
+        LOGGER.log(Level.INFO, "LugarResource createLugar: output: {0}", nuevoLugarDTO);
+        return nuevoLugarDTO;
     }
 
     /**
@@ -77,7 +89,7 @@ public class LugarResource {
     public List<LugarDetailDTO> getLugares() {
         LOGGER.info("LugarResource getLugares: input: void");
         List<LugarDetailDTO> listLugares = listEntity2DetailDTO(logica.getLugares());
-        LOGGER.log(Level.INFO, "LugarResource getBooks: output: {0}", listLugares);
+        LOGGER.log(Level.INFO, "LugarResource getLugares: output: {0}", listLugares);
         return listLugares;
     }
 
@@ -96,7 +108,7 @@ public class LugarResource {
         LOGGER.log(Level.INFO, "LugarResource getLugar: input: {0}", lugaresId);
         LugarEntity lugarEntity = logica.getLugar(lugaresId);
         if (lugarEntity == null) {
-            throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + lugaresId + msg2, 404);
         }
         LugarDetailDTO lugarDTO = new LugarDetailDTO(lugarEntity);
         LOGGER.log(Level.INFO, "LugarResource getLugar: output: {0}", lugarDTO);
@@ -123,7 +135,7 @@ public class LugarResource {
         LOGGER.log(Level.INFO, "LugarResource updateLugar: input: id: {0} , book: {1}", new Object[]{lugaresId, lugar});
         lugar.setId(lugaresId);
         if (logica.getLugar(lugaresId) == null) {
-            throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + lugaresId + msg2, 404);
         }
         LugarDTO lugarDTO = new LugarDTO(logica.updateLugar(lugaresId, lugar.toEntity()));
         LOGGER.log(Level.INFO, "LugarResource updateLugar: output: {0}", lugarDTO);
@@ -146,7 +158,7 @@ public class LugarResource {
         LOGGER.log(Level.INFO, "LugarResource deleteLugar: input: {0}", lugaresId);
         LugarEntity entity = logica.getLugar(lugaresId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /lugares/" + lugaresId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + lugaresId + msg2, 404);
         }
         logica.deleteLugar(lugaresId);
         LOGGER.info("LugarResource deleteLugar: output: void");

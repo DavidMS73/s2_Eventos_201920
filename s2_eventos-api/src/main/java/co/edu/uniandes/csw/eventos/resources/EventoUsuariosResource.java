@@ -51,6 +51,16 @@ public class EventoUsuariosResource {
     private UsuarioLogic usuarioLogic;
 
     /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /usuarios/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = " no existe.";
+
+    /**
      * Asocia un usuario existente con un evento existente
      *
      * @param usuariosId El ID del usuario que se va a asociar
@@ -64,7 +74,7 @@ public class EventoUsuariosResource {
     public UsuarioDetailDTO addUsuario(@PathParam("eventosId") Long eventosId, @PathParam("usuariosId") Long usuariosId) {
         LOGGER.log(Level.INFO, "EventoUsuariosResource addUsuario: input: eventosId {0} , usuariosId {1}", new Object[]{eventosId, usuariosId});
         if (usuarioLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(eventoUsuarioLogic.addUsuario(eventosId, usuariosId));
         LOGGER.log(Level.INFO, "EventoUsuariosResource addUsuario: output: {0}", detailDTO);
@@ -101,7 +111,7 @@ public class EventoUsuariosResource {
     public UsuarioDetailDTO getUsuario(@PathParam("eventosId") Long eventosId, @PathParam("usuariosId") Long usuariosId) {
         LOGGER.log(Level.INFO, "EventoUsuariosResource getUsuario: input: eventosId {0} , usuariosId {1}", new Object[]{eventosId, usuariosId});
         if (usuarioLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(eventoUsuarioLogic.getUsuario(eventosId, usuariosId));
         LOGGER.log(Level.INFO, "EventoUsuariosResource getUsuario: output: {0}", detailDTO);
@@ -125,7 +135,7 @@ public class EventoUsuariosResource {
         LOGGER.log(Level.INFO, "EventoUsuariosResource replaceUsuarios: input: eventosId {0} , usuarios {1}", new Object[]{eventosId, usuarios});
         for (UsuarioDetailDTO usuario : usuarios) {
             if (usuarioLogic.getUsuario(usuario.getId()) == null) {
-                throw new WebApplicationException("El recurso /usuarios/" + usuario.getId() + " no existe.", 404);
+                throw new WebApplicationException(msg1 + usuario.getId() + msg2, 404);
             }
         }
         List<UsuarioDetailDTO> lista = usuariosListEntity2DTO(eventoUsuarioLogic.replaceUsuarios(eventosId, usuariosListDTO2Entity(usuarios)));
@@ -147,7 +157,7 @@ public class EventoUsuariosResource {
     public void removeUsuario(@PathParam("eventosId") Long eventosId, @PathParam("usuariosId") Long usuariosId) {
         LOGGER.log(Level.INFO, "EventoUsuariosResource removeUsuario: input: eventosId {0} , usuariosId {1}", new Object[]{eventosId, usuariosId});
         if (usuarioLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         eventoUsuarioLogic.removeUsuario(eventosId, usuariosId);
         LOGGER.info("EventoUsuariosResource removeUsuario: output: void");
