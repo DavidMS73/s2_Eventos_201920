@@ -137,7 +137,8 @@ public class ActividadEventoPersistenceTest {
         Assert.assertNotNull(result);
 
         ActividadEventoEntity entity = em.find(ActividadEventoEntity.class, result.getId());
-        
+
+        Assert.assertFalse(actividadEvento.equals(null));
         Assert.assertEquals(actividadEvento.hashCode(), entity.hashCode());
 
         Assert.assertEquals(actividadEvento.getId(), entity.getId());
