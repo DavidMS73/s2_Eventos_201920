@@ -147,11 +147,7 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
     
     @Override
     public boolean equals(Object obj) {
-        if (!super.equals(obj)) {
-            return false;
-        }
-        ActividadEventoEntity other = (ActividadEventoEntity) obj;
-        return this.getId().equals(other.getId());
+        return super.equals(obj);
     }
 
     @Override
