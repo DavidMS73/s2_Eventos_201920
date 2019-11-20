@@ -45,6 +45,11 @@ public class PseResource {
     private UsuarioTarjetasLogic utp;
     
     
+    private static final String  MSG="El recurso /pse/";
+    
+    private static final String  MSG1="no existe";
+    
+    
     private static final Logger LOGGER= Logger.getLogger(PseResource.class.getName());
     
     
@@ -68,8 +73,7 @@ public class PseResource {
 
     @GET
     public List<PseDTO> getPses(@PathParam("usuariosId") Long usuariosId) {
-        List<PseDTO> listaPses= listEntity2DTO(logica.getPses(usuariosId));
-        return listaPses;
+        return listEntity2DTO(logica.getPses(usuariosId));
     }    
     
     @GET
@@ -79,7 +83,7 @@ public class PseResource {
         PseEntity pseEntity= logica.getPse(usuariosId, pseId);
         if( pseEntity == null)
         {
-            throw new WebApplicationException("El recurso /pse/"+ pseId + " no existe.", 404 );
+            throw new WebApplicationException(MSG+ pseId + MSG1, 404 );
         }
         PseDTO pseDTO = new PseDTO(pseEntity);
         LOGGER.log(Level.INFO, "PseResource getPse: output: {0}", pseDTO);
@@ -92,11 +96,11 @@ public class PseResource {
         
         pse.setId(pseId);
         if (logica.getPse(usuariosId, pseId) == null) {
-            throw new WebApplicationException("El recurso /pse/" + pseId + " no existe.", 404);
+            throw new WebApplicationException(MSG + pseId + MSG1, 404);
         }
-        PseDTO detailDTO = new PseDTO(logica.updatePse(usuariosId, pseId, pse.toEntity()));
+         
         
-        return detailDTO;
+        return new PseDTO(logica.updatePse(usuariosId, pseId, pse.toEntity()));
     }
 
     @DELETE
@@ -104,7 +108,7 @@ public class PseResource {
     public void deletePse(@PathParam("usuariosId") Long usuariosId, @PathParam("pseId") Long pseId) throws BusinessLogicException {
         
         if (logica.getPse(usuariosId ,pseId) == null) {
-            throw new WebApplicationException("El recurso /pse/" + pseId + " no existe.", 404);
+            throw new WebApplicationException(MSG + pseId + MSG1, 404);
         }
         logica.deletePse(usuariosId, pseId);
         

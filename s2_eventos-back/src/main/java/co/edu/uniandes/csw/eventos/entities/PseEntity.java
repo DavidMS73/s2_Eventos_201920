@@ -62,5 +62,10 @@ public class PseEntity extends MedioPagoEntity implements Serializable {
     public void setCorreo(String pCorreo) {
         this.correo = pCorreo;
     }
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+    
 
 }
