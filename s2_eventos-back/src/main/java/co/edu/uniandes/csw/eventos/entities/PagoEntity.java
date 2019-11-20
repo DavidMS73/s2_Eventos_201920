@@ -44,6 +44,16 @@ public class PagoEntity extends BaseEntity implements Serializable {
         this.fecha = pFecha;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     /**
      * @return the evento
      */
@@ -56,15 +66,5 @@ public class PagoEntity extends BaseEntity implements Serializable {
      */
     public void setEvento(EventoEntity evento) {
         this.evento = evento;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 }

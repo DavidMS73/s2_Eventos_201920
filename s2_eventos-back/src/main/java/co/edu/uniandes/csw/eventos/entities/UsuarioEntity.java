@@ -155,6 +155,16 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.tarjetas = tarjetas;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     /**
      * @return the tipo
      */
@@ -167,15 +177,5 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 }
