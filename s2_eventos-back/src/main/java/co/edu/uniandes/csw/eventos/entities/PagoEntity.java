@@ -26,6 +26,16 @@ public class PagoEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private EventoEntity evento;
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     public PagoEntity() {
         //Constructor
     }
@@ -42,16 +52,6 @@ public class PagoEntity extends BaseEntity implements Serializable {
      */
     public void setFecha(Date pFecha) {
         this.fecha = pFecha;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
     /**
