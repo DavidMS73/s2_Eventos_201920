@@ -29,7 +29,6 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author Gabriel Jose Gonzalez Pereira
  */
-@Path("memorias")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
