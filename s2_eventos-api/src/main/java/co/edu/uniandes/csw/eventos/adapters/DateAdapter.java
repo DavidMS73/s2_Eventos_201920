@@ -37,22 +37,20 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * @author ISIS2603
  */
 public class DateAdapter extends XmlAdapter<String, Date> {
-
-    private static final Logger LOGGER = Logger.getLogger(DateAdapter.class.getName());
+    
+      private static final Logger LOGGER = Logger.getLogger(DateAdapter.class.getName());
 
     /**
      * Thread safe {@link DateFormat}.
      */
-    private static final ThreadLocal<DateFormat> DATE_FORMAT_TL = ThreadLocal.withInitial(SimpleDateFormat::new);
+    private static final ThreadLocal<DateFormat> DATE_FORMAT_TL = new ThreadLocal<DateFormat>() {
 
-    /**
-     * private static final ThreadLocal<DateFormat> DATE_FORMAT_TL = new
-     * ThreadLocal<DateFormat>() {
-     *
-     * @Override protected DateFormat initialValue() { return new
-     * SimpleDateFormat("yyyy-MM-dd"); }
+        @Override
+        protected DateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd");
+        }
     };
-     */
+
     @Override
     public Date unmarshal(String v) throws Exception {
         LOGGER.log(Level.INFO, "input date {0} ", v);
