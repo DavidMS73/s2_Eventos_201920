@@ -54,7 +54,7 @@ public class PseIT {
         String desiredResult = "0";
         Assert.assertEquals("Error en Iterations de: " + COLLECTION, desiredResult, tp.getIterations_failed());
 
-        Assert.assertEquals("Error en Requests de: " + COLLECTION, "3", tp.getRequests_failed());
+        Assert.assertEquals("Error en Requests de: " + COLLECTION, desiredResult, tp.getRequests_failed());
 
         Assert.assertEquals("Error en Test-Scripts de: " + COLLECTION, desiredResult, tp.getTest_scripts_failed());
 

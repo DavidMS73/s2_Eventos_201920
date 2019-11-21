@@ -47,7 +47,7 @@ public class PseResource {
     
     private static final String  MSG="El recurso /pse/";
     
-    private static final String  MSG1="no existe";
+    private static final String  MSG1=" no existe";
     
     
     private static final Logger LOGGER= Logger.getLogger(PseResource.class.getName());

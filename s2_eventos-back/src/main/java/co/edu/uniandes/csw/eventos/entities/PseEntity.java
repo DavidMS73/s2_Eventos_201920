@@ -67,5 +67,10 @@ public class PseEntity extends MedioPagoEntity implements Serializable {
         return super.equals(obj);
     }
     
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+    
 
 }

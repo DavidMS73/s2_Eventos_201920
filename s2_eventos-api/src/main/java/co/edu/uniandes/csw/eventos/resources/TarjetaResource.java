@@ -48,12 +48,12 @@ public class TarjetaResource {
     /**
      * Parte del mensaje
      */
-    private String msg1 = "El recurso /tarjetas/";
+    private static final String MSG1 = "El recurso /tarjetas/";
 
     /**
      * Parte del mensaje
      */
-    private String msg2 = " no existe.";
+    private static final String MSG2 = " no existe.";
 
     @POST
     public TarjetaDTO createTarjeta(@PathParam("usuariosId") Long usuariosId, TarjetaDTO tarjeta) throws BusinessLogicException {
@@ -70,7 +70,7 @@ public class TarjetaResource {
         LOGGER.log(Level.INFO, "TarjetaResource getTarjeta: input: {0}", tarjetasId);
         TarjetaEntity tarjetaEntity = tp.getTarjeta(usuariosId, tarjetasId);
         if (tarjetaEntity == null) {
-            throw new WebApplicationException(msg1 + tarjetasId + msg2, 404);
+            throw new WebApplicationException(MSG1 + tarjetasId + MSG2, 404);
         }
         TarjetaDTO tarjetaDTO = new TarjetaDTO(tarjetaEntity);
         LOGGER.log(Level.INFO, "TarjetaResource getTarjeta: output: {0}", tarjetaDTO);
@@ -83,7 +83,7 @@ public class TarjetaResource {
         LOGGER.log(Level.INFO, "TarjetaResource updateTarjeta: input: id: {0} , tarjeta: {1}", new Object[]{tarjetasId, tarjeta});
         tarjeta.setId(tarjetasId);
         if (tp.getTarjeta(usuariosId, tarjetasId) == null) {
-            throw new WebApplicationException(msg1 + tarjetasId + msg2, 404);
+            throw new WebApplicationException(MSG1 + tarjetasId + MSG2, 404);
         }
         TarjetaDTO tarjetaDTO = new TarjetaDTO(tp.updateTarjeta(tarjetasId, tarjeta.toEntity()));
         LOGGER.log(Level.INFO, "TarjetaResource updateTarjeta: output: {0}", tarjetaDTO);
@@ -96,7 +96,7 @@ public class TarjetaResource {
         LOGGER.log(Level.INFO, "TarjetaResource updateTarjeta: input: id: {0} , tarjeta: {1}", new Object[]{tarjetasId, tarjetasId});
         TarjetaEntity entity = tp.getTarjeta(usuariosId, tarjetasId);
         if (entity == null) {
-            throw new WebApplicationException(msg1 + tarjetasId + msg2, 404);
+            throw new WebApplicationException(MSG1 + tarjetasId + MSG2, 404);
         }
         tp.deleteTarjeta(usuariosId, tarjetasId);
         utp.removeTarjeta(usuariosId, tarjetasId);
