@@ -45,17 +45,17 @@ public class ActividadEventoResource {
      */
     @Inject
     private ActividadEventoLogic actividadEventoLogic;
-    
+
     /**
      * Parte del mensaje
      */
     private String msg1 = "El recurso /eventos/";
-    
+
     /**
      * Parte del mensaje
      */
     private String msg2 = "/actividades/";
-    
+
     /**
      * Parte del mensaje
      */
@@ -166,12 +166,14 @@ public class ActividadEventoResource {
      */
     @DELETE
     @Path("{actividadesId: \\d+}")
-    public void deleteReview(@PathParam("eventosId") Long eventosId, @PathParam("actividadesId") Long actividadesId) throws BusinessLogicException {
+    public void deleteActividad(@PathParam("eventosId") Long eventosId, @PathParam("actividadesId") Long actividadesId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "ActividadEventoResource deleteActividad: input: eventosId: {0} , actividadesId: {1}", new Object[]{eventosId, actividadesId});
         ActividadEventoEntity entity = actividadEventoLogic.getActividadEvento(eventosId, actividadesId);
         if (entity == null) {
-            throw new WebApplicationException(msg1 +  eventosId + msg2 + actividadesId + msg3, 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2 + actividadesId + msg3, 404);
         }
         actividadEventoLogic.deleteActividadEvento(eventosId, actividadesId);
+        LOGGER.log(Level.INFO, "ActividadEventoResource deleteActividad: output: void", new Object[]{eventosId, actividadesId});
     }
 
     /**

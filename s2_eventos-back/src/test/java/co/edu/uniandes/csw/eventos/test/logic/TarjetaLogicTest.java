@@ -113,7 +113,7 @@ public class TarjetaLogicTest {
 
         TarjetaEntity entity = em.find(TarjetaEntity.class, result.getId());
         Assert.assertEquals(entity.getNumeroTarjeta(), result.getNumeroTarjeta());
-        Assert.assertEquals(entity.getCw(), result.getCw());
+        Assert.assertEquals(entity.getCvv(), result.getCvv());
         Assert.assertEquals(entity.getExpiracion(), result.getExpiracion());
         Assert.assertEquals(entity.getTipoTarjeta(), result.getTipoTarjeta());
     }
@@ -149,7 +149,7 @@ public class TarjetaLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createTarjetaCWInvalidoTest() throws BusinessLogicException {
         TarjetaEntity newEntity = factory.manufacturePojo(TarjetaEntity.class);
-        newEntity.setCw(null);
+        newEntity.setCvv(null);
         tarjetaLogic.createTarjeta(dataUsuario.get(0).getId(), newEntity);
     }
 
@@ -169,7 +169,7 @@ public class TarjetaLogicTest {
         TarjetaEntity result = em.find(TarjetaEntity.class, entity.getId());
         Assert.assertEquals(pojoEntity.getId(), result.getId());
         Assert.assertEquals(pojoEntity.getNumeroTarjeta(), result.getNumeroTarjeta());
-        Assert.assertEquals(pojoEntity.getCw(), result.getCw());
+        Assert.assertEquals(pojoEntity.getCvv(), result.getCvv());
         Assert.assertEquals(pojoEntity.getExpiracion(), result.getExpiracion());
         Assert.assertEquals(pojoEntity.getTipoTarjeta(), result.getTipoTarjeta());
     }
@@ -188,7 +188,7 @@ public class TarjetaLogicTest {
         TarjetaEntity result = tarjetaLogic.getTarjeta(dataUsuario.get(1).getId(), entity.getId());
         Assert.assertNotNull(result);
         Assert.assertEquals(entity.getNumeroTarjeta(), result.getNumeroTarjeta());
-        Assert.assertEquals(entity.getCw(), result.getCw());
+        Assert.assertEquals(entity.getCvv(), result.getCvv());
         Assert.assertEquals(entity.getExpiracion(), result.getExpiracion());
         Assert.assertEquals(entity.getTipoTarjeta(), result.getTipoTarjeta());
     }

@@ -113,6 +113,28 @@ public class UsuarioResource {
         return UsuarioEventosResource.class;
     }
 
+    /**
+     * Conexión con el servicio de tarjetas para un usuario.
+     * {@link TarjetaResource}
+     *
+     * Este método conecta la ruta de /tarjetas con las rutas de /usuarios que
+     * dependen del usuario, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de las tarjetas.
+     *
+     * @param usuariosId El ID del usuario con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de tarjeta para ese evento en particular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el usuario.
+     */
+    @Path("{usuariosId: \\d+}/tarjetas")
+    public Class<TarjetaResource> getTarjetaResource(@PathParam("usuariosId") Long usuariosId) {
+        if (uLogic.getUsuario(usuariosId) == null) {
+            throw new WebApplicationException(msg1 + usuariosId + "/tarjetas" + msg2, 404);
+        }
+        return TarjetaResource.class;
+    }
+
     private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
         List<UsuarioDetailDTO> list = new ArrayList<>();
         for (UsuarioEntity entity : entityList) {

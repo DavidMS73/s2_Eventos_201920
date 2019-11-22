@@ -22,67 +22,64 @@ import javax.inject.Inject;
  */
 @Stateless
 public class TarjetaLogic {
-    
+
     private static final Logger LOGGER = Logger.getLogger(TarjetaLogic.class.getName());
 
     @Inject
     private TarjetaPersistence persistence;
-    
-    @Inject 
+
+    @Inject
     private UsuarioPersistence usuarioPersistence;
 
     public TarjetaEntity createTarjeta(Long usuariosId, TarjetaEntity pTarjeta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia el proceso de crear una tarjeta");
 
-        if (pTarjeta.getNumeroTarjeta() == null || pTarjeta.getNumeroTarjeta().length() != 16) 
+        if (pTarjeta.getNumeroTarjeta() == null || pTarjeta.getNumeroTarjeta().length() != 16) {
             throw new BusinessLogicException("No existe el número de la tarjeta.");
-        if(pTarjeta.getCw() == null)
-            throw new BusinessLogicException("No existe el cw de la tarjeta.");
-        if(pTarjeta.getTipoTarjeta() == null)
+        }
+        if (pTarjeta.getCvv() == null) {
+            throw new BusinessLogicException("No existe el CVV de la tarjeta.");
+        }
+        if (pTarjeta.getTipoTarjeta() == null) {
             throw new BusinessLogicException("El tipo de tarjeta no existe.");
-        if(pTarjeta.getExpiracion() == null)
+        }
+        if (pTarjeta.getExpiracion() == null) {
             throw new BusinessLogicException("La tarjeta no tiene fecha de expiración");
-        
+        }
+
         UsuarioEntity usuario = usuarioPersistence.find(usuariosId);
         pTarjeta.setUsuario(usuario);
-       
+
         LOGGER.log(Level.INFO, "Termina el proceso de crear una tarjeta");
         pTarjeta = persistence.create(pTarjeta);
         return pTarjeta;
     }
-    
-    
-    public TarjetaEntity updateTarjeta(Long usuariosId, TarjetaEntity pTarjeta){
+
+    public TarjetaEntity updateTarjeta(Long usuariosId, TarjetaEntity pTarjeta) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar tarjeta del usuario con id = {0}", usuariosId);
         UsuarioEntity u = usuarioPersistence.find(usuariosId);
         pTarjeta.setUsuario(u);
-        TarjetaEntity update = persistence.update(pTarjeta);
-        List<TarjetaEntity> lista=u.getTarjetas();
-        lista.add(update);
-        u.setTarjetas(lista);
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar tarjeta con id = {0}", pTarjeta.getId());
-        return update;
+        persistence.update(pTarjeta);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar tarjeta con id = {0}", pTarjeta.getId());
+        return pTarjeta;
     }
-    
-    
-    public void deleteTarjeta(Long usuariosId, Long tarjetaId) throws BusinessLogicException{
+
+    public void deleteTarjeta(Long usuariosId, Long tarjetaId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0}", tarjetaId);
         TarjetaEntity old = getTarjeta(usuariosId, tarjetaId);
-        if(old == null)
-            throw new BusinessLogicException("La tarjeta con id = " + tarjetaId + " no existe en la cuenta del usario con id = " + usuariosId);
+        if (old == null) {
+            throw new BusinessLogicException("La tarjeta con id = " + tarjetaId + " no está asociada al usuario con id = " + usuariosId);
+        }
         persistence.delete(old.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", tarjetaId);
     }
-    
-    public TarjetaEntity getTarjeta(Long usuarioId, Long tarjetaId) throws BusinessLogicException{
-        TarjetaEntity result = persistence.find(usuarioId, tarjetaId);
-        if(result == null)
-            throw new BusinessLogicException("No existe el medio de pagio que se introdujo.");
-        
-        return result;
+
+    public TarjetaEntity getTarjeta(Long usuarioId, Long tarjetaId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la tarjeta con id = {0}", tarjetaId);
+        return persistence.find(usuarioId, tarjetaId);
     }
-    
-    public List<TarjetaEntity> getTarjetas(Long usuariosId){
+
+    public List<TarjetaEntity> getTarjetas(Long usuariosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las tarjetas");
         UsuarioEntity u = usuarioPersistence.find(usuariosId);
         LOGGER.log(Level.INFO, "Termina proceso de consultar todas las tarjetas");

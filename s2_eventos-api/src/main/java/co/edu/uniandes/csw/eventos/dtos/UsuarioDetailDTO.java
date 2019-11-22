@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.dtos;
 
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +26,12 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
      * Lista de eventos
      */
     private List<EventoDTO> eventos;
+
+    /**
+     * Lista de tipo TarjetaDTO que contiene las tarjetas que están asociadas a
+     * un usuario
+     */
+    private List<TarjetaDTO> tarjetas;
 
     /**
      * Constructor por defecto
@@ -48,6 +55,12 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
                 eventos.add(new EventoDTO(entityEventos));
             }
         }
+        if (usuarioEntity.getTarjetas() != null) {
+            tarjetas = new ArrayList<>();
+            for (TarjetaEntity entityTarjeta : usuarioEntity.getTarjetas()) {
+                tarjetas.add(new TarjetaDTO(entityTarjeta));
+            }
+        }
     }
 
     /**
@@ -59,12 +72,19 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     @Override
     public UsuarioEntity toEntity() {
         UsuarioEntity usuarioEntity = super.toEntity();
-        if (eventos != null) {
-            List<EventoEntity> booksEntity = new ArrayList<>();
-            for (EventoDTO dtoEvento : eventos) {
-                booksEntity.add(dtoEvento.toEntity());
+        if (getEventos() != null) {
+            List<EventoEntity> eventosEntity = new ArrayList<>();
+            for (EventoDTO dtoEvento : getEventos()) {
+                eventosEntity.add(dtoEvento.toEntity());
             }
-            usuarioEntity.setEventos(booksEntity);
+            usuarioEntity.setEventos(eventosEntity);
+        }
+        if (getTarjetas() != null) {
+            List<TarjetaEntity> tarjetasEntity = new ArrayList<>();
+            for (TarjetaDTO dtoTarjeta : getTarjetas()) {
+                tarjetasEntity.add(dtoTarjeta.toEntity());
+            }
+            usuarioEntity.setTarjetas(tarjetasEntity);
         }
         return usuarioEntity;
     }
@@ -86,5 +106,19 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @return the tarjetas
+     */
+    public List<TarjetaDTO> getTarjetas() {
+        return tarjetas;
+    }
+
+    /**
+     * @param tarjetas the tarjetas to set
+     */
+    public void setTarjetas(List<TarjetaDTO> tarjetas) {
+        this.tarjetas = tarjetas;
     }
 }

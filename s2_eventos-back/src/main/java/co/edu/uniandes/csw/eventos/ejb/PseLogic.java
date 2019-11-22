@@ -27,9 +27,8 @@ public class PseLogic {
 
     @Inject
     private PsePersistence persistence;
-    
-    
-    @Inject 
+
+    @Inject
     private UsuarioPersistence usuarioPersistence;
 
     public PseEntity createPse(Long usuariosId, PseEntity pse) throws BusinessLogicException {
@@ -44,7 +43,7 @@ public class PseLogic {
 
         UsuarioEntity usuario = usuarioPersistence.find(usuariosId);
         pse.setUsuario(usuario);
-        
+
         pse = persistence.create(pse);
         LOGGER.log(Level.INFO, "Termina proceso de creación de PSE");
 
@@ -53,7 +52,7 @@ public class PseLogic {
 
     public List<PseEntity> getPses(Long usuariosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los PSE");
-        UsuarioEntity u =usuarioPersistence.find(usuariosId);
+        UsuarioEntity u = usuarioPersistence.find(usuariosId);
         LOGGER.log(Level.INFO, "Termina proceso de consultar todos los PSE");
         return u.getPse();
     }
@@ -69,12 +68,12 @@ public class PseLogic {
         return pseEntity;
     }
 
-    public PseEntity updatePse(Long usuarioId,Long pseId, PseEntity entity) {
+    public PseEntity updatePse(Long usuarioId, Long pseId, PseEntity entity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el PSE con id = {0}", pseId);
         UsuarioEntity u = usuarioPersistence.find(usuarioId);
         entity.setUsuario(u);
         PseEntity update = persistence.update(entity);
-        List<PseEntity> lista=u.getPse();
+        List<PseEntity> lista = u.getPse();
         lista.add(update);
         u.setPse(lista);
 
@@ -83,13 +82,14 @@ public class PseLogic {
         return en;
     }
 
-    public void deletePse(Long usuariosId,Long id) throws BusinessLogicException{
+    public void deletePse(Long usuariosId, Long id) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el PSE con id = {0}", id);
-        
-        PseEntity vieja= getPse(usuariosId, id);
-        
-        if(vieja == null)
+
+        PseEntity vieja = getPse(usuariosId, id);
+
+        if (vieja == null) {
             throw new BusinessLogicException("El pse con id = " + id + " no existe en la cuenta del usario con id = " + usuariosId);
+        }
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el PSE con id = {0}", id);
     }

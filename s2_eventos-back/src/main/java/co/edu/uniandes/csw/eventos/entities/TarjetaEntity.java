@@ -32,7 +32,7 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
     @PodamStrategyValue(DateStrategy.class)
     private Date expiracion;
 
-    private Integer cw;
+    private Integer cvv;
 
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -97,21 +97,21 @@ public class TarjetaEntity extends MedioPagoEntity implements Serializable {
     }
 
     /**
-     * Retorna el cw.
+     * Retorna el cvv.
      *
-     * @return cw.
+     * @return cvv.
      */
-    public Integer getCw() {
-        return cw;
+    public Integer getCvv() {
+        return cvv;
     }
 
     /**
-     * Establece un nuevo cw.
+     * Establece un nuevo cvv.
      *
-     * @param pCw cw que se establecerá.
+     * @param pCvv cvv que se establecerá.
      */
-    public void setCw(Integer pCw) {
-        this.cw = pCw;
+    public void setCvv(Integer pCvv) {
+        this.cvv = pCvv;
     }
 
     public UsuarioEntity getUsuario() {

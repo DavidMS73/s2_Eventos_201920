@@ -138,7 +138,7 @@ public class TarjetaPersistenceTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNumeroTarjeta(), newEntity.getNumeroTarjeta());
         Assert.assertEquals(entity.getExpiracion(), newEntity.getExpiracion());
-        Assert.assertEquals(entity.getCw(), newEntity.getCw());
+        Assert.assertEquals(entity.getCvv(), newEntity.getCvv());
     }
 
     @Test
@@ -163,7 +163,7 @@ public class TarjetaPersistenceTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNumeroTarjeta(), newEntity.getNumeroTarjeta());
         Assert.assertEquals(entity.getExpiracion(), newEntity.getExpiracion());
-        Assert.assertEquals(entity.getCw(), newEntity.getCw());
+        Assert.assertEquals(entity.getCvv(), newEntity.getCvv());
 
         newEntity = ep.findByNumber(null);
         Assert.assertNull(newEntity);
