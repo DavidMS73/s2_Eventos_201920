@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.PseDTO;
 import co.edu.uniandes.csw.eventos.ejb.PseLogic;
-import co.edu.uniandes.csw.eventos.ejb.UsuarioTarjetasLogic;
 import co.edu.uniandes.csw.eventos.entities.PseEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -37,9 +36,6 @@ public class PseResource {
 
     @Inject
     private PseLogic pseLogic;
-
-    @Inject
-    private UsuarioTarjetasLogic utp;
 
     /**
      * Parte del mensaje
