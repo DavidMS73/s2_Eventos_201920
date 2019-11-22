@@ -74,7 +74,7 @@ public class TarjetaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", tarjetaId);
     }
 
-    public TarjetaEntity getTarjeta(Long usuarioId, Long tarjetaId) throws BusinessLogicException {
+    public TarjetaEntity getTarjeta(Long usuarioId, Long tarjetaId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar la tarjeta con id = {0}", tarjetaId);
         return persistence.find(usuarioId, tarjetaId);
     }

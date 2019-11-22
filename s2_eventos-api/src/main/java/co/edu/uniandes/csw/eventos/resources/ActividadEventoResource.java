@@ -173,7 +173,7 @@ public class ActividadEventoResource {
             throw new WebApplicationException(msg1 + eventosId + msg2 + actividadesId + msg3, 404);
         }
         actividadEventoLogic.deleteActividadEvento(eventosId, actividadesId);
-        LOGGER.log(Level.INFO, "ActividadEventoResource deleteActividad: output: void", new Object[]{eventosId, actividadesId});
+        LOGGER.log(Level.INFO, "ActividadEventoResource deleteActividad: output: void");
     }
 
     /**

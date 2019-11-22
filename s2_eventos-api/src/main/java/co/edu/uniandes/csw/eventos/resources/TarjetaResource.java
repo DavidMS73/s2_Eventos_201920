@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.eventos.resources;
 
 import co.edu.uniandes.csw.eventos.dtos.TarjetaDTO;
 import co.edu.uniandes.csw.eventos.ejb.TarjetaLogic;
-import co.edu.uniandes.csw.eventos.ejb.UsuarioTarjetasLogic;
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
