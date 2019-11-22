@@ -27,7 +27,7 @@ import javax.ws.rs.WebApplicationException;
 
 /**
  *
- * @author Samuel.
+ * @author Samuel Osorio
  */
 @Produces("application/json")
 @Consumes("application/json")
@@ -85,7 +85,6 @@ public class TarjetaResource {
         TarjetaEntity entity = tarjetaLogic.getTarjeta(usuariosId, tarjetasId);
         if (entity == null) {
             throw new WebApplicationException(msg1 + usuariosId + msg2 + tarjetasId + msg3, 404);
-
         }
         TarjetaDTO tarjetaDTO = new TarjetaDTO(tarjetaLogic.updateTarjeta(tarjetasId, tarjeta.toEntity()));
         LOGGER.log(Level.INFO, "TarjetaResource updateTarjeta: output: {0}", tarjetaDTO);

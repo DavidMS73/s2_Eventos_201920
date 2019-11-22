@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.dtos;
 
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.PseEntity;
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import java.io.Serializable;
@@ -32,6 +33,12 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
      * un usuario
      */
     private List<TarjetaDTO> tarjetas;
+
+    /**
+     * Lista de tipo PSEDTO que contiene los correos PSE que están asociados a
+     * un usuario
+     */
+    private List<PseDTO> pse;
 
     /**
      * Constructor por defecto
@@ -61,6 +68,12 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
                 tarjetas.add(new TarjetaDTO(entityTarjeta));
             }
         }
+        if (usuarioEntity.getPse() != null) {
+            pse = new ArrayList<>();
+            for (PseEntity entityPse : usuarioEntity.getPse()) {
+                pse.add(new PseDTO(entityPse));
+            }
+        }
     }
 
     /**
@@ -85,6 +98,13 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
                 tarjetasEntity.add(dtoTarjeta.toEntity());
             }
             usuarioEntity.setTarjetas(tarjetasEntity);
+        }
+        if (getPse() != null) {
+            List<PseEntity> pseEntity = new ArrayList<>();
+            for (PseDTO dtoPse : getPse()) {
+                pseEntity.add(dtoPse.toEntity());
+            }
+            usuarioEntity.setPse(pseEntity);
         }
         return usuarioEntity;
     }
@@ -120,5 +140,19 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
      */
     public void setTarjetas(List<TarjetaDTO> tarjetas) {
         this.tarjetas = tarjetas;
+    }
+
+    /**
+     * @return the pse
+     */
+    public List<PseDTO> getPse() {
+        return pse;
+    }
+
+    /**
+     * @param pse the pse to set
+     */
+    public void setPse(List<PseDTO> pse) {
+        this.pse = pse;
     }
 }

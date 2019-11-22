@@ -135,6 +135,27 @@ public class UsuarioResource {
         return TarjetaResource.class;
     }
 
+    /**
+     * Conexión con el servicio de pse para un usuario. {@link PseResource}
+     *
+     * Este método conecta la ruta de /pse con las rutas de /usuarios que
+     * dependen del usuario, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de pse.
+     *
+     * @param usuariosId El ID del usuario con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de pse para ese evento en particular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el usuario.
+     */
+    @Path("{usuariosId: \\d+}/pse")
+    public Class<PseResource> getPseResource(@PathParam("usuariosId") Long usuariosId) {
+        if (uLogic.getUsuario(usuariosId) == null) {
+            throw new WebApplicationException(msg1 + usuariosId + "/pse" + msg2, 404);
+        }
+        return PseResource.class;
+    }
+
     private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
         List<UsuarioDetailDTO> list = new ArrayList<>();
         for (UsuarioEntity entity : entityList) {

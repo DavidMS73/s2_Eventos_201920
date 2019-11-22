@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class PseIT {
 
-    private static final String COLLECTION = "Pse Tests.postman_collection";
+    private static final String COLLECTION = "PseResource.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {

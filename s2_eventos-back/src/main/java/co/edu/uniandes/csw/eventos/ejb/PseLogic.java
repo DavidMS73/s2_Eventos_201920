@@ -23,7 +23,7 @@ import javax.inject.Inject;
 @Stateless
 public class PseLogic {
 
-    private static final Logger LOGGER = Logger.getLogger(EventoLogic.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PseLogic.class.getName());
 
     @Inject
     private PsePersistence persistence;
@@ -59,34 +59,21 @@ public class PseLogic {
 
     public PseEntity getPse(Long usuarioId, Long pseId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el PSE con id = {0}", pseId);
-        PseEntity pseEntity = persistence.find(usuarioId, pseId);
-        if (pseEntity == null) {
-            LOGGER.log(Level.SEVERE, "El PSE con el id = {0} no existe", pseId);
-        }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el PSE con id = {0}", pseId);
-
-        return pseEntity;
+        return persistence.find(usuarioId, pseId);
     }
 
-    public PseEntity updatePse(Long usuarioId, Long pseId, PseEntity entity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el PSE con id = {0}", pseId);
+    public PseEntity updatePse(Long usuarioId, PseEntity entity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar PSE del usuario con id = {0}", usuarioId);
         UsuarioEntity u = usuarioPersistence.find(usuarioId);
         entity.setUsuario(u);
-        PseEntity update = persistence.update(entity);
-        List<PseEntity> lista = u.getPse();
-        lista.add(update);
-        u.setPse(lista);
-
-        PseEntity en = persistence.update(entity);
+        persistence.update(entity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el PSE con id = {0}", entity.getId());
-        return en;
+        return entity;
     }
 
     public void deletePse(Long usuariosId, Long id) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el PSE con id = {0}", id);
-
         PseEntity vieja = getPse(usuariosId, id);
-
         if (vieja == null) {
             throw new BusinessLogicException("El pse con id = " + id + " no existe en la cuenta del usario con id = " + usuariosId);
         }

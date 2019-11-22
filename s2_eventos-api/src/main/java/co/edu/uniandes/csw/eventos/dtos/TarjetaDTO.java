@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  *
- * @author Samuelillo el pillo.
+ * @author Samuel Osorio.
  */
 public class TarjetaDTO implements Serializable {
 

@@ -10,21 +10,20 @@ import java.io.Serializable;
 
 /**
  *
- * @author Daniel tenjo
+ * @author Daniel Tenjo
  */
 public class PseDTO implements Serializable {
 
-    
     private String correo;
 
     private Long id;
-    
+
     private UsuarioDTO usuario;
 
     public PseDTO(PseEntity entidad) {
         if (entidad != null) {
-            this.correo= (entidad.getCorreo());
-            this.id= entidad.getId();
+            setId(entidad.getId());
+            setCorreo(entidad.getCorreo());
             if (entidad.getUsuario() != null) {
                 this.usuario = (new UsuarioDTO(entidad.getUsuario()));
             } else {
@@ -75,7 +74,7 @@ public class PseDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     /**
      * @return the usuario
      */
@@ -89,6 +88,5 @@ public class PseDTO implements Serializable {
     public void setUsuario(UsuarioDTO usuario) {
         this.usuario = usuario;
     }
-
 
 }

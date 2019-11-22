@@ -25,34 +25,39 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author Danisanti Tenjo
+ * @author Daniel Santiago Tenjo
  */
-
-@Path("usuarios/{usuariosId: \\d+}/pses")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@Produces("application/json")
+@Consumes("application/json")
 @RequestScoped
 public class PseResource {
 
     @Inject
-    private PseLogic logica;
-    
+    private PseLogic pseLogic;
+
     @Inject
     private UsuarioTarjetasLogic utp;
-    
-    
-    private static final String  MSG="El recurso /pse/";
-    
-    private static final String  MSG1=" no existe";
-    
-    
-    private static final Logger LOGGER= Logger.getLogger(PseResource.class.getName());
-    
-    
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /usuarios/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = "/pse/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg3 = " no existe.";
+
+    private static final Logger LOGGER = Logger.getLogger(PseResource.class.getName());
+
     private List<PseDTO> listEntity2DTO(List<PseEntity> entityList) {
         List<PseDTO> list = new ArrayList<>();
         for (PseEntity entity : entityList) {
@@ -62,55 +67,56 @@ public class PseResource {
     }
 
     @POST
-    public PseDTO createPse(@PathParam("usuariosId") Long usuariosId,PseDTO pse) throws BusinessLogicException {
-
-        PseEntity pseEntity = pse.toEntity();
-        pseEntity = logica.createPse(usuariosId, pseEntity);
-        PseDTO nuevoPse = new PseDTO(pseEntity);
+    public PseDTO createPse(@PathParam("usuariosId") Long usuariosId, PseDTO pse) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "PseResource createPse: input: {0}", pse);
+        PseDTO nuevoPse = new PseDTO(pseLogic.createPse(usuariosId, pse.toEntity()));
+        LOGGER.log(Level.INFO, "PseResource createPse: output: {0}", nuevoPse);
         return nuevoPse;
     }
 
     @GET
     public List<PseDTO> getPses(@PathParam("usuariosId") Long usuariosId) {
-        return listEntity2DTO(logica.getPses(usuariosId));
-    }    
-    
+        return listEntity2DTO(pseLogic.getPses(usuariosId));
+    }
+
     @GET
     @Path("{pseId: \\d+}")
-    public PseDTO getPse(@PathParam("usuariosId") Long usuariosId, @PathParam("pseId") Long pseId)
-    {
-        PseEntity pseEntity= logica.getPse(usuariosId, pseId);
-        if( pseEntity == null)
-        {
-            throw new WebApplicationException(MSG+ pseId + MSG1, 404 );
+    public PseDTO getPse(@PathParam("usuariosId") Long usuariosId, @PathParam("pseId") Long pseId) {
+        LOGGER.log(Level.INFO, "PseResource getPse: input: {0}", pseId);
+        PseEntity tarjetaEntity = pseLogic.getPse(usuariosId, pseId);
+        if (tarjetaEntity == null) {
+            throw new WebApplicationException(msg1 + usuariosId + msg2 + pseId + msg3, 404);
         }
-        PseDTO pseDTO = new PseDTO(pseEntity);
+        PseDTO pseDTO = new PseDTO(tarjetaEntity);
         LOGGER.log(Level.INFO, "PseResource getPse: output: {0}", pseDTO);
         return pseDTO;
     }
 
     @PUT
     @Path("{pseId: \\d+}")
-    public PseDTO updatePse(@PathParam("usuariosId") Long usuariosId, @PathParam("pseId") Long pseId, PseDTO pse) {
-        
-        pse.setId(pseId);
-        if (logica.getPse(usuariosId, pseId) == null) {
-            throw new WebApplicationException(MSG + pseId + MSG1, 404);
+    public PseDTO updatePse(@PathParam("usuariosId") Long usuariosId, @PathParam("pseId") Long pseId, PseDTO pse) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "PseResource updatePse: input: usuariosId: {0} , pseId: {1} , pse:{2}", new Object[]{usuariosId, pseId, pse});
+        if (pseId.equals(pse.getId())) {
+            throw new BusinessLogicException("Los ids del pse no coinciden.");
         }
-         
-        
-        return new PseDTO(logica.updatePse(usuariosId, pseId, pse.toEntity()));
+        PseEntity entity = pseLogic.getPse(usuariosId, pseId);
+        if (entity == null) {
+            throw new WebApplicationException(msg1 + usuariosId + msg2 + pseId + msg3, 404);
+        }
+        PseDTO pseDTO = new PseDTO(pseLogic.updatePse(pseId, pse.toEntity()));
+        LOGGER.log(Level.INFO, "PseResource updatePse: output: {0}", pseDTO);
+        return pseDTO;
     }
 
     @DELETE
     @Path("{pseId: \\d+}")
     public void deletePse(@PathParam("usuariosId") Long usuariosId, @PathParam("pseId") Long pseId) throws BusinessLogicException {
-        
-        if (logica.getPse(usuariosId ,pseId) == null) {
-            throw new WebApplicationException(MSG + pseId + MSG1, 404);
+        LOGGER.log(Level.INFO, "PseResource deletePse: input: usuariosId: {0} , pseId: {1}", new Object[]{usuariosId, pseId});
+        PseEntity entity = pseLogic.getPse(usuariosId, pseId);
+        if (entity == null) {
+            throw new WebApplicationException(msg1 + usuariosId + msg2 + pseId + msg3, 404);
         }
-        logica.deletePse(usuariosId, pseId);
-        
+        pseLogic.deletePse(usuariosId, pseId);
+        LOGGER.info("PseResource deletePse: output: void");
     }
 }

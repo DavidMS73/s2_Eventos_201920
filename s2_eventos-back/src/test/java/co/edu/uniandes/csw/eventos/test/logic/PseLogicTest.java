@@ -158,7 +158,7 @@ public class PseLogicTest {
         PseEntity entity = data.get(0);
         PseEntity pojoEntity = factory.manufacturePojo(PseEntity.class);
         pojoEntity.setId(entity.getId());
-        pseLogic.updatePse(dataUsuario.get(1).getId(),pojoEntity.getId(), pojoEntity);
+        pseLogic.updatePse(dataUsuario.get(1).getId(), pojoEntity);
         PseEntity resp = em.find(PseEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
