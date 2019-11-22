@@ -49,7 +49,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
      */
     public UsuarioDetailDTO(UsuarioEntity usuarioEntity) {
         super(usuarioEntity);
-        if (usuarioEntity != null) {
+        if (usuarioEntity.getEventos() != null) {
             eventos = new ArrayList<>();
             for (EventoEntity entityEventos : usuarioEntity.getEventos()) {
                 eventos.add(new EventoDTO(entityEventos));
