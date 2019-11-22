@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d227da95-b78c-4bc9-a6d3-d484313a2c13",
+		"_postman_id": "b8e481e2-3d11-49fc-bdc5-820997755329",
 		"name": "PseResource",
 		"description": "Colección de pruebas sobre el recurso Pse",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -35,7 +35,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juddsjkj@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juddsjkj@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\",\n\t\"username\": \"culeZ\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

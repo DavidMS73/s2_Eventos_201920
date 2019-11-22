@@ -173,4 +173,15 @@ public class UsuarioPersistenceTest {
         newEntity = up.findByEmail(null);
         Assert.assertNull(newEntity);
     }
+    
+    @Test
+    public void findUsuarioByUsernameTest() {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity newEntity = up.findByUsername(entity.getUsername());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getUsername(), newEntity.getUsername());
+
+        newEntity = up.findByUsername(null);
+        Assert.assertNull(newEntity);
+    }
 }

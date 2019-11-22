@@ -1,20 +1,20 @@
 {
 	"info": {
-		"_postman_id": "9e8d3a85-eddc-4706-8e2e-a17a540f43d8",
-		"name": "UsuarioTarjetaTest",
+		"_postman_id": "01f45dab-9583-4fb6-b7ad-33a51f4ffcfe",
+		"name": "Tarjeta tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Post usuario",
+			"name": "Post tarjeta",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "f7785be9-93f4-4af6-bf37-23766c0c84bb",
+						"id": "368f631f-dfa1-446f-8d44-6d5fc9fb53bc",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a\", data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"jukbef78782@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\",\n\t\"username\": \"sexooo\"\n}",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juddsjkh@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\",\n\t\"username\": \"judds\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -54,7 +54,8 @@
 						"usuarios",
 						""
 					]
-				}
+				},
+				"description": "añade una tarjeta"
 			},
 			"response": []
 		},
@@ -113,24 +114,30 @@
 			"response": []
 		},
 		{
-			"name": "Get tarjetas de un usuario",
+			"name": "Get tarjetas",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "296f846c-17f8-4023-aae9-733f4241cfb1",
+						"id": "65e428b0-6bf3-4cac-b15b-a0756f1b8c70",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/tarjetas",
 					"protocol": "http",
@@ -150,16 +157,15 @@
 			"response": []
 		},
 		{
-			"name": "Get tarjeta de un usuario",
+			"name": "Get tarjeta",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "75baaf01-7da1-4a2c-b1ff-5bca2585e17d",
+						"id": "79931d94-dd8e-4060-8b8c-5f58bbe7f4c4",
 						"exec": [
 							"var data= JSON.parse(responseBody);",
-							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
-							""
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
@@ -188,12 +194,12 @@
 			"response": []
 		},
 		{
-			"name": "Delete tarjeta de un usuario",
+			"name": "Delete tarjeta",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "cd1b5f6c-6327-45b9-90b8-2a7c24aa66e0",
+						"id": "f4809dfa-bee4-4c84-9f77-a5de9df1cf37",
 						"exec": [
 							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
 						],
@@ -203,7 +209,23 @@
 			],
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_eventos-api/api/usuarios/{{new_id_a}}/tarjetas/{{new_id_e}}",
 					"protocol": "http",
@@ -229,9 +251,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5810ac2f-28d9-4619-91a5-61734137b6e1",
+						"id": "a8d64c6a-1dc6-45c2-a883-6c01054aea26",
 						"exec": [
-							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}

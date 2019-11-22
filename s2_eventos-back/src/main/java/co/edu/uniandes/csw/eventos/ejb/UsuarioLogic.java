@@ -52,6 +52,9 @@ public class UsuarioLogic {
         if (persistence.findByEmail(usuario.getCorreo()) != null) {
             throw new BusinessLogicException("El correo del usuario ya existe");
         }
+        if(persistence.findByUsername(usuario.getUsername()) != null){
+            throw new BusinessLogicException("El nombre de usuario ya existe");
+        }
         usuario = persistence.create(usuario);
         LOGGER.log(Level.INFO, "Termina proceso de creación del usuario");
         return usuario;
@@ -71,6 +74,16 @@ public class UsuarioLogic {
             LOGGER.log(Level.INFO, "El usuario con el id = {0} no existe", usuariosId);
         }
         LOGGER.log(Level.INFO, "Termina proceso de consultar el usuario con id = {0}", usuariosId);
+        return usuarioEntity;
+    }
+    
+    public UsuarioEntity getUsuarioUsername(String pCorreo){
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el usuario con correo = {0}", pCorreo);
+        UsuarioEntity usuarioEntity = persistence.findByUsername(pCorreo);
+        if(usuarioEntity == null){
+            LOGGER.log(Level.INFO, "El usuario con el correo = {0} no existe", pCorreo);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el usuario con el correo = {0}", pCorreo);
         return usuarioEntity;
     }
 

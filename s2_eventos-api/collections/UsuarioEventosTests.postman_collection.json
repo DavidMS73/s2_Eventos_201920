@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c9a6dff1-5056-4a6b-ac77-ad071ac7c9dd",
+		"_postman_id": "8b3ab309-d5cd-4a33-bb52-55ac28ef2fcb",
 		"name": "UsuarioEventosTests",
 		"description": "Colección de pruebas sobre el recurso UsuarioEventos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -141,7 +141,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}\n",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\",\n\t\"username\": \"jueputa\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"

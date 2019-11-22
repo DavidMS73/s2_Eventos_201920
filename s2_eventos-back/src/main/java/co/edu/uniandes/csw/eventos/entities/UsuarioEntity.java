@@ -86,7 +86,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToMany(mappedBy = "usuarios")
     private List<EventoEntity> eventos = new ArrayList<>();
-
+    
+    private String username;
     /**
      * Constructor por defecto
      */
@@ -162,6 +163,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      */
     public void setEventos(List<EventoEntity> eventos) {
         this.eventos = eventos;
+    }
+    
+    public String getUsername(){
+        return  username;
+    }
+    
+    public void setUsername(String username){
+        this.username = username;
     }
 
     /**
