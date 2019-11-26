@@ -68,7 +68,6 @@ public class UsuarioResource {
         return listaUsuarios;
     }
 
-    
     @GET
     @Path("{usuariosId: \\d+}")
     public UsuarioDetailDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
@@ -81,23 +80,19 @@ public class UsuarioResource {
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
         return detailDTO;
     }
-    
-    
+
     @GET
     @Path("{nombre: [a-zA-Z][a-zA-Z]*}")
-    public UsuarioDetailDTO getUsuarioCorreo(@PathParam("nombre") String correo){
+    public UsuarioDetailDTO getUsuarioCorreo(@PathParam("nombre") String correo) {
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: input: {0}", correo);
         UsuarioEntity usuarioEntity = uLogic.getUsuarioUsername(correo);
-        System.out.println("AQUI ESTAAAAA HPTAAAA: ___________________________________________________" + correo);
-        LOGGER.log(Level.INFO, "AQUI ESTAAAAA HPTAAAA: ___________________________________________________" + correo);
-        if(usuarioEntity == null){
+        if (usuarioEntity == null) {
             throw new WebApplicationException(msg1 + correo + msg2, 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(usuarioEntity);
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
         return detailDTO;
     }
-    
 
     @PUT
     @Path("{usuariosId: \\d+}")
