@@ -49,6 +49,16 @@ public class EventoResource {
     private static final Logger LOGGER = Logger.getLogger(EventoResource.class.getName());
 
     /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /eventos/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = " no existe.";
+
+    /**
      * Crea un nuevo evento con la información que se recibe en el cuerpo de la
      * petición y se regresa un objeto idéntico con un id auto-generado por la
      * base de datos
@@ -98,7 +108,7 @@ public class EventoResource {
         LOGGER.log(Level.INFO, "EventoResource getEvento: input: {0}", eventosId);
         EventoEntity entidad = eventoLogic.getEvento(eventosId);
         if (entidad == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2, 404);
         }
         EventoDetailDTO eventoDetailDTO = new EventoDetailDTO(entidad);
         LOGGER.log(Level.INFO, "EventoResource getEvento: output: {0}", eventoDetailDTO);
@@ -125,7 +135,7 @@ public class EventoResource {
         LOGGER.log(Level.INFO, "EventoResource updateEvento: input: id: {0} , evento: {1}", new Object[]{eventosId, evento});
         evento.setId(eventosId);
         if (eventoLogic.getEvento(eventosId) == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2, 404);
         }
         EventoDetailDTO detailDTO = new EventoDetailDTO(eventoLogic.updateEvento(eventosId, evento.toEntity()));
         LOGGER.log(Level.INFO, "EventoResource updateEvento: output: {0}", detailDTO);
@@ -148,7 +158,7 @@ public class EventoResource {
         LOGGER.log(Level.INFO, "EventoResource deleteEvento: input: {0}", eventosId);
         EventoEntity entity = eventoLogic.getEvento(eventosId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2, 404);
         }
         eventoLogic.deleteEvento(eventosId);
         LOGGER.info("EventoResource deleteEvento: output: void");
@@ -160,7 +170,8 @@ public class EventoResource {
      *
      * Este método conecta la ruta de /eventos con las rutas de
      * /actividadesEvento que dependen del evento, es una redirección al
-     * servicio que maneja el segmento de la URL que se encarga de las actividades.
+     * servicio que maneja el segmento de la URL que se encarga de las
+     * actividades.
      *
      * @param eventosId El ID del evento con respecto al cual se accede al
      * servicio.
@@ -171,18 +182,18 @@ public class EventoResource {
     @Path("{eventosId: \\d+}/actividades")
     public Class<ActividadEventoResource> getActividadEventoResource(@PathParam("eventosId") Long eventosId) {
         if (eventoLogic.getEvento(eventosId) == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/actividades no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + "/actividades" + msg2, 404);
         }
         return ActividadEventoResource.class;
     }
-    
+
     /**
      * Conexión con el servicio de memorias para un evento.
      * {@link MemoriaResource}
      *
-     * Este método conecta la ruta de /eventos con las rutas de
-     * /memorias que dependen del evento, es una redirección al
-     * servicio que maneja el segmento de la URL que se encarga de las memorias.
+     * Este método conecta la ruta de /eventos con las rutas de /memorias que
+     * dependen del evento, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de las memorias.
      *
      * @param eventosId El ID del evento con respecto al cual se accede al
      * servicio.
@@ -193,7 +204,7 @@ public class EventoResource {
     @Path("{eventosId: \\d+}/memorias")
     public Class<MemoriaResource> getMemoriaResource(@PathParam("eventosId") Long eventosId) {
         if (eventoLogic.getEvento(eventosId) == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/memorias no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + "/memorias" + msg2, 404);
         }
         return MemoriaResource.class;
     }
@@ -215,7 +226,7 @@ public class EventoResource {
     @Path("{eventosId: \\d+}/usuarios")
     public Class<EventoUsuariosResource> getEventoUsuariosResource(@PathParam("eventosId") Long eventosId) {
         if (eventoLogic.getEvento(eventosId) == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2, 404);
         }
         return EventoUsuariosResource.class;
     }
@@ -237,7 +248,7 @@ public class EventoResource {
     @Path("{eventosId: \\d+}/patrocinios")
     public Class<EventoPatrociniosResource> getEventoPatrociniosResource(@PathParam("eventosId") Long eventosId) {
         if (eventoLogic.getEvento(eventosId) == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2, 404);
         }
         return EventoPatrociniosResource.class;
     }

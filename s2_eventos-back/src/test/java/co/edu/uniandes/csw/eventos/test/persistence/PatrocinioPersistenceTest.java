@@ -56,6 +56,9 @@ public class PatrocinioPersistenceTest {
 
         PatrocinioEntity entity = em.find(PatrocinioEntity.class, result.getId());
 
+        Assert.assertFalse(usuario.equals(null));
+        Assert.assertEquals(usuario.hashCode(), entity.hashCode());
+
         Assert.assertEquals(usuario.getEmpresa(), entity.getEmpresa());
     }
 

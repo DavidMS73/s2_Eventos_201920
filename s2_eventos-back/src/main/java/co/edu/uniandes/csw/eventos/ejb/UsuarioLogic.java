@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.eventos.ejb;
 
 import co.edu.uniandes.csw.eventos.entities.EventoEntity;
+import co.edu.uniandes.csw.eventos.entities.PseEntity;
 import co.edu.uniandes.csw.eventos.entities.TarjetaEntity;
 import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
@@ -51,6 +52,9 @@ public class UsuarioLogic {
         if (persistence.findByEmail(usuario.getCorreo()) != null) {
             throw new BusinessLogicException("El correo del usuario ya existe");
         }
+        if(persistence.findByUsername(usuario.getUsername()) != null){
+            throw new BusinessLogicException("El nombre de usuario ya existe");
+        }
         usuario = persistence.create(usuario);
         LOGGER.log(Level.INFO, "Termina proceso de creación del usuario");
         return usuario;
@@ -72,6 +76,16 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO, "Termina proceso de consultar el usuario con id = {0}", usuariosId);
         return usuarioEntity;
     }
+    
+    public UsuarioEntity getUsuarioUsername(String pCorreo){
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el usuario con correo = {0}", pCorreo);
+        UsuarioEntity usuarioEntity = persistence.findByUsername(pCorreo);
+        if(usuarioEntity == null){
+            LOGGER.log(Level.INFO, "El usuario con el correo = {0} no existe", pCorreo);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el usuario con el correo = {0}", pCorreo);
+        return usuarioEntity;
+    }
 
     public UsuarioEntity updateUsuario(Long usuariosId, UsuarioEntity usuarioEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar usuario con id = {0}", usuariosId);
@@ -89,6 +103,10 @@ public class UsuarioLogic {
         List<TarjetaEntity> tarjetas = getUsuario(usuariosId).getTarjetas();
         if (tarjetas != null && !tarjetas.isEmpty()) {
             throw new BusinessLogicException("No se puede borrar el usuario con id  = " + usuariosId + " porque tiene tarjetas registradas.");
+        }
+        List<PseEntity> pses = getUsuario(usuariosId).getPse();
+        if (pses != null && !pses.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar el usuario con id  = " + usuariosId + " porque tiene pses registrados.");
         }
         persistence.delete(usuariosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrer el evento con id = {0}", usuariosId);

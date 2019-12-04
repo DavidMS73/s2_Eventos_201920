@@ -129,6 +129,18 @@ public class UsuarioLogicTest {
         newEntity.setCorreo(data.get(0).getCorreo());
         usuarioLogic.createUsuario(newEntity);
     }
+    
+    @Test
+    public void getUsuarioUsernameTest(){
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity result = usuarioLogic.getUsuarioUsername(entity.getUsername());
+        Assert.assertEquals(entity.getNombre(), result.getNombre());
+        Assert.assertEquals(entity.getCorreo(), result.getCorreo());
+        Assert.assertEquals(entity.getContrasena(), result.getContrasena());
+        Assert.assertEquals(entity.getCodigoQR(), result.getCodigoQR());
+        Assert.assertEquals(entity.getTipo(), result.getTipo());
+        Assert.assertEquals(entity.getUsername(), result.getUsername());
+    }
 
     /**
      * Prueba para consultar la lista de Authors.

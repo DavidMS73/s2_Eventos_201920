@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  *
- * @author Samuelillo el pillo.
+ * @author Samuel Osorio.
  */
 public class TarjetaDTO implements Serializable {
 
@@ -23,17 +23,17 @@ public class TarjetaDTO implements Serializable {
 
     private Date expiracion;
 
-    private Integer cw;
+    private Integer cvv;
 
     private UsuarioDTO usuario;
 
     public TarjetaDTO(TarjetaEntity newEntity) {
         if (newEntity != null) {
-            this.id = newEntity.getId();
-            this.tipoTarjeta = (newEntity.getTipoTarjeta());
-            this.numeroTarjeta = newEntity.getNumeroTarjeta();
-            this.expiracion = (newEntity.getExpiracion());
-            this.cw = (newEntity.getCw());
+            setId(newEntity.getId());
+            setTipoTarjeta(newEntity.getTipoTarjeta());
+            setNumeroTarjeta(newEntity.getNumeroTarjeta());
+            setExpiracion(newEntity.getExpiracion());
+            setCvv(newEntity.getCvv());
             if (newEntity.getUsuario() != null) {
                 this.usuario = (new UsuarioDTO(newEntity.getUsuario()));
             } else {
@@ -53,7 +53,7 @@ public class TarjetaDTO implements Serializable {
         newEntity.setNumeroTarjeta(this.getNumeroTarjeta());
         newEntity.setTipoTarjeta(this.getTipoTarjeta());
         newEntity.setExpiracion(this.getExpiracion());
-        newEntity.setCw(this.getCw());
+        newEntity.setCvv(this.getCvv());
         if (this.getUsuario() != null) {
             newEntity.setUsuario(this.getUsuario().toEntity());
         }
@@ -85,12 +85,12 @@ public class TarjetaDTO implements Serializable {
         this.expiracion = expiracion;
     }
 
-    public Integer getCw() {
-        return cw;
+    public Integer getCvv() {
+        return cvv;
     }
 
-    public void setCw(Integer cw) {
-        this.cw = cw;
+    public void setCvv(Integer cvv) {
+        this.cvv = cvv;
     }
 
     public Long getId() {

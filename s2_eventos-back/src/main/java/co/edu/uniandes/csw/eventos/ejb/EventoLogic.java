@@ -90,11 +90,6 @@ public class EventoLogic {
         if (evento.getFechaFin() == null) {
             throw new BusinessLogicException("Debe definir una fecha de fin");
         }
-
-        java.util.Date fecha = new Date();
-        if (evento.getFechaInicio().before(fecha)) {
-            throw new BusinessLogicException("La fecha de inicio no puede ser anterior a la actual");
-        }
         if (evento.getFechaInicio().after(evento.getFechaFin())) {
             throw new BusinessLogicException("La fecha de inicio no puede ser después de la de fin");
         }

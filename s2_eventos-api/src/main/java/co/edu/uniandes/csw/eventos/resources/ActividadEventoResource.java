@@ -47,6 +47,21 @@ public class ActividadEventoResource {
     private ActividadEventoLogic actividadEventoLogic;
 
     /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /eventos/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = "/actividades/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg3 = " no existe.";
+
+    /**
      * Crea una nueva actividad con la informacion que se recibe en el cuerpo de
      * la petición y se regresa un objeto idéntico con un id auto-generado por
      * la base de datos.
@@ -101,7 +116,7 @@ public class ActividadEventoResource {
         LOGGER.log(Level.INFO, "ActividadEventoResource getActividad: input: {0}", actividadesId);
         ActividadEventoEntity entity = actividadEventoLogic.getActividadEvento(eventosId, actividadesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/actividades/" + actividadesId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2 + actividadesId + msg3, 404);
         }
         ActividadEventoDTO actividadDTO = new ActividadEventoDTO(entity);
         LOGGER.log(Level.INFO, "ActividadEventoResource getActividad: output: {0}", actividadDTO);
@@ -131,7 +146,7 @@ public class ActividadEventoResource {
         }
         ActividadEventoEntity entity = actividadEventoLogic.getActividadEvento(eventosId, actividadesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/actividades/" + actividadesId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2 + actividadesId + msg3, 404);
 
         }
         ActividadEventoDTO actividadDTO = new ActividadEventoDTO(actividadEventoLogic.updateActividadEvento(eventosId, actividad.toEntity()));
@@ -151,12 +166,14 @@ public class ActividadEventoResource {
      */
     @DELETE
     @Path("{actividadesId: \\d+}")
-    public void deleteReview(@PathParam("eventosId") Long eventosId, @PathParam("actividadesId") Long actividadesId) throws BusinessLogicException {
+    public void deleteActividad(@PathParam("eventosId") Long eventosId, @PathParam("actividadesId") Long actividadesId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "ActividadEventoResource deleteActividad: input: eventosId: {0} , actividadesId: {1}", new Object[]{eventosId, actividadesId});
         ActividadEventoEntity entity = actividadEventoLogic.getActividadEvento(eventosId, actividadesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /eventos/" + eventosId + "/actividades/" + actividadesId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + eventosId + msg2 + actividadesId + msg3, 404);
         }
         actividadEventoLogic.deleteActividadEvento(eventosId, actividadesId);
+        LOGGER.log(Level.INFO, "ActividadEventoResource deleteActividad: output: void");
     }
 
     /**

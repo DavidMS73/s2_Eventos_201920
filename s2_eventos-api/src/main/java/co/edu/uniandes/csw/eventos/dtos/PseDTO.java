@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Estudiante
+ * @author Daniel Tenjo
  */
 public class PseDTO implements Serializable {
 
@@ -18,10 +18,17 @@ public class PseDTO implements Serializable {
 
     private Long id;
 
+    private UsuarioDTO usuario;
+
     public PseDTO(PseEntity entidad) {
         if (entidad != null) {
-            setCorreo(entidad.getCorreo());
             setId(entidad.getId());
+            setCorreo(entidad.getCorreo());
+            if (entidad.getUsuario() != null) {
+                this.usuario = (new UsuarioDTO(entidad.getUsuario()));
+            } else {
+                this.usuario = null;
+            }
         }
     }
 
@@ -33,6 +40,9 @@ public class PseDTO implements Serializable {
         PseEntity entidad = new PseEntity();
         entidad.setCorreo(this.getCorreo());
         entidad.setId(this.getId());
+        if (this.getUsuario() != null) {
+            entidad.setUsuario(this.getUsuario().toEntity());
+        }
 
         return entidad;
     }
@@ -63,6 +73,20 @@ public class PseDTO implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public UsuarioDTO getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
     }
 
 }

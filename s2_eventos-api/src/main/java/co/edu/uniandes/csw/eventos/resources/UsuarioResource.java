@@ -40,6 +40,16 @@ public class UsuarioResource {
     @Inject
     private UsuarioLogic uLogic;
 
+    /**
+     * Parte del mensaje
+     */
+    private String msg1 = "El recurso /usuarios/";
+
+    /**
+     * Parte del mensaje
+     */
+    private String msg2 = " no existe.";
+
     @POST
     public UsuarioDTO crearUsuario(UsuarioDTO usuario) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UsuarioResource createEditorial: input: {0}", usuario);
@@ -64,7 +74,20 @@ public class UsuarioResource {
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: input: {0}", usuariosId);
         UsuarioEntity usuarioEntity = uLogic.getUsuario(usuariosId);
         if (usuarioEntity == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
+        }
+        UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(usuarioEntity);
+        LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
+        return detailDTO;
+    }
+
+    @GET
+    @Path("{nombre: [a-zA-Z][a-zA-Z]*}")
+    public UsuarioDetailDTO getUsuarioCorreo(@PathParam("nombre") String correo) {
+        LOGGER.log(Level.INFO, "UsuarioResource getUsuario: input: {0}", correo);
+        UsuarioEntity usuarioEntity = uLogic.getUsuarioUsername(correo);
+        if (usuarioEntity == null) {
+            throw new WebApplicationException(msg1 + correo + msg2, 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(usuarioEntity);
         LOGGER.log(Level.INFO, "UsuarioResource getUsuario: output: {0}", detailDTO);
@@ -77,7 +100,7 @@ public class UsuarioResource {
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: input: usuariosId: {0} , usuario: {1}", new Object[]{usuariosId, usuario});
         usuario.setId(usuariosId);
         if (uLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         UsuarioDetailDTO detailDTO = new UsuarioDetailDTO(uLogic.updateUsuario(usuariosId, usuario.toEntity()));
         LOGGER.log(Level.INFO, "UsuarioResource updateUsuario: output: {0}", detailDTO);
@@ -89,7 +112,7 @@ public class UsuarioResource {
     public void deleteUsuario(@PathParam("usuariosId") Long usuariosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UsuarioResource deleteUsuario: input: {0}", usuariosId);
         if (uLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         uLogic.deleteUsuario(usuariosId);
         LOGGER.info("UsuarioResource deleteUsuario: output: void");
@@ -98,9 +121,52 @@ public class UsuarioResource {
     @Path("{usuariosId: \\d+}/eventos")
     public Class<UsuarioEventosResource> getUsuarioEventosResource(@PathParam("usuariosId") Long usuariosId) {
         if (uLogic.getUsuario(usuariosId) == null) {
-            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+            throw new WebApplicationException(msg1 + usuariosId + msg2, 404);
         }
         return UsuarioEventosResource.class;
+    }
+
+    /**
+     * Conexión con el servicio de tarjetas para un usuario.
+     * {@link TarjetaResource}
+     *
+     * Este método conecta la ruta de /tarjetas con las rutas de /usuarios que
+     * dependen del usuario, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de las tarjetas.
+     *
+     * @param usuariosId El ID del usuario con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de tarjeta para ese evento en particular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el usuario.
+     */
+    @Path("{usuariosId: \\d+}/tarjetas")
+    public Class<TarjetaResource> getTarjetaResource(@PathParam("usuariosId") Long usuariosId) {
+        if (uLogic.getUsuario(usuariosId) == null) {
+            throw new WebApplicationException(msg1 + usuariosId + "/tarjetas" + msg2, 404);
+        }
+        return TarjetaResource.class;
+    }
+
+    /**
+     * Conexión con el servicio de pse para un usuario. {@link PseResource}
+     *
+     * Este método conecta la ruta de /pse con las rutas de /usuarios que
+     * dependen del usuario, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de pse.
+     *
+     * @param usuariosId El ID del usuario con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de pse para ese evento en particular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el usuario.
+     */
+    @Path("{usuariosId: \\d+}/pse")
+    public Class<PseResource> getPseResource(@PathParam("usuariosId") Long usuariosId) {
+        if (uLogic.getUsuario(usuariosId) == null) {
+            throw new WebApplicationException(msg1 + usuariosId + "/pse" + msg2, 404);
+        }
+        return PseResource.class;
     }
 
     private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {

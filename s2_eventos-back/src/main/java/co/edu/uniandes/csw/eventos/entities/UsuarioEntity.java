@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,6 +24,20 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  */
 @Entity
 public class UsuarioEntity extends BaseEntity implements Serializable {
+
+    /**
+     * @return the pse
+     */
+    public List<PseEntity> getPse() {
+        return pse;
+    }
+
+    /**
+     * @param pse the pse to set
+     */
+    public void setPse(List<PseEntity> pse) {
+        this.pse = pse;
+    }
 
     /**
      * Atributo que modela el nombre del usuario
@@ -56,6 +71,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<TarjetaEntity> tarjetas;
+    
+    
+     /**
+     * Atributo que modela la relación Usuario - Pses
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<PseEntity> pse;
 
     /**
      * Atributo que modela la relación Usuarios - Eventos
@@ -63,7 +86,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToMany(mappedBy = "usuarios")
     private List<EventoEntity> eventos = new ArrayList<>();
-
+    
+    private String username;
     /**
      * Constructor por defecto
      */
@@ -140,6 +164,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void setEventos(List<EventoEntity> eventos) {
         this.eventos = eventos;
     }
+    
+    public String getUsername(){
+        return  username;
+    }
+    
+    public void setUsername(String username){
+        this.username = username;
+    }
 
     /**
      * @return the tarjetas
@@ -167,5 +199,15 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

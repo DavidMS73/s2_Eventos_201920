@@ -63,6 +63,16 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
         this.lugar = lugar;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     /**
      * @return the fecha
      */
@@ -90,4 +100,5 @@ public class MemoriaEntity extends BaseEntity implements Serializable {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
 }

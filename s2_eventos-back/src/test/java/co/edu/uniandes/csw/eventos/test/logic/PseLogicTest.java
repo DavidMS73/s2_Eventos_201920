@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.eventos.test.logic;
 
 import co.edu.uniandes.csw.eventos.ejb.PseLogic;
 import co.edu.uniandes.csw.eventos.entities.PseEntity;
+import co.edu.uniandes.csw.eventos.entities.UsuarioEntity;
 import co.edu.uniandes.csw.eventos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.eventos.persistence.PsePersistence;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class PseLogicTest {
     
     
     private List<PseEntity> data = new ArrayList<>();
+    
+    private ArrayList<UsuarioEntity> dataUsuario = new ArrayList<>();
 
     @Inject
     private PseLogic pseLogic;
@@ -83,7 +86,13 @@ public class PseLogicTest {
     
     private void insertData() {
         for (int i = 0; i < 3; i++) {
+            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            em.persist(entity);
+            dataUsuario.add(entity);
+        }
+        for (int i = 0; i < 3; i++) {
             PseEntity entity = factory.manufacturePojo(PseEntity.class);
+            entity.setUsuario(dataUsuario.get(1));
             em.persist(entity);
             data.add(entity);
         }
@@ -93,8 +102,9 @@ public class PseLogicTest {
     public void createPseTest() throws BusinessLogicException {
 
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
+        newEntity.setUsuario(dataUsuario.get(1));
         newEntity.setCorreo("germanElNegritoDeOjosClaros@gmail.com");
-        PseEntity result = pseLogic.createPse(newEntity);
+        PseEntity result = pseLogic.createPse(dataUsuario.get(1).getId(),newEntity);
         Assert.assertNotNull(result);
 
         PseEntity entity = em.find(PseEntity.class, result.getId());
@@ -106,20 +116,20 @@ public class PseLogicTest {
     public void createPseCorreoNullTest() throws BusinessLogicException {
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
         newEntity.setCorreo(null);
-        pseLogic.createPse(newEntity);
+        pseLogic.createPse(dataUsuario.get(0).getId(),newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createPseCorreoSinArrobaTest() throws BusinessLogicException {
         PseEntity newEntity = factory.manufacturePojo(PseEntity.class);
         newEntity.setCorreo("GermancitoElsexi");
-        pseLogic.createPse(newEntity);
+        pseLogic.createPse(dataUsuario.get(0).getId(),newEntity);
     }
     
     
     @Test
     public void getPsesTest() {
-        List<PseEntity> list = pseLogic.getPses();
+        List<PseEntity> list = pseLogic.getPses(dataUsuario.get(1).getId());
         Assert.assertEquals(data.size(), list.size());
         for (PseEntity entity : list) {
             boolean found = false;
@@ -136,7 +146,7 @@ public class PseLogicTest {
     @Test
     public void getPseTest() {
         PseEntity entity = data.get(0);
-        PseEntity resultEntity = pseLogic.getPse(entity.getId());
+        PseEntity resultEntity = pseLogic.getPse(dataUsuario.get(1).getId(), entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getCorreo(), resultEntity.getCorreo());
@@ -148,7 +158,7 @@ public class PseLogicTest {
         PseEntity entity = data.get(0);
         PseEntity pojoEntity = factory.manufacturePojo(PseEntity.class);
         pojoEntity.setId(entity.getId());
-        pseLogic.updatePse(pojoEntity.getId(), pojoEntity);
+        pseLogic.updatePse(dataUsuario.get(1).getId(), pojoEntity);
         PseEntity resp = em.find(PseEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
@@ -158,7 +168,7 @@ public class PseLogicTest {
     @Test
     public void deletePseTest() throws BusinessLogicException {
         PseEntity entity = data.get(1);
-        pseLogic.deletePse(entity.getId());
+        pseLogic.deletePse(dataUsuario.get(1).getId(),entity.getId());
         PseEntity deleted = em.find(PseEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }

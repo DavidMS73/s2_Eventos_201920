@@ -123,7 +123,6 @@ public class ActividadEventoLogic {
      */
     public ActividadEventoEntity updateActividadEvento(Long eventosId, ActividadEventoEntity actividadEventoEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar la editorial con id = {0}", actividadEventoEntity.getId());
-
         EventoEntity eventoEntity = eventoPersistence.find(eventosId);
         actividadEventoEntity.setEvento(eventoEntity);
         persistence.update(actividadEventoEntity);

@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juddsjkj@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juddsjkh@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\",\n\t\"username\": \"judds\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

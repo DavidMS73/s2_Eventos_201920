@@ -41,6 +41,8 @@ public class UsuarioDTO implements Serializable {
      * Artibuto que modela el código QR del usuario
      */
     private String codigoQR;
+    
+    private String username;
 
     /**
      * Atributo que modela el id del usuario
@@ -55,6 +57,7 @@ public class UsuarioDTO implements Serializable {
             setContrasena(usuario.getContrasena());
             setCodigoQR(usuario.getCodigoQR());
             setTipo(usuario.getTipo());
+            setUsername(usuario.getUsername());
         }
     }
 
@@ -73,7 +76,16 @@ public class UsuarioDTO implements Serializable {
         usuario.setContrasena(this.getContrasena());
         usuario.setCorreo(this.getCorreo());
         usuario.setNombre(this.getNombre());
+        usuario.setUsername(this.getUsername());
         return usuario;
+    }
+    
+    public String getUsername(){
+        return this.username;
+    }
+    
+    public void setUsername(String username){
+        this.username = username;
     }
 
     /**

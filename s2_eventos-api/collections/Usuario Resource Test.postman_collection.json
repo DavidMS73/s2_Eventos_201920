@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c440e03a-b8ad-4f9a-9bd5-03cc81958667",
+		"_postman_id": "83d68695-00a2-4fce-9ccf-d420305cc489",
 		"name": "Usuario Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\"\n}\n",
+					"raw": "{\n\t\"nombre\": \"Juan\",\n\t\"correo\":\"juan1@uniandes.edu.co\",\n\t\"contrasena\":\"1234567\",\n\t\"codigoQR\":\"fotol.png\",\n\t\"tipo\":\"Responsable\",\n\t\"username\": \"ayy\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -86,7 +86,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Juan Pedraza\",\n\t\"correo\":\"juan2@uniandes.edu.co\",\n\t\"contrasena\":\"234567\",\n\t\"codigoQR\":\"foto2.png\",\n\t\"tipo\":\"Asistente\"\n}\n",
+					"raw": "{\n\t\"nombre\": \"Juan Pedraza\",\n\t\"correo\":\"juan2@uniandes.edu.co\",\n\t\"contrasena\":\"234567\",\n\t\"codigoQR\":\"foto2.png\",\n\t\"tipo\":\"Asistente\",\n\t\"username\": \"ayf\"\n\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"

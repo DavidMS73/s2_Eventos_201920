@@ -131,6 +131,16 @@ public class ActividadEventoEntity extends BaseEntity implements Serializable {
         this.fecha = fecha;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     /**
      * @return the evento
      */

@@ -60,4 +60,20 @@ public class UsuarioPersistence {
         }
         return result;
     }
+
+    public UsuarioEntity findByUsername(String name) {
+        TypedQuery query = em.createQuery("select u from UsuarioEntity u where u.username = :name", UsuarioEntity.class);
+        query = query.setParameter("name", name);
+        List<UsuarioEntity> sameEmail = query.getResultList();
+        UsuarioEntity usuario;
+        if (sameEmail == null) {
+            usuario = null;
+        } else if (sameEmail.isEmpty()) {
+            usuario = null;
+        } else {
+            usuario = sameEmail.get(0);
+        }
+        return usuario;
+    }
+
 }
