@@ -107,9 +107,9 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
     @Override
     public EventoEntity toEntity() {
         EventoEntity entidad = super.toEntity();
-        if (getActividadesEvento() != null) {
+        if (getActividades() != null) {
             List<ActividadEventoEntity> actividadesEntity = new ArrayList<>();
-            for (ActividadEventoDTO dtoActividad : getActividadesEvento()) {
+            for (ActividadEventoDTO dtoActividad : getActividades()) {
                 actividadesEntity.add(dtoActividad.toEntity());
             }
             entidad.setActividadesEvento(actividadesEntity);
@@ -144,20 +144,6 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
             entidad.setUsuarios(usuariosEntity);
         }
         return entidad;
-    }
-
-    /**
-     * @return the actividadesEvento
-     */
-    public List<ActividadEventoDTO> getActividadesEvento() {
-        return actividades;
-    }
-
-    /**
-     * @param actividadesEvento the actividadesEvento to set
-     */
-    public void setActividadesEvento(List<ActividadEventoDTO> actividadesEvento) {
-        this.actividades = actividadesEvento;
     }
 
     /**
@@ -214,6 +200,20 @@ public class EventoDetailDTO extends EventoDTO implements Serializable {
      */
     public void setUsuarios(List<UsuarioDTO> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    /**
+     * @return the actividades
+     */
+    public List<ActividadEventoDTO> getActividades() {
+        return actividades;
+    }
+
+    /**
+     * @param actividades the actividades to set
+     */
+    public void setActividades(List<ActividadEventoDTO> actividades) {
+        this.actividades = actividades;
     }
 
 }
