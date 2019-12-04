@@ -144,7 +144,6 @@ public class LugarPersistenceTest {
         lp.update(lugEntity);
 
         LugarEntity resp = em.find(LugarEntity.class, entity.getId());
-
         Assert.assertEquals(lugEntity.getSalon(), resp.getSalon());
     }
 
