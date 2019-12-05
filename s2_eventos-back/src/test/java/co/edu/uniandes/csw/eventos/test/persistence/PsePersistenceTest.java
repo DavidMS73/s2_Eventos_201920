@@ -100,6 +100,9 @@ public class PsePersistenceTest {
         Assert.assertNotNull(result);
 
         PseEntity entity = em.find(PseEntity.class, result.getId());
+        
+        Assert.assertFalse(pse.equals(null));
+        Assert.assertEquals(pse.hashCode(), entity.hashCode());
 
         Assert.assertEquals(pse.getCorreo(), entity.getCorreo());
     }
